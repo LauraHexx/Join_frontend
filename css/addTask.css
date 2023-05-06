@@ -1,0 +1,349 @@
+.bigHeadline {
+  margin-bottom: 25px !important;
+}
+
+form {
+  max-width: 1150px;
+  display: flex;
+  justify-content: space-between;
+}
+
+form span {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+input {
+  box-sizing: border-box;
+  background: var(--bright-white);
+  border: 1px solid var(--grey);
+  border-radius: 10px;
+  padding: 15px 20px;
+}
+
+input::placeholder {
+  color: var(--dark-grey);
+  font-size: 15px;
+}
+
+/*LEFT SECTION*/
+
+.leftSection {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/*DESCRIPTION*/
+
+#descriptionInput {
+  height: 70px;
+}
+
+/*CATEGORY & CONTACTS*/
+
+.inputContainer {
+  position: relative;
+}
+
+#categoryInput,
+#inputContacts {
+  width: 100%;
+}
+
+.inputImage {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 19px;
+  right: 23px;
+  cursor: pointer;
+}
+
+.partingLine {
+  border: 1px solid var(--grey);
+}
+
+.containerSection {
+  position: relative;
+  box-sizing: border-box;
+  background: var(--bright-white);
+  border: 1px solid var(--grey);
+  font-size: 15px;
+  border-radius: 10px;
+}
+
+.selectCategoryHead {
+  padding: 15px 20px;
+}
+
+.selectCategoryTitle {
+  font-weight: unset;
+  color: var(--dark-grey);
+}
+
+.listDropDown {
+  margin: unset;
+  padding-left: unset;
+  list-style-type: none;
+  font-size: 15px;
+  color: var(--dark-grey);
+}
+
+.listDropDown li {
+  padding: 13px 0px 13px 20px;
+  cursor: pointer;
+}
+
+.listDropDown li:hover {
+  background-color: var(--grey);
+}
+
+.listDropDown li:last-child:hover {
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+}
+
+.singleCategory {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+}
+
+.singleCategory span {
+  font-weight: unset;
+}
+
+/*CATEGORY*/
+
+#purple {
+  background-color: #9747ff;
+}
+#red {
+  background-color: #f24822;
+}
+
+#green {
+  background-color: #14ae5c;
+}
+
+#orange {
+  background-color: #ffcd29;
+}
+
+#rosa {
+  background-color: #ff24bd;
+}
+
+#blue {
+  background-color: #0d99ff;
+}
+
+.optionsCategory {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 23px;
+  z-index: 1;
+}
+
+.close {
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+}
+
+.confirm {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+}
+
+.partingLineCategory {
+  height: 31px;
+  width: 1px;
+  background-color: var(--grey);
+}
+
+#categorysColours {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  padding-left: 20px;
+  margin-top: -4px;
+}
+
+.circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 20px;
+  border: 2px solid var(--bright-white);
+  transform: translateY(0);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+}
+
+.selectedColor {
+  transform: translateY(-5px);
+}
+
+#errorName {
+  padding-left: 20px;
+  margin-top: -10px;
+  color: red;
+  font-size: 12px;
+}
+
+#errorNameExists {
+  padding-left: 20px;
+  margin-top: -10px;
+  color: red;
+  font-size: 12px;
+}
+
+#errorColor {
+  padding-left: 20px;
+  margin-top: -5px;
+  color: red;
+  font-size: 12px;
+}
+
+/*CONTACTS*/
+
+.newContact {
+  width: 15px;
+  height: 15px;
+}
+
+/*RIGHT SECTION*/
+
+.rightSection {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  cursor: pointer;
+}
+
+#addTaskDate {
+  width: 100%;
+}
+/*PRIO BUTTONS*/
+
+.prioBtns {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.prioBtns button {
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 4px 5px !important;
+  background: var(--bright-white);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--grey);
+  color: black;
+}
+
+.prioBtns button:hover {
+  border: 1px solid var(--grey);
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    0px 9px 15px -7px rgba(0, 0, 0, 0);
+  box-shadow: 0px 10px 13px -7px #000000, 0px 9px 15px -7px rgba(0, 0, 0, 0);
+  transition: 0.5s;
+}
+
+.prioBtns img {
+  width: 16px;
+  height: 16px;
+}
+
+/*SUBTASKS*/
+
+#addTaskSubtasks {
+  width: 100%;
+}
+
+.imagePlus {
+  top: 16px;
+}
+
+#subtasks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.singleSubtask {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.singleSubtask input {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.singleSubtask span {
+  font-weight: unset;
+  font-size: 12px;
+}
+
+/*CLEAR AND CREATE BUTTONS*/
+
+.clearAndCreateBtns {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.clearBtn {
+  width: 100px;
+}
+
+.createBtn {
+  width: 150px;
+}
+
+.clearAndCreateBtns button {
+  height: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clearBtn {
+  background-color: var(--bright-white) !important;
+  color: var(--dark-blue) !important;
+}
+
+.clearBtn img {
+  width: 11px;
+  height: 11px;
+}
+
+.clearBtn:hover {
+  color: var(--bright-blue) !important;
+  border: 1px solid var(--bright-blue);
+  transition: 0.2s;
+}
+
+.createBtn:hover {
+  transition: 0.2s;
+}

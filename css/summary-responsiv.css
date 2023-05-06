@@ -1,0 +1,106 @@
+@media only screen and (max-width: 1160px) {
+  #greetingTimeOfDay {
+    font-size: 25px;
+  }
+
+  #greetedUser {
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 1060px) {
+  #greetedUser {
+    font-size: 23px;
+  }
+}
+
+@media only screen and (max-width: 920px) {
+  .headlineMobile {
+    display: flex !important;
+    margin-bottom: var(--margin-bottom);
+  }
+
+  .headContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .partingLineBlue {
+    display: none;
+  }
+
+  .lineMobile {
+    display: flex;
+    height: 3px;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .mainContainer {
+    gap: 40px;
+  }
+}
+
+@media only screen and (max-width: 710px) {
+  .headlineMobile {
+    display: block !important;
+    text-align: center;
+  }
+  .headContainer {
+    align-items: center;
+  }
+  .mainContainer {
+    justify-content: center;
+  }
+
+  .greetingContainer {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .headlineMobile {
+    text-align: unset;
+  }
+  .headContainer {
+    align-items: flex-start;
+  }
+
+  .overwievContainer {
+    width: 100%;
+  }
+
+  .overwievContainer img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .tasks a {
+    width: 30%;
+  }
+
+  .fieldTask {
+    width: unset;
+    height: 115px;
+  }
+
+  .urgent a {
+    height: 100px;
+  }
+
+  .todos,
+  .done {
+    height: 105px;
+  }
+}
+
+@media only screen and (max-width: 445px) {
+  .headlineMobile {
+    text-align: unset;
+  }
+
+  .fontBig {
+    font-size: 35px;
+  }
+}

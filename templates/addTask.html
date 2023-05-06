@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join - Add Task</title>
+    <link rel="stylesheet" href="../css/general.css" />
+    <link rel="stylesheet" href="../css/general-responsiv.css" />
+    <link rel="stylesheet" href="../css/nav.css" />
+    <link rel="stylesheet" href="../css/nav-responsiv.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/header-responsiv.css" />
+    <link rel="stylesheet" href="../css/animations.css" />
+    <link rel="stylesheet" href="../css/addTask.css" />
+    <link rel="stylesheet" href="../css/addTask-responsiv.css" />
+    <script src="../js/storage.js"></script>
+    <script src="../js/general.js"></script>
+    <script src="../js/header.js"></script>
+    <script src="../js/addTasks.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="../assets/img/logoWhite.svg" />
+  </head>
+
+  <body onload="init('addTask'); initAddTask()">
+    <header w3-include-html="header.html"></header>
+    <nav w3-include-html="nav.html" class="navNotMobil"></nav>
+
+    <div class="contentAfterLogin">
+      <span class="headlineMobile d-none">Kanban Project Management Tool</span>
+      <h1 class="bigHeadline">Add Task</h1>
+      <form class="mainContainer">
+        <!--LEFT SECTION-->
+        <section class="leftSection">
+          <span>Title</span>
+          <input type="text" id="addTaskTitle" placeholder="Enter a title" />
+          <span>Description</span>
+          <input
+            type="text"
+            id="descriptionInput"
+            placeholder="Enter a description" />
+          <span>Category</span>
+          <!--CATEGORY-->
+          <div id="selectCategory" class="containerSection">
+            <div class="selectCategoryHead">
+              <span class="selectCategoryTitle">Select task category</span>
+              <img
+                onclick="renderCategorys(); toggleClass('listCategorys', 'd-none')"
+                class="inputImage"
+                src="../assets/img/addTaskDropDownArrow.svg"
+                alt="arrow to drop down the menu of categorys" />
+            </div>
+            <ul id="listCategorys" class="d-none listDropDown">
+              <li onclick="toggleNewCategory()" class="singleCategory">
+                <span>New Category</span>
+                <div id="blue" class="circle"></div>
+              </li>
+              <div id="selectableCategorys"></div>
+            </ul>
+          </div>
+          <div id="newCategory" class="inputContainer d-none">
+            <input
+              type="text"
+              id="categoryInput"
+              class="categoryInput"
+              placeholder="New category name"
+              maxlength="20" />
+            <div class="optionsCategory">
+              <img
+                onclick="showSelectCategory()"
+                class="close"
+                src="../assets/img/addTaskClose.svg"
+                alt="icon to close the category section" />
+              <div class="partingLineCategory"></div>
+              <img
+                onclick="addCategory()"
+                class="confirm"
+                src="../assets/img/addTaskConfirm.svg"
+                alt="icon to add a new category" />
+            </div>
+          </div>
+          <span id="errorName" class="d-none">Please enter a new category</span>
+          <span id="errorNameExists" class="d-none"
+            >This category is already created. Please enter another
+            category</span
+          >
+          <div id="categorysColours" class="d-none">
+            <div
+              onclick="moveCircle(event)"
+              id="purple"
+              class="circle cursorPointer"></div>
+            <div
+              onclick="moveCircle(event)"
+              id="red"
+              class="circle cursorPointer"></div>
+            <div
+              onclick="moveCircle(event)"
+              id="green"
+              class="circle cursorPointer"></div>
+            <div
+              onclick="moveCircle(event)"
+              id="orange"
+              class="circle cursorPointer"></div>
+            <div
+              onclick="moveCircle(event)"
+              id="rosa"
+              class="circle cursorPointer"></div>
+            <div
+              onclick="moveCircle(event)"
+              id="blue"
+              class="circle cursorPointer"></div>
+          </div>
+          <span id="errorColor" class="d-none">Please select a color</span>
+          <span>Assigned to</span>
+          <!--CONTACTS-->
+          <div id="selectContact" class="containerSection">
+            <div class="selectCategoryHead">
+              <span class="selectCategoryTitle">Select contacts to assign</span>
+              <img
+                onclick="toggleClass('listContacts', 'd-none')"
+                class="inputImage"
+                src="../assets/img/addTaskDropDownArrow.svg"
+                alt="arrow to drop down the menu of contacts" />
+            </div>
+            <ul id="listContacts" class="listDropDown d-none">
+              <li onclick="" class="singleCategory">
+                <span>You</span>
+              </li>
+              <div id="contactBook"></div>
+              <li onclick="toggleInviteContact()" class="singleCategory">
+                <span>Invite new Contact</span>
+                <img
+                  class="newContact"
+                  src="../assets/img/addTaskNewContact.svg"
+                  alt="icon to invite a new contact" />
+              </li>
+            </ul>
+          </div>
+          <div id="newContact" class="inputContainer d-none">
+            <input
+              type="email"
+              id="categoryInput"
+              class="categoryInput"
+              placeholder="Contact email"
+              maxlength="20" />
+            <div class="optionsCategory">
+              <img
+                onclick="showSelectContacts()"
+                class="close"
+                src="../assets/img/addTaskClose.svg"
+                alt="icon to close the category section" />
+              <div class="partingLineCategory"></div>
+              <img
+                class="confirm"
+                src="../assets/img/addTaskConfirm.svg"
+                alt="icon to add a new contact" />
+            </div>
+          </div>
+        </section>
+        <div class="partingLine"></div>
+        <!--RIGHT SECTION-->
+        <section class="rightSection">
+          <span>Due date</span>
+          <div>
+            <input type="date" id="addTaskDate" placeholder="dd/mm/yyyy" />
+          </div>
+          <span>Prio</span>
+          <div class="prioBtns">
+            <button>
+              Urgent
+              <img
+                src="../assets/img/prioUrgent.svg"
+                alt="icon to show priority" />
+            </button>
+            <button>
+              Medium
+              <img
+                src="../assets/img/prioMedium.svg"
+                alt="icon to show priority" />
+            </button>
+            <button>
+              Low
+              <img
+                src="../assets/img/prioLow.svg"
+                alt="icon to show priority" />
+            </button>
+          </div>
+          <span>Subtasks</span>
+          <div class="inputContainer">
+            <input
+              type="text"
+              id="addTaskSubtasks"
+              placeholder="Add new subtask" />
+            <img
+              class="inputImage imagePlus"
+              src="../assets/img/addTaskPlus.svg"
+              alt="icon of plus to add a subtask" />
+          </div>
+          <div id="subtasks">
+            <div class="singleSubtask">
+              <input type="checkbox" id="" class="checkbox" />
+              <span>Subtask 1</span>
+            </div>
+            <div class="singleSubtask">
+              <input type="checkbox" id="" class="checkbox" />
+              <span>Subtask 1</span>
+            </div>
+            <div class="singleSubtask">
+              <input type="checkbox" id="" class="checkbox" />
+              <span>Subtask 1</span>
+            </div>
+          </div>
+          <div class="clearAndCreateBtns">
+            <button class="clearBtn">
+              <span>Clear</span>
+              <img
+                onmouseenter="changeImageOnHover('clearBtnIcon',
+                '../assets/img/addTaskCancelBright.svg',
+                '../assets/img/addTaskCancelDark.svg')"
+                onmouseleave="changeImageOnHover('clearBtnIcon',
+                '../assets/img/addTaskCancelBright.svg',
+                '../assets/img/addTaskCancelDark.svg')"
+                id="clearBtnIcon"
+                src="../assets/img/addTaskCancelDark.svg"
+                alt="icon of plus to add
+              a subtask" />
+            </button>
+            <button class="createBtn">
+              <span>Create Task</span>
+              <img
+                src="../assets/img/addTaskCreate.svg"
+                alt="icon to clear the create a new Task" />
+            </button>
+          </div>
+        </section>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+@media only screen and (max-width: 920px) {
+  header {
+    position: fixed;
+    z-index: 2;
+  }
+
+  .logoDark {
+    display: block;
+  }
+
+  .headline {
+    display: none;
+  }
+
+  .options {
+    justify-content: space-between;
+    width: 100%;
+    padding-right: unset;
+  }
+
+  .optionMenu {
+    display: flex;
+  }
+}

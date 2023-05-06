@@ -1,0 +1,12 @@
+h2 {
+  font-size: 27px;
+}
+
+p,
+h2 {
+  margin: 20px 0px 0px 0px;
+}
+
+p {
+  text-align: start;
+}

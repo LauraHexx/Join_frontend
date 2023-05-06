@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join - Board</title>
+    <link rel="stylesheet" href="../css/general.css" />
+    <link rel="stylesheet" href="../css/general-responsiv.css" />
+    <link rel="stylesheet" href="../css/nav.css" />
+    <link rel="stylesheet" href="../css/nav-responsiv.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/header-responsiv.css" />
+    <link rel="stylesheet" href="../css/animations.css" />
+    <link rel="stylesheet" href="../css/board.css" />
+    <link rel="stylesheet" href="../css/board-responsiv.css" />
+    <link rel="stylesheet" href="../css/addTask.css" />
+    <link rel="stylesheet" href="../css/addTask-responsiv.css" />
+    <link rel="stylesheet" href="../css/addTask-display.css" />
+    <link rel="stylesheet" href="../css/addTask-display-responsiv.css" />
+    <script src="../js/general.js"></script>
+    <script src="../js/header.js"></script>
+    <script src="../js/board.js"></script>
+    <script src="../js/addTasks.js"></script>
+    <link rel="icon" type="image/x-icon" href="../assets/img/logoWhite.svg" />
+  </head>
+
+  <body id="body" onload="init('board'); initBoard()">
+    <header w3-include-html="header.html"></header>
+    <nav w3-include-html="nav.html"></nav>
+    <div
+    w3-include-html="addTask-display.html"
+    id="containerAdd"
+    class="d-none"></div>
+
+    <div id="content" class="contentAfterLogin">
+      <span class="headlineMobile d-none">Kanban Project Management Tool</span>
+      <!--HEADER-->
+      <div class="headerBoard">
+        <h1>Board</h1>
+        <div class="containerSearchTasks">
+          <div class="containerSearchTasksContent">
+            <input
+              id="searchBar"
+              onkeyup="filterTasks()"
+              placeholder="Find Task"
+              type="text" />
+            <img
+              src="../assets/img/boardSearch.svg"
+              alt="icon for searching tasks" />
+          </div>
+        </div>
+        <button onclick="toggleClass('body', 'overflowHidden'); showAddTask('containerAdd','animation-slideInRight','d-none')">
+          Add Task
+          <img src="../assets/img/boardPlusWhite.svg" alt="icon to add tasks" />
+        </button>
+        <img onclick="toggleClass('body', 'overflowHidden'); showAddTask('containerAdd','animation-slideInRight','d-none')" class="addTaskMobile d-none" src="../assets/img/boardPlusFilled.svg" alt="icon to add tasks">
+      </div>
+      <!--MAIN-->
+      <main class="mainBoard">
+        <section>
+          <div class="processStep">
+            <span>To Do</span>
+            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
+          </div>
+          <div id="contentProcess">
+            <div id="singleCard" onclick="toggleClass('body', 'overflowHidden'); showEditTask('containerEdit','animation-slideInRight','d-none')">
+              <div id="category">Design</div>
+              <div id="title">Website redesign</div>
+              <span id="description">
+                Modify the contents of the main website
+              </span>
+              <div id="progressContainer">
+                <div id="progress">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    aria-valuenow="25"
+                    aria-valuemin="0"
+                    aria-valuemax="100"></div>
+                </div>
+                <span id="progressAmount">1/2 Done</span>
+              </div>
+              <div id="contactsAndPrio">
+                <div id="assignedContacts">
+                  <div class="initialsOfNames smallCircle">BB</div>
+                  <div class="initialsOfNames smallCircle">BB</div>
+                  <div class="initialsOfNames smallCircle">+2</div>
+                </div>
+                <img
+                  id="prio"
+                  src="../assets/img/prioLow.svg"
+                  alt="icon to show priority" />
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="processStep">
+            <span>In progress</span>
+            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
+          </div>
+          <div id="contentProcess">
+        </section>
+        <section>
+          <div class="processStep">
+            <span>Awaiting Feedback</span>
+            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
+          </div>
+          <div id="contentProcess"></div>
+        </section>
+        <section>
+          <div class="processStep">
+            <span>Done</span>
+            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
+          </div>
+          <div id="contentProcess"></div>
+        </section>
+      </main>
+    </div>    
+    <!--EDIT TASKS-DISPLAY -->
+    <section id="containerEdit" class="d-none">
+      <div class="displayEdit">
+        <div class="headContainer">
+          <div id="category">Design</div>
+          <img onclick="toggleClass('body', 'overflowHidden'); hideEditTask('containerEdit','d-none')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
+        </div>
+        <span id="titleDisplay">Website redesign</span>
+        <span id="descriptionDisplay">
+          Modify the contents of the main website
+        </span>
+        <section class="containerSectionBoard">
+          <span class="bold">Due date:</span>
+          <span id="dueDate">18-04-2023</span>
+        </section>
+        <section class="containerSectionBoard">
+          <span class="bold">Priority:</span>
+          <button id="priorityDisplay">
+            Urgent
+            <img src="../assets/img/boardPriorityWhite.svg" alt="icon of priority">
+          </button>
+        </section>
+        <section class="containerAssignedTo">
+          <span class="bold">Assigned To:</span>
+          <div class="assignedContacts">
+            <div class="singleContact">
+              <div class="initialsOfNames smallCircle">BB</div>
+              <span id="nameOfContact">Max Mustermann</span>
+            </div>
+            <div class="singleContact">
+              <div class="initialsOfNames smallCircle">BB</div>
+              <span id="nameOfContact">Max Mustermann</span>
+            </div>
+            <div class="singleContact">
+              <div class="initialsOfNames smallCircle">BB</div>
+              <span id="nameOfContact">Max Mustermann</span>
+            </div>
+          </div>
+        </section>
+        <div class="btnContainer">
+          <button class="deleteBtn"><img id="deleteBtnImage" src="../assets/img/boardDeleteTaskDarkBlue.svg" alt="icon to delete task"></button>
+          <button class="editBtn"><img src="../assets/img/boardEditTask.svg" alt="icon to edit task"></button>
+        </div>
+      </div>          
+    </section>
+    
+  </body>
+</html>

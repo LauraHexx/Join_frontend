@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: general.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: general.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>async function init(currentHtmlTemplate) {
+  await loadUsers();
+  await includeHTML();
+  styleCurrentSectionInNav(currentHtmlTemplate);
+}
+
+/**
+ * Asynchronously loads users from storage and parses the JSON data.
+ *
+ * @async
+ * @throws {Error} If an error occurs during loading or parsing of user data.
+ * @returns {Promise&lt;void>} A promise that resolves when the users are loaded and parsed successfully.
+ */
+async function loadUsers() {
+  try {
+    users = JSON.parse(await getItem("users"));
+    console.log(users);
+  } catch (e) {
+    console.error("Loading error:", e);
+  }
+}
+
+/**
+ * Loads HTML Code into elements signed with [w3-include-html]
+ */
+async function includeHTML() {
+  let includeElements = document.querySelectorAll("[w3-include-html]");
+  for (let i = 0; i &lt; includeElements.length; i++) {
+    await loadHTML(includeElements[i]);
+  }
+}
+
+/**
+ * Adds HTML code from a file to the given element
+ * @param {object} _element the HTML element to which code should be added
+ * @param {string} _file the source file name
+ */
+async function loadHTML(_element, _file) {
+  let file = _file;
+  let element = _element;
+
+  if (!file) {
+    file = element.getAttribute("w3-include-html");
+  } else {
+    element = document.getElementById(_element);
+  }
+
+  let resp = await fetch(file);
+  if (resp.ok) {
+    element.innerHTML = await resp.text();
+  } else {
+    element.innerHTML = "Page not found";
+  }
+}
+
+/**
+ * It is used to check which html template is opened based on the url.
+ * It then styles the opened section in the navbar
+ * @param {string} currentHtmlTemplate - name of html template
+ */
+function styleCurrentSectionInNav(currentHtmlTemplate) {
+  if (!currentHtmlTemplate) return;
+  const path = window.location.pathname;
+  if (path.includes(currentHtmlTemplate)) {
+    document.getElementById(currentHtmlTemplate).classList.add("activeSection");
+  }
+}
+
+/**
+ * Toggles the specified class of the specified element ID. If the element has the
+ * class, it will be removed. If it does not have the class, it will be added.
+ * @param {string} elementId - the ID of the element to toggle the class for
+ * @param {string} className - the class to toggle
+ */
+function toggleClass(elementId, className) {
+  let element = document.getElementById(elementId);
+  if (element.classList.contains(className)) {
+    element.classList.remove(className);
+  } else {
+    element.classList.add(className);
+  }
+}
+
+/**This function toggles the "blur" filter on certain elements.
+ * The elements to be filtered are selected using their CSS selectors.
+ * Here, "nav", "header", and "#content" are selected.
+ * If the element already has the "filterBlur" class, it is removed. Otherwise, the class is added
+ */
+function toggleBlurFilter() {
+  const elements = document.querySelectorAll("nav, header, #content");
+  elements.forEach((element) => {
+    if (element.classList.contains("filterBlur")) {
+      element.classList.remove("filterBlur");
+    } else {
+      element.classList.add("filterBlur");
+    }
+  });
+}
+
+/**
+ * Plays a CSS animation on an element with the given ID
+ * @param {string} id - The ID of the element on which the animation will be played
+ * @param {string} animationClass - The CSS class of the animation to apply to the element
+ */
+function playAnimation(id, animationClass) {
+  let element = document.getElementById(id);
+  element.classList.add(animationClass);
+}
+
+/**
+ * Changes the image displayed when hovering over a specific HTML element or its parent div
+ * @param {string} elementId - the ID of the image element to apply the function to
+ * @param {string} imgSrcOnHover - the file path of the image to display when hovering over the element or its parent div
+ * @param {string} imgSrcOnMouseOut - the file path of the image to display when the mouse leaves the element or its parent div
+ */
+function changeImageOnHover(elementId, imgSrcOnHover, imgSrcOnMouseOut) {
+  const element = document.getElementById(elementId);
+  const parent = element.parentElement;
+  element.addEventListener("mouseover", () => {
+    element.src = imgSrcOnHover;
+  });
+  element.addEventListener("mouseout", () => {
+    element.src = imgSrcOnMouseOut;
+  });
+  parent.addEventListener("mouseover", () => {
+    element.src = imgSrcOnHover;
+  });
+  parent.addEventListener("mouseout", () => {
+    element.src = imgSrcOnMouseOut;
+  });
+}
+
+function loadTemplate(template) {
+  window.location = template;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#changeImageOnHover">changeImageOnHover</a></li><li><a href="global.html#changeZindexAnimation">changeZindexAnimation</a></li><li><a href="global.html#checkIfUserAlreadyRegistered">checkIfUserAlreadyRegistered</a></li><li><a href="global.html#getItem">getItem</a></li><li><a href="global.html#includeHTML">includeHTML</a></li><li><a href="global.html#loadHTML">loadHTML</a></li><li><a href="global.html#loadUsers">loadUsers</a></li><li><a href="global.html#playAnimation">playAnimation</a></li><li><a href="global.html#registerNewUser">registerNewUser</a></li><li><a href="global.html#setItem">setItem</a></li><li><a href="global.html#styleCurrentSectionInNav">styleCurrentSectionInNav</a></li><li><a href="global.html#toggleBlurFilter">toggleBlurFilter</a></li><li><a href="global.html#toggleClass">toggleClass</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 01 2023 17:13:52 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+/* VARIABLES*/
+
+:root {
+  --header-height: 89px;
+  --header-width: 2000px;
+  --nav-width: 200px;
+  --padding-top: 20px;
+  --padding: 25px;
+  --margin-top: 35px;
+  --margin-bottom: 20px;
+  --padding-mobile: 25px;
+  --nav-height-mobile: 50px;
+  --dark-white: #f6f7f8;
+  --bright-white: #ffffff;
+  --bright-blue: #29abe2;
+  --dark-blue: #2a3647;
+  --dark-blue-selected: #091931;
+  --grey: #d1d1d1;
+  --dark-grey: #515050;
+  --red: #fee6e9;
+  --orange: #ff7a00;
+}
+
+/* GENERAL STYLING & CLASSES*/
+
+html {
+  font-family: "Segoe UI", sans-serif !important;
+}
+
+body {
+  margin: 0;
+  background-color: var(--dark-white);
+}
+
+h1 {
+  margin: 0 !important;
+  font-size: 45px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 30px;
+}
+
+a {
+  all: unset;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+p {
+  margin: 15px 0px 0px 0px;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  width: 145px;
+  height: 51px;
+  padding: 4px 16px;
+  gap: 10px;
+  border: 1px solid var(--dark-blue);
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: var(--dark-blue);
+  color: var(--bright-white);
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--bright-blue);
+  border: 1px solid var(--bright-blue);
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    0px 9px 15px -7px rgba(0, 0, 0, 0);
+  box-shadow: 0px 10px 13px -7px #000000, 0px 9px 15px -7px rgba(0, 0, 0, 0);
+  transition: 0.5s;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.marginBottom {
+  margin-bottom: 20px;
+}
+
+.marginTop {
+  margin-top: 20px;
+}
+
+.padding {
+  padding: 20px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.filterBlur {
+  filter: blur(25px);
+}
+
+.overflowHidden {
+  overflow: hidden;
+}
+
+/* BEFORE LOGIN*/
+
+.logoDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 30px;
+}
+
+.logoDiv img {
+  width: 60px;
+  height: 80px;
+}
+
+.contentBeforeLogin {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  z-index: 0;
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  background-color: var(--bright-white);
+  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+  border-radius: 30px;
+}
+
+.displayHeader {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.arrowBackBlue {
+  position: absolute;
+  left: 0%;
+}
+
+.arrowBackBlue:hover {
+  cursor: pointer;
+}
+
+.blueLine {
+  height: 5px;
+  width: 170px;
+  background-color: var(--bright-blue);
+}
+
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.input {
+  width: 95%;
+  height: 35px;
+  padding: 5px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+}
+
+.inputName {
+  background-image: url("../assets/img/inputName.svg");
+  background-repeat: no-repeat;
+  background-position: center right 5px;
+  background-size: 19px 16px;
+}
+
+.inputEmail {
+  background-image: url("../assets/img/inputEmail.svg");
+  background-repeat: no-repeat;
+  background-position: center right 5px;
+  background-size: 19px 14px;
+}
+
+.inputPassword {
+  background-image: url("../assets/img/inputPassword.svg");
+  background-repeat: no-repeat;
+  background-position: center right 5px;
+  background-size: 19px 16px;
+}
+
+/* AFTER LOGIN */
+
+.contentAfterLogin {
+  max-width: calc(var(--header-width) - var(--nav-width) - var(--padding));
+  margin-left: var(--nav-width);
+  padding-top: calc(var(--header-height) + var(--padding-top)) !important;
+  padding: var(--padding);
+}

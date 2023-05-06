@@ -1,0 +1,34 @@
+@media only screen and (max-width: 760px) {
+  form {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .leftSection,
+  .rightSection {
+    width: 95%;
+  }
+
+  .partingLine {
+    display: none;
+  }
+
+  .prioBtns button {
+    width: 33%;
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .clearAndCreateBtns span {
+    width: unset;
+    display: none;
+  }
+
+  .clearAndCreateBtns button {
+    width: 32px;
+    height: 31px;
+    justify-content: center;
+    padding: 5px;
+  }
+}

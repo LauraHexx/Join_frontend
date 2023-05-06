@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join - Contacts</title>
+    <link rel="icon" type="image/x-icon" href="../assets/img/logoWhite.svg" />
+    <link rel="stylesheet" href="../css/general.css" />
+    <link rel="stylesheet" href="../css/general-responsiv.css" />
+    <link rel="stylesheet" href="../css/nav.css" />
+    <link rel="stylesheet" href="../css/nav-responsiv.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/header-responsiv.css" />
+    <link rel="stylesheet" href="../css/animations.css" />
+    <link rel="stylesheet" href="../css/contacts.css" />
+    <link rel="stylesheet" href="../css/contacts-responsiv.css" />
+    <link rel="stylesheet" href="../css/contacts-displays-add-edit.css" />
+    <link
+      rel="stylesheet"
+      href="../css/contacts-displays-add-edit-responsiv.css" />
+    <link rel="stylesheet" href="../css/addTask.css" />
+    <link rel="stylesheet" href="../css/addTask-responsiv.css" />
+    <link rel="stylesheet" href="../css/addTask-display.css" />
+    <link rel="stylesheet" href="../css/addTask-display-responsiv.css" />
+    <script src="../js/storage.js"></script>
+    <script src="../js/general.js"></script>
+    <script src="../js/header.js"></script>
+    <script src="../js/contacts.js"></script>
+  </head>
+
+  <body id="body" onload="init('contacts'); initContacts()">
+    <header w3-include-html="header.html"></header>
+    <nav w3-include-html="nav.html"></nav>
+    <div
+      w3-include-html="addTask-display.html"
+      id="containerAdd"
+      class="d-none"></div>
+
+    <div id="content">
+      <div class="newContactBtnMobileContainer d-none">
+        <button
+          onclick="showAddContact('contentAddDisplay','animation-slideInRight','d-none'); toggleClass('body', 'overflowHidden')"
+          class="newContactBtn">
+          New Contact
+          <img
+            src="../assets/img/newContact.svg"
+            alt="image of icon to add a new contact" />
+        </button>
+      </div>
+      <!--BUTTON - CREATED CONTACT-->
+      <div id="contactCreatedSucess" class="d-none">
+        <button>Contact succesfully created</button>
+      </div>
+      <!--CONTACT LIST-->
+      <section id="contactList"></section>
+      <!--CONTACT DETAILS-->
+      <section id="contactDetails" class="gap">
+        <div class="headlineMobile d-none">
+          <span>Kanban Project Management Tool</span>
+          <img src="../assets/img/arrowBackBlack.svg" alt="arrow to get back" />
+        </div>
+        <div class="headContainer">
+          <h1>Contacts</h1>
+          <div class="partingLineBlue"></div>
+          <span>Better with a team</span>
+          <div class="blueLine lineMobile d-none"></div>
+        </div>
+        <div class="gap" id="mainInfosContact"></div>
+        <div class="newContactBtnContainer">
+          <button
+            onclick="showDisplay('contentAddDisplay','animation-slideInRight','d-none'); toggleClass('body', 'overflowHidden')"
+            class="newContactBtn">
+            New Contact
+            <img
+              src="../assets/img/newContact.svg"
+              alt="image of icon to add a new contact" />
+          </button>
+        </div>
+        <div class="editContactMobileBtnContainer">
+          <button class="editContactMobileBtn">
+            <img
+              src="../assets/img/pencilWhite.svg"
+              alt="image of icon to add a new contact" />
+          </button>
+        </div>
+      </section>
+    </div>
+    <!--ADD CONTACTS - DISPLAY-->
+    <section id="contentAddDisplay" class="d-none">
+      <div id="displayAddContact">
+        <div class="leftSectionAdd">
+          <img
+            onclick="toggleClass('body', 'overflowHidden'); hideAddContact('contentAddDisplay','d-none')"
+            id="closeAddContact"
+            class="cursorPointer closeWhite d-none"
+            src="../assets/img/closeWhite.svg"
+            alt="image of icon to close the adding" />
+          <img
+            class="logoAddContact"
+            src="../assets/img/logoWhite.svg"
+            alt="logo of join" />
+          <h1>Add Contact</h1>
+          <div>Tasks are better with a team!</div>
+          <div class="blueLine"></div>
+        </div>
+        <div class="rightSectionAdd">
+          <img
+            onclick="hideDisplay('contentAddDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
+            class="cursorPointer closeDark"
+            src="../assets/img/closeDark.svg"
+            alt="image of icon to close the adding" />
+          <div class="imageNewContact">
+            <img
+              src="../assets/img/contactsNewImage.svg"
+              alt="icon as a placeholder for a image of the new contact" />
+          </div>
+          <form class="formAdd">
+            <input
+              id="addContactName"
+              class="input inputName"
+              type="name"
+              placeholder="Name"
+              required />
+            <input
+              id="addContactEmail"
+              class="input inputEmail"
+              type="email"
+              placeholder="Email"
+              required />
+            <input
+              id="addContactPhone"
+              class="input inputPassword"
+              type="phone"
+              placeholder="Phone"
+              required />
+            <div class="addDisplayBtns">
+              <button id="cancelAddContact">
+                Cancel
+                <span>X</span>
+              </button>
+              <button class="createNewContact">
+                Create contact
+                <img
+                  src="../assets/img/contactsCheck.svg"
+                  alt="image of icon to create a new contact" />
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!--EDIT CONTACTS - DISPLAY-->
+    <section id="contentEditDisplay" class="d-none"></section>
+  </body>
+</html>

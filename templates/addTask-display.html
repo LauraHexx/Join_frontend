@@ -1,0 +1,101 @@
+<!--ADD TASKS-DISPLAY -->
+<form class="mainContainer">
+  <img
+    onclick="toggleClass('body', 'overflowHidden'); hideAddTask('containerAdd','d-none')"
+    id="closeDisplay"
+    src="../assets/img/boardCloseDisplay.svg"
+    alt="icon to close display" />
+  <!--LEFT SECTION-->
+  <section class="leftSection marginTop">
+    <span>Title</span>
+    <input type="text" id="addTaskTitle" placeholder="Enter a title" />
+    <span>Description</span>
+    <input
+      type="text"
+      id="descriptionInput"
+      placeholder="Enter a Description" />
+    <span>Category</span>
+    <div class="inputContainer">
+      <input
+        type="text"
+        id="categoryInput"
+        class="categoryInput"
+        placeholder="Select task category" />
+      <img
+        class="inputImage"
+        src="../assets/img/addTaskDropDownArrow.svg"
+        alt="arrow to drop down the menu of categorys" />
+    </div>
+    <span>Assigned to</span>
+    <div class="inputContainer">
+      <input
+        type="text"
+        id="inputContacts"
+        placeholder="Select contacts to assign" />
+      <img
+        class="inputImage"
+        src="../assets/img/addTaskDropDownArrow.svg"
+        alt="arrow to drop down the menu of categorys" />
+    </div>
+  </section>
+  <div class="partingLine"></div>
+  <!--RIGHT SECTION-->
+  <section class="rightSection marginTop">
+    <span>Due date</span>
+    <div>
+      <input type="date" id="addTaskDate" placeholder="dd/mm/yyyy" />
+    </div>
+    <span>Prio</span>
+    <div class="prioBtns">
+      <button>
+        Urgent
+        <img src="../assets/img/prioUrgent.svg" alt="icon to show priority" />
+      </button>
+      <button>
+        Medium
+        <img src="../assets/img/prioMedium.svg" alt="icon to show priority" />
+      </button>
+      <button>
+        Low
+        <img src="../assets/img/prioLow.svg" alt="icon to show priority" />
+      </button>
+    </div>
+    <span>Subtasks</span>
+    <div class="inputContainer">
+      <input type="text" id="addTaskSubtasks" placeholder="Add new subtask" />
+      <img
+        class="inputImage imagePlus"
+        src="../assets/img/addTaskPlus.svg"
+        alt="icon of plus to add a subtask" />
+    </div>
+    <div id="subtasks">
+      <div class="singleSubtask">
+        <input type="checkbox" id="" class="checkbox" />
+        <span>Subtask 1</span>
+      </div>
+      <div class="singleSubtask">
+        <input type="checkbox" id="" class="checkbox" />
+        <span>Subtask 1</span>
+      </div>
+      <div class="singleSubtask">
+        <input type="checkbox" id="" class="checkbox" />
+        <span>Subtask 1</span>
+      </div>
+    </div>
+    <div class="clearAndCreateBtns">
+      <button class="clearBtn">
+        <span> Clear</span>
+        <img
+          id="clearBtnIcon"
+          src="../assets/img/addTaskCancelDark.svg"
+          alt="icon of plus to add a subtask" />
+      </button>
+      <button class="createBtn">
+        <span>Create Task</span>
+        <img
+          src="../assets/img/addTaskCreate.svg"
+          alt="icon to clear the create a new Task" />
+      </button>
+    </div>
+  </section>
+</form>

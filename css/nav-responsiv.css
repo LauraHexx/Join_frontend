@@ -1,0 +1,100 @@
+@media only screen and (max-width: 920px) {
+  .darkLogoMobile {
+    display: block;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  nav {
+    all: unset;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: var(--dark-blue);
+    z-index: 2;
+  }
+
+  .navSections {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: unset;
+  }
+
+  .navSections a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 80px;
+    padding-left: unset;
+  }
+
+  .navSummaryIcon {
+    width: 19px;
+    height: 18px;
+  }
+
+  .navBoardIcon {
+    width: 21px;
+    height: 23px;
+  }
+
+  .navTaskIcon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .navContactsIcon {
+    width: 16.5px;
+    height: 19.9px;
+  }
+
+  .navLegalNoticeIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .navText {
+    padding-left: 0;
+  }
+
+  .questionMark {
+    display: none;
+  }
+
+  .navLegalNotice {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  nav {
+    font-size: 13px;
+  }
+
+  nav img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media only screen and (max-height: 800px) {
+  nav {
+    gap: 80px;
+  }
+
+  nav span {
+    font-size: 15px;
+  }
+
+  .logo img {
+    height: 84px;
+  }
+}

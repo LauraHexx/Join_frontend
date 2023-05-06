@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join - Login</title>
+    <link rel="stylesheet" href="./css/general.css" />
+    <link rel="stylesheet" href="../css/animations.css" />
+    <link rel="stylesheet" href="./css/login.css" />
+    <link rel="stylesheet" href="./css/login-responsiv.css" />
+    <script src="./js/storage.js"></script>
+    <script src="./js/general.js"></script>
+    <script src="./js/login.js"></script>
+    <link rel="icon" type="image/x-icon" href="./assets/img/logoWhite.svg" />
+  </head>
+
+  <body onload="initLogin()">
+    <div id="animationDiv" class="animationDiv animate-fadeOpacityOut"></div>
+    <div class="contentBeforeLogin">
+      <div class="loginHeader">
+        <img
+          class="animate-joinlogo"
+          src="./assets/img/logoDark.svg"
+          alt="logo of join" />
+        <div class="loginNoUser">
+          <span class="loginNoUserSpan">Not a Join user?</span>
+          <button onclick="window.location.href='templates/signUp.html'">
+            Sign up
+          </button>
+        </div>
+      </div>
+
+      <div class="display padding">
+        <h1 class="title">Log in</h1>
+        <div class="blueLine marginTop"></div>
+        <form
+          class="form marginTop"
+          onsubmit="checkIfDataCorrect(); return false">
+          <input
+            id="loginEmail"
+            class="input inputEmail"
+            type="email"
+            placeholder="Email"
+            required />
+          <input
+            id="loginPassword"
+            class="input inputPassword"
+            type="password"
+            placeholder="Password"
+            required />
+          <span id="dataIncorrect" class="d-none"
+            >Your email or password is incorrect</span
+          >
+          <div class="loginOptions">
+            <div class="loginRememberMe">
+              <input id="checkbox" type="checkbox" />
+              <label>Remember me</label>
+            </div>
+            <span
+              onclick="window.location.href='templates/forgotPassword.html'"
+              class="loginForgotPassword"
+              >Forgot my password</span
+            >
+          </div>
+          <div class="containerButtons">
+            <button type="submit">Log in</button>
+            <button
+              onclick="guestLogin()"
+              type="button"
+              class="guestLoginButton">
+              Guest Log in
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="loginNoUserResponsiv">
+        <span class="loginNoUserSpan">Not a Join user?</span>
+        <button
+          onclick="window.location.href='templates/signUp.html'"
+          class="signUpButton">
+          Sign up
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

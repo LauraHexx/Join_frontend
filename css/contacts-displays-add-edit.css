@@ -1,0 +1,251 @@
+/*BUTTON - CREATED CONTACT*/
+
+#contactCreatedSucess {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 115px;
+}
+
+.contactCreatedSucess button {
+  width: 250px !important;
+}
+
+/*ADD CONTACTS - DISPLAY*/
+
+#contentAddDisplay {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+#displayAddContact {
+  height: 450px;
+  display: flex;
+  border-radius: 30px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  background: var(--bright-white);
+}
+
+.leftSectionAdd {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--dark-blue);
+  color: var(--bright-white);
+  border-bottom-left-radius: 30px;
+  border-top-left-radius: 30px;
+  padding: 0 45px;
+  gap: 25px;
+}
+
+.logoAddContact {
+  width: 30px;
+  height: 32px;
+}
+
+/*RIGHT-SECTION*/
+
+.rightSectionAdd {
+  width: 495px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin: 0 20px;
+}
+
+.closeDark {
+  position: absolute;
+  top: 15px;
+  right: -7px;
+  cursor: pointer;
+}
+
+.imageNewContact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--grey);
+  border-radius: 100px;
+  padding: 20px 15px 20px 15px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  border: 3px solid var(--bright-white);
+}
+
+.imageNewContact img {
+  width: 50px;
+  height: 40px;
+}
+
+.formAdd {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.formAdd input {
+  width: unset !important;
+}
+
+.addDisplayBtns {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.createNewContact {
+  width: 177px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#cancelAddContact {
+  height: 40px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--bright-white);
+  color: var(--dark-blue);
+}
+
+#cancelAddContact:hover {
+  color: #29abe2 !important;
+  border: 1px solid var(--bright-blue);
+  background-color: unset !important;
+}
+
+#cancelAddContact span {
+  font-size: 13px;
+}
+
+/*EDIT CONTACTS - DISPLAY*/
+
+#contentEditDisplay {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.displayEditContact {
+  height: 450px;
+  display: flex;
+  border-radius: 30px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  background: var(--bright-white);
+}
+
+/*LEFT-SECTION*/
+
+.leftSectionEdit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--dark-blue);
+  color: var(--bright-white);
+  border-bottom-left-radius: 30px;
+  border-top-left-radius: 30px;
+  padding: 0 45px;
+  gap: 25px;
+}
+
+.logoEdit {
+  width: 45px;
+  height: 45px;
+}
+
+/*RIGHT-SECTION*/
+
+.rightSectionEdit {
+  width: 495px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin: 0 20px;
+}
+
+.closeDarkEdit {
+  position: absolute;
+  top: 15px;
+  right: -7px;
+  cursor: pointer;
+}
+
+#editContactInitials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--bright-white);
+  background: #ff7a00;
+  border-radius: 100px;
+}
+
+.bigCircleEdit {
+  font-size: 30px;
+  padding: 15px 20px 15px 20px;
+  border: 4px solid var(--bright-white);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+}
+
+.formEdit {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.formEdit input {
+  width: unset !important;
+}
+
+.editContactBtns {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.deleteBtn {
+  background-color: var(--bright-white) !important;
+  color: var(--dark-blue) !important;
+  width: 130px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deleteBtn:hover {
+  color: var(--bright-blue) !important;
+  border: 1px solid var(--bright-blue);
+}
+
+.saveBtn {
+  width: 130px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

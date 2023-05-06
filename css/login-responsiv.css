@@ -1,0 +1,27 @@
+@media (max-height: 920px) {
+  .loginHeader img {
+    width: 40px;
+    height: 60px;
+  }
+}
+
+@media (max-height: 520px) {
+  .loginHeader img {
+    width: 30px;
+    height: 50px;
+  }
+}
+@media (max-width: 493px) {
+  .loginNoUser {
+    display: none;
+  }
+  .loginNoUserResponsiv {
+    display: flex;
+  }
+}
+
+@media (max-width: 380px) {
+  .loginButtonsDiv {
+    flex-direction: column;
+  }
+}

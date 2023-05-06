@@ -1,0 +1,92 @@
+/*GENERAL*/
+
+#animationDiv {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background-color: var(--dark-blue);
+}
+
+/*HEADER*/
+
+.loginHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.loginHeader img {
+  width: 60px;
+  height: 80px;
+  z-index: 1000;
+}
+
+.loginNoUser {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+/*DISPLAY*/
+
+#dataIncorrect {
+  width: 100%;
+  padding-left: 13px;
+  margin-top: -15px;
+  color: red;
+  font-size: 12px;
+}
+
+.loginOptions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.loginRememberMe {
+  display: flex;
+  align-items: center;
+}
+
+.loginForgotPassword {
+  color: var(--bright-blue);
+  cursor: pointer;
+}
+
+.containerButtons {
+  display: flex;
+  gap: 35px;
+}
+
+.loginButtonsDiv a {
+  color: var(--bright-white);
+}
+
+.guestLoginButton {
+  background-color: var(--bright-white) !important;
+  color: var(--dark-blue) !important;
+}
+
+.guestLoginButton:hover {
+  color: var(--bright-blue) !important;
+  border: 1px solid var(--bright-blue);
+}
+
+.loginNoUserResponsiv {
+  position: absolute;
+  bottom: 20px;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}

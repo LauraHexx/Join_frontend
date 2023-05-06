@@ -1,0 +1,85 @@
+/*LOGIN*/
+
+.animate-fadeOpacityOut {
+  animation: fadeOpacityOut 1.5s ease 0s 1 normal forwards;
+}
+
+.animate-joinlogo {
+  animation: joinlogo 1.5s ease 0s 1 normal forwards;
+}
+
+@keyframes fadeOpacityOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes joinlogo {
+  0% {
+    transform: scale(1.6) translate(400%, 150%);
+  }
+  100% {
+    transform: scale(1) translate(0);
+  }
+}
+
+/*DISPLAYS*/
+
+.animation-slideInRight {
+  animation: slideInRight 1s ease 0s 1 normal forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(var(--header-width));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animation-slideOutRight {
+  animation: slideOutRight 1s ease 0s 1 normal forwards;
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(987px);
+  }
+}
+
+/*HEADER*/
+
+.animation-menuSlideInRight {
+  animation: menuSlideInRight 0.5s ease 0s 1 normal forwards;
+}
+
+@keyframes menuSlideInRight {
+  from {
+    transform: translateX(var(--header-width));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/*BUTTONS*/
+
+.slide-top {
+  animation: slide-top 0.5s ease-out both;
+}
+
+@keyframes slide-top {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100px);
+  }
+}

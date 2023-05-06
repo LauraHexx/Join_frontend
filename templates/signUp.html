@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join - Sign Up</title>
+    <link rel="icon" type="image/x-icon" href="../assets/img/logoWhite.svg" />
+    <link rel="stylesheet" href="../css/general.css" />
+    <link rel="stylesheet" href="../css/signUp.css" />
+    <script src="../js/storage.js"></script>
+    <script src="../js/general.js"></script>
+    <script src="../js/signUp.js"></script>
+  </head>
+  <body onload="init(); initSignUp()">
+    <div class="contentBeforeLogin">
+      <div class="logoDiv">
+        <img src="../assets/img/logoDark.svg" alt="logo of join" />
+      </div>
+
+      <div class="display padding">
+        <div class="displayHeader">
+          <img
+            onclick="window.location.href='../index.html'"
+            class="arrowBackBlue"
+            src="../assets/img/arrowBackBlue.svg"
+            alt="arrow to get back" />
+          <h1 class="title">Sign up</h1>
+        </div>
+        <div class="blueLine marginTop"></div>
+        <form
+          class="form marginTop"
+          onsubmit="checkIfUserAlreadyRegistered(); return false">
+          <input
+            required
+            id="signUpName"
+            class="input inputName"
+            type="name"
+            placeholder="Name"
+            required />
+          <input
+            required
+            id="signUpEmail"
+            class="input inputEmail"
+            type="email"
+            placeholder="Email"
+            required />
+          <span class="d-none" id="userIsAlreadyRegistered"
+            >User is already registered</span
+          >
+          <input
+            required
+            id="signUpPassword"
+            class="input inputPassword"
+            type="password"
+            placeholder="Password"
+            required />
+          <button id="signUpButton">Sign up</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

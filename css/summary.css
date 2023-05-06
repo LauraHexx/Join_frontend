@@ -1,0 +1,153 @@
+/*GENERAL*/
+
+.fontBig {
+  font-size: 45px;
+}
+
+/*HEAD-CONTAINER*/
+
+.headContainer {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.partingLineBlue {
+  width: 0px;
+  height: 59px;
+  border: 3px solid #29abe2;
+}
+
+/*MAIN-CONTAINER*/
+
+.mainContainer {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  margin-top: var(--margin-top);
+}
+
+.field {
+  gap: 5px;
+  background: var(--bright-white);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+}
+
+.field:hover {
+  background-color: var(--dark-blue);
+  color: var(--bright-white);
+  box-shadow: 0px 0px 19px rgba(0, 0, 0, 0.7);
+  transition: 0.5s;
+}
+
+.overwievContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.overwievContainer img {
+  height: 50px;
+  width: 50px;
+}
+
+/*MAIN-CONTAINER-TASKS*/
+
+.tasks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.tasks span {
+  text-align: center;
+}
+
+.fieldTask {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 145px;
+  height: 125px;
+}
+
+/*MAIN-CONTAINER-URGENT*/
+
+.urgent a {
+  height: 115px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.urgentLeft {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.urgentAmount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.partingLineGrey {
+  width: 0px;
+  height: 59px;
+  border: 2px solid #d1d1d1;
+}
+
+.lineMobile {
+  display: none;
+}
+
+.urgentRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+/*MAIN-CONTAINER-TODO & DONE*/
+
+.todosAndDone {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.todosAndDone a {
+  width: 45%;
+}
+
+.todos,
+.done {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 15px;
+  height: 110px;
+}
+
+.todosAmount,
+.doneAmount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*MAIN-CONTAINER-GREETING*/
+
+#greetingTimeOfDay {
+  font-size: 27px;
+  color: var(--dark-blue);
+}
+
+#greetedUser {
+  font-size: 42px;
+  color: var(--bright-blue);
+}

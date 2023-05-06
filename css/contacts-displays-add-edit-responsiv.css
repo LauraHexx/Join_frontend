@@ -1,0 +1,125 @@
+@media only screen and (max-width: 920px) {
+  /*  ADD CONTACTS - DISPLAY*/
+  #displayAddContact {
+    width: 330px;
+    height: unset;
+    flex-direction: column;
+    border-radius: 30px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    background: var(--bright-white);
+    z-index: 100;
+  }
+
+  /*LEFT-SECTION*/
+
+  .leftSectionAdd {
+    position: relative;
+    align-items: center;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: unset;
+    padding: 70px 50px;
+    gap: 25px;
+  }
+
+  .closeWhite {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex !important;
+    cursor: pointer;
+  }
+
+  .logoAddContact {
+    display: none;
+  }
+
+  .addDisplayBtns {
+    justify-content: center;
+  }
+
+  #cancelAddContact {
+    display: none;
+  }
+
+  /*RIGHT-SECTION*/
+
+  .formAdd {
+    margin-top: 60px;
+  }
+
+  .rightSectionAdd {
+    width: unset;
+    margin-bottom: 25px;
+  }
+
+  .closeDark {
+    display: none;
+  }
+
+  .imageNewContact {
+    width: 80px;
+    position: absolute;
+    top: -51px;
+    left: 0;
+    right: 0;
+    padding: 25px 5px 25px 5px;
+    margin: 0 auto;
+  }
+
+  /*EDIT CONTACTS - DISPLAY*/
+
+  .displayEditContact {
+    width: 330px;
+    height: unset;
+    flex-direction: column;
+    border-radius: 30px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    background: var(--bright-white);
+  }
+
+  /*LEFT-SECTION*/
+
+  .leftSectionEdit {
+    position: relative;
+    align-items: center;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: unset;
+    padding: 90px 50px;
+    gap: 25px;
+  }
+
+  .closeWhite {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex !important;
+    cursor: pointer;
+  }
+
+  /*RIGHT-SECTION*/
+
+  .rightSectionEdit {
+    width: unset;
+    margin-bottom: 25px;
+  }
+
+  .closeDarkEdit {
+    display: none;
+  }
+
+  #editContactInitials {
+    width: 80px;
+    position: absolute;
+    top: -51px;
+    left: 0;
+    right: 0;
+    padding: 25px 5px 25px 5px;
+    margin: 0 auto;
+  }
+
+  .formEdit {
+    margin-top: 60px;
+  }
+}

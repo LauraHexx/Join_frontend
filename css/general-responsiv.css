@@ -1,0 +1,49 @@
+@media only screen and (max-width: 920px) {
+  h1 {
+    font-size: 35px;
+  }
+
+  .contentAfterLogin {
+    margin-left: unset;
+    padding-bottom: var(--header-height);
+  }
+
+  .headlineMobile {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--margin-bottom);
+  }
+
+  .headlineMobile img {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 750px) {
+  .marginBottom {
+    margin-bottom: 15px;
+  }
+  .marginTop {
+    margin-top: 15px;
+  }
+  .padding {
+    padding: 15px;
+  }
+}
+
+@media (max-height: 560px) {
+  .logoDiv img {
+    width: 40px;
+    height: 60px;
+  }
+}
+
+@media (max-height: 520px) {
+  .logoDiv img {
+    width: 30px;
+    height: 50px;
+  }
+}
