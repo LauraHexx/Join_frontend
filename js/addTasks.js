@@ -2,7 +2,7 @@ async function initAddTask() {
   await loadUsers();
   await sortUsersAlphabetically();
   await loadCategorys();
-  showContent();
+  showContentOfTemplate();
 }
 
 async function sortUsersAlphabetically() {
@@ -13,7 +13,7 @@ async function sortCategorysAlphabetically() {
   CATEGORYS = CATEGORYS.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function showContent() {
+function showContentOfTemplate() {
   init("addTask");
   document.getElementById("content").classList.remove("d-none");
 }
@@ -22,21 +22,8 @@ async function addCategory() {
   let newCategory = getCategory();
   let colour = getSelectedColor();
   checkAndPushData(newCategory, colour);
-}
-
-async function checkAndPushData(newCategory, colour) {
-  if (newCategory && colour) {
-    CATEGORYS.push({
-      name: newCategory,
-      color: colour,
-    });
-    await sortCategorysAlphabetically();
-    setItem("categorys", JSON.stringify(CATEGORYS));
-    toggleClass("selectCategory", "d-none");
-    toggleClass("newCategory", "d-none");
-    toggleClass("listCategorys", "d-none");
-    toggleClass("categorysColours", "d-none");
-  }
+  await sortCategorysAlphabetically();
+  setItem("categorys", JSON.stringify(CATEGORYS));
 }
 
 function getCategory() {
@@ -82,14 +69,43 @@ function deleteAllErrors() {
  * @returns {string|null} The ID of the selected div element, or null if no element is selected.
  */
 function getSelectedColor() {
-  const selectedColorDiv = document.querySelector(".selectedColor");
-  if (selectedColorDiv) {
-    document.getElementById("errorColor").classList.add("d-none");
-    return selectedColorDiv.id;
+  const selectedColor = document.querySelector(".selectedColor");
+  if (colorWasSelected(selectedColor)) {
+    deleteColorError(selectedColor);
+    return selectedColor.id;
   } else {
-    document.getElementById("errorColor").classList.remove("d-none");
+    showErrorNoColorSelected();
     return;
   }
+}
+
+function colorWasSelected(selectedColor) {
+  return selectedColor;
+}
+
+function deleteColorError(selectedColor) {
+  document.getElementById("errorColor").classList.add("d-none");
+}
+
+function showErrorNoColorSelected() {
+  document.getElementById("errorColor").classList.remove("d-none");
+}
+
+async function checkAndPushData(newCategory, colour) {
+  if (newCategory && colour) {
+    CATEGORYS.push({
+      name: newCategory,
+      color: colour,
+    });
+    changeStyle();
+  }
+}
+
+function changeStyle() {
+  toggleClass("selectCategory", "d-none");
+  toggleClass("newCategory", "d-none");
+  toggleClass("listCategorys", "d-none");
+  toggleClass("categorysColours", "d-none");
 }
 
 function renderCategorys() {
