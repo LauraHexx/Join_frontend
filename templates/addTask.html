@@ -111,13 +111,13 @@
               class="circle cursorPointer"></div>
           </div>
           <span id="errorColor" class="d-none">Please select a color</span>
-          <span>Assigned to</span>
           <!--CONTACTS-->
+          <span>Assigned to</span>
           <div id="selectContact" class="containerSection">
             <div class="selectCategoryHead">
               <span class="selectCategoryTitle">Select contacts to assign</span>
               <img
-                onclick="toggleClass('listContacts', 'd-none')"
+                onclick="showContacts()"
                 class="inputImage"
                 src="../assets/img/addTaskDropDownArrow.svg"
                 alt="arrow to drop down the menu of contacts" />
@@ -126,7 +126,7 @@
               <li onclick="" class="singleCategory">
                 <span>You</span>
               </li>
-              <div id="contactBook"></div>
+              <div id="savedContacts"></div>
               <li onclick="toggleInviteContact()" class="singleCategory">
                 <span>Invite new Contact</span>
                 <img
@@ -160,6 +160,7 @@
         <div class="partingLine"></div>
         <!--RIGHT SECTION-->
         <section class="rightSection">
+        
           <span>Due date</span>
           <div>
             <input type="date" id="addTaskDate" placeholder="dd/mm/yyyy" />

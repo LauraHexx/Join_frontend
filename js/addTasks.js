@@ -127,6 +127,32 @@ function renderCategorysHtml(name, color) {
   `;
 }
 
+async function showContacts() {
+  await renderContacts();
+  toggleClass("listContacts", "d-none");
+}
+
+function renderContacts() {
+  document.getElementById("savedContacts").innerHTML = "";
+  USERS.forEach((user) => {
+    const name = user.name;
+    document.getElementById("savedContacts").innerHTML +=
+      renderContactsHtml(name);
+  });
+}
+
+function renderContactsHtml(name) {
+  return /*html*/ `
+    <li onclick="toggleInviteContact()" class="singleCategory">
+      <span>${name}</span>
+      <img
+        class="newContact"
+        src="../assets/img/addTaskNewContact.svg"
+        alt="icon to invite a new contact" />
+    </li>
+  `;
+}
+
 function moveCircle(event) {
   const circles = document.querySelectorAll(".circle");
   circles.forEach((circle) => {
