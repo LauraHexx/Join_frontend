@@ -22,10 +22,6 @@ async function addCategory() {
   let newCategory = getCategory();
   let colour = getSelectedColor();
   checkAndPushData(newCategory, colour);
-  toggleClass("selectCategory", "d-none");
-  toggleClass("newCategory", "d-none");
-  toggleClass("listCategorys", "d-none");
-  toggleClass("categorysColours", "d-none");
 }
 
 async function checkAndPushData(newCategory, colour) {
@@ -36,28 +32,48 @@ async function checkAndPushData(newCategory, colour) {
     });
     await sortCategorysAlphabetically();
     setItem("categorys", JSON.stringify(CATEGORYS));
+    toggleClass("selectCategory", "d-none");
+    toggleClass("newCategory", "d-none");
+    toggleClass("listCategorys", "d-none");
+    toggleClass("categorysColours", "d-none");
   }
 }
 
 function getCategory() {
   const newCategory = document.getElementById("categoryInput").value;
-  if (!newCategory) {
-    document.getElementById("errorNameExists").classList.add("d-none");
-    document.getElementById("errorName").classList.remove("d-none");
+  if (noCategoryEntered(newCategory)) {
+    showErrorsNoCategoryEntered();
     return;
   }
-  if (checkIfCategoryAlreadyExist(newCategory)) {
-    document.getElementById("errorName").classList.add("d-none");
-    document.getElementById("errorNameExists").classList.remove("d-none");
+  if (categoryAlreadyExists(newCategory)) {
+    showErrorsCategoryAlreadyExists();
     return;
   }
-  document.getElementById("errorNameExists").classList.add("d-none");
-  document.getElementById("errorName").classList.add("d-none");
+  deleteAllErrors();
   return newCategory;
 }
 
-function checkIfCategoryAlreadyExist(newCategory) {
+function noCategoryEntered(newCategory) {
+  return !newCategory;
+}
+
+function showErrorsNoCategoryEntered() {
+  document.getElementById("errorNameExists").classList.add("d-none");
+  document.getElementById("errorName").classList.remove("d-none");
+}
+
+function categoryAlreadyExists(newCategory) {
   return CATEGORYS.find((category) => category.name === newCategory);
+}
+
+function showErrorsCategoryAlreadyExists() {
+  document.getElementById("errorNameExists").classList.remove("d-none");
+  document.getElementById("errorName").classList.add("d-none");
+}
+
+function deleteAllErrors() {
+  document.getElementById("errorNameExists").classList.add("d-none");
+  document.getElementById("errorName").classList.add("d-none");
 }
 
 /**
