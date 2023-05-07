@@ -6,7 +6,7 @@ async function initAddTask() {
   await renderContacts();
   await loadCategorys();
   await renderCategorys();
-  showContentOfTemplate();
+  await showContentOfTemplate();
 }
 
 async function sortUsersAlphabetically() {
@@ -17,7 +17,7 @@ async function sortCategorysAlphabetically() {
   CATEGORYS = CATEGORYS.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function showContentOfTemplate() {
+async function showContentOfTemplate() {
   init("addTask");
   document.getElementById("content").classList.remove("d-none");
 }
@@ -124,9 +124,19 @@ function renderCategorys() {
 
 function renderCategorysHtml(name, color) {
   return /*html*/ `
-    <li class="singleCategory">
+    <li onclick="changeTitleInput(${name}, ${color})" class="singleCategory">
       <span>${name}</span>
       <div id=${color} class="circle"></div>
+    </li>
+  `;
+}
+
+function changeTitleInput(name, color) {
+  const selectCategoryTitle = document.querySelector(".selectCategoryTitle");
+  selectCategoryTitle.innerHTML = /*html*/ `
+    <li class="singleCategory">
+      <span>${name}</span>
+      <div id="${color}" class="circle"></div>
     </li>
   `;
 }
