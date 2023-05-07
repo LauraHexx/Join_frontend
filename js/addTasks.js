@@ -22,7 +22,10 @@ async function addCategory() {
   let newCategory = getCategory();
   let colour = getSelectedColor();
   checkAndPushData(newCategory, colour);
+  toggleClass("selectCategory", "d-none");
+  toggleClass("newCategory", "d-none");
   toggleClass("listCategorys", "d-none");
+  toggleClass("categorysColours", "d-none");
 }
 
 async function checkAndPushData(newCategory, colour) {
