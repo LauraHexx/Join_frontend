@@ -143,14 +143,16 @@ function renderContacts() {
 
 function renderContactsHtml(name) {
   return /*html*/ `
-    <li onclick="toggleInviteContact()" class="singleCategory">
+    <li onclick="toggleCheckBox(this)" class="singleCategory">
       <span>${name}</span>
-      <img
-        class="newContact"
-        src="../assets/img/addTaskNewContact.svg"
-        alt="icon to invite a new contact" />
+      <input type="checkbox" name="" id="" />
     </li>
   `;
+}
+
+function toggleCheckBox(liElement) {
+  const checkbox = liElement.querySelector('input[type="checkbox"]');
+  checkbox.checked = !checkbox.checked;
 }
 
 function moveCircle(event) {

@@ -123,8 +123,9 @@
                 alt="arrow to drop down the menu of contacts" />
             </div>
             <ul id="listContacts" class="listDropDown d-none">
-              <li onclick="" class="singleCategory">
+              <li onclick="toggleCheckBox(this)" class="singleCategory">
                 <span>You</span>
+                <input type="checkbox" name="" id="" />
               </li>
               <div id="savedContacts"></div>
               <li onclick="toggleInviteContact()" class="singleCategory">
@@ -151,6 +152,7 @@
                 alt="icon to close the category section" />
               <div class="partingLineCategory"></div>
               <img
+                onclick="inviteNewContact()"
                 class="confirm"
                 src="../assets/img/addTaskConfirm.svg"
                 alt="icon to add a new contact" />
@@ -160,7 +162,6 @@
         <div class="partingLine"></div>
         <!--RIGHT SECTION-->
         <section class="rightSection">
-        
           <span>Due date</span>
           <div>
             <input type="date" id="addTaskDate" placeholder="dd/mm/yyyy" />
