@@ -3,7 +3,9 @@ let selectedPrioBtn = null;
 async function initAddTask() {
   await loadUsers();
   await sortUsersAlphabetically();
+  await renderContacts();
   await loadCategorys();
+  await renderCategorys();
   showContentOfTemplate();
 }
 
@@ -129,11 +131,6 @@ function renderCategorysHtml(name, color) {
   `;
 }
 
-async function showContacts() {
-  await renderContacts();
-  toggleClass("listContacts", "d-none");
-}
-
 function renderContacts() {
   document.getElementById("savedContacts").innerHTML = "";
   USERS.forEach((user) => {
@@ -155,6 +152,7 @@ function renderContactsHtml(name) {
 /**
  * Toggles the checked state of the checkbox associated with the given liElement when the liElement is clicked,
  * but not when the checkbox itself is clicked. This prevents the function from being called twice when the checkbox is clicked.
+ * Also updates the selected contacts display.
  *
  * @param {HTMLElement} liElement - The li element containing the checkbox to toggle.
  */
@@ -165,6 +163,24 @@ function toggleCheckBox(liElement) {
     return;
   }
   checkbox.checked = !checkbox.checked;
+  updateSelectedContacts();
+}
+
+/**
+ * Updates the display of selected contacts based on the checked state of the checkboxes.
+ * If at least one checkbox is checked, the selectCategoryTitle will be updated to show "Contact(s) selected",
+ * otherwise it will display the original value.
+ */
+function updateSelectedContacts() {
+  const checkedCheckboxes = document.querySelectorAll(
+    '#listContacts input[type="checkbox"]:checked'
+  );
+  const selectContactsTitle = document.querySelector(".selectContactsTitle");
+  if (checkedCheckboxes.length > 0) {
+    selectContactsTitle.textContent = "Contact(s) selected";
+  } else {
+    selectContactsTitle.textContent = "Select contacts to assign";
+  }
 }
 
 /**

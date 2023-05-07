@@ -47,7 +47,7 @@
             <div class="selectCategoryHead">
               <span class="selectCategoryTitle">Select task category</span>
               <img
-                onclick="renderCategorys(); toggleClass('listCategorys', 'd-none')"
+                onclick="toggleClass('listCategorys', 'd-none')"
                 class="inputImage"
                 src="../assets/img/addTaskDropDownArrow.svg"
                 alt="arrow to drop down the menu of categorys" />
@@ -118,9 +118,9 @@
           <span>Assigned to</span>
           <div id="selectContact" class="containerSection">
             <div class="selectCategoryHead">
-              <span class="selectCategoryTitle">Select contacts to assign</span>
+              <span class="selectContactsTitle">Select contacts to assign</span>
               <img
-                onclick="showContacts()"
+                onclick="toggleClass('listContacts', 'd-none')"
                 class="inputImage"
                 src="../assets/img/addTaskDropDownArrow.svg"
                 alt="arrow to drop down the menu of contacts" />
