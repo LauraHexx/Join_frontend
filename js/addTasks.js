@@ -2,6 +2,7 @@ async function initAddTask() {
   await loadUsers();
   await sortUsersAlphabetically();
   await loadCategorys();
+  showContent();
 }
 
 async function sortUsersAlphabetically() {
@@ -12,27 +13,43 @@ async function sortCategorysAlphabetically() {
   CATEGORYS = CATEGORYS.sort((a, b) => a.name.localeCompare(b.name));
 }
 
+function showContent() {
+  init("addTask");
+  document.getElementById("content").classList.remove("d-none");
+}
+
 async function addCategory() {
-  let category = getCategory();
+  let newCategory = getCategory();
   let colour = getSelectedColor();
-  CATEGORYS.push({
-    name: category,
-    color: colour,
-  });
-  await sortCategorysAlphabetically();
-  setItem("categorys", JSON.stringify(CATEGORYS));
+  checkAndPushData(newCategory, colour);
+  toggleClass("listCategorys", "d-none");
+}
+
+async function checkAndPushData(newCategory, colour) {
+  if (newCategory && colour) {
+    CATEGORYS.push({
+      name: newCategory,
+      color: colour,
+    });
+    await sortCategorysAlphabetically();
+    setItem("categorys", JSON.stringify(CATEGORYS));
+  }
 }
 
 function getCategory() {
   const newCategory = document.getElementById("categoryInput").value;
   if (!newCategory) {
+    document.getElementById("errorNameExists").classList.add("d-none");
     document.getElementById("errorName").classList.remove("d-none");
     return;
   }
   if (checkIfCategoryAlreadyExist(newCategory)) {
+    document.getElementById("errorName").classList.add("d-none");
     document.getElementById("errorNameExists").classList.remove("d-none");
     return;
   }
+  document.getElementById("errorNameExists").classList.add("d-none");
+  document.getElementById("errorName").classList.add("d-none");
   return newCategory;
 }
 
@@ -48,9 +65,11 @@ function checkIfCategoryAlreadyExist(newCategory) {
 function getSelectedColor() {
   const selectedColorDiv = document.querySelector(".selectedColor");
   if (selectedColorDiv) {
+    document.getElementById("errorColor").classList.add("d-none");
     return selectedColorDiv.id;
   } else {
     document.getElementById("errorColor").classList.remove("d-none");
+    return;
   }
 }
 

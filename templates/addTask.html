@@ -22,11 +22,11 @@
     <link rel="icon" type="image/x-icon" href="../assets/img/logoWhite.svg" />
   </head>
 
-  <body onload="init('addTask'); initAddTask()">
+  <body onload="initAddTask()">
     <header w3-include-html="header.html"></header>
     <nav w3-include-html="nav.html" class="navNotMobil"></nav>
 
-    <div class="contentAfterLogin">
+    <div class="contentAfterLogin d-none" id="content">
       <span class="headlineMobile d-none">Kanban Project Management Tool</span>
       <h1 class="bigHeadline">Add Task</h1>
       <form class="mainContainer">
