@@ -147,13 +147,23 @@ function renderContactsHtml(name) {
   return /*html*/ `
     <li onclick="toggleCheckBox(this)" class="singleCategory">
       <span>${name}</span>
-      <input type="checkbox" name="" id="" />
+      <input type="checkbox" onclick="event.stopPropagation()" />
     </li>
   `;
 }
 
+/**
+ * Toggles the checked state of the checkbox associated with the given liElement when the liElement is clicked,
+ * but not when the checkbox itself is clicked. This prevents the function from being called twice when the checkbox is clicked.
+ *
+ * @param {HTMLElement} liElement - The li element containing the checkbox to toggle.
+ */
 function toggleCheckBox(liElement) {
   const checkbox = liElement.querySelector('input[type="checkbox"]');
+  const clickedElement = event.target;
+  if (clickedElement.tagName === "INPUT") {
+    return;
+  }
   checkbox.checked = !checkbox.checked;
 }
 
