@@ -13,7 +13,7 @@
     display: none;
   }
 
-  .prioBtns button {
+  .singlePrioBtn {
     width: 33%;
     font-size: 13px;
   }

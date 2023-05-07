@@ -29,16 +29,18 @@
     <div class="contentAfterLogin d-none" id="content">
       <span class="headlineMobile d-none">Kanban Project Management Tool</span>
       <h1 class="bigHeadline">Add Task</h1>
-      <form class="mainContainer">
+      <form onsubmit="test();return false" class="mainContainer">
         <!--LEFT SECTION-->
         <section class="leftSection">
           <span>Title</span>
           <input type="text" id="addTaskTitle" placeholder="Enter a title" />
+          <span class="error d-none">Please enter a title</span>
           <span>Description</span>
           <input
             type="text"
             id="descriptionInput"
             placeholder="Enter a description" />
+          <span class="error d-none">Please enter a description</span>
           <span>Category</span>
           <!--CATEGORY-->
           <div id="selectCategory" class="containerSection">
@@ -111,6 +113,7 @@
               class="circle cursorPointer"></div>
           </div>
           <span id="errorColor" class="d-none">Please select a color</span>
+          <span class="error d-none">Please select a category</span>
           <!--CONTACTS-->
           <span>Assigned to</span>
           <div id="selectContact" class="containerSection">
@@ -128,36 +131,9 @@
                 <input type="checkbox" name="" id="" />
               </li>
               <div id="savedContacts"></div>
-              <li onclick="toggleInviteContact()" class="singleCategory">
-                <span>Invite new Contact</span>
-                <img
-                  class="newContact"
-                  src="../assets/img/addTaskNewContact.svg"
-                  alt="icon to invite a new contact" />
-              </li>
             </ul>
           </div>
-          <div id="newContact" class="inputContainer d-none">
-            <input
-              type="email"
-              id="categoryInput"
-              class="categoryInput"
-              placeholder="Contact email"
-              maxlength="20" />
-            <div class="optionsCategory">
-              <img
-                onclick="showSelectContacts()"
-                class="close"
-                src="../assets/img/addTaskClose.svg"
-                alt="icon to close the category section" />
-              <div class="partingLineCategory"></div>
-              <img
-                onclick="inviteNewContact()"
-                class="confirm"
-                src="../assets/img/addTaskConfirm.svg"
-                alt="icon to add a new contact" />
-            </div>
-          </div>
+          <span class="error d-none">Please select an contact</span>
         </section>
         <div class="partingLine"></div>
         <!--RIGHT SECTION-->
@@ -166,27 +142,41 @@
           <div>
             <input type="date" id="addTaskDate" placeholder="dd/mm/yyyy" />
           </div>
+          <span class="error d-none">Please select a due day</span>
           <span>Prio</span>
           <div class="prioBtns">
-            <button>
+            <button
+              type="button"
+              id="urgentBtn"
+              class="singlePrioBtn"
+              onclick="changeStyle('urgentBtn','red', '../assets/img/prioUrgent.svg')">
               Urgent
               <img
                 src="../assets/img/prioUrgent.svg"
                 alt="icon to show priority" />
             </button>
-            <button>
+            <button
+              type="button"
+              id="mediumBtn"
+              class="singlePrioBtn"
+              onclick="changeStyle('mediumBtn','orange', '../assets/img/prioMedium.svg')">
               Medium
               <img
                 src="../assets/img/prioMedium.svg"
                 alt="icon to show priority" />
             </button>
-            <button>
+            <button
+              type="button"
+              id="lowBtn"
+              class="singlePrioBtn"
+              onclick="changeStyle('lowBtn','green','../assets/img/prioLow.svg')">
               Low
               <img
                 src="../assets/img/prioLow.svg"
                 alt="icon to show priority" />
             </button>
           </div>
+          <span class="error d-none">Please select a priority</span>
           <span>Subtasks</span>
           <div class="inputContainer">
             <input

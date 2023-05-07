@@ -1,3 +1,5 @@
+let selectedPrioBtn = null;
+
 async function initAddTask() {
   await loadUsers();
   await sortUsersAlphabetically();
@@ -153,6 +155,48 @@ function renderContactsHtml(name) {
 function toggleCheckBox(liElement) {
   const checkbox = liElement.querySelector('input[type="checkbox"]');
   checkbox.checked = !checkbox.checked;
+}
+
+/**
+ * Changes the style of the clicked button and deselects the previously selected button.
+ * @param {string} id - The id of the clicked button.
+ * @param {string} backgroundColor - The background color to apply to the clicked button.
+ */
+function changeStyle(id, backgroundColor) {
+  const btns = document.querySelectorAll(".singlePrioBtn");
+  const currentBtn = document.getElementById(id);
+  const currentImg = currentBtn.querySelector("img");
+
+  if (selectedPrioBtn !== currentBtn) {
+    selectBtn(currentBtn, backgroundColor, currentImg);
+    deselectBtn(selectedPrioBtn);
+    selectedPrioBtn = currentBtn;
+  }
+}
+
+/**
+ * Selects the provided button and updates its style and image.
+ * @param {HTMLElement} currentBtn - The button element to select.
+ * @param {string} backgroundColor - The background color to apply to the button.
+ * @param {HTMLImageElement} img - The image element within the button.
+ */
+function selectBtn(currentBtn, backgroundColor, img) {
+  currentBtn.style.backgroundColor = backgroundColor;
+  currentBtn.style.color = "white";
+  img.src = img.src.replace(".svg", "White.svg");
+}
+
+/**
+ * Deselects the provided button and updates its style and image.
+ * @param {HTMLElement} btn - The button element to deselect.
+ */
+function deselectBtn(selectedPrioBtn) {
+  if (selectedPrioBtn) {
+    const img = selectedPrioBtn.querySelector("img");
+    selectedPrioBtn.style.backgroundColor = "";
+    selectedPrioBtn.style.color = "";
+    img.src = img.src.replace("White.svg", ".svg");
+  }
 }
 
 function moveCircle(event) {
