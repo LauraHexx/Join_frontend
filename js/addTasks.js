@@ -51,7 +51,7 @@ function changeTitleCategoryInput(name, color) {
 async function addCategory() {
   let newCategory = getCategory();
   let colour = getSelectedColor();
-  checkAndPushData(newCategory, colour);
+  checkAndPushCategory(newCategory, colour);
   await sortCategorysAlphabetically();
   setItem("categorys", JSON.stringify(CATEGORYS));
   renderCategorys();
@@ -126,7 +126,7 @@ function showErrorNoColorSelected() {
   document.getElementById("errorColor").classList.remove("d-none");
 }
 
-async function checkAndPushData(newCategory, colour) {
+async function checkAndPushCategory(newCategory, colour) {
   if (newCategory && colour) {
     CATEGORYS.push({
       name: newCategory,
@@ -335,10 +335,13 @@ function createTask() {
     subtasks: SUBTASKS,
     processStep: "todo",
   };
+  checkAndPushTask(task);
+}
+
+function checkAndPushTask(task) {
   if (requiredDataComplete(task)) {
     TASKS.push(task);
     setItem("tasks", JSON.stringify(TASKS));
-    console.log(TASKS);
   }
 }
 
