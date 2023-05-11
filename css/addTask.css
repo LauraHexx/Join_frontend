@@ -84,7 +84,7 @@ input::placeholder {
   padding: 15px 20px;
 }
 
-.selectCategoryTitle,
+#selectCategoryTitle,
 #selectContactsTitle {
   font-weight: unset !important;
   color: var(--dark-grey);

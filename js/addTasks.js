@@ -39,7 +39,7 @@ function renderCategorysHtml(name, color) {
 }
 
 function changeTitleCategoryInput(name, color) {
-  const selectCategoryTitle = document.querySelector(".selectCategoryTitle");
+  const selectCategoryTitle = document.getElementById("selectCategoryTitle");
   selectCategoryTitle.innerHTML = /*html*/ `
     <li class="selectedCategory">
       <span id='selectedCategoryName'>${name}</span>
@@ -461,6 +461,28 @@ function getSubtasks() {
     subtaskTexts.push(element.textContent.trim());
   });
   return subtaskTexts;
+}
+
+function clearTask() {
+  titleInput.value = "";
+  descriptionInput.value = "";
+  document.getElementById("selectCategoryTitle").innerHTML =
+    "Select task category";
+  document.getElementById("selectContactsTitle").innerHTML =
+    "Select contacts to assign";
+  document.getElementById("inputDueDate").value = "";
+  clearPrioBtn();
+}
+
+function clearPrioBtn() {
+  if (SELECTED_PRIO_BTN) {
+    deselectBtn(SELECTED_PRIO_BTN);
+    SELECTED_PRIO_BTN.classList.remove("selectedPrioBtn");
+  }
+}
+
+function clearSubtasks() {
+  SUBTASKS = [];
 }
 
 /*CATEGORY*/

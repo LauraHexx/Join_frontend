@@ -45,9 +45,9 @@
           >
           <span>Category</span>
           <!--CATEGORY-->
-          <div id="selectCategory" class="containerSection">
+          <div+ class="containerSection">
             <div class="selectCategoryHead">
-              <span class="selectCategoryTitle">Select task category</span>
+              <span id="selectCategoryTitle">Select task category</span>
               <img
                 onclick="toggleClass('listCategorys', 'd-none')"
                 class="inputImage"
@@ -61,7 +61,7 @@
               </li>
               <div id="selectableCategorys"></div>
             </ul>
-          </div>
+          </div+>
           <div id="newCategory" class="inputContainer d-none">
             <input
               type="text"
@@ -198,7 +198,7 @@
           </div>
           <div id="subtasks"></div>
           <div class="clearAndCreateBtns">
-            <button class="clearBtn">
+            <button onclick="clearTask()" class="clearBtn">
               <span>Clear</span>
               <img
                 onmouseenter="changeImageOnHover('clearBtnIcon',
