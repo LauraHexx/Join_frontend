@@ -1,13 +1,6 @@
-let TASKS = [];
-
-let TITLE = "";
-let DESCRIPTION = "";
-let SELECTED_CATEGORY = "";
-let SELECTED_CONTACTS = "";
-let DUE_DATE = "";
-let PRIO = "";
+let SELECTED_PRIO_BTN;
 let SUBTASKS = [];
-let STATUS = [];
+let TASKS = [];
 
 async function initAddTask() {
   await loadUsers();
@@ -225,16 +218,16 @@ function toggleCheckbox(id) {
  * Updates the title to show the number of selected contacts.
  */
 function changeTitleContactInput() {
-  const checkboxes = document.querySelectorAll(
+  const selectedCheckBoxes = document.querySelectorAll(
     '#listContacts input[type="checkbox"]:checked'
   );
   const selectContactsTitle = document.getElementById("selectContactsTitle");
-  if (checkboxes.length === 0) {
+  if (selectedCheckBoxes.length === 0) {
     selectContactsTitle.innerHTML = "Select contacts to assign";
-  } else if (checkboxes.length === 1) {
+  } else if (selectedCheckBoxes.length === 1) {
     selectContactsTitle.innerHTML = "1 Contact selected";
   } else {
-    selectContactsTitle.innerHTML = `${checkboxes.length} Contacts selected`;
+    selectContactsTitle.innerHTML = `${selectedCheckBoxes.length} Contacts selected`;
   }
 }
 
@@ -333,59 +326,127 @@ function renderSubtasksHtml(subtask, indexOfSubtask) {
 
 function createTask() {
   let task = {
-    TITLE: titleInput.value,
-    DESCRIPTION: descriptionInput.value,
-    SELECTED_CATEGORY: getCategory(),
-    CONTACTS: getSelectedContacts(),
-    DUE_DATE: addTaskDate.value,
-    PRIO: document.querySelector(".selectedPrioBtn").getAttribute("id"),
-    SUBTASKS: getSubtasks(),
+    title: getTitle(),
+    description: getDescription(),
+    category: getCategory(),
+    contacts: getSelectedCheckBoxes(),
+    dueDate: getDueDate(),
+    priority: getPriority(),
+    subtasks: SUBTASKS,
+    processStep: "todo",
   };
-  console.log(task);
-  checkDataTask(TITLE);
-  checkDataTask(DESCRIPTION);
-  checkDataTask(SELECTED_CATEGORY);
-  checkDataTask(CONTACTS);
-  checkDataTask(DUE_DATE);
-  checkDataTask(PRIO);
-  checkDataTask(SUBTASKS);
+  if (requiredDataComplete(task)) {
+    TASKS.push(task);
+    console.log(TASKS);
+  }
 }
 
-function getTitle() {}
+function requiredDataComplete(task) {
+  return (
+    task.title !== undefined &&
+    task.description !== undefined &&
+    task.category !== undefined &&
+    task.contacts !== undefined &&
+    task.dueDate !== undefined &&
+    task.priority !== undefined
+  );
+}
+
+function getTitle() {
+  if (titleInput.value) {
+    hideError("errorTitle");
+    return titleInput.value;
+  } else {
+    showError("errorTitle");
+    return undefined;
+  }
+}
+
+function getDescription() {
+  if (descriptionInput.value) {
+    hideError("errorDescription");
+    return descriptionInput.value;
+  } else {
+    showError("errorDescription");
+    return undefined;
+  }
+}
 
 function getCategory() {
-  document.getElementById("selectedCategoryName").innerHTML;
+  let cateGoryName = document.getElementById("selectedCategoryName");
+  if (cateGoryName) {
+    hideError("errorCategory");
+    return cateGoryName.innerHTML;
+  } else {
+    showError("errorCategory");
+    return undefined;
+  }
+}
+
+function getDueDate() {
+  if (inputDueDate.value) {
+    hideError("errorDueDate");
+    return inputDueDate.value;
+  } else {
+    showError("errorDueDate");
+    return undefined;
+  }
+}
+
+function getPriority() {
+  let priority = document.querySelector(".selectedPrioBtn");
+  if (priority) {
+    hideError("errorPriority");
+    return priority.getAttribute("id");
+  } else {
+    showError("errorPriority");
+    return undefined;
+  }
+}
+
+function hideError(id) {
+  const errorElement = document.getElementById(id);
+  if (!errorElement.classList.contains("d-none")) {
+    errorElement.classList.add("d-none");
+  }
 }
 
 /**
  * Checks if a value is undefined and removes the "d-none" class from an element with the ID "error" + the variable name if it is.
  *
- * @param {string} inputUser - The name of the variable to check.
+ * @param {string} id - The name of the variable to check.
  */
-function checkDataTask(inputUser) {
-  if (typeof inputUser === "undefined") {
-    const errorElement = document.getElementById("error" + inputUser);
-    if (errorElement) {
-      errorElement.classList.remove("d-none");
-    }
-  }
+function showError(id) {
+  const errorElement = document.getElementById(id);
+  errorElement.classList.remove("d-none");
 }
 
 /**
- * Retrieves an array of numbers representing the ids of checked checkboxes within the "savedContacts" container.
+ * Retrieves an array of numbers representing the ids of checked selectedCheckBoxes within the "savedContacts" container.
  *
- * @return {Array} An array of numbers representing the ids of checked checkboxes within the "savedContacts" container.
+ * @return {Array} An array of numbers representing the ids of checked selectedCheckBoxes within the "savedContacts" container.
  */
-function getSelectedContacts() {
-  const checkboxes = document.querySelectorAll(
-    '#listContacts input[type="checkbox"]'
+function getSelectedCheckBoxes() {
+  const selectedCheckBoxes = document.querySelectorAll(
+    '#listContacts input[type="checkbox"]:checked'
   );
+  if (selectedCheckBoxes.length > 0) {
+    hideError("errorContacts");
+    return getContactsId(selectedCheckBoxes);
+  } else {
+    showError("errorContacts");
+    return undefined;
+  }
+}
+
+function getContactsId(selectedCheckBoxes) {
   const checkedIds = [];
-  checkboxes.forEach((checkbox) => {
+  selectedCheckBoxes.forEach((checkbox) => {
     if (checkbox.checked) {
       checkedIds.push(Number(checkbox.id.replace("checkBoxUser", "")));
     }
   });
+  console.log("checkedIds", checkedIds);
   return checkedIds;
 }
 

@@ -29,18 +29,18 @@
     <div class="contentAfterLogin d-none" id="content">
       <span class="headlineMobile d-none">Kanban Project Management Tool</span>
       <h1 class="bigHeadline">Add Task</h1>
-      <form onsubmit="createTask(); return false" class="mainContainer">
+      <div class="mainContainer">
         <!--LEFT SECTION-->
         <section class="leftSection">
           <span>Title</span>
           <input type="text" id="titleInput" placeholder="Enter a title" />
-          <span id="errorTITLE" class="error d-none">Please enter a title</span>
+          <span id="errorTitle" class="error d-none">Please enter a title</span>
           <span>Description</span>
           <input
             type="text"
             id="descriptionInput"
             placeholder="Enter a description" />
-          <span id="errorDESCRIPTION" class="error d-none"
+          <span id="errorDescription" class="error d-none"
             >Please enter a description</span
           >
           <span>Category</span>
@@ -115,7 +115,7 @@
               class="circle cursorPointer"></div>
           </div>
           <span id="errorColor" class="d-none">Please select a color</span>
-          <span id="errorSELECTED_CATEGORY" class="error d-none"
+          <span id="errorCategory" class="error d-none"
             >Please select a category</span
           >
           <!--CONTACTS-->
@@ -134,16 +134,18 @@
               <div id="savedContacts"></div>
             </ul>
           </div>
-          <span class="error d-none">Please select an contact</span>
+          <span id="errorContacts" class="error d-none"
+            >Please select an contact</span
+          >
         </section>
         <div class="partingLine"></div>
         <!--RIGHT SECTION-->
         <section class="rightSection">
           <span>Due date</span>
           <div>
-            <input type="date" id="addTaskDate" placeholder="dd/mm/yyyy" />
+            <input type="date" id="inputDueDate" placeholder="dd/mm/yyyy" />
           </div>
-          <span id="errorDUE_DATE" class="error d-none"
+          <span id="errorDueDate" class="error d-none"
             >Please select a due day</span
           >
           <span>Prio</span>
@@ -179,7 +181,7 @@
                 alt="icon to show priority" />
             </button>
           </div>
-          <span id="errorPRIO" class="error d-none"
+          <span id="errorPriority" class="error d-none"
             >Please select a priority</span
           >
           <span>Subtasks</span>
@@ -210,7 +212,7 @@
                 alt="icon of plus to add
               a subtask" />
             </button>
-            <button class="createBtn">
+            <button onclick="createTask()" class="createBtn">
               <span>Create Task</span>
               <img
                 src="../assets/img/addTaskCreate.svg"
@@ -218,7 +220,7 @@
             </button>
           </div>
         </section>
-      </form>
+      </div>
     </div>
   </body>
 </html>
