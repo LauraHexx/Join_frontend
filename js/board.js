@@ -1,7 +1,10 @@
 let currentDraggedElement;
 
 async function initBoard() {
+  await loadUsers();
   await checkIfUserLoggedIn();
+  await loadTasks();
+  await loadCategorys();
   await init("board");
   changeImageOnHover(
     "deleteBtnImage",
@@ -18,17 +21,7 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
-function moveTo(category) {
-  
-
-}
-
-
-
-
-
-
-
+function moveTo(category) {}
 
 function showEditTask(id, animationClass, className) {
   toggleClass(id, className);
