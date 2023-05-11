@@ -337,6 +337,7 @@ function createTask() {
   };
   if (requiredDataComplete(task)) {
     TASKS.push(task);
+    setItem("tasks", JSON.stringify(TASKS));
     console.log(TASKS);
   }
 }
