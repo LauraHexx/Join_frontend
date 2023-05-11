@@ -1,9 +1,8 @@
-let SELECTED_PRIO_BTN = null;
 let TASKS = [];
+
 let TITLE = "";
 let DESCRIPTION = "";
-let SELECTED_CATEGORY_NAME = "";
-let SELECTED_CATEGORY_COLOR = "";
+let SELECTED_CATEGORY = "";
 let SELECTED_CONTACTS = "";
 let DUE_DATE = "";
 let PRIO = "";
@@ -187,7 +186,7 @@ function renderContactsHtml(name, id) {
     <li class="oneContact">
       <div onclick="toggleCheckbox(${id})" class="toggleCheckbox"></div>
       <label class="nameOfContact">${name}</label>
-      <input id="checkbox${id}" type="checkbox"/>
+      <input id="checkBoxUser${id}" type="checkbox"/>
     </li>
   `;
 }
@@ -206,7 +205,7 @@ function renderLoggedUserContactHtml() {
      <li class="oneContact">
       <div onclick="toggleCheckbox(${LOGGED_USER.id})" class="toggleCheckbox"></div>
       <label class="nameOfContact">You</label>
-      <input id="checkbox${LOGGED_USER.id}" type="checkbox"/>
+      <input id="checkBoxUser${LOGGED_USER.id}" type="checkbox"/>
     </li>
   `;
 }
@@ -217,7 +216,7 @@ function renderLoggedUserContactHtml() {
  * @param {string} id - The id of the checkbox to toggle.
  */
 function toggleCheckbox(id) {
-  const checkbox = document.getElementById(`checkbox${id}`);
+  const checkbox = document.getElementById(`checkBoxUser${id}`);
   checkbox.checked = !checkbox.checked;
   changeTitleContactInput();
 }
@@ -231,11 +230,11 @@ function changeTitleContactInput() {
   );
   const selectContactsTitle = document.getElementById("selectContactsTitle");
   if (checkboxes.length === 0) {
-    selectContactsTitle.innerText = "Select contacts to assign";
+    selectContactsTitle.innerHTML = "Select contacts to assign";
   } else if (checkboxes.length === 1) {
-    selectContactsTitle.innerText = "1 Contact selected";
+    selectContactsTitle.innerHTML = "1 Contact selected";
   } else {
-    selectContactsTitle.innerText = `${checkboxes.length} Contacts selected`;
+    selectContactsTitle.innerHTML = `${checkboxes.length} Contacts selected`;
   }
 }
 
@@ -304,10 +303,12 @@ function updateHoverEffect(btns, currentBtn) {
 /*SUBTASKS*******************************************************************************/
 
 function addSubtask() {
-  let subtask = document.getElementById("addTaskSubtasks").value;
-  SUBTASKS.push(subtask);
-  document.getElementById("addTaskSubtasks").value = "";
-  renderSubtasks();
+  let subtask = addTaskSubtasks.value;
+  if (subtask) {
+    SUBTASKS.push(subtask);
+    document.getElementById("addTaskSubtasks").value = "";
+    renderSubtasks();
+  }
 }
 
 function renderSubtasks() {
@@ -325,32 +326,80 @@ function renderSubtasksHtml(subtask, indexOfSubtask) {
   return /*html*/ `
     <div class="singleSubtask">
       <input type="checkbox" id="" class="checkbox">
-      <span id='subtask${indexOfSubtask}'>${subtask}</span>
+      <span class='subtask'>${subtask}</span>
     </div>
   `;
 }
 
 function createTask() {
-  TITLE = document.getElementById("addTaskTitle").value;
-  DESCRIPTION = document.getElementById("descriptionInput").value;
-  SELECTED_CATEGORY_NAME = document.getElementById(
-    "selectedCategoryName"
-  ).textContent;
-  SELECTED_CATEGORY_COLOR = document
-    .querySelector(".colorOfCategory")
-    .getAttribute("id");
-  CONTACTS = [];
-  DUE_DATE = document.getElementById("addTaskDate").value;
-  PRIO = document.querySelector(".selected").getAttribute("id");
-  SUBTASKS = [];
+  let task = {
+    TITLE: titleInput.value,
+    DESCRIPTION: descriptionInput.value,
+    SELECTED_CATEGORY: getCategory(),
+    CONTACTS: getSelectedContacts(),
+    DUE_DATE: addTaskDate.value,
+    PRIO: document.querySelector(".selectedPrioBtn").getAttribute("id"),
+    SUBTASKS: getSubtasks(),
+  };
+  console.log(task);
+  checkDataTask(TITLE);
+  checkDataTask(DESCRIPTION);
+  checkDataTask(SELECTED_CATEGORY);
+  checkDataTask(CONTACTS);
+  checkDataTask(DUE_DATE);
+  checkDataTask(PRIO);
+  checkDataTask(SUBTASKS);
+}
 
-  console.log(TITLE);
-  console.log(DESCRIPTION);
-  console.log(SELECTED_CATEGORY_NAME);
-  console.log(SELECTED_CATEGORY_COLOR);
-  console.log(TITLE);
-  console.log(TITLE);
-  console.log(TITLE);
+function getTitle() {}
+
+function getCategory() {
+  document.getElementById("selectedCategoryName").innerHTML;
+}
+
+/**
+ * Checks if a value is undefined and removes the "d-none" class from an element with the ID "error" + the variable name if it is.
+ *
+ * @param {string} inputUser - The name of the variable to check.
+ */
+function checkDataTask(inputUser) {
+  if (typeof inputUser === "undefined") {
+    const errorElement = document.getElementById("error" + inputUser);
+    if (errorElement) {
+      errorElement.classList.remove("d-none");
+    }
+  }
+}
+
+/**
+ * Retrieves an array of numbers representing the ids of checked checkboxes within the "savedContacts" container.
+ *
+ * @return {Array} An array of numbers representing the ids of checked checkboxes within the "savedContacts" container.
+ */
+function getSelectedContacts() {
+  const checkboxes = document.querySelectorAll(
+    '#listContacts input[type="checkbox"]'
+  );
+  const checkedIds = [];
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      checkedIds.push(Number(checkbox.id.replace("checkBoxUser", "")));
+    }
+  });
+  return checkedIds;
+}
+
+/**
+ * Retrieves the text content of all elements with the class "subtask".
+ * @returns {Array<string>} An array of the text content of elements with the class "subtask".
+ */
+function getSubtasks() {
+  const subtaskElements = document.querySelectorAll(".subtask");
+  const subtaskTexts = [];
+  subtaskElements.forEach((element) => {
+    subtaskTexts.push(element.textContent.trim());
+  });
+  return subtaskTexts;
 }
 
 /*CATEGORY*/

@@ -33,14 +33,16 @@
         <!--LEFT SECTION-->
         <section class="leftSection">
           <span>Title</span>
-          <input type="text" id="addTaskTitle" placeholder="Enter a title" />
-          <span class="error d-none">Please enter a title</span>
+          <input type="text" id="titleInput" placeholder="Enter a title" />
+          <span id="errorTITLE" class="error d-none">Please enter a title</span>
           <span>Description</span>
           <input
             type="text"
             id="descriptionInput"
             placeholder="Enter a description" />
-          <span class="error d-none">Please enter a description</span>
+          <span id="errorDESCRIPTION" class="error d-none"
+            >Please enter a description</span
+          >
           <span>Category</span>
           <!--CATEGORY-->
           <div id="selectCategory" class="containerSection">
@@ -113,7 +115,9 @@
               class="circle cursorPointer"></div>
           </div>
           <span id="errorColor" class="d-none">Please select a color</span>
-          <span class="error d-none">Please select a category</span>
+          <span id="errorSELECTED_CATEGORY" class="error d-none"
+            >Please select a category</span
+          >
           <!--CONTACTS-->
           <span>Assigned to</span>
           <div id="selectContact" class="containerSection">
@@ -139,7 +143,9 @@
           <div>
             <input type="date" id="addTaskDate" placeholder="dd/mm/yyyy" />
           </div>
-          <span class="error d-none">Please select a due day</span>
+          <span id="errorDUE_DATE" class="error d-none"
+            >Please select a due day</span
+          >
           <span>Prio</span>
           <div class="prioBtns">
             <button
@@ -173,7 +179,9 @@
                 alt="icon to show priority" />
             </button>
           </div>
-          <span class="error d-none">Please select a priority</span>
+          <span id="errorPRIO" class="error d-none"
+            >Please select a priority</span
+          >
           <span>Subtasks</span>
           <div class="inputContainer">
             <input
@@ -202,7 +210,7 @@
                 alt="icon of plus to add
               a subtask" />
             </button>
-            <button type="submit" class="createBtn">
+            <button class="createBtn">
               <span>Create Task</span>
               <img
                 src="../assets/img/addTaskCreate.svg"
