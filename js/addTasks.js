@@ -472,6 +472,7 @@ function clearTask() {
     "Select contacts to assign";
   document.getElementById("inputDueDate").value = "";
   clearPrioBtn();
+  clearSubtasks();
 }
 
 function clearPrioBtn() {
@@ -483,6 +484,8 @@ function clearPrioBtn() {
 
 function clearSubtasks() {
   SUBTASKS = [];
+  document.getElementById("subtasks").innerHTML = "";
+  document.getElementById("addTaskSubtasks").value = "";
 }
 
 /*CATEGORY*/
