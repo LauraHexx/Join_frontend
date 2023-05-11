@@ -63,8 +63,8 @@
             <span>To Do</span>
             <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
           </div>
-          <div id="contentProcess">
-            <div id="singleCard" onclick="toggleClass('body', 'overflowHidden'); showEditTask('containerEdit','animation-slideInRight','d-none')" draggable="true" ondragstart="startDragging(1)">
+          <div id="toDo" ondrop="moveTo('toDo')" ondragover="allowDrop(event)">
+            <div id="1" class="singleCard" onclick="toggleClass('body', 'overflowHidden'); showEditTask('containerEdit','animation-slideInRight','d-none')" draggable="true" ondragstart="startDragging(1)">
               <div id="category">Design</div>
               <div id="title">Website redesign</div>
               <span id="description">
@@ -100,21 +100,21 @@
             <span>In progress</span>
             <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
           </div>
-          <div id="contentProcess">
+          <div id="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event)" >
         </section>
         <section>
           <div class="processStep">
             <span>Awaiting Feedback</span>
             <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
           </div>
-          <div id="contentProcess"></div>
+          <div id="awaitingFeedback" ondrop="moveTo('awaitingFeedback')" ondragover="allowDrop(event)"></div>
         </section>
         <section>
           <div class="processStep">
             <span>Done</span>
             <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
           </div>
-          <div id="contentProcess"></div>
+          <div id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)"></div>
         </section>
       </main>
     </div>    

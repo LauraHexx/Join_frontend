@@ -95,7 +95,7 @@ section {
 
 /*SINGLE CARD*/
 
-#singleCard {
+.singleCard {
   display: flex;
   flex-direction: column;
   justify-content: center;

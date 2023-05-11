@@ -1,11 +1,21 @@
+let currentDraggedElement;
+
 async function initBoard() {
   await checkIfUserLoggedIn();
-  await init('board')
+  await init("board");
   changeImageOnHover(
     "deleteBtnImage",
     "../assets/img/boardDeleteTaskBrightBlue.svg",
     "../assets/img/boardDeleteTaskDarkBlue.svg"
   );
+}
+
+function startDragging(id) {
+  currentDraggedElement = id;
+}
+
+function allowDrop(ev) {
+  ev.preventDefault();
 }
 
 function showEditTask(id, animationClass, className) {
