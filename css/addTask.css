@@ -64,7 +64,7 @@ input::placeholder {
   height: 15px;
   position: absolute;
   top: 19px;
-  right: 20px;
+  right: 22px;
   cursor: pointer;
 }
 
@@ -86,9 +86,21 @@ input::placeholder {
 }
 
 .selectCategoryTitle,
-.selectContactsTitle {
+#selectContactsTitle {
   font-weight: unset;
   color: var(--dark-grey);
+}
+
+.selectedCategory {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  font-weight: unset !important;
+}
+
+.selectedCategory span {
+  font-weight: unset !important;
 }
 
 .listDropDown {
@@ -108,14 +120,14 @@ input::placeholder {
   background-color: var(--grey);
 }
 
-.listDropDown li:last-child:hover {
+#savedContacts li:last-child:hover {
   border-bottom-left-radius: 9px;
   border-bottom-right-radius: 9px;
 }
 
 .singleCategory {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   gap: 15px;
 }
@@ -224,12 +236,23 @@ input::placeholder {
 
 /*CONTACTS*/
 
-.newContact {
-  width: 15px;
-  height: 15px;
+/*RIGHT SECTION*/
+
+.oneContact {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/*RIGHT SECTION*/
+.toggleCheckbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
 
 .rightSection {
   width: 45%;
@@ -266,13 +289,14 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   color: black;
 }
 
-.singlePrioBtn:hover {
+.singlePrioBtn:hover:not(.selected) {
   border: 1px solid var(--grey);
   -webkit-box-shadow: 0px 10px 13px -7px #000000,
     0px 9px 15px -7px rgba(0, 0, 0, 0);
   box-shadow: 0px 10px 13px -7px #000000, 0px 9px 15px -7px rgba(0, 0, 0, 0);
   transition: 0.5s;
   background: var(--bright-white);
+  cursor: pointer;
 }
 
 .prioBtns img {

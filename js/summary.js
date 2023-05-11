@@ -1,7 +1,7 @@
-let LOGGED_USER_ID = "";
-
 async function initSummary() {
   await loadUsers();
+  await checkIfUserLoggedIn();
+  await init("summary");
   changeImageOnHover(
     "pencilLogo",
     "../assets/img/toDosPencilWhite.svg",
@@ -38,11 +38,9 @@ function setGreetingForTimeOfDay() {
 }
 
 function greetUser() {
-  LOGGED_USER_ID = getItemFromLocalStorage("loggedUserId");
-  if (LOGGED_USER_ID === "Guest") {
+  if (LOGGED_USER === "Guest") {
     document.getElementById("greetedUser").innerHTML = "Guest";
   } else {
-    let user = getUserData(LOGGED_USER_ID);
-    document.getElementById("greetedUser").innerHTML = /*html*/ `${user.name}`;
+    document.getElementById("greetedUser").innerHTML = `${LOGGED_USER.name}`;
   }
 }

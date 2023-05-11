@@ -2,6 +2,8 @@ const FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_USER = "";
 
 async function initContacts() {
+  await checkIfUserLoggedIn();
+  await init("contacts");
   await loadUsers();
   await sortUsersAlphabetically();
   await renderFirstInitialsList();
@@ -55,7 +57,7 @@ function renderContactsHtml(user) {
    <div
       onclick="openContactDetails(${user.id})"
       class="singleContact">
-      <div class="initialsOfNames smallCircle">${user.initials}</div>
+      <div style="background-color: ${user.color}" class="initialsOfNames smallCircle">${user.initials}</div>
       <div id="deatilsOfUSer">
         <span>${user.name}</span>
         <br />

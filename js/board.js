@@ -1,4 +1,6 @@
-function initBoard() {
+async function initBoard() {
+  await checkIfUserLoggedIn();
+  await init('board')
   changeImageOnHover(
     "deleteBtnImage",
     "../assets/img/boardDeleteTaskBrightBlue.svg",

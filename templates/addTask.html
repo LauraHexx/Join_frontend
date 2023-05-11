@@ -29,7 +29,7 @@
     <div class="contentAfterLogin d-none" id="content">
       <span class="headlineMobile d-none">Kanban Project Management Tool</span>
       <h1 class="bigHeadline">Add Task</h1>
-      <form onsubmit="test();return false" class="mainContainer">
+      <form onsubmit="createTask(); return false" class="mainContainer">
         <!--LEFT SECTION-->
         <section class="leftSection">
           <span>Title</span>
@@ -118,7 +118,7 @@
           <span>Assigned to</span>
           <div id="selectContact" class="containerSection">
             <div class="selectCategoryHead">
-              <span class="selectContactsTitle">Select contacts to assign</span>
+              <span id="selectContactsTitle">Select contacts to assign</span>
               <img
                 onclick="toggleClass('listContacts', 'd-none')"
                 class="inputImage"
@@ -126,10 +126,7 @@
                 alt="arrow to drop down the menu of contacts" />
             </div>
             <ul id="listContacts" class="listDropDown d-none">
-              <li onclick="toggleCheckBox(this)" class="singleCategory">
-                <span>You</span>
-                <input type="checkbox" name="" id="" />
-              </li>
+              <div id="loggedUserContact"></div>
               <div id="savedContacts"></div>
             </ul>
           </div>
@@ -147,9 +144,9 @@
           <div class="prioBtns">
             <button
               type="button"
-              id="urgentBtn"
+              id="urgent"
               class="singlePrioBtn"
-              onclick="changeStyle('urgentBtn','red', '../assets/img/prioUrgent.svg')">
+              onclick="changeStylePrioBtn('urgent','red', '../assets/img/prioUrgent.svg')">
               Urgent
               <img
                 src="../assets/img/prioUrgent.svg"
@@ -157,9 +154,9 @@
             </button>
             <button
               type="button"
-              id="mediumBtn"
+              id="medium"
               class="singlePrioBtn"
-              onclick="changeStyle('mediumBtn','orange', '../assets/img/prioMedium.svg')">
+              onclick="changeStylePrioBtn('medium','orange', '../assets/img/prioMedium.svg')">
               Medium
               <img
                 src="../assets/img/prioMedium.svg"
@@ -167,9 +164,9 @@
             </button>
             <button
               type="button"
-              id="lowBtn"
+              id="low"
               class="singlePrioBtn"
-              onclick="changeStyle('lowBtn','green','../assets/img/prioLow.svg')">
+              onclick="changeStylePrioBtn('low','green','../assets/img/prioLow.svg')">
               Low
               <img
                 src="../assets/img/prioLow.svg"
@@ -184,24 +181,12 @@
               id="addTaskSubtasks"
               placeholder="Add new subtask" />
             <img
+              onclick="addSubtask()"
               class="inputImage imagePlus"
               src="../assets/img/addTaskPlus.svg"
               alt="icon of plus to add a subtask" />
           </div>
-          <div id="subtasks">
-            <div class="singleSubtask">
-              <input type="checkbox" id="" class="checkbox" />
-              <span>Subtask 1</span>
-            </div>
-            <div class="singleSubtask">
-              <input type="checkbox" id="" class="checkbox" />
-              <span>Subtask 1</span>
-            </div>
-            <div class="singleSubtask">
-              <input type="checkbox" id="" class="checkbox" />
-              <span>Subtask 1</span>
-            </div>
-          </div>
+          <div id="subtasks"></div>
           <div class="clearAndCreateBtns">
             <button class="clearBtn">
               <span>Clear</span>
@@ -217,7 +202,7 @@
                 alt="icon of plus to add
               a subtask" />
             </button>
-            <button class="createBtn">
+            <button type="submit" class="createBtn">
               <span>Create Task</span>
               <img
                 src="../assets/img/addTaskCreate.svg"

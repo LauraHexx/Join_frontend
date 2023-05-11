@@ -60,6 +60,7 @@ function formatAndPushData() {
 
 function pushDataToArray(formattedName, formattedEmail) {
   USERS.push({
+    color: getRandomColor(),
     id: determineId(),
     name: formattedName,
     email: formattedEmail,
@@ -67,6 +68,14 @@ function pushDataToArray(formattedName, formattedEmail) {
     phone: 049,
     initials: getInitials(),
   });
+}
+
+/**
+ * Generates a random hex code.
+ * @returns {string} A random hex code.
+ */
+function getRandomColor() {
+  return "#" + Math.floor(Math.random() * 16777215).toString(16);
 }
 
 function determineId() {

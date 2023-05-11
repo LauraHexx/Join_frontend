@@ -1,7 +1,7 @@
 async function initLogin() {
   changeZindexAnimation();
   getLocalStorage();
-  loadUsers();
+  await loadUsers();
 }
 
 /**

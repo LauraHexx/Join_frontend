@@ -1,6 +1,7 @@
 let USERS = [];
-let TASKS = [];
 let CATEGORYS = [];
+
+let LOGGED_USER = "";
 
 async function init(currentHtmlTemplate) {
   await includeHTML();
@@ -100,11 +101,6 @@ async function loadCategorys() {
   }
 }
 
-function getUserData(userId) {
-  let user = USERS.find((user) => user.id === userId);
-  return user;
-}
-
 /**
  * Stores the id of the user in the local storage for greeting in summary.
  *  @param {number} userId - The id of the user who will be greeted.
@@ -121,11 +117,7 @@ function setDataForGreeting(userId) {
  */
 function toggleClass(elementId, className) {
   let element = document.getElementById(elementId);
-  if (element.classList.contains(className)) {
-    element.classList.remove(className);
-  } else {
-    element.classList.add(className);
-  }
+  element.classList.toggle(className);
 }
 
 /**
@@ -207,6 +199,14 @@ function getItemFromLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
 
+/**
+ * Removes an item from the local storage.
+ * @param {string} key - The key of the item to remove.
+ */
+function removeItemFromLocalStorage(key) {
+  localStorage.removeItem(key);
+}
+
 /***************************DISPLAYS******************************/
 
 function showDisplay(id, animationClass, className) {
@@ -218,4 +218,41 @@ function showDisplay(id, animationClass, className) {
 function hideDisplay(id, className) {
   toggleClass(id, className);
   toggleBlurFilter();
+}
+
+function getUserData(userId) {
+  let user = USERS.find((user) => user.id === userId);
+  return user;
+}
+
+function getDataLoggedUser() {
+  let loggedUserId = getItemFromLocalStorage("loggedUserId");
+  if (loggedUserId === "Guest") {
+    LOGGED_USER.name = "Guest";
+  } else {
+    LOGGED_USER = getUserData(loggedUserId);
+  }
+}
+
+async function checkIfUserLoggedIn() {
+  let loggedUserId = getItemFromLocalStorage("loggedUserId");
+  if (loggedUserId === "Guest") {
+    LOGGED_USER = "Guest";
+    console.log("Logged User:", LOGGED_USER);
+    return;
+  }
+  if (loggedUserId) {
+    LOGGED_USER = getUserData(loggedUserId);
+    console.log("Logged User:", LOGGED_USER);
+    return;
+  }
+  if (!loggedUserId) {
+    loadTemplate("../index.html");
+    return;
+  }
+}
+
+async function logOut() {
+  removeItemFromLocalStorage("loggedUserId");
+  loadTemplate("../index.html");
 }

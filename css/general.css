@@ -74,17 +74,14 @@ button {
   color: var(--bright-white);
 }
 
-button:hover {
-  cursor: pointer;
-}
-
-button:hover {
+button:hover:not(.selectedPrioBtn) {
   background-color: var(--bright-blue);
   border: 1px solid var(--bright-blue);
   -webkit-box-shadow: 0px 10px 13px -7px #000000,
     0px 9px 15px -7px rgba(0, 0, 0, 0);
   box-shadow: 0px 10px 13px -7px #000000, 0px 9px 15px -7px rgba(0, 0, 0, 0);
   transition: 0.5s;
+  cursor: pointer;
 }
 
 .d-none {
