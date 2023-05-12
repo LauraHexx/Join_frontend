@@ -233,3 +233,26 @@ function getDataLoggedUser() {
     LOGGED_USER = getUserData(loggedUserId);
   }
 }
+
+async function checkIfUserLoggedIn() {
+  let loggedUserId = getItemFromLocalStorage("loggedUserId");
+  if (loggedUserId === "Guest") {
+    LOGGED_USER = "Guest";
+    console.log("Logged User:", LOGGED_USER);
+    return;
+  }
+  if (loggedUserId) {
+    LOGGED_USER = getUserData(loggedUserId);
+    console.log("Logged User:", LOGGED_USER);
+    return;
+  }
+  if (!loggedUserId) {
+    loadTemplate("../index.html");
+    return;
+  }
+}
+
+async function logOut() {
+  removeItemFromLocalStorage("loggedUserId");
+  loadTemplate("../index.html");
+}
