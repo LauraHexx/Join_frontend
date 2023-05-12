@@ -4,11 +4,12 @@ let TASKS = [];
 
 async function initAddTask() {
   await loadUsers();
-  await checkIfUserLoggedIn();
   await loadCategorys();
-  await renderCategorys();
+  await loadTasks();
+  await checkIfUserLoggedIn();
   await sortUsersAlphabetically();
   await renderContacts();
+  await renderCategorys();
   await showContentOfTemplate();
 }
 
