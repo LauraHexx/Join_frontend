@@ -1,21 +1,16 @@
-forgot password - css email
-reset password - css email
-
-ausloggen
 
 add Task Template: new Contact 2ter Input wenn neuer Contact
 
-greeting
 
 getInitialsForFullName - 2 mal contacts/signup
 
 alphabetisch sortieren user, categorys - 2mal
 
-todo - veralgemeinerung soriteren?
 
 bei task wird soritert und dann gepusht
 
 bei contacts wird geladen und dann sortiert
 
-toggle ist eine eigene funktion von javascript!
-
+addTask: drop down für gesamten input
+button: task wurde erstellt und alle inhalte löschen
+new Category bug
