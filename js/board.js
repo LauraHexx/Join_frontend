@@ -54,9 +54,7 @@ function renderTasksHtml(indexOfTask, task, colorCategory) {
         <span id="progressAmount">1/2 Done</span>
       </div>
       <div id="contactsAndPrio">
-        <div class="assignedContacts" id="contacts${indexOfTask}">
-
-        </div>
+        <div class="assignedContacts" id="contacts${indexOfTask}"></div>
         <img id="prio" src="../assets/img/prioLow.svg" alt="icon to show priority">
       </div>
     </div>
@@ -75,7 +73,7 @@ function renderContactsInTasks(indexOfTask, contactsIds) {
 
 function renderContactsInTasksHtml(initials) {
   return /*html*/ `
-    <div class="initialsOfNames smallCircle">BB</div>
+    <div class="initialsOfNames smallCircle">${initials}</div>
   `;
 }
 
