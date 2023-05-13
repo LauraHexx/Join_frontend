@@ -172,7 +172,6 @@ section {
   justify-content: center;
   align-items: center;
   color: var(--bright-white);
-  background: blue;
   border-radius: 100px;
   text-align: center;
 }

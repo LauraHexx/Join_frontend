@@ -62,18 +62,24 @@ function renderTasksHtml(indexOfTask, task, colorCategory) {
 }
 
 function renderContactsInTasks(indexOfTask, contactsIds) {
-  let amountContacts = contactsIds.length;
   for (let i = 0; i < 2; i++) {
     const contactData = getUserData(contactsIds[i]);
     const initials = contactData.initials;
-    document.getElementById(`contacts${indexOfTask}`).innerHTML =
-      renderContactsInTasksHtml(initials);
+    const color = contactData.color;
+    document.getElementById(`contacts${indexOfTask}`).innerHTML +=
+      renderContactsInTasksHtml(initials, color);
+  }
+  let amountContacts = contactsIds.length;
+  if (amountContacts > 2) {
+    let remainingContacts = "+" + (amountContacts - 2);
+    document.getElementById(`contacts${indexOfTask}`).innerHTML +=
+      renderContactsInTasksHtml(remainingContacts, "blue");
   }
 }
 
-function renderContactsInTasksHtml(initials) {
+function renderContactsInTasksHtml(initials, color) {
   return /*html*/ `
-    <div class="initialsOfNames smallCircle">${initials}</div>
+    <div class="initialsOfNames smallCircle" style="background-color:${color}">${initials}</div>
   `;
 }
 
