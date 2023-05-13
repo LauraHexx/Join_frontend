@@ -20,13 +20,13 @@ function renderTasks() {
     const category = task.category;
     const colorCategory = getColorCategory(category);
     const processStep = task.processStep;
-    const contacts = task.contacts;
+    const contactsIds = task.contacts;
     document.getElementById(processStep).innerHTML += renderTasksHtml(
       indexOfTask,
       task,
       colorCategory
     );
-    renderContactsInTasks(indexOfTask, contacts);
+    renderContactsInTasks(indexOfTask, contactsIds);
   });
 }
 
@@ -43,7 +43,7 @@ function getColorCategory(name) {
 
 function renderTasksHtml(indexOfTask, task, colorCategory) {
   return /*html*/ `
-    <div id="1" class="singleCard" ondrop="moveTo('toDo')" ondragover="allowDrop(event) onclick="toggleClass('body', 'overflowHidden'); showEditTask('containerEdit','animation-slideInRight','d-none')" draggable="true" ondragstart="startDragging(1)">
+    <div id=${indexOfTask} class="singleCard" onclick="toggleClass('body', 'overflowHidden'); showEditTask('containerEdit','animation-slideInRight','d-none')">
       <div class="category" id=${colorCategory}>${task.category}</div>
       <div id="title">${task.title}</div>
       <span id="description">${task.description}</span>
@@ -54,10 +54,8 @@ function renderTasksHtml(indexOfTask, task, colorCategory) {
         <span id="progressAmount">1/2 Done</span>
       </div>
       <div id="contactsAndPrio">
-        <div class="assignedContacts" id="${indexOfTask}">
-          <div class="initialsOfNames smallCircle">BB</div>
-          <div class="initialsOfNames smallCircle">BB</div>
-          <div class="initialsOfNames smallCircle">+2</div>
+        <div class="assignedContacts" id="contacts${indexOfTask}">
+
         </div>
         <img id="prio" src="../assets/img/prioLow.svg" alt="icon to show priority">
       </div>
@@ -65,10 +63,20 @@ function renderTasksHtml(indexOfTask, task, colorCategory) {
   `;
 }
 
-function renderContactsInTasks(indexOfTask, contacts) {
-  let amountContacts = contacts.length;
-  console.log(amountContacts);
-  document.getElementById(`assignedContacts${indexOfTask}`);
+function renderContactsInTasks(indexOfTask, contactsIds) {
+  let amountContacts = contactsIds.length;
+  for (let i = 0; i < 2; i++) {
+    const contactData = getUserData(contactsIds[i]);
+    const initials = contactData.initials;
+    document.getElementById(`contacts${indexOfTask}`).innerHTML =
+      renderContactsInTasksHtml(initials);
+  }
+}
+
+function renderContactsInTasksHtml(initials) {
+  return /*html*/ `
+    <div class="initialsOfNames smallCircle">BB</div>
+  `;
 }
 
 function startDragging(id) {
