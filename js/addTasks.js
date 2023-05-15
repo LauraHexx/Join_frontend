@@ -32,14 +32,14 @@ function renderCategorys() {
 
 function renderCategorysHtml(name, color) {
   return /*html*/ `
-    <li onclick="setTitleOfSelectedCategory('${name}','${color}')" class="singleCategory">
+    <li onclick="setSelectedCategory('${name}','${color}')" class="singleCategory">
       <span>${name}</span>
       <div class="circle ${color}"></div>
     </li>
   `;
 }
 
-function setTitleOfSelectedCategory(name, color) {
+function setSelectedCategory(name, color) {
   const selectCategoryTitle = document.getElementById("selectCategoryTitle");
   selectCategoryTitle.innerHTML = /*html*/ `
     <li class="selectedCategory">
