@@ -479,7 +479,7 @@ function clearSubtasks() {
 /*CATEGORY*/
 
 function toggleNewCategory() {
-  toggleClass("selectCategory", "d-none");
+  toggleClass("sectionSelectCategory", "d-none");
   toggleClass("newCategory", "d-none");
   toggleClass("categorysColours", "d-none");
 }
