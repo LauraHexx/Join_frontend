@@ -44,7 +44,7 @@ function getColorCategory(name) {
 function renderTasksHtml(indexOfTask, task, colorCategory) {
   return /*html*/ `
     <div id=${indexOfTask} class="singleCard" onclick="toggleClass('body', 'overflowHidden'); showEditTask('containerEdit','animation-slideInRight','d-none')">
-      <div class="category" id=${colorCategory}>${task.category}</div>
+      <div class="category ${colorCategory}">${task.category}</div>
       <div id="title">${task.title}</div>
       <span id="description">${task.description}</span>
       <div id="progressContainer">
