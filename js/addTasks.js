@@ -34,7 +34,7 @@ function renderCategorysHtml(name, color) {
   return /*html*/ `
     <li onclick="setTitleOfSelectedCategory('${name}','${color}')" class="singleCategory">
       <span>${name}</span>
-      <div id=${color} class="circle selectedColor"></div>
+      <div class="circle ${color}"></div>
     </li>
   `;
 }
@@ -44,7 +44,7 @@ function setTitleOfSelectedCategory(name, color) {
   selectCategoryTitle.innerHTML = /*html*/ `
     <li class="selectedCategory">
       <span id='selectedCategoryName'>${name}</span>
-      <div id="${color}" class="circle colorOfCategory"></div>
+      <div class="${color} circle colorOfCategory"></div>
     </li>
   `;
 }
@@ -72,12 +72,10 @@ function getNewCategory() {
     setErrorsCategoryAlreadyExists();
     return;
   }
+  /*
   deleteAllErrors();
   return newCategory;
-}
-
-function noCategoryEntered(newCategory) {
-  return (newCategory = "");
+  */
 }
 
 function setErrorNoCategoryEntered() {

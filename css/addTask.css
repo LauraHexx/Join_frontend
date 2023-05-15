@@ -137,26 +137,27 @@ input::placeholder {
 
 /*CATEGORY*/
 
-#purple {
+.purple {
   background-color: #9747ff;
 }
-#red {
+
+.red {
   background-color: #f24822;
 }
 
-#green {
+.green {
   background-color: #14ae5c;
 }
 
-#orange {
+.orange {
   background-color: #ffcd29;
 }
 
-#rosa {
+.rosa {
   background-color: #ff24bd;
 }
 
-#blue {
+.blue {
   background-color: #0d99ff;
 }
 
