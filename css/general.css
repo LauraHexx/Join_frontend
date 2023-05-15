@@ -190,6 +190,7 @@ button:hover:not(.selectedPrioBtn) {
   padding: 5px;
   border: 1px solid #d1d1d1;
   border-radius: 10px;
+  font-family: "Segoe UI", sans-serif !important;
 }
 
 .inputName {

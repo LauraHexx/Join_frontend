@@ -14,3 +14,5 @@ bei contacts wird geladen und dann sortiert
 addTask: drop down für gesamten input
 button: task wurde erstellt und alle inhalte löschen
 new Category bug
+
+allgemeine error Funktion - id geben und d-none - gibt es schon?

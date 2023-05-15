@@ -409,23 +409,6 @@ function getPriority() {
   }
 }
 
-function hideError(id) {
-  const errorElement = document.getElementById(id);
-  if (!errorElement.classList.contains("d-none")) {
-    errorElement.classList.add("d-none");
-  }
-}
-
-/**
- * Checks if a value is undefined and removes the "d-none" class from an element with the ID "error" + the variable name if it is.
- *
- * @param {string} id - The name of the variable to check.
- */
-function showError(id) {
-  const errorElement = document.getElementById(id);
-  errorElement.classList.remove("d-none");
-}
-
 /**
  * Retrieves an array of numbers representing the ids of checked selectedCheckBoxes within the "savedContacts" container.
  *

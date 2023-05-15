@@ -45,11 +45,12 @@
           >
           <span>Category</span>
           <!--CATEGORY-->
-          <div+ class="containerSection">
+          <div
+            onclick="toggleClass('listCategorys', 'd-none')"
+            class="containerSection">
             <div class="selectCategoryHead">
               <span id="selectCategoryTitle">Select task category</span>
               <img
-                onclick="toggleClass('listCategorys', 'd-none')"
                 class="inputImage"
                 src="../assets/img/addTaskDropDownArrow.svg"
                 alt="arrow to drop down the menu of categorys" />
@@ -61,7 +62,7 @@
               </li>
               <div id="selectableCategorys"></div>
             </ul>
-          </div+>
+          </div>
           <div id="newCategory" class="inputContainer d-none">
             <input
               type="text"
@@ -120,11 +121,13 @@
           >
           <!--CONTACTS-->
           <span>Assigned to</span>
-          <div id="selectContact" class="containerSection">
+          <div
+            id="selectContact"
+            class="containerSection"
+            onclick="toggleClass('listContacts', 'd-none')">
             <div class="selectCategoryHead">
               <span id="selectContactsTitle">Select contacts to assign</span>
               <img
-                onclick="toggleClass('listContacts', 'd-none')"
                 class="inputImage"
                 src="../assets/img/addTaskDropDownArrow.svg"
                 alt="arrow to drop down the menu of contacts" />

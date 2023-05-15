@@ -2,21 +2,33 @@ async function initSignUp() {
   await loadUsers();
 }
 
-/**
- * Checks if the user is already registered based on their email.
- * If the user is already registered, it displays an error message.
- * If the user is not registered, it proceeds to register the user.
- */
 function checkSignUpData() {
   const existingUser = checkForExistingUser();
   const existingName = checkForExistingName();
   if (existingUser) {
-    userIsAlreadyRegistered();
+    showError("userIsAlreadyRegistered");
   } else if (existingName) {
-    nameIsAlreadyTaken();
+    showError("nameIsAlreadyTaken");
+    hideError("userIsAlreadyRegistered");
   } else {
     registerNewUser();
   }
+
+  /*
+  if (existingUser) {
+    showError("userIsAlreadyRegistered");
+    hideError("nameIsAlreadyTaken");
+    return;
+  }
+  if (existingName) {
+    hideError("userIsAlreadyRegistered");
+    showError("nameIsAlreadyTaken");
+    return;
+  }
+  if (!existingName && !existingName) {
+    registerNewUser();
+  }
+  */
 }
 
 /**
@@ -33,24 +45,6 @@ function checkForExistingUser() {
  */
 function checkForExistingName() {
   return USERS.find((user) => user.name === signUpName.value);
-}
-
-/**
- * Displays an error message indicating that the provided name is already registered.
- */
-function nameIsAlreadyTaken() {
-  const error = document
-    .getElementById("nameIsAlreadyTaken")
-    .classList.remove("d-none");
-}
-
-/**
- * Displays an error message indicating that the provided user is already registered.
- */
-function userIsAlreadyRegistered() {
-  const error = document
-    .getElementById("userIsAlreadyRegistered")
-    .classList.remove("d-none");
 }
 
 /**
