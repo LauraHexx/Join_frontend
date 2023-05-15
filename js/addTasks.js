@@ -4,9 +4,9 @@ let TASKS = [];
 
 async function initAddTask() {
   await loadUsers();
+  await checkIfUserLoggedIn();
   await loadCategorys();
   await loadTasks();
-  await checkIfUserLoggedIn();
   await sortUsersAlphabetically();
   await renderContacts();
   await renderCategorys();
@@ -32,14 +32,14 @@ function renderCategorys() {
 
 function renderCategorysHtml(name, color) {
   return /*html*/ `
-    <li onclick="changeTitleCategoryInput('${name}','${color}')" class="singleCategory">
+    <li onclick="setTitleOfSelectedCategory('${name}','${color}')" class="singleCategory">
       <span>${name}</span>
       <div id=${color} class="circle selectedColor"></div>
     </li>
   `;
 }
 
-function changeTitleCategoryInput(name, color) {
+function setTitleOfSelectedCategory(name, color) {
   const selectCategoryTitle = document.getElementById("selectCategoryTitle");
   selectCategoryTitle.innerHTML = /*html*/ `
     <li class="selectedCategory">
@@ -49,8 +49,8 @@ function changeTitleCategoryInput(name, color) {
   `;
 }
 
-async function addCategory() {
-  let newCategory = getCategory();
+async function addNewCategory() {
+  let newCategory = getNewCategory();
   let colour = getSelectedColor();
   checkAndPushCategory(newCategory, colour);
   await sortCategorysAlphabetically();
@@ -62,14 +62,14 @@ async function sortCategorysAlphabetically() {
   CATEGORYS = CATEGORYS.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function getCategory() {
-  const newCategory = document.getElementById("categoryInput").value;
-  if (noCategoryEntered(newCategory)) {
-    showErrorsNoCategoryEntered();
+function getNewCategory() {
+  const newCategory = document.getElementById("newCategoryInput").value;
+  if (newCategory === "") {
+    setErrorNoCategoryEntered();
     return;
   }
   if (categoryAlreadyExists(newCategory)) {
-    showErrorsCategoryAlreadyExists();
+    setErrorsCategoryAlreadyExists();
     return;
   }
   deleteAllErrors();
@@ -77,12 +77,14 @@ function getCategory() {
 }
 
 function noCategoryEntered(newCategory) {
-  return !newCategory;
+  return (newCategory = "");
 }
 
-function showErrorsNoCategoryEntered() {
-  document.getElementById("errorNameExists").classList.add("d-none");
-  document.getElementById("errorName").classList.remove("d-none");
+function setErrorNoCategoryEntered() {
+  document.getElementById("errorNoCategorySelected").classList.add("d-none");
+  document
+    .getElementById("errorNewCategoryNoNameEntered")
+    .classList.remove("d-none");
 }
 
 function categoryAlreadyExists(newCategory) {
@@ -90,13 +92,21 @@ function categoryAlreadyExists(newCategory) {
 }
 
 function showErrorsCategoryAlreadyExists() {
-  document.getElementById("errorNameExists").classList.remove("d-none");
-  document.getElementById("errorName").classList.add("d-none");
+  document
+    .getElementById("errorNewCategoryNameAlreadyCreated")
+    .classList.remove("d-none");
+  document
+    .getElementById("errorNewCategoryNoNameEntered")
+    .classList.add("d-none");
 }
 
 function deleteAllErrors() {
-  document.getElementById("errorNameExists").classList.add("d-none");
-  document.getElementById("errorName").classList.add("d-none");
+  document
+    .getElementById("errorNewCategoryNameAlreadyCreated")
+    .classList.add("d-none");
+  document
+    .getElementById("errorNewCategoryNoNameEntered")
+    .classList.add("d-none");
 }
 
 /**
@@ -120,11 +130,15 @@ function colorWasSelected(selectedColor) {
 }
 
 function deleteColorError(selectedColor) {
-  document.getElementById("errorColor").classList.add("d-none");
+  document
+    .getElementById("errorNewCategoryNoNameEntered")
+    .classList.add("d-none");
 }
 
 function showErrorNoColorSelected() {
-  document.getElementById("errorColor").classList.remove("d-none");
+  document
+    .getElementById("errorNewCategoryNoColorSelected")
+    .classList.remove("d-none");
 }
 
 async function checkAndPushCategory(newCategory, colour) {
@@ -138,13 +152,13 @@ async function checkAndPushCategory(newCategory, colour) {
 }
 
 function changeStyleCategory() {
-  toggleClass("selectCategory", "d-none");
-  toggleClass("newCategory", "d-none");
+  toggleClass("selectCategoryDiv", "d-none");
+  toggleClass("newCategoryDiv", "d-none");
   toggleClass("listCategorys", "d-none");
-  toggleClass("categorysColours", "d-none");
+  toggleClass("newCategoryColorSelection", "d-none");
 }
 
-function moveCircle(event) {
+function moveSelectedColorCircleUp(event) {
   const circles = document.querySelectorAll(".circle");
   circles.forEach((circle) => {
     if (circle === event.target) {
@@ -152,6 +166,13 @@ function moveCircle(event) {
     } else {
       circle.classList.remove("selectedColor");
     }
+  });
+}
+
+function moveSelectedColorCircleDown() {
+  const circles = document.querySelectorAll(".circle");
+  circles.forEach((circle) => {
+    circle.classList.remove("selectedColor");
   });
 }
 
@@ -378,12 +399,12 @@ function getDescription() {
 }
 
 function getCategory() {
-  let cateGoryName = document.getElementById("selectedCategoryName");
+  let cateGoryName = document.getElementById("newCategoryInput");
   if (cateGoryName) {
-    hideError("errorCategory");
+    hideError("errorNoCategorySelected");
     return cateGoryName.innerHTML;
   } else {
-    showError("errorCategory");
+    showError("errorNoCategorySelected");
     return undefined;
   }
 }
@@ -479,14 +500,20 @@ function clearSubtasks() {
 /*CATEGORY*/
 
 function toggleNewCategory() {
-  toggleClass("sectionSelectCategory", "d-none");
-  toggleClass("newCategory", "d-none");
-  toggleClass("categorysColours", "d-none");
+  toggleClass("selectCategoryDiv", "d-none");
+  toggleClass("newCategoryDiv", "d-none");
+  toggleClass("newCategoryColorSelection", "d-none");
 }
 
-function showSelectCategory() {
+function stopAddingNewCategory() {
+  resetNewCategory();
   toggleNewCategory();
   toggleClass("listCategorys", "d-none");
+}
+
+function resetNewCategory() {
+  moveSelectedColorCircleDown();
+  document.getElementById("newCategoryInput").value = "";
 }
 
 /*CONTACTS*/

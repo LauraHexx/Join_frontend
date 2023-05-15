@@ -45,13 +45,11 @@
           >
           <span>Category</span>
           <!--CATEGORY-->
-          <div
-            onclick="toggleClass('listCategorys', 'd-none')"
-            class="containerSection"
-            id="sectionSelectCategory">
-            <div class="containerTitle">
+          <div id="selectCategoryDiv">
+            <div id="selectCategoryTitleDiv">
               <span id="selectCategoryTitle">Select task category</span>
               <img
+                onclick="toggleClass('listCategorys', 'd-none')"
                 class="inputImage"
                 src="../assets/img/addTaskDropDownArrow.svg"
                 alt="arrow to drop down the menu of categorys" />
@@ -64,69 +62,71 @@
               <div id="selectableCategorys"></div>
             </ul>
           </div>
-          <div id="newCategory" class="inputContainer d-none">
+          <div id="newCategoryDiv" class="inputContainer d-none">
             <input
               type="text"
-              id="categoryInput"
-              class="categoryInput"
+              id="newCategoryInput"
               placeholder="New category name"
               maxlength="20" />
-            <div class="optionsCategory">
+            <div class="newCategoryContainerImages">
               <img
-                onclick="showSelectCategory()"
+                onclick="stopAddingNewCategory()"
                 class="close"
                 src="../assets/img/addTaskClose.svg"
                 alt="icon to close the category section" />
               <div class="partingLineCategory"></div>
               <img
-                onclick="addCategory()"
+                onclick="addNewCategory()"
                 class="confirm"
                 src="../assets/img/addTaskConfirm.svg"
                 alt="icon to add a new category" />
             </div>
           </div>
-          <span id="errorName" class="d-none">Please enter a new category</span>
-          <span id="errorNameExists" class="d-none"
-            >This category is already created. Please enter another
-            category</span
+          <span id="errorNewCategoryNameAlreadyCreated" class="d-none"
+            >This category is already created. Please enter another name</span
           >
-          <div id="categorysColours" class="d-none">
+          <span id="errorNewCategoryNoNameEntered" class="d-none"
+            >Please enter the name of the new category</span
+          >
+
+          <div id="newCategoryColorSelection" class="d-none">
             <div
-              onclick="moveCircle(event)"
+              onclick="moveSelectedColorCircleUp(event)"
               id="purple"
               class="circle cursorPointer"></div>
             <div
-              onclick="moveCircle(event)"
+              onclick="moveSelectedColorCircleUp(event)"
               id="red"
               class="circle cursorPointer"></div>
             <div
-              onclick="moveCircle(event)"
+              onclick="moveSelectedColorCircleUp(event)"
               id="green"
               class="circle cursorPointer"></div>
             <div
-              onclick="moveCircle(event)"
+              onclick="moveSelectedColorCircleUp(event)"
               id="orange"
               class="circle cursorPointer"></div>
             <div
-              onclick="moveCircle(event)"
+              onclick="moveSelectedColorCircleUp(event)"
               id="rosa"
               class="circle cursorPointer"></div>
             <div
-              onclick="moveCircle(event)"
+              onclick="moveSelectedColorCircleUp(event)"
               id="blue"
               class="circle cursorPointer"></div>
           </div>
-          <span id="errorColor" class="d-none">Please select a color</span>
-          <span id="errorCategory" class="error d-none"
+          <span id="errorNewCategoryNoColorSelected" class="d-none"
+            >Please select a color</span
+          >
+          <span id="errorNoCategorySelected" class="error d-none"
             >Please select a category</span
           >
           <!--CONTACTS-->
           <span>Assigned to</span>
-          <div
-            id="selectContact"
-            class="containerSection"
-            onclick="toggleClass('listContacts', 'd-none')">
-            <div class="containerTitle">
+          <div id="selectContact" class="containerSection">
+            <div
+              onclick="toggleClass('listContacts', 'd-none')"
+              class="containerTitle">
               <span id="selectContactsTitle">Select contacts to assign</span>
               <img
                 class="inputImage"

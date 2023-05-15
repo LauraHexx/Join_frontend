@@ -53,7 +53,7 @@ input::placeholder {
   position: relative;
 }
 
-#categoryInput,
+#newCategoryInput,
 #inputContacts {
   width: 100%;
 }
@@ -70,7 +70,7 @@ input::placeholder {
   border: 1px solid var(--grey);
 }
 
-.containerSection {
+#selectCategoryDiv {
   position: relative;
   box-sizing: border-box;
   background: var(--bright-white);
@@ -80,7 +80,7 @@ input::placeholder {
   cursor: pointer;
 }
 
-.containerTitle {
+#selectCategoryTitleDiv {
   padding: 15px 20px;
 }
 
@@ -160,7 +160,7 @@ input::placeholder {
   background-color: #0d99ff;
 }
 
-.optionsCategory {
+.newCategoryContainerImages {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -190,7 +190,7 @@ input::placeholder {
   background-color: var(--grey);
 }
 
-#categorysColours {
+#newCategoryColorSelection {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -212,21 +212,21 @@ input::placeholder {
   transform: translateY(-5px);
 }
 
-#errorName {
+#errorNewCategoryNoNameEntered {
   padding-left: 20px;
   margin-top: -10px;
   color: red;
   font-size: 12px;
 }
 
-#errorNameExists {
+#errorNewCategoryNameAlreadyCreated {
   padding-left: 20px;
   margin-top: -10px;
   color: red;
   font-size: 12px;
 }
 
-#errorColor {
+#errorNewCategoryNoColorSelected {
   padding-left: 20px;
   margin-top: -5px;
   color: red;
