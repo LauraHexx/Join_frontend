@@ -273,3 +273,7 @@ function showError(id) {
   const errorElement = document.getElementById(id);
   errorElement.classList.remove("d-none");
 }
+
+async function sortCategorysAlphabetically() {
+  CATEGORYS = CATEGORYS.sort((a, b) => a.name.localeCompare(b.name));
+}

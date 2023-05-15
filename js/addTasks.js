@@ -58,53 +58,31 @@ async function addNewCategory() {
   renderCategorys();
 }
 
-async function sortCategorysAlphabetically() {
-  CATEGORYS = CATEGORYS.sort((a, b) => a.name.localeCompare(b.name));
-}
-
 function getNewCategory() {
-  const newCategory = document.getElementById("newCategoryInput").value;
+  let newCategory = document.getElementById("newCategoryInput").value;
   if (newCategory === "") {
-    setErrorNoCategoryEntered();
-    return;
+    setErrorsNoCategoryEntered();
+    newCategory = undefined;
   }
-  if (categoryAlreadyExists(newCategory)) {
+  if (categoryNameAlreadyExists(newCategory)) {
     setErrorsCategoryAlreadyExists();
-    return;
+    newCategory = undefined;
   }
-  /*
-  deleteAllErrors();
   return newCategory;
-  */
 }
 
-function setErrorNoCategoryEntered() {
-  document.getElementById("errorNoCategorySelected").classList.add("d-none");
-  document
-    .getElementById("errorNewCategoryNoNameEntered")
-    .classList.remove("d-none");
+function setErrorsNoCategoryEntered() {
+  showError("errorNewCategoryNoNameEntered");
+  hideError("errorNoCategorySelected");
 }
 
-function categoryAlreadyExists(newCategory) {
+function categoryNameAlreadyExists(newCategory) {
   return CATEGORYS.find((category) => category.name === newCategory);
 }
 
-function showErrorsCategoryAlreadyExists() {
-  document
-    .getElementById("errorNewCategoryNameAlreadyCreated")
-    .classList.remove("d-none");
-  document
-    .getElementById("errorNewCategoryNoNameEntered")
-    .classList.add("d-none");
-}
-
-function deleteAllErrors() {
-  document
-    .getElementById("errorNewCategoryNameAlreadyCreated")
-    .classList.add("d-none");
-  document
-    .getElementById("errorNewCategoryNoNameEntered")
-    .classList.add("d-none");
+function setErrorsCategoryAlreadyExists() {
+  showError("errorNewCategoryNameAlreadyCreated");
+  hideError("errorNoCategorySelected");
 }
 
 /**
@@ -114,6 +92,7 @@ function deleteAllErrors() {
  */
 function getSelectedColor() {
   const selectedColor = document.querySelector(".selectedColor");
+  console.log(selectedColor);
   if (colorWasSelected(selectedColor)) {
     deleteColorError(selectedColor);
     return selectedColor.id;
@@ -121,22 +100,6 @@ function getSelectedColor() {
     showErrorNoColorSelected();
     return;
   }
-}
-
-function colorWasSelected(selectedColor) {
-  return selectedColor;
-}
-
-function deleteColorError(selectedColor) {
-  document
-    .getElementById("errorNewCategoryNoNameEntered")
-    .classList.add("d-none");
-}
-
-function showErrorNoColorSelected() {
-  document
-    .getElementById("errorNewCategoryNoColorSelected")
-    .classList.remove("d-none");
 }
 
 async function checkAndPushCategory(newCategory, colour) {
