@@ -26,7 +26,7 @@ function renderTasks() {
       task,
       colorCategory
     );
-    renderContactsInTasks(indexOfTask, contactsIds);
+    renderContactsInTaskCards(indexOfTask, contactsIds);
   });
 }
 
@@ -61,23 +61,56 @@ function renderTasksHtml(indexOfTask, task, colorCategory) {
   `;
 }
 
-function renderContactsInTasks(indexOfTask, contactsIds) {
-  for (let i = 0; i < 2; i++) {
+/**
+ * Renders the contacts in a task.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {string[]} contactsIds - The IDs of the contacts.
+ */
+function renderContactsInTaskCards(indexOfTask, contactsIds) {
+  const amountContacts = contactsIds.length;
+  renderFirstTwoContacts(indexOfTask, contactsIds);
+  renderRemainingAmountOfContacts(indexOfTask, amountContacts);
+}
+
+/**
+ * Renders the first two contacts in a task.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {string[]} contactsIds - The IDs of the contacts.
+ */
+function renderFirstTwoContacts(indexOfTask, contactsIds) {
+  const maxContacts = Math.min(2, contactsIds.length);
+  for (let i = 0; i < maxContacts; i++) {
     const contactData = getUserData(contactsIds[i]);
     const initials = contactData.initials;
     const color = contactData.color;
-    document.getElementById(`contacts${indexOfTask}`).innerHTML +=
-      renderContactsInTasksHtml(initials, color);
-  }
-  let amountContacts = contactsIds.length;
-  if (amountContacts > 2) {
-    let remainingContacts = "+" + (amountContacts - 2);
-    document.getElementById(`contacts${indexOfTask}`).innerHTML +=
-      renderContactsInTasksHtml(remainingContacts, "blue");
+    appendContactHtml(indexOfTask, initials, color);
   }
 }
 
-function renderContactsInTasksHtml(initials, color) {
+/**
+ * Renders the remaining contacts in a task.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {number} amountContacts - The total number of contacts.
+ */
+function renderRemainingAmountOfContacts(indexOfTask, amountContacts) {
+  if (amountContacts > 2) {
+    const remainingContacts = "+" + (amountContacts - 2);
+    appendContactHtml(indexOfTask, remainingContacts, "blue");
+  }
+}
+
+/**
+ * Appends the contact HTML to the specified task.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {string} initials - The initials of the contact.
+ * @param {string} color - The color of the contact.
+ */
+function appendContactHtml(indexOfTask, initials, color) {
+  document.getElementById(`contacts${indexOfTask}`).innerHTML +=
+    renderContactsInTaskCardsHtml(initials, color);
+}
+
+function renderContactsInTaskCardsHtml(initials, color) {
   return /*html*/ `
     <div class="initialsOfNames smallCircle" style="background-color:${color}">${initials}</div>
   `;

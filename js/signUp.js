@@ -7,10 +7,13 @@ async function initSignUp() {
  * If the user is already registered, it displays an error message.
  * If the user is not registered, it proceeds to register the user.
  */
-function checkIfUserAlreadyRegistered() {
+function checkSignUpData() {
   const existingUser = checkForExistingUser();
+  const existingName = checkForExistingName();
   if (existingUser) {
     userIsAlreadyRegistered();
+  } else if (existingName) {
+    nameIsAlreadyTaken();
   } else {
     registerNewUser();
   }
@@ -22,6 +25,23 @@ function checkIfUserAlreadyRegistered() {
  */
 function checkForExistingUser() {
   return USERS.find((user) => user.email === signUpEmail.value);
+}
+
+/**
+ * Checks if the user's email matches any user in the `users` array.
+ * @returns {Object|undefined} The user object if login data is correct, otherwise undefined.
+ */
+function checkForExistingName() {
+  return USERS.find((user) => user.name === signUpName.value);
+}
+
+/**
+ * Displays an error message indicating that the provided name is already registered.
+ */
+function nameIsAlreadyTaken() {
+  const error = document
+    .getElementById("nameIsAlreadyTaken")
+    .classList.remove("d-none");
 }
 
 /**

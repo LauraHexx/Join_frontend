@@ -28,9 +28,7 @@
           <h1 class="title">Sign up</h1>
         </div>
         <div class="blueLine marginTop"></div>
-        <form
-          class="form marginTop"
-          onsubmit="checkIfUserAlreadyRegistered(); return false">
+        <form class="form marginTop" onsubmit="checkSignUpData(); return false">
           <input
             required
             id="signUpName"
@@ -38,6 +36,9 @@
             type="name"
             placeholder="Name"
             required />
+          <span class="d-none error" id="nameIsAlreadyTaken"
+            >Please enter a new name. This is already taken</span
+          >
           <input
             required
             id="signUpEmail"
@@ -45,9 +46,10 @@
             type="email"
             placeholder="Email"
             required />
-          <span class="d-none" id="userIsAlreadyRegistered"
+          <span class="d-none error" id="userIsAlreadyRegistered"
             >User is already registered</span
           >
+
           <input
             required
             id="signUpPassword"
