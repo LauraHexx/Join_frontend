@@ -511,6 +511,8 @@ function stopAddingNewCategory() {
 
 function resetNewCategory() {
   moveSelectedColorCircleDown();
+  hideError("errorNewCategoryNoNameEntered");
+  hideError("errorNewCategoryNoColorSelected");
   document.getElementById("newCategoryInput").value = "";
 }
 
