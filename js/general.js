@@ -6,36 +6,42 @@ const SAMPLE_DATA_CONTACTS = [
     name: "Max Mustermann",
     email: "max.mustermann@test",
     phone: "+49123456456",
+    initials: "MM",
   },
   {
     color: "#00FF00",
     name: "Erika Musterfrau",
     email: "erika.musterfrau@test",
     phone: "+49789123789",
+    initials: "EM",
   },
   {
     color: "#0000FF",
     name: "John Doe",
     email: "john.doe@test",
     phone: "+49456789123",
+    initials: "JD",
   },
   {
     color: "#FFFF00",
     name: "Johny Depp",
     email: "johny.depp@test",
     phone: "+49987654321",
+    initials: "JD",
   },
   {
     color: "#00FFFF",
     name: "Laura Residenz",
     email: "laura.residenz@test",
     phone: "+49654987321",
+    initials: "LR",
   },
   {
     color: "#FFA500",
     name: "Hannah Müller",
     email: "hannah.mueller@test",
     phone: "+49111222333",
+    initials: "HM",
   },
 ];
 
