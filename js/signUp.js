@@ -27,22 +27,23 @@ function checkForExistingUser() {
  * Loads the summary after registration.
  */
 async function registerNewUser() {
-  pushDataToArray();
+  pushNewUserToArray();
   await setItem("users", JSON.stringify(USERS));
-  setDataForGreeting(setUserId());
   loadTemplate("summary.html");
 }
 
-function pushDataToArray() {
-  USERS.push({
+function pushNewUserToArray() {
+  const newUser = {
     color: getRandomColor(),
-    id: setUserId(),
+    id: getUserId(),
     name: signUpName.value,
     email: signUpEmail.value,
     password: signUpPassword.value,
-    phone: +49,
     tasks: [],
-  });
+    contacts: [],
+  };
+  USERS.push(newUser);
+  setDataForGreeting(newUser.id);
 }
 
 /**
@@ -51,11 +52,6 @@ function pushDataToArray() {
  */
 function getRandomColor() {
   return "#" + Math.floor(Math.random() * 16777215).toString(16);
-}
-
-function setUserId() {
-  const id = USERS.length + 1;
-  return id;
 }
 
 /**

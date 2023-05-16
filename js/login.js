@@ -29,7 +29,7 @@ function getLocalStorage() {
  * and loads the summary template. Otherwise, it calls the `wrongData` function.
  */
 function checkIfDataCorrect() {
-  const correctUserData = checkData();
+  const correctUserData = lookForUserData();
   if (correctUserData) {
     checkIfRememberMeActiv();
     setItemInLocalStorage("loggedUserId", correctUserData.id);
@@ -43,7 +43,7 @@ function checkIfDataCorrect() {
  * Checks if the user's email and password match any user in the `users` array.
  * @returns {Object|undefined} The user object if login data is correct, otherwise undefined.
  */
-function checkData() {
+function lookForUserData() {
   return USERS.find(
     (user) =>
       user.email === loginEmail.value && user.password === loginPassword.value
@@ -69,7 +69,16 @@ function wrongData() {
     .classList.remove("d-none");
 }
 
-function guestLogin() {
-  setDataForGreeting("Guest");
+async function guestLogin() {
+  const newGuestUser = {
+    color: getRandomColor(),
+    id: getUserId(),
+    name: "Guest",
+    tasks: [],
+    contacts: [],
+  };
+  USERS.push(newGuestUser);
+  await setItem("users", JSON.stringify(USERS));
+  setDataForGreeting(newGuestUser.id);
   loadTemplate("templates/summary.html");
 }

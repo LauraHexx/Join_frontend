@@ -288,3 +288,16 @@ function showError(id) {
 async function sortCategorysAlphabetically() {
   CATEGORYS = CATEGORYS.sort((a, b) => a.name.localeCompare(b.name));
 }
+
+function getUserId() {
+  const id = USERS.length + 1;
+  return id;
+}
+
+/**
+ * Generates a random hex code.
+ * @returns {string} A random hex code.
+ */
+function getRandomColor() {
+  return "#" + Math.floor(Math.random() * 16777215).toString(16);
+}
