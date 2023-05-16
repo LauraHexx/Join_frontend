@@ -1,6 +1,6 @@
 /*
 const FIRST_INITIALS_NO_DUPLICAT = [];
-let SELECTED_USER = "";
+let SELECTED_CONTACT = "";
 let CONTACTS = [];
 
 async function initContacts() {
@@ -74,7 +74,7 @@ function renderContactsHtml(user) {
 }
 
 async function openContactDetails(userId) {
-  SELECTED_USER = getUserData(userId);
+  SELECTED_CONTACT = getUserData(userId);
   renderContactDetails();
   await playAnimation("mainInfosContact", "animation-slideInRight");
   setTimeout(() => {
@@ -91,9 +91,9 @@ function renderContactDetails() {
 function renderContactDetailsHtml() {
   return /*html*/ `
    <div class="addTaskToContact gap">
-     <div class="initialsOfNames bigCircle">${SELECTED_USER.initials}</div>
+     <div class="initialsOfNames bigCircle">${SELECTED_CONTACT.initials}</div>
      <div class="NameAndAddTask">
-       <span class="name">${SELECTED_USER.name}</span>
+       <span class="name">${SELECTED_CONTACT.name}</span>
        <a
          onclick="toggleClass('body', 'overflowHidden'); showAddTask('containerAdd','animation-slideInRight','d-none')"
          class="addTask">
@@ -117,11 +117,11 @@ function renderContactDetailsHtml() {
    <div class="emailAndPhone gap">
      <div class="email">
        <span class="bold">Email</span>
-       <a href="mailto:${SELECTED_USER.email}">${SELECTED_USER.email}</a>
+       <a href="mailto:${SELECTED_CONTACT.email}">${SELECTED_CONTACT.email}</a>
      </div>
      <div class="phone">
        <span class="bold">Phone</span>
-       <a href="phone:${SELECTED_USER.phone}">${SELECTED_USER.phone}</a>
+       <a href="phone:${SELECTED_CONTACT.phone}">${SELECTED_CONTACT.phone}</a>
      </div>
    </div>
   `;
@@ -156,24 +156,24 @@ function renderEditContactHtml() {
           class="cursorPointer closeDarkEdit"
           src="../assets/img/closeDark.svg"
           alt="image of icon to close the adding" />
-        <div id="editContactInitials" class="bigCircleEdit">${SELECTED_USER.initials}</div>
+        <div id="editContactInitials" class="bigCircleEdit">${SELECTED_CONTACT.initials}</div>
         <form onsubmit="saveChanges(); return false" class="formEdit">
           <input
-            value="${SELECTED_USER.name}"
+            value="${SELECTED_CONTACT.name}"
             id="editContactName"
             class="input inputName"
             type="name"
             placeholder="Name"
             required />
           <input
-            value="${SELECTED_USER.email}"
+            value="${SELECTED_CONTACT.email}"
             id="editContactEmail"
             class="input inputEmail"
             type="email"
             placeholder="Email"
             required />
           <input
-            value="${SELECTED_USER.phone}"
+            value="${SELECTED_CONTACT.phone}"
             id="editContactPhone"
             class="input inputPassword"
             type="number"
@@ -190,9 +190,9 @@ function renderEditContactHtml() {
 }
 
 function deleteChanges() {
-  editContactName.value = SELECTED_USER.name;
-  editContactEmail.value = SELECTED_USER.email;
-  editContactPhone.value = SELECTED_USER.phone;
+  editContactName.value = SELECTED_CONTACT.name;
+  editContactEmail.value = SELECTED_CONTACT.email;
+  editContactPhone.value = SELECTED_CONTACT.phone;
 }
 
 async function saveChanges() {
@@ -214,7 +214,7 @@ function formatNewData() {
 }
 
 function changeData(formattedName, formattedEmail, initials) {
-  let indexUserToEdit = USERS.indexOf(SELECTED_USER);
+  let indexUserToEdit = USERS.indexOf(SELECTED_CONTACT);
   let userToEdit = USERS[indexUserToEdit];
   userToEdit.name = formattedName;
   userToEdit.email = formattedEmail;
@@ -222,11 +222,7 @@ function changeData(formattedName, formattedEmail, initials) {
   userToEdit.initials = initials;
 }
 
-/**
- * Get initials from a name.
- * @param {string} name - The name to extract initials from.
- * @returns {string} The initials of the name.
- */
+
 function getInitials() {
   const names = editContactName.value.trim().split(" ");
   let initials = "";
@@ -242,11 +238,7 @@ function oneName(names) {
   return names.length === 1;
 }
 
-/**
- * Get initials for a single name.
- * @param {string} name - The name to extract initials from.
- * @returns {string} The initials of the name.
- */
+
 function getInitialsForSingleName(name) {
   const initials = name[0].toUpperCase();
   return initials;
@@ -256,11 +248,7 @@ function moreThanOneName(names) {
   return names.length > 1;
 }
 
-/**
- * Get initials from a full name.
- * @param {string[]} names - An array of names [firstName, lastName].
- * @returns {string} The initials of the full name.
- */
+
 function getInitialsForFullName(names) {
   const firstNameInitial = names[0][0].toUpperCase();
   const lastNameInitial = names[names.length - 1][0].toUpperCase();

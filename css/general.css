@@ -214,6 +214,13 @@ button:hover:not(.selectedPrioBtn) {
   background-size: 19px 16px;
 }
 
+.inputPhone {
+  background-image: url("../assets/img/inputPhone.svg");
+  background-repeat: no-repeat;
+  background-position: center right 5px;
+  background-size: 19px 16px;
+}
+
 /* AFTER LOGIN */
 
 .contentAfterLogin {

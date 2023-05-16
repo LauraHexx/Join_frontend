@@ -123,3 +123,65 @@ function renderContactDetailsHtml() {
      </div>
     `;
 }
+
+function renderEditContact() {
+  document.getElementById("contentEditDisplay").innerHTML =
+    renderEditContactHtml();
+  showDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
+  toggleClass("body", "overflowHidden");
+}
+
+function renderEditContactHtml() {
+  return /*html*/ `
+      <div class="displayEditContact">
+        <div class="leftSectionEdit">
+          <img
+          onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
+            class="cursorPointer closeWhite d-none"
+            src="../assets/img/closeWhite.svg"
+            alt="image of icon to close the editing" />
+          <img
+            class="logoEdit"
+            src="../assets/img/logoWhite.svg"
+            alt="logo of join" />
+          <h1>Edit contact</h1>
+          <div class="blueLine"></div>
+        </div>
+        <div class="rightSectionEdit">
+          <img
+            onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
+            class="cursorPointer closeDarkEdit"
+            src="../assets/img/closeDark.svg"
+            alt="image of icon to close the adding" />
+          <div id="editContactInitials" class="bigCircleEdit">${SELECTED_CONTACT.initials}</div>
+          <form class="formEdit">
+            <input
+              value="${SELECTED_CONTACT.name}"
+              id="editContactName"
+              class="input inputName"
+              type="name"
+              placeholder="Name"
+              required />
+            <input
+              value="${SELECTED_CONTACT.email}"
+              id="editContactEmail"
+              class="input inputEmail"
+              type="email"
+              placeholder="Email"
+              required />
+            <input
+              value=${SELECTED_CONTACT.phone}
+              id="editContactPhone"
+              class="input inputPhone"
+              type="number"
+              placeholder="Phone"
+               />
+            <div class="editContactBtns">
+              <button onclick="deleteChanges()" class="deleteBtn">Delete</button>
+              <button onclick="saveChanges()" class="saveBtn">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    `;
+}
