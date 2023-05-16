@@ -382,7 +382,7 @@ function getDescription() {
 }
 
 function getCategory() {
-  let cateGoryName = document.getElementById("newCategoryInput");
+  let cateGoryName = document.getElementById("selectedCategoryName");
   if (cateGoryName) {
     hideError("errorNoCategorySelected");
     return cateGoryName.innerHTML;
