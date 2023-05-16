@@ -4,31 +4,11 @@ async function initSignUp() {
 
 function checkSignUpData() {
   const existingUser = checkForExistingUser();
-  const existingName = checkForExistingName();
   if (existingUser) {
     showError("userIsAlreadyRegistered");
-  } else if (existingName) {
-    showError("nameIsAlreadyTaken");
-    hideError("userIsAlreadyRegistered");
   } else {
     registerNewUser();
   }
-
-  /*
-  if (existingUser) {
-    showError("userIsAlreadyRegistered");
-    hideError("nameIsAlreadyTaken");
-    return;
-  }
-  if (existingName) {
-    hideError("userIsAlreadyRegistered");
-    showError("nameIsAlreadyTaken");
-    return;
-  }
-  if (!existingName && !existingName) {
-    registerNewUser();
-  }
-  */
 }
 
 /**
@@ -81,6 +61,7 @@ function pushDataToArray(formattedName, formattedEmail) {
     password: signUpPassword.value,
     phone: 049,
     initials: getInitials(),
+    tasks: [],
   });
 }
 
