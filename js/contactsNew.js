@@ -1,4 +1,4 @@
-let SELECTED_USER = "";
+let SELECTED_CONTACT = "";
 let CONTACTS = [];
 let FIRST_INITIALS_NO_DUPLICAT = [];
 
@@ -46,15 +46,16 @@ function renderFirstInitialsListHtml(firstInitial) {
 function renderContacts() {
   CONTACTS.forEach((contact) => {
     const firstInitial = contact.initials.charAt(0);
+    const indexOfContact = CONTACTS.indexOf(contact);
     document.getElementById(`contactsLetter${firstInitial}`).innerHTML +=
-      renderContactsHtml(contact);
+      renderContactsHtml(contact, indexOfContact);
   });
 }
 
-function renderContactsHtml(contact) {
+function renderContactsHtml(contact, indexOfContact) {
   return /*html*/ `
      <div
-        onclick="openContactDetails(${contact.id})"
+        onclick="openContactDetails(${indexOfContact})"
         class="singleContact">
         <div style="background-color: ${contact.color}" class="initialsOfNames smallCircle">${contact.initials}</div>
         <div id="deatilsOfUSer">
@@ -66,5 +67,59 @@ function renderContactsHtml(contact) {
           >
         </div>
       </div>
+    `;
+}
+
+async function openContactDetails(indexOfContact) {
+  SELECTED_CONTACT = CONTACTS[indexOfContact];
+  renderContactDetails();
+  await playAnimation("mainInfosContact", "animation-slideInRight");
+  setTimeout(() => {
+    toggleClass("mainInfosContact", "animation-slideInRight");
+  }, 1000);
+}
+
+function renderContactDetails() {
+  document.getElementById("mainInfosContact").innerHTML = "";
+  document.getElementById("mainInfosContact").innerHTML =
+    renderContactDetailsHtml();
+}
+
+function renderContactDetailsHtml() {
+  return /*html*/ `
+     <div class="addTaskToContact gap">
+       <div class="initialsOfNames bigCircle">${SELECTED_CONTACT.initials}</div>
+       <div class="nameAndAddTask">
+         <span class="name">${SELECTED_CONTACT.name}</span>
+         <a
+           onclick="toggleClass('body', 'overflowHidden'); showAddTask('containerAdd','animation-slideInRight','d-none')"
+           class="addTask">
+           <img
+             src="../assets/img/plusBlue.svg"
+             alt="image of icon to add a task" />
+           <span>Add Task</span>
+         </a>
+       </div>
+     </div>
+     <div class="editContact gap">
+       <span>Contact Information</span>
+       <a
+         onclick="renderEditContact()">
+         <img
+           src="../assets/img/pencilBlue.svg"
+           alt="image of icon to edit contact" />
+         <span class="editContactSpan">Edit Contact</span>
+       </a>
+     </div>
+     <div class="emailAndPhone gap">
+       <div class="email">
+         <span class="bold">Email</span>
+         <a href="mailto:${SELECTED_CONTACT.email}">${SELECTED_CONTACT.email}</a>
+       </div>
+       <div class="phone">
+         <span class="bold">Phone</span>
+         <a href="phone:${SELECTED_CONTACT.phone}">${SELECTED_CONTACT.phone}</a>
+       </div>
+     </div>
     `;
 }
