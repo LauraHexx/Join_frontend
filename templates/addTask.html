@@ -49,7 +49,6 @@
             <div id="selectCategoryTitleDiv">
               <span id="selectCategoryTitle">Select task category</span>
               <img
-                onclick="toggleClass('listCategorys', 'd-none')"
                 class="inputImage"
                 src="../assets/img/addTaskDropDownArrow.svg"
                 alt="arrow to drop down the menu of categorys" />
@@ -82,7 +81,7 @@
                 alt="icon to add a new category" />
             </div>
           </div>
-          <span id="errorNewCategoryNameAlreadyCreated" class="d-none"
+          <span id="errorNewCategoryNameAlreadyExists" class="d-none"
             >This category already exists. Please enter another name</span
           >
           <span id="errorNewCategoryNoNameEntered" class="d-none"
@@ -92,21 +91,27 @@
           <div id="newCategoryColorSelection" class="d-none">
             <div
               onclick="moveSelectedColorCircleUp(event)"
+              id="purple"
               class="purple circle cursorPointer"></div>
             <div
               onclick="moveSelectedColorCircleUp(event)"
+              id="red"
               class="red circle cursorPointer"></div>
             <div
               onclick="moveSelectedColorCircleUp(event)"
+              id="green"
               class="green circle cursorPointer"></div>
             <div
               onclick="moveSelectedColorCircleUp(event)"
+              id="orange"
               class="orange circle cursorPointer"></div>
             <div
               onclick="moveSelectedColorCircleUp(event)"
+              id="rosa"
               class="rosa circle cursorPointer"></div>
             <div
               onclick="moveSelectedColorCircleUp(event)"
+              id="blue"
               class="blue circle cursorPointer"></div>
           </div>
           <span id="errorNewCategoryNoColorSelected" class="d-none"
@@ -117,10 +122,8 @@
           >
           <!--CONTACTS-->
           <span>Assigned to</span>
-          <div id="selectContact" class="containerSection">
-            <div
-              onclick="toggleClass('listContacts', 'd-none')"
-              class="containerTitle">
+          <div id="selectContactsDiv" class="containerSection">
+            <div id="selectContactsTitleDiv" class="containerTitle">
               <span id="selectContactsTitle">Select contacts to assign</span>
               <img
                 class="inputImage"

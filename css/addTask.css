@@ -70,7 +70,8 @@ input::placeholder {
   border: 1px solid var(--grey);
 }
 
-#selectCategoryDiv {
+#selectCategoryDiv,
+#selectContactsDiv {
   position: relative;
   box-sizing: border-box;
   background: var(--bright-white);
@@ -80,7 +81,8 @@ input::placeholder {
   cursor: pointer;
 }
 
-#selectCategoryTitleDiv {
+#selectCategoryTitleDiv,
+#selectContactsTitleDiv {
   padding: 15px 20px;
 }
 
@@ -220,7 +222,7 @@ input::placeholder {
   font-size: 12px;
 }
 
-#errorNewCategoryNameAlreadyCreated {
+#errorNewCategoryNameAlreadyExists {
   padding-left: 20px;
   margin-top: -10px;
   color: red;

@@ -11,6 +11,7 @@ async function initAddTask() {
   await renderContacts();
   await renderCategorys();
   await showContentOfTemplate();
+  eventCloseDropDown();
 }
 
 async function showContentOfTemplate() {
@@ -60,7 +61,7 @@ async function addNewCategory() {
 
 function getNewCategory() {
   let newCategory = document.getElementById("newCategoryInput").value;
-  if (newCategory === "") {
+  if (noCategoryNameEntered(newCategory)) {
     setErrorsNoCategoryEntered();
     newCategory = undefined;
   }
@@ -71,9 +72,14 @@ function getNewCategory() {
   return newCategory;
 }
 
+function noCategoryNameEntered(newCategory) {
+  return newCategory === "";
+}
+
 function setErrorsNoCategoryEntered() {
   showError("errorNewCategoryNoNameEntered");
   hideError("errorNoCategorySelected");
+  hideError("errorNewCategoryNameAlreadyExists");
 }
 
 function categoryNameAlreadyExists(newCategory) {
@@ -81,8 +87,9 @@ function categoryNameAlreadyExists(newCategory) {
 }
 
 function setErrorsCategoryAlreadyExists() {
-  showError("errorNewCategoryNameAlreadyCreated");
+  showError("errorNewCategoryNameAlreadyExists");
   hideError("errorNoCategorySelected");
+  hideError("errorNewCategoryNoNameEntered");
 }
 
 /**
@@ -93,7 +100,7 @@ function setErrorsCategoryAlreadyExists() {
 function getSelectedColor() {
   const selectedColor = document.querySelector(".selectedColor");
   console.log(selectedColor);
-  if (colorWasSelected(selectedColor)) {
+  if (selectedColor) {
     deleteColorError(selectedColor);
     return selectedColor.id;
   } else {
@@ -102,20 +109,35 @@ function getSelectedColor() {
   }
 }
 
-async function checkAndPushCategory(newCategory, colour) {
-  if (newCategory && colour) {
+function deleteColorError() {
+  hideError("errorNewCategoryNoColorSelected");
+}
+
+function showErrorNoColorSelected() {
+  showError("errorNewCategoryNoColorSelected");
+}
+
+async function checkAndPushCategory(newCategory, color) {
+  if (newCategory && color) {
     CATEGORYS.push({
       name: newCategory,
-      color: colour,
+      color: color,
     });
     changeStyleCategory();
+    deleteAllErrors();
+    resetNewCategory();
+    setSelectedCategory(newCategory, color);
   }
+}
+
+function deleteAllErrors() {
+  hideError("errorNewCategoryNoNameEntered");
+  hideError("errorNewCategoryNameAlreadyExists");
 }
 
 function changeStyleCategory() {
   toggleClass("selectCategoryDiv", "d-none");
   toggleClass("newCategoryDiv", "d-none");
-  toggleClass("listCategorys", "d-none");
   toggleClass("newCategoryColorSelection", "d-none");
 }
 
@@ -159,7 +181,7 @@ function renderContacts() {
 
 function renderContactsHtml(name, id) {
   return /*html*/ `
-    <li class="oneContact">
+    <li class="oneContact" onclick="event.stopPropagation();">
       <div onclick="toggleCheckbox(${id})" class="toggleCheckbox"></div>
       <label class="nameOfContact">${name}</label>
       <input id="checkBoxUser${id}" type="checkbox"/>
@@ -489,4 +511,78 @@ function toggleInviteContact() {
 function showSelectContacts() {
   toggleInviteContact();
   toggleClass("listContacts", "d-none");
+}
+
+// Event listener for closing the dropdown menus
+function eventCloseDropDown() {
+  closeDropDown();
+  toggleCategoryDropDownContainer();
+  toggleContactDropDownContainer();
+}
+
+/**
+ * Closes the dropdown menus when clicked anywhere on the page, except for the "listContacts" element.
+ */
+function closeDropDown() {
+  document.addEventListener("click", handleClickOnPage);
+
+  /**
+   * Handles the click event on the page.
+   * @param {Event} event - The click event object.
+   */
+  function handleClickOnPage(event) {
+    if (
+      !event.target.closest("#listContacts") &&
+      !event.target.closest("#selectContactsDiv")
+    ) {
+      hideDropdown("listContacts");
+      hideDropdown("listCategorys");
+    }
+  }
+}
+
+/**
+ * Hides the specified dropdown menu by adding the "d-none" class.
+ * @param {string} id - The ID of the dropdown menu element.
+ */
+function hideDropdown(id) {
+  let dropDownList = document.getElementById(id);
+  dropDownList.classList.add("d-none");
+}
+
+/**
+ * Toggles the visibility of the category dropdown menu.
+ */
+function toggleCategoryDropDownContainer() {
+  document
+    .getElementById("selectCategoryDiv")
+    .addEventListener("click", handleClick);
+
+  /**
+   * Handles the click event on the category dropdown container.
+   * @param {Event} event - The click event object.
+   */
+  function handleClick(event) {
+    event.stopPropagation();
+    toggleClass("listCategorys", "d-none");
+    hideDropdown("listContacts");
+  }
+}
+
+/**
+ * Toggles the visibility of the contact dropdown menu.
+ */
+function toggleContactDropDownContainer() {
+  document
+    .getElementById("selectContactsDiv")
+    .addEventListener("click", handleClick);
+
+  /**
+   * Handles the click event on the contact dropdown container.
+   * @param {Event} event - The click event object.
+   */
+  function handleClick(event) {
+    event.stopPropagation();
+    toggleClass("listContacts", "d-none");
+  }
 }

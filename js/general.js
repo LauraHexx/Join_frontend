@@ -220,6 +220,17 @@ function hideDisplay(id, className) {
   toggleBlurFilter();
 }
 
+/**
+ * Toggles the specified class of the given element ID. If the element has the class, it is removed.
+ * If it doesn't have the class, it is added.
+ * @param {string} elementId - The ID of the element to toggle the class for.
+ * @param {string} className - The class to toggle.
+ */
+function toggleClass(elementId, className) {
+  let element = document.getElementById(elementId);
+  element.classList.toggle(className);
+}
+
 function getUserData(userId) {
   let user = USERS.find((user) => user.id === userId);
   return user;
