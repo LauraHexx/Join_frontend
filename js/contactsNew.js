@@ -1,6 +1,6 @@
-let SELECTED_CONTACT = "";
 let CONTACTS = [];
 let FIRST_INITIALS_NO_DUPLICAT = [];
+let SELECTED_CONTACT = "";
 
 async function initContacts() {
   await loadUserData();
