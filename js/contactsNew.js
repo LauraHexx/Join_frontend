@@ -118,7 +118,7 @@ function renderContactDetailsHtml() {
        </div>
        <div class="phone">
          <span class="bold">Phone</span>
-         <a href="phone:${SELECTED_CONTACT.phone}">${SELECTED_CONTACT.phone}</a>
+         <a href="tel:${SELECTED_CONTACT.phone}">${SELECTED_CONTACT.phone}</a>
        </div>
      </div>
     `;
