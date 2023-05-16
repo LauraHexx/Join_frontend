@@ -20,14 +20,6 @@ function checkForExistingUser() {
 }
 
 /**
- * Checks if the user's email matches any user in the `users` array.
- * @returns {Object|undefined} The user object if login data is correct, otherwise undefined.
- */
-function checkForExistingName() {
-  return USERS.find((user) => user.name === signUpName.value);
-}
-
-/**
  * Registers a new user with the provided name, email, and password.
  * The user information is added to the 'users' array.
  * The 'users' array is stored in the storage as a JSON string.
@@ -35,32 +27,20 @@ function checkForExistingName() {
  * Loads the summary after registration.
  */
 async function registerNewUser() {
-  setDataForGreeting(determineId());
-  formatAndPushData();
+  pushDataToArray();
   await setItem("users", JSON.stringify(USERS));
+  setDataForGreeting(setUserId());
   loadTemplate("summary.html");
 }
 
-function formatAndPushData() {
-  const name = signUpName.value;
-  const formattedName = name
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-  const email = signUpEmail.value;
-  const formattedEmail = email.toLowerCase();
-  pushDataToArray(formattedName, formattedEmail);
-}
-
-function pushDataToArray(formattedName, formattedEmail) {
+function pushDataToArray() {
   USERS.push({
     color: getRandomColor(),
-    id: determineId(),
-    name: formattedName,
-    email: formattedEmail,
+    id: setUserId(),
+    name: signUpName.value,
+    email: signUpEmail.value,
     password: signUpPassword.value,
-    phone: 049,
-    initials: getInitials(),
+    phone: +49,
     tasks: [],
   });
 }
@@ -73,7 +53,7 @@ function getRandomColor() {
   return "#" + Math.floor(Math.random() * 16777215).toString(16);
 }
 
-function determineId() {
+function setUserId() {
   const id = USERS.length + 1;
   return id;
 }
@@ -84,18 +64,18 @@ function determineId() {
  * @returns {string} The initials of the name.
  */
 function getInitials() {
-  const names = signUpName.value.trim().split(" ");
+  const fullname = signUpName.value.trim().split(" ");
   let initials = "";
-  if (oneName(names)) {
-    initials = getInitialsForSingleName(names[0]);
-  } else if (moreThanOneName(names)) {
-    initials = getInitialsForFullName(names);
+  if (oneName(fullname)) {
+    initials = getFirstInitial(fullname[0]);
+  } else {
+    initials = getFirstAndLastInitial(fullname);
   }
   return initials;
 }
 
-function oneName(names) {
-  return names.length === 1;
+function oneName(fullname) {
+  return fullname.length === 1;
 }
 
 /**
@@ -103,13 +83,9 @@ function oneName(names) {
  * @param {string} name - The name to extract initials from.
  * @returns {string} The initials of the name.
  */
-function getInitialsForSingleName(name) {
-  const initials = name[0].toUpperCase();
-  return initials;
-}
-
-function moreThanOneName(names) {
-  return names.length > 1;
+function getFirstInitial(fullname) {
+  const initial = name[0].toUpperCase();
+  return initial;
 }
 
 /**
@@ -117,9 +93,9 @@ function moreThanOneName(names) {
  * @param {string[]} names - An array of names [firstName, lastName].
  * @returns {string} The initials of the full name.
  */
-function getInitialsForFullName(names) {
-  const firstNameInitial = names[0][0].toUpperCase();
-  const lastNameInitial = names[names.length - 1][0].toUpperCase();
+function getFirstAndLastInitial(fullname) {
+  const firstNameInitial = fullname[0][0].toUpperCase();
+  const lastNameInitial = fullname[fullname.length - 1][0].toUpperCase();
   const initials = firstNameInitial + lastNameInitial;
   return initials;
 }

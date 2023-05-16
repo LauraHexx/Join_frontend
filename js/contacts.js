@@ -1,5 +1,6 @@
 const FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_USER = "";
+let CONTACTS = [];
 
 async function initContacts() {
   await checkIfUserLoggedIn();
