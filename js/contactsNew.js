@@ -154,7 +154,7 @@ function renderEditContactHtml() {
             src="../assets/img/closeDark.svg"
             alt="image of icon to close the adding" />
           <div id="editContactInitials" class="bigCircleEdit">${SELECTED_CONTACT.initials}</div>
-          <form class="formEdit">
+          <div class="formEdit">
             <input
               value="${SELECTED_CONTACT.name}"
               id="editContactName"
@@ -169,6 +169,7 @@ function renderEditContactHtml() {
               type="email"
               placeholder="Email"
               required />
+            <span id="errorEmailIsAlreadyTaken" class="d-none">Email already belongs to a contact. Please update it.</span>
             <input
               value=${SELECTED_CONTACT.phone}
               id="editContactPhone"
@@ -180,8 +181,40 @@ function renderEditContactHtml() {
               <button onclick="deleteChanges()" class="deleteBtn">Delete</button>
               <button onclick="saveChanges()" class="saveBtn">Save</button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     `;
+}
+
+function deleteChanges() {
+  editContactName.value = SELECTED_CONTACT.name;
+  editContactEmail.value = SELECTED_CONTACT.email;
+  editContactPhone.value = SELECTED_CONTACT.phone;
+}
+
+function saveChanges() {
+  checkIfEmailIsAlreadyExisting();
+  /*
+  let indexContactToEdit = USERS.indexOf(SELECTED_CONTACT);
+  let contactToEdit = USERS[indexContactToEdit];
+  contactToEdit.name = editContactName.value;
+  contactToEdit.email = editContactEmail.value;
+  contactToEdit.phone = editContactPhone.value;
+  contactToEdit.initials = getInitials(editContactName.value);
+  */
+}
+
+function checkIfEmailIsAlreadyExisting() {
+  const filteredContacts = CONTACTS.filter(
+    (contact) => contact !== SELECTED_CONTACT
+  );
+  const foundContact = filteredContacts.find(
+    (contact) => contact.email === editContactEmail.value
+  );
+  if (foundContact) {
+    showError("errorEmailIsAlreadyTaken");
+  } else {
+    console.log("Ändern");
+  }
 }

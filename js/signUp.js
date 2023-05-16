@@ -26,7 +26,7 @@ function pushNewUserToArray() {
     color: getRandomColor(),
     id: getUserId(),
     name: signUpName.value,
-    initials: getInitials(),
+    initials: getInitials(signUpName.value),
     email: signUpEmail.value,
     password: signUpPassword.value,
     tasks: [],
@@ -36,8 +36,8 @@ function pushNewUserToArray() {
   setDataForGreeting(newUser.id);
 }
 
-function getInitials() {
-  const partsOfName = signUpName.value.trim().split(" ");
+function getInitials(fullname) {
+  const partsOfName = fullname.trim().split(" ");
   let initials = "";
   if (oneName(partsOfName)) {
     initials = getFirstTwoInitials(partsOfName[0]);

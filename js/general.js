@@ -340,3 +340,32 @@ function getUserId() {
 function getRandomColor() {
   return "#" + Math.floor(Math.random() * 16777215).toString(16);
 }
+
+function getInitials(fullname) {
+  const partsOfName = fullname.trim().split(" ");
+  let initials = "";
+  if (oneName(partsOfName)) {
+    initials = getFirstTwoInitials(partsOfName[0]);
+  } else {
+    initials = getFirstAndLastInitial(partsOfName);
+  }
+  return initials;
+}
+
+function oneName(partsOfName) {
+  return partsOfName.length === 1;
+}
+
+function getFirstTwoInitials(name) {
+  const firstInitial = name[0].toUpperCase();
+  const secondInitial = name[1].toUpperCase();
+  const initials = firstInitial + secondInitial;
+  return initials;
+}
+
+function getFirstAndLastInitial(partsOfName) {
+  const firstNameInitial = partsOfName[0][0].toUpperCase();
+  const lastNameInitial = partsOfName[partsOfName.length - 1][0].toUpperCase();
+  const initials = firstNameInitial + lastNameInitial;
+  return initials;
+}
