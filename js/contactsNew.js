@@ -179,7 +179,7 @@ function renderEditContactHtml() {
                />
             <div class="editContactBtns">
               <button onclick="deleteChanges()" class="deleteBtn">Delete</button>
-              <button onclick="saveChanges()" class="saveBtn">Save</button>
+              <button onclick="checkChanges()" class="saveBtn">Save</button>
             </div>
           </div>
         </div>
@@ -193,19 +193,7 @@ function deleteChanges() {
   editContactPhone.value = SELECTED_CONTACT.phone;
 }
 
-function saveChanges() {
-  checkIfEmailIsAlreadyExisting();
-  /*
-  let indexContactToEdit = USERS.indexOf(SELECTED_CONTACT);
-  let contactToEdit = USERS[indexContactToEdit];
-  contactToEdit.name = editContactName.value;
-  contactToEdit.email = editContactEmail.value;
-  contactToEdit.phone = editContactPhone.value;
-  contactToEdit.initials = getInitials(editContactName.value);
-  */
-}
-
-function checkIfEmailIsAlreadyExisting() {
+function checkChanges() {
   const filteredContacts = CONTACTS.filter(
     (contact) => contact !== SELECTED_CONTACT
   );
@@ -215,6 +203,18 @@ function checkIfEmailIsAlreadyExisting() {
   if (foundContact) {
     showError("errorEmailIsAlreadyTaken");
   } else {
-    console.log("Ändern");
+    saveChanges();
   }
+}
+
+async function saveChanges() {
+  let indexContactToEdit = CONTACTS.indexOf(SELECTED_CONTACT);
+  let contactToEdit = CONTACTS[indexContactToEdit];
+  contactToEdit.name = editContactName.value;
+  contactToEdit.email = editContactEmail.value;
+  contactToEdit.phone = editContactPhone.value;
+  contactToEdit.initials = getInitials(editContactName.value);
+  await setItem("users", JSON.stringify(USERS));
+  await loadUserData();
+  location.reload();
 }
