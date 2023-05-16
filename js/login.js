@@ -74,6 +74,7 @@ async function guestLogin() {
     color: getRandomColor(),
     id: getUserId(),
     name: "Guest",
+    initials: "GU",
     tasks: [],
     contacts: SAMPLE_DATA_CONTACTS,
   };

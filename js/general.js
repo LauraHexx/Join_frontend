@@ -295,7 +295,7 @@ async function getLoggedUser() {
     loadTemplate("../index.html");
   } else {
     LOGGED_USER = getUserData(loggedUserId);
-    console.log("Logged User:", LOGGED_USER);
+    console.log("LOGGED_USER:", LOGGED_USER);
   }
 }
 

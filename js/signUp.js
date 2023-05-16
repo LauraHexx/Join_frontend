@@ -11,21 +11,10 @@ function checkSignUpData() {
   }
 }
 
-/**
- * Checks if the user's email matches any user in the `users` array.
- * @returns {Object|undefined} The user object if login data is correct, otherwise undefined.
- */
 function checkForExistingUser() {
   return USERS.find((user) => user.email === signUpEmail.value);
 }
 
-/**
- * Registers a new user with the provided name, email, and password.
- * The user information is added to the 'users' array.
- * The 'users' array is stored in the storage as a JSON string.
- * Resets the new user form after successful registration.
- * Loads the summary after registration.
- */
 async function registerNewUser() {
   pushNewUserToArray();
   await setItem("users", JSON.stringify(USERS));
@@ -37,6 +26,7 @@ function pushNewUserToArray() {
     color: getRandomColor(),
     id: getUserId(),
     name: signUpName.value,
+    initials: getInitials(),
     email: signUpEmail.value,
     password: signUpPassword.value,
     tasks: [],
@@ -46,44 +36,31 @@ function pushNewUserToArray() {
   setDataForGreeting(newUser.id);
 }
 
-/**
- * Get initials from a name.
- * @param {string} name - The name to extract initials from.
- * @returns {string} The initials of the name.
- */
 function getInitials() {
-  const fullname = signUpName.value.trim().split(" ");
+  const partsOfName = signUpName.value.trim().split(" ");
   let initials = "";
-  if (oneName(fullname)) {
-    initials = getFirstInitial(fullname[0]);
+  if (oneName(partsOfName)) {
+    initials = getFirstTwoInitials(partsOfName[0]);
   } else {
-    initials = getFirstAndLastInitial(fullname);
+    initials = getFirstAndLastInitial(partsOfName);
   }
   return initials;
 }
 
-function oneName(fullname) {
-  return fullname.length === 1;
+function oneName(partsOfName) {
+  return partsOfName.length === 1;
 }
 
-/**
- * Get initials for a single name.
- * @param {string} name - The name to extract initials from.
- * @returns {string} The initials of the name.
- */
-function getFirstInitial(fullname) {
-  const initial = name[0].toUpperCase();
-  return initial;
+function getFirstTwoInitials(name) {
+  const firstInitial = name[0].toUpperCase();
+  const secondInitial = name[1].toUpperCase();
+  const initials = firstInitial + secondInitial;
+  return initials;
 }
 
-/**
- * Get initials from a full name.
- * @param {string[]} names - An array of names [firstName, lastName].
- * @returns {string} The initials of the full name.
- */
-function getFirstAndLastInitial(fullname) {
-  const firstNameInitial = fullname[0][0].toUpperCase();
-  const lastNameInitial = fullname[fullname.length - 1][0].toUpperCase();
+function getFirstAndLastInitial(partsOfName) {
+  const firstNameInitial = partsOfName[0][0].toUpperCase();
+  const lastNameInitial = partsOfName[partsOfName.length - 1][0].toUpperCase();
   const initials = firstNameInitial + lastNameInitial;
   return initials;
 }
