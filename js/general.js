@@ -1,4 +1,44 @@
 let USERS = [];
+let ACTIVE_USER = "";
+const SAMPLE_DATA_CONTACTS = [
+  {
+    color: "#FF0000",
+    name: "Max Mustermann",
+    email: "max.mustermann@test",
+    phone: "+49123456456",
+  },
+  {
+    color: "#00FF00",
+    name: "Erika Musterfrau",
+    email: "erika.musterfrau@test",
+    phone: "+49789123789",
+  },
+  {
+    color: "#0000FF",
+    name: "John Doe",
+    email: "john.doe@test",
+    phone: "+49456789123",
+  },
+  {
+    color: "#FFFF00",
+    name: "Johny Depp",
+    email: "johny.depp@test",
+    phone: "+49987654321",
+  },
+  {
+    color: "#00FFFF",
+    name: "Laura Residenz",
+    email: "laura.residenz@test",
+    phone: "+49654987321",
+  },
+  {
+    color: "#FFA500",
+    name: "Hannah Müller",
+    email: "hannah.mueller@test",
+    phone: "+49111222333",
+  },
+];
+
 let CATEGORYS = [];
 
 let LOGGED_USER = "";
@@ -62,13 +102,17 @@ function styleCurrentSectionInNav(currentHtmlTemplate) {
  * @throws {Error} If an error occurs during loading or parsing of user data.
  * @returns {Promise<void>} A promise that resolves when the users are loaded and parsed successfully.
  */
-async function loadUsers() {
+async function loadUserData() {
   try {
     USERS = JSON.parse(await getItem("users"));
     console.log("USERS SERVER", USERS);
   } catch (e) {
     console.error("Loading error:", e);
   }
+}
+
+async function setActiveUser() {
+  let ACTIVE_USER = getUserData();
 }
 
 /**
@@ -245,21 +289,13 @@ function getDataLoggedUser() {
   }
 }
 
-async function checkIfUserLoggedIn() {
-  let loggedUserId = getItemFromLocalStorage("loggedUserId");
-  if (loggedUserId === "Guest") {
-    LOGGED_USER = "Guest";
-    console.log("Logged User:", LOGGED_USER);
-    return;
-  }
-  if (loggedUserId) {
-    LOGGED_USER = getUserData(loggedUserId);
-    console.log("Logged User:", LOGGED_USER);
-    return;
-  }
+async function getLoggedUser() {
+  const loggedUserId = getItemFromLocalStorage("loggedUserId");
   if (!loggedUserId) {
     loadTemplate("../index.html");
-    return;
+  } else {
+    LOGGED_USER = getUserData(loggedUserId);
+    console.log("Logged User:", LOGGED_USER);
   }
 }
 

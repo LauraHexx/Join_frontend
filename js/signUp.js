@@ -1,5 +1,5 @@
 async function initSignUp() {
-  await loadUsers();
+  await loadUserData();
 }
 
 function checkSignUpData() {
@@ -40,18 +40,10 @@ function pushNewUserToArray() {
     email: signUpEmail.value,
     password: signUpPassword.value,
     tasks: [],
-    contacts: [],
+    contacts: SAMPLE_DATA_CONTACTS,
   };
   USERS.push(newUser);
   setDataForGreeting(newUser.id);
-}
-
-/**
- * Generates a random hex code.
- * @returns {string} A random hex code.
- */
-function getRandomColor() {
-  return "#" + Math.floor(Math.random() * 16777215).toString(16);
 }
 
 /**

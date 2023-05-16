@@ -1,3 +1,4 @@
+/*
 const FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_USER = "";
 let CONTACTS = [];
@@ -10,6 +11,7 @@ async function initContacts() {
   await renderFirstInitialsList();
   await renderContacts();
 }
+*/
 
 async function sortUsersAlphabetically() {
   USERS = USERS.sort((a, b) => a.initials.localeCompare(b.initials));

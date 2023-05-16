@@ -1,7 +1,7 @@
 async function initLogin() {
   changeZindexAnimation();
   getLocalStorage();
-  await loadUsers();
+  await loadUserData();
 }
 
 /**
@@ -75,7 +75,7 @@ async function guestLogin() {
     id: getUserId(),
     name: "Guest",
     tasks: [],
-    contacts: [],
+    contacts: SAMPLE_DATA_CONTACTS,
   };
   USERS.push(newGuestUser);
   await setItem("users", JSON.stringify(USERS));

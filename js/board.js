@@ -1,7 +1,7 @@
 let currentDraggedElement;
 
 async function initBoard() {
-  await loadUsers();
+  await loadUserData();
   await checkIfUserLoggedIn();
   await loadTasks();
   await loadCategorys();

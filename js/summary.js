@@ -1,6 +1,6 @@
 async function initSummary() {
-  await loadUsers();
-  await checkIfUserLoggedIn();
+  await loadUserData();
+  await getLoggedUser();
   await init("summary");
   changeImageOnHover(
     "pencilLogo",
