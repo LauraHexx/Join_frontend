@@ -251,10 +251,11 @@ a {
 #contactCreatedSucess {
   position: absolute;
   left: 50%;
-  bottom: -5px;
+  bottom: 15px;
   transform: translateX(-50%);
   width: 250px;
   z-index: 5;
+  animation: slideUpDown 2s ease 0s 1;
 }
 
 #contactCreatedSucess button {
