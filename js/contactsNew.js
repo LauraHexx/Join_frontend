@@ -23,6 +23,8 @@ function sortContactsAlphabetically() {
 }
 
 async function renderFirstInitialsList() {
+  let FIRST_INITIALS_NO_DUPLICAT = [];
+  document.getElementById("contactList").innerHTML = "";
   CONTACTS.forEach((contact) => {
     const firstInitial = contact.initials.charAt(0);
     if (!FIRST_INITIALS_NO_DUPLICAT.includes(firstInitial)) {
@@ -44,12 +46,21 @@ function renderFirstInitialsListHtml(firstInitial) {
 }
 
 function renderContacts() {
+  clearContacts();
   CONTACTS.forEach((contact) => {
     const firstInitial = contact.initials.charAt(0);
     const indexOfContact = CONTACTS.indexOf(contact);
     document.getElementById(`contactsLetter${firstInitial}`).innerHTML +=
       renderContactsHtml(contact, indexOfContact);
   });
+}
+
+function clearContacts() {
+  const containers = document.querySelectorAll('[id^="contactsLetter"]');
+  for (let i = 0; i < containers.length; i++) {
+    const container = containers[i];
+    container.innerHTML = "";
+  }
 }
 
 function renderContactsHtml(contact, indexOfContact) {
@@ -162,14 +173,16 @@ function renderEditContactHtml() {
               type="name"
               placeholder="Name"
               required />
-            <input
-              value="${SELECTED_CONTACT.email}"
-              id="editContactEmail"
-              class="input inputEmail"
-              type="email"
-              placeholder="Email"
-              required />
-            <span id="errorEmailIsAlreadyTaken" class="d-none">Email already belongs to a contact. Please update it.</span>
+            <div class="editContactEmailContainer">
+              <input
+                value="${SELECTED_CONTACT.email}"
+                id="editContactEmail"
+                class="input inputEmail"
+                type="email"
+                placeholder="Email"
+                required />
+              <span id="errorEmailIsAlreadyTaken" class="d-none">Email already belongs to a contact. Please update it.</span>
+            </div>
             <input
               value=${SELECTED_CONTACT.phone}
               id="editContactPhone"
@@ -178,8 +191,8 @@ function renderEditContactHtml() {
               placeholder="Phone"
                />
             <div class="editContactBtns">
-              <button onclick="deleteChanges()" class="deleteBtn">Delete</button>
-              <button onclick="checkChanges()" class="saveBtn">Save</button>
+              <button onclick="deleteEdits()" class="deleteBtn">Delete</button>
+              <button onclick="checkEdits()" class="saveBtn">Save</button>
             </div>
           </div>
         </div>
@@ -187,27 +200,35 @@ function renderEditContactHtml() {
     `;
 }
 
-function deleteChanges() {
+function deleteEdits() {
   editContactName.value = SELECTED_CONTACT.name;
   editContactEmail.value = SELECTED_CONTACT.email;
   editContactPhone.value = SELECTED_CONTACT.phone;
+  hideError("errorEmailIsAlreadyTaken");
 }
 
-function checkChanges() {
-  const filteredContacts = CONTACTS.filter(
-    (contact) => contact !== SELECTED_CONTACT
+function checkEdits() {
+  const filteredContacts = filterContacts();
+  const foundExistingEmail = findExistingEmail(
+    filteredContacts,
+    editContactEmail.value
   );
-  const foundContact = filteredContacts.find(
-    (contact) => contact.email === editContactEmail.value
-  );
-  if (foundContact) {
+  if (foundExistingEmail) {
     showError("errorEmailIsAlreadyTaken");
   } else {
-    saveChanges();
+    saveEdits();
   }
 }
 
-async function saveChanges() {
+function filterContacts() {
+  return CONTACTS.filter((contact) => contact !== SELECTED_CONTACT);
+}
+
+function findExistingEmail(contacts, email) {
+  return contacts.find((contact) => contact.email === email);
+}
+
+async function saveEdits() {
   let indexContactToEdit = CONTACTS.indexOf(SELECTED_CONTACT);
   let contactToEdit = CONTACTS[indexContactToEdit];
   contactToEdit.name = editContactName.value;
@@ -215,6 +236,53 @@ async function saveChanges() {
   contactToEdit.phone = editContactPhone.value;
   contactToEdit.initials = getInitials(editContactName.value);
   await setItem("users", JSON.stringify(USERS));
-  await loadUserData();
-  location.reload();
+  initContacts();
+  closeEditContact();
+}
+
+function closeEditContact() {
+  hideDisplay("contentEditDisplay", "d-none");
+  toggleClass("body", "overflowHidden");
+}
+
+async function getDataNewContact() {
+  let newContact = {
+    color: getRandomColor(),
+    name: addContactName.value,
+    initials: getInitials(addContactName.value),
+    email: addContactEmail.value,
+    phone: addContactPhone.value,
+  };
+  checkIfEmailIsAlreadyExisting(newContact);
+}
+
+function checkIfEmailIsAlreadyExisting(newContact) {
+  const foundExistingEmail = findExistingEmail(
+    LOGGED_USER.contacts,
+    addContactEmail.value
+  );
+  if (foundExistingEmail) {
+    showError("errorEnterANewEmail");
+  } else {
+    addNewContact(newContact);
+  }
+}
+
+async function addNewContact(newContact) {
+  LOGGED_USER.contacts.push(newContact);
+  await setItem("users", JSON.stringify(USERS));
+  closeAddContact();
+  await initContacts();
+  showDisplay("contactCreatedSucess", "animation-slideInTop", "d-none");
+}
+
+function closeAddContact() {
+  hideDisplay("contentAddDisplay", "d-none");
+  toggleClass("body", "overflowHidden");
+}
+
+function cancelNewContact() {
+  addContactName.value = "";
+  addContactEmail.value = "";
+  addContactPhone.value = "";
 }
