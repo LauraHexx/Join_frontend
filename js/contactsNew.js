@@ -273,7 +273,8 @@ async function addNewContact(newContact) {
   await setItem("users", JSON.stringify(USERS));
   closeAddContact();
   await initContacts();
-  showDisplay("contactCreatedSucess", "animation-slideInTop", "d-none");
+  await toggleClass("contactCreatedSucess", "d-none");
+  await playAnimation("contactCreatedSucess", "animation-slideUpDown");
 }
 
 function closeAddContact() {

@@ -71,15 +71,18 @@
 
 /*CONTACTS*/
 
-.animation-slideInTop {
-  animation: slideInTop 0.5s ease 0s 1 normal forwards;
+.animation-slideUpDown {
+  animation: slideUpDown 2s ease 0s 1;
 }
 
-@keyframes slideInTop {
+@keyframes slideUpDown {
   0% {
-    transform: translateY(100px);
+    transform: translateY(800px);
+  }
+  50% {
+    transform: translateY(0);
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(800px);
   }
 }
