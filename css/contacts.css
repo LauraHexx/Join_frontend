@@ -88,7 +88,6 @@ a {
   justify-content: center;
   align-items: center;
   color: var(--bright-white);
-  background: #ff7a00;
   border-radius: 100px;
   width: 25px;
   height: 19px;
@@ -251,11 +250,10 @@ a {
 #contactCreatedSucess {
   position: absolute;
   left: 50%;
-  bottom: 15px;
+  bottom: 215px;
   transform: translateX(-50%);
   width: 250px;
   z-index: 5;
-  animation: slideUpDown 2s ease 0s 1;
 }
 
 #contactCreatedSucess button {

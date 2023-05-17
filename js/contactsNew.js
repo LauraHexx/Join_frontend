@@ -99,7 +99,7 @@ function renderContactDetails() {
 function renderContactDetailsHtml() {
   return /*html*/ `
      <div class="addTaskToContact gap">
-       <div class="initialsOfNames bigCircle">${SELECTED_CONTACT.initials}</div>
+       <div class="initialsOfNames bigCircle"  style="background-color: ${SELECTED_CONTACT.color}" >${SELECTED_CONTACT.initials}</div>
        <div class="nameAndAddTask">
          <span class="name">${SELECTED_CONTACT.name}</span>
          <a
@@ -269,12 +269,12 @@ function checkIfEmailIsAlreadyExisting(newContact) {
 }
 
 async function addNewContact(newContact) {
+  closeAddContact();
   LOGGED_USER.contacts.push(newContact);
   await setItem("users", JSON.stringify(USERS));
-  closeAddContact();
   await initContacts();
-  /*await toggleClass("contactCreatedSucess", "d-none");*/
-  /*await playAnimation("contactCreatedSucess", "animation-slideUpDown");*/
+  await toggleClass("contactCreatedSucess", "d-none");
+  await playAnimation("contactCreatedSucess", "slideInOut");
 }
 
 function closeAddContact() {

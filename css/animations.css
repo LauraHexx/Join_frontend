@@ -71,18 +71,18 @@
 
 /*CONTACTS*/
 
-.animation-slideUpDown {
-  animation: slideUpDown 2s ease 0s 1;
+.slideInOut {
+  animation: slideInOut 2s forwards;
 }
 
-@keyframes slideUpDown {
+@keyframes slideInOut {
   0% {
-    transform: translateY(400px);
+    transform: translateY(100%);
   }
   50% {
-    transform: translateY(0);
+    transform: translateY(0%);
   }
   100% {
-    transform: translateY(400px);
+    transform: translateY(-100%);
   }
 }
