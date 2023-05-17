@@ -69,17 +69,17 @@
   }
 }
 
-/*BUTTONS*/
+/*CONTACTS*/
 
-.slide-top {
-  animation: slide-top 0.5s ease-out both;
+.animation-slideInTop {
+  animation: slideInTop 0.5s ease 0s 1 normal forwards;
 }
 
-@keyframes slide-top {
+@keyframes slideInTop {
   0% {
-    transform: translateY(0);
+    transform: translateY(100px);
   }
   100% {
-    transform: translateY(-100px);
+    transform: translateY(0);
   }
 }

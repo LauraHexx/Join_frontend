@@ -3,8 +3,8 @@ let SUBTASKS = [];
 let TASKS = [];
 
 async function initAddTask() {
-  await loadUsers();
-  await checkIfUserLoggedIn();
+  await loadUserData();
+  await getLoggedUser();
   await loadCategorys();
   await loadTasks();
   await sortUsersAlphabetically();

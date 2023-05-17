@@ -40,7 +40,7 @@
     <div id="content">
       <div class="newContactBtnMobileContainer d-none">
         <button
-          onclick="showAddContact('contentAddDisplay','animation-slideInRight','d-none'); toggleClass('body', 'overflowHidden')"
+          onclick="showDisplay('contentAddDisplay', 'animation-slideInRight', 'd-none');toggleClass('body', 'overflowHidden')"
           class="newContactBtn">
           New Contact
           <img
@@ -91,7 +91,7 @@
       <div id="displayAddContact">
         <div class="leftSectionAdd">
           <img
-            onclick="toggleClass('body', 'overflowHidden'); hideAddContact('contentAddDisplay','d-none')"
+            onclick="hideDisplay('contentAddDisplay','d-none'); toggleClass('body', 'overflowHidden')"
             id="closeAddContact"
             class="cursorPointer closeWhite d-none"
             src="../assets/img/closeWhite.svg"
@@ -115,27 +115,34 @@
               src="../assets/img/contactsNewImage.svg"
               alt="icon as a placeholder for a image of the new contact" />
           </div>
-          <form class="formAdd">
+          <form onsubmit="getDataNewContact(); return false" class="formAdd">
             <input
               id="addContactName"
               class="input inputName"
               type="name"
               placeholder="Name"
               required />
-            <input
-              id="addContactEmail"
-              class="input inputEmail"
-              type="email"
-              placeholder="Email"
-              required />
+            <div class="inputContainer">
+              <input
+                id="addContactEmail"
+                class="input inputEmail"
+                type="email"
+                placeholder="Email"
+                required />
+              <span id="errorEnterANewEmail" class="d-none"
+                >Email already belongs to a contact. Please update it.</span
+              >
+            </div>
             <input
               id="addContactPhone"
               class="input inputPassword"
-              type="phone"
-              placeholder="Phone"
-              required />
+              type="number"
+              placeholder="Phone" />
             <div class="addDisplayBtns">
-              <button id="cancelAddContact">
+              <button
+                id="cancelAddContact"
+                onclick="cancelNewContact()"
+                type="button">
                 Cancel
                 <span>X</span>
               </button>

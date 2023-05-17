@@ -342,14 +342,16 @@ function getRandomColor() {
 }
 
 function getInitials(fullname) {
-  const partsOfName = fullname.trim().split(" ");
-  let initials = "";
-  if (oneName(partsOfName)) {
-    initials = getFirstTwoInitials(partsOfName[0]);
-  } else {
-    initials = getFirstAndLastInitial(partsOfName);
+  if (fullname) {
+    const partsOfName = fullname.trim().split(" ");
+    let initials = "";
+    if (oneName(partsOfName)) {
+      initials = getFirstTwoInitials(partsOfName[0]);
+    } else {
+      initials = getFirstAndLastInitial(partsOfName);
+    }
+    return initials;
   }
-  return initials;
 }
 
 function oneName(partsOfName) {
