@@ -46,6 +46,10 @@
     display: flex !important;
   }
 
+  .newContactBtnContainer {
+    display: none;
+  }
+
   #contactDetails {
     display: none;
   }

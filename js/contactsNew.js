@@ -3,10 +3,24 @@ let FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_CONTACT = "";
 
 async function initContacts() {
+  setEventListenerScreenSize();
   await loadUserData();
   await getLoggedUser();
   await init("contacts");
   checkAndSortContacts();
+}
+
+function setEventListenerScreenSize() {
+  window.addEventListener("resize", monitorScreenSize);
+}
+
+function monitorScreenSize() {
+  if (window.innerWidth >= 952) {
+    document.getElementById("contactList").style.display = "flex";
+    document.getElementById("contactDetails").style.display = "flex";
+  } else {
+    document.getElementById("contactDetails").style.display = "none";
+  }
 }
 
 async function checkAndSortContacts() {
@@ -82,12 +96,25 @@ function renderContactsHtml(contact, indexOfContact) {
 }
 
 async function openContactDetails(indexOfContact) {
+  if (window.innerWidth <= 920) {
+    showContactDetails();
+  }
   SELECTED_CONTACT = CONTACTS[indexOfContact];
   renderContactDetails();
   await playAnimation("mainInfosContact", "animation-slideInRight");
   setTimeout(() => {
     toggleClass("mainInfosContact", "animation-slideInRight");
   }, 1000);
+}
+
+function showContactDetails() {
+  document.getElementById("contactDetails").style.display = "flex";
+  document.getElementById("contactList").style.display = "none";
+}
+
+function showContactList() {
+  document.getElementById("contactDetails").style.display = "none";
+  document.getElementById("contactList").style.display = "flex";
 }
 
 function renderContactDetails() {

@@ -110,12 +110,10 @@
   }
 
   #editContactInitials {
-    width: 80px;
     position: absolute;
     top: -51px;
     left: 0;
     right: 0;
-    padding: 25px 5px 25px 5px;
     margin: 0 auto;
   }
 
