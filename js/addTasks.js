@@ -5,12 +5,12 @@ let TASKS = [];
 async function initAddTask() {
   await loadUserData();
   await getLoggedUser();
+  await showContentOfTemplate();
   await loadCategorys();
   await loadTasks();
   await sortUsersAlphabetically();
   await renderContacts();
   await renderCategorys();
-  await showContentOfTemplate();
   eventCloseDropDown();
 }
 

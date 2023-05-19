@@ -15,7 +15,7 @@ header {
 }
 
 .headline {
-  padding-left: calc(var(--nav-width) + var(--padding));
+  padding-left: var(--nav-width);
 }
 
 .options {

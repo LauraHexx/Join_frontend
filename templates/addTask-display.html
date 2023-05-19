@@ -1,101 +1,178 @@
-<!--ADD TASKS-DISPLAY -->
-<form class="mainContainer">
+<!--LEFT SECTION-->
+<section class="leftSection">
+  <span>Title</span>
+  <input type="text" id="titleInput" placeholder="Enter a title" />
+  <span id="errorTitle" class="error d-none">Please enter a title</span>
+  <span>Description</span>
+  <input type="text" id="descriptionInput" placeholder="Enter a description" />
+  <span id="errorDescription" class="error d-none"
+    >Please enter a description</span
+  >
+  <span>Category</span>
+  <!--CATEGORY-->
+  <div id="selectCategoryDiv">
+    <div id="selectCategoryTitleDiv">
+      <span id="selectCategoryTitle">Select task category</span>
+      <img
+        class="inputImage"
+        src="../assets/img/addTaskDropDownArrow.svg"
+        alt="arrow to drop down the menu of categorys" />
+    </div>
+    <ul id="listCategorys" class="d-none listDropDown">
+      <li onclick="toggleNewCategory()" class="singleCategory">
+        <span>New Category</span>
+        <div class="blue circle"></div>
+      </li>
+      <div id="selectableCategorys"></div>
+    </ul>
+  </div>
+  <div id="newCategoryDiv" class="inputContainer d-none">
+    <input
+      type="text"
+      id="newCategoryInput"
+      placeholder="New category name"
+      maxlength="20" />
+    <div class="newCategoryContainerImages">
+      <img
+        onclick="stopAddingNewCategory()"
+        class="close"
+        src="../assets/img/addTaskClose.svg"
+        alt="icon to close the category section" />
+      <div class="partingLineCategory"></div>
+      <img
+        onclick="addNewCategory()"
+        class="confirm"
+        src="../assets/img/addTaskConfirm.svg"
+        alt="icon to add a new category" />
+    </div>
+  </div>
+  <span id="errorNewCategoryNameAlreadyExists" class="d-none"
+    >This category already exists. Please enter another name</span
+  >
+  <span id="errorNewCategoryNoNameEntered" class="d-none"
+    >Please enter a name for the new category</span
+  >
+
+  <div id="newCategoryColorSelection" class="d-none">
+    <div
+      onclick="moveSelectedColorCircleUp(event)"
+      id="purple"
+      class="purple circle cursorPointer"></div>
+    <div
+      onclick="moveSelectedColorCircleUp(event)"
+      id="red"
+      class="red circle cursorPointer"></div>
+    <div
+      onclick="moveSelectedColorCircleUp(event)"
+      id="green"
+      class="green circle cursorPointer"></div>
+    <div
+      onclick="moveSelectedColorCircleUp(event)"
+      id="orange"
+      class="orange circle cursorPointer"></div>
+    <div
+      onclick="moveSelectedColorCircleUp(event)"
+      id="rosa"
+      class="rosa circle cursorPointer"></div>
+    <div
+      onclick="moveSelectedColorCircleUp(event)"
+      id="blue"
+      class="blue circle cursorPointer"></div>
+  </div>
+  <span id="errorNewCategoryNoColorSelected" class="d-none"
+    >Please select a color</span
+  >
+  <span id="errorNoCategorySelected" class="error d-none"
+    >Please select a category</span
+  >
+  <!--CONTACTS-->
+  <span>Assigned to</span>
+  <div id="selectContactsDiv" class="containerSection">
+    <div id="selectContactsTitleDiv" class="containerTitle">
+      <span id="selectContactsTitle">Select contacts to assign</span>
+      <img
+        class="inputImage"
+        src="../assets/img/addTaskDropDownArrow.svg"
+        alt="arrow to drop down the menu of contacts" />
+    </div>
+    <ul id="listContacts" class="listDropDown d-none">
+      <div id="loggedUserContact"></div>
+      <div id="savedContacts"></div>
+    </ul>
+  </div>
+  <span id="errorContacts" class="error d-none">Please select an contact</span>
+</section>
+<div class="partingLine"></div>
+<!--RIGHT SECTION-->
+<section class="rightSection">
   <img
     onclick="toggleClass('body', 'overflowHidden'); hideAddTask('containerAdd','d-none')"
     id="closeDisplay"
     src="../assets/img/boardCloseDisplay.svg"
     alt="icon to close display" />
-  <!--LEFT SECTION-->
-  <section class="leftSection marginTop">
-    <span>Title</span>
-    <input type="text" id="addTaskTitle" placeholder="Enter a title" />
-    <span>Description</span>
-    <input
-      type="text"
-      id="descriptionInput"
-      placeholder="Enter a Description" />
-    <span>Category</span>
-    <div class="inputContainer">
-      <input
-        type="text"
-        id="categoryInput"
-        class="categoryInput"
-        placeholder="Select task category" />
+  <span>Due date</span>
+  <div>
+    <input type="date" id="inputDueDate" placeholder="dd/mm/yyyy" />
+  </div>
+  <span id="errorDueDate" class="error d-none">Please select a due day</span>
+  <span>Prio</span>
+  <div class="prioBtns">
+    <button
+      type="button"
+      id="urgent"
+      class="singlePrioBtn"
+      onclick="changeStylePrioBtn('urgent','red', '../assets/img/prioUrgent.svg')">
+      Urgent
+      <img src="../assets/img/prioUrgent.svg" alt="icon to show priority" />
+    </button>
+    <button
+      type="button"
+      id="medium"
+      class="singlePrioBtn"
+      onclick="changeStylePrioBtn('medium','orange', '../assets/img/prioMedium.svg')">
+      Medium
+      <img src="../assets/img/prioMedium.svg" alt="icon to show priority" />
+    </button>
+    <button
+      type="button"
+      id="low"
+      class="singlePrioBtn"
+      onclick="changeStylePrioBtn('low','green','../assets/img/prioLow.svg')">
+      Low
+      <img src="../assets/img/prioLow.svg" alt="icon to show priority" />
+    </button>
+  </div>
+  <span id="errorPriority" class="error d-none">Please select a priority</span>
+  <span>Subtasks</span>
+  <div class="inputContainer">
+    <input type="text" id="addTaskSubtasks" placeholder="Add new subtask" />
+    <img
+      onclick="addSubtask()"
+      class="inputImage imagePlus"
+      src="../assets/img/addTaskPlus.svg"
+      alt="icon of plus to add a subtask" />
+  </div>
+  <div id="subtasks"></div>
+  <div class="clearAndCreateBtns">
+    <button onclick="clearTask()" class="clearBtn">
+      <span>Clear</span>
       <img
-        class="inputImage"
-        src="../assets/img/addTaskDropDownArrow.svg"
-        alt="arrow to drop down the menu of categorys" />
-    </div>
-    <span>Assigned to</span>
-    <div class="inputContainer">
-      <input
-        type="text"
-        id="inputContacts"
-        placeholder="Select contacts to assign" />
+        onmouseenter="changeImageOnHover('clearBtnIcon',
+          '../assets/img/addTaskCancelBright.svg',
+          '../assets/img/addTaskCancelDark.svg')"
+        onmouseleave="changeImageOnHover('clearBtnIcon',
+          '../assets/img/addTaskCancelBright.svg',
+          '../assets/img/addTaskCancelDark.svg')"
+        id="clearBtnIcon"
+        src="../assets/img/addTaskCancelDark.svg"
+        alt="icon of plus to add
+        a subtask" />
+    </button>
+    <button onclick="createTask()" class="createBtn">
+      <span>Create Task</span>
       <img
-        class="inputImage"
-        src="../assets/img/addTaskDropDownArrow.svg"
-        alt="arrow to drop down the menu of categorys" />
-    </div>
-  </section>
-  <div class="partingLine"></div>
-  <!--RIGHT SECTION-->
-  <section class="rightSection marginTop">
-    <span>Due date</span>
-    <div>
-      <input type="date" id="addTaskDate" placeholder="dd/mm/yyyy" />
-    </div>
-    <span>Prio</span>
-    <div class="prioBtns">
-      <button>
-        Urgent
-        <img src="../assets/img/prioUrgent.svg" alt="icon to show priority" />
-      </button>
-      <button>
-        Medium
-        <img src="../assets/img/prioMedium.svg" alt="icon to show priority" />
-      </button>
-      <button>
-        Low
-        <img src="../assets/img/prioLow.svg" alt="icon to show priority" />
-      </button>
-    </div>
-    <span>Subtasks</span>
-    <div class="inputContainer">
-      <input type="text" id="addTaskSubtasks" placeholder="Add new subtask" />
-      <img
-        class="inputImage imagePlus"
-        src="../assets/img/addTaskPlus.svg"
-        alt="icon of plus to add a subtask" />
-    </div>
-    <div id="subtasks">
-      <div class="singleSubtask">
-        <input type="checkbox" id="" class="checkbox" />
-        <span>Subtask 1</span>
-      </div>
-      <div class="singleSubtask">
-        <input type="checkbox" id="" class="checkbox" />
-        <span>Subtask 1</span>
-      </div>
-      <div class="singleSubtask">
-        <input type="checkbox" id="" class="checkbox" />
-        <span>Subtask 1</span>
-      </div>
-    </div>
-    <div class="clearAndCreateBtns">
-      <button class="clearBtn">
-        <span> Clear</span>
-        <img
-          id="clearBtnIcon"
-          src="../assets/img/addTaskCancelDark.svg"
-          alt="icon of plus to add a subtask" />
-      </button>
-      <button class="createBtn">
-        <span>Create Task</span>
-        <img
-          src="../assets/img/addTaskCreate.svg"
-          alt="icon to clear the create a new Task" />
-      </button>
-    </div>
-  </section>
-</form>
+        src="../assets/img/addTaskCreate.svg"
+        alt="icon to clear the create a new Task" />
+    </button>
+  </div>
+</section>

@@ -15,27 +15,23 @@
     <link rel="stylesheet" href="../css/animations.css" />
     <link rel="stylesheet" href="../css/contacts.css" />
     <link rel="stylesheet" href="../css/contacts-responsiv.css" />
-    <link rel="stylesheet" href="../css/contacts-displays-add-edit.css" />
-    <link
-      rel="stylesheet"
-      href="../css/contacts-displays-add-edit-responsiv.css" />
+    <link rel="stylesheet" href="../css/contacts-displays.css" />
+    <link rel="stylesheet" href="../css/contacts-displays-responsiv.css" />
     <link rel="stylesheet" href="../css/addTask.css" />
     <link rel="stylesheet" href="../css/addTask-responsiv.css" />
-    <link rel="stylesheet" href="../css/addTask-display.css" />
-    <link rel="stylesheet" href="../css/addTask-display-responsiv.css" />
     <script src="../js/storage.js"></script>
     <script src="../js/general.js"></script>
     <script src="../js/header.js"></script>
     <script src="../js/contactsNew.js"></script>
+    <script src="../js/addTasks.js"></script>
   </head>
 
   <body id="body" onload="initContacts()">
     <header w3-include-html="header.html"></header>
     <nav w3-include-html="nav.html"></nav>
-    <div
-      w3-include-html="addTask-display.html"
-      id="containerAdd"
-      class="d-none"></div>
+    <section id="contentAddTaskDisplay" class="">
+      <div id="displayAddTask" w3-include-html="addTask-display.html"></div>
+    </section>
 
     <div id="content">
       <div class="newContactBtnMobileContainer d-none">
