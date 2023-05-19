@@ -31,6 +31,7 @@ function pushNewUserToArray() {
     password: signUpPassword.value,
     tasks: [],
     contacts: SAMPLE_DATA_CONTACTS,
+    categorys: SAMPLE_DATA_CATEGORYS,
   };
   USERS.push(newUser);
   setDataForGreeting(newUser.id);

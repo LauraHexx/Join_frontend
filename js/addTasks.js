@@ -343,10 +343,12 @@ function createTask() {
   checkAndPushTask(task);
 }
 
-function checkAndPushTask(task) {
+async function checkAndPushTask(task) {
   if (requiredDataComplete(task)) {
-    TASKS.push(task);
-    setItem("tasks", JSON.stringify(TASKS));
+    let indexUserToAddTask = CONTACTS.indexOf(LOGGED_USER);
+    let userToAddTask = CONTACTS[indexUserToAddTask];
+    userToAddTask.tasks.push(task);
+    await setItem("users", JSON.stringify(USERS));
   }
 }
 
@@ -355,7 +357,6 @@ function requiredDataComplete(task) {
     task.title !== undefined &&
     task.description !== undefined &&
     task.category !== undefined &&
-    task.contacts !== undefined &&
     task.dueDate !== undefined &&
     task.priority !== undefined
   );
@@ -423,11 +424,9 @@ function getSelectedCheckBoxes() {
     '#listContacts input[type="checkbox"]:checked'
   );
   if (selectedCheckBoxes.length > 0) {
-    hideError("errorContacts");
     return getContactsId(selectedCheckBoxes);
   } else {
-    showError("errorContacts");
-    return undefined;
+    return [];
   }
 }
 
@@ -438,7 +437,6 @@ function getContactsId(selectedCheckBoxes) {
       checkedIds.push(Number(checkbox.id.replace("checkBoxUser", "")));
     }
   });
-  console.log("checkedIds", checkedIds);
   return checkedIds;
 }
 

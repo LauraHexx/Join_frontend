@@ -1,5 +1,4 @@
 let USERS = [];
-let ACTIVE_USER = "";
 
 const SAMPLE_DATA_CONTACTS = [
   {
@@ -43,6 +42,25 @@ const SAMPLE_DATA_CONTACTS = [
     email: "hannah.mueller@test",
     phone: 01234566789,
     initials: "HM",
+  },
+];
+
+const SAMPLE_DATA_CATEGORYS = [
+  {
+    name: "Developing",
+    color: "blue",
+  },
+  {
+    name: "HR",
+    color: "red",
+  },
+  {
+    name: "Marketing",
+    color: "orange",
+  },
+  {
+    name: "Sales",
+    color: "green",
   },
 ];
 

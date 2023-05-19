@@ -77,6 +77,7 @@ async function guestLogin() {
     initials: "GU",
     tasks: [],
     contacts: SAMPLE_DATA_CONTACTS,
+    categorys: SAMPLE_DATA_CATEGORYS,
   };
   USERS.push(newGuestUser);
   await setItem("users", JSON.stringify(USERS));
