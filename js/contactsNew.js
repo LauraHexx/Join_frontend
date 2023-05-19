@@ -28,7 +28,7 @@ async function checkAndSortContacts() {
   if (CONTACTS) {
     sortContactsAlphabetically();
     await renderFirstInitialsList();
-    renderContacts();
+    renderContactsInInitialList();
   }
 }
 
@@ -59,13 +59,13 @@ function renderFirstInitialsListHtml(firstInitial) {
   `;
 }
 
-function renderContacts() {
+function renderContactsInInitialList() {
   clearContacts();
   CONTACTS.forEach((contact) => {
     const firstInitial = contact.initials.charAt(0);
     const indexOfContact = CONTACTS.indexOf(contact);
     document.getElementById(`contactsLetter${firstInitial}`).innerHTML +=
-      renderContactsHtml(contact, indexOfContact);
+      renderContactsInInitialListHtml(contact, indexOfContact);
   });
 }
 
@@ -77,7 +77,7 @@ function clearContacts() {
   }
 }
 
-function renderContactsHtml(contact, indexOfContact) {
+function renderContactsInInitialListHtml(contact, indexOfContact) {
   return /*html*/ `
      <div
         onclick="openContactDetails(${indexOfContact})"
@@ -130,7 +130,7 @@ function renderContactDetailsHtml() {
        <div class="nameAndAddTask">
          <span class="name">${SELECTED_CONTACT.name}</span>
          <a
-           onclick="toggleClass('body', 'overflowHidden'); showAddTask('containerAdd','animation-slideInRight','d-none')"
+           onclick="toggleClass('body', 'overflowHidden'); showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none')"
            class="addTask">
            <img
              src="../assets/img/plusBlue.svg"
@@ -165,7 +165,7 @@ function renderContactDetailsHtml() {
 function renderEditContact() {
   document.getElementById("contentEditDisplay").innerHTML =
     renderEditContactHtml();
-  showDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
+  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
 }
 
