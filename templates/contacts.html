@@ -91,7 +91,7 @@
       <div id="displayAddContact">
         <div class="leftSectionAdd">
           <img
-            onclick="hideDisplay('contentAddDisplay','d-none'); toggleClass('body', 'overflowHidden')"
+            onclick="closeAddContact()"
             id="closeAddContact"
             class="cursorPointer closeWhite d-none"
             src="../assets/img/closeWhite.svg"
@@ -106,7 +106,7 @@
         </div>
         <div class="rightSectionAdd">
           <img
-            onclick="hideDisplay('contentAddDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
+            onclick="closeAddContact()"
             class="cursorPointer closeDark"
             src="../assets/img/closeDark.svg"
             alt="image of icon to close the adding" />
@@ -121,7 +121,8 @@
               class="input inputName"
               type="name"
               placeholder="Name"
-              required />
+              required
+              maxlength="27" />
             <div class="inputContainer">
               <input
                 id="addContactEmail"

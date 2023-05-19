@@ -99,7 +99,7 @@ function renderContactDetails() {
 function renderContactDetailsHtml() {
   return /*html*/ `
      <div class="addTaskToContact gap">
-       <div class="initialsOfNames bigCircle"  style="background-color: ${SELECTED_CONTACT.color}" >${SELECTED_CONTACT.initials}</div>
+       <div class="initialsOfNames bigCircle" style="background-color: ${SELECTED_CONTACT.color}">${SELECTED_CONTACT.initials}</div>
        <div class="nameAndAddTask">
          <span class="name">${SELECTED_CONTACT.name}</span>
          <a
@@ -164,7 +164,7 @@ function renderEditContactHtml() {
             class="cursorPointer closeDarkEdit"
             src="../assets/img/closeDark.svg"
             alt="image of icon to close the adding" />
-          <div id="editContactInitials" class="bigCircleEdit">${SELECTED_CONTACT.initials}</div>
+          <div id="editContactInitials" class="bigCircleEdit" style="background-color:${SELECTED_CONTACT.color}">${SELECTED_CONTACT.initials}</div>
           <div class="formEdit">
             <input
               value="${SELECTED_CONTACT.name}"
@@ -191,7 +191,7 @@ function renderEditContactHtml() {
               placeholder="Phone"
                />
             <div class="editContactBtns">
-              <button onclick="deleteEdits()" class="deleteBtn">Delete</button>
+              <button onclick="deleteContact()" class="deleteBtn">Delete</button>
               <button onclick="checkEdits()" class="saveBtn">Save</button>
             </div>
           </div>
@@ -200,11 +200,23 @@ function renderEditContactHtml() {
     `;
 }
 
-function deleteEdits() {
-  editContactName.value = SELECTED_CONTACT.name;
-  editContactEmail.value = SELECTED_CONTACT.email;
-  editContactPhone.value = SELECTED_CONTACT.phone;
-  hideError("errorEmailIsAlreadyTaken");
+async function deleteContact() {
+  const indexSelectedContact = CONTACTS.indexOf(SELECTED_CONTACT);
+  CONTACTS.splice(indexSelectedContact, 1);
+  await setItem("users", JSON.stringify(USERS));
+  initContacts();
+  hideDetailInfos();
+  closeEditContact();
+}
+
+function closeEditContact() {
+  hideDisplay("contentEditDisplay", "d-none");
+  toggleClass("body", "overflowHidden");
+}
+
+function hideDetailInfos() {
+  let detailInfos = document.getElementById("mainInfosContact");
+  detailInfos.innerHTML = "";
 }
 
 function checkEdits() {
@@ -237,12 +249,8 @@ async function saveEdits() {
   contactToEdit.initials = getInitials(editContactName.value);
   await setItem("users", JSON.stringify(USERS));
   initContacts();
+  hideDetailInfos();
   closeEditContact();
-}
-
-function closeEditContact() {
-  hideDisplay("contentEditDisplay", "d-none");
-  toggleClass("body", "overflowHidden");
 }
 
 async function getDataNewContact() {
@@ -275,14 +283,16 @@ async function addNewContact(newContact) {
   await initContacts();
   await toggleClass("contactCreatedSucess", "d-none");
   await playAnimation("contactCreatedSucess", "slideInOut");
+  clearAddContact();
 }
 
 function closeAddContact() {
+  clearAddContact();
   hideDisplay("contentAddDisplay", "d-none");
   toggleClass("body", "overflowHidden");
 }
 
-function cancelNewContact() {
+function clearAddContact() {
   addContactName.value = "";
   addContactEmail.value = "";
   addContactPhone.value = "";
