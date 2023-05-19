@@ -179,21 +179,21 @@ function renderContacts() {
   document.getElementById("savedContacts").innerHTML = "";
   CONTACTS.forEach((contact) => {
     const name = contact.name;
-    const index = CONTACTS.indexOf(contact);
+    const id = contact.id;
     document.getElementById("savedContacts").innerHTML += renderContactsHtml(
       name,
-      index
+      id
     );
   });
   checkIfLoggedUserShouldBeRendered();
 }
 
-function renderContactsHtml(name, index) {
+function renderContactsHtml(name, id) {
   return /*html*/ `
     <li class="oneContact" onclick="event.stopPropagation();">
-      <div onclick="toggleCheckbox(${index})" class="toggleCheckbox"></div>
+      <div onclick="toggleCheckbox(${id})" class="toggleCheckbox"></div>
       <label class="nameOfContact">${name}</label>
-      <input id="checkBoxUser${index}" type="checkbox"/>
+      <input id="checkBoxUser${id}" type="checkbox"/>
     </li>
   `;
 }
@@ -358,6 +358,7 @@ async function checkAndPushTask(task) {
     let userToAddTask = USERS[indexUserToAddTask];
     userToAddTask.tasks.push(task);
     await setItem("users", JSON.stringify(USERS));
+    loadTemplate("./board.html");
   }
 }
 
