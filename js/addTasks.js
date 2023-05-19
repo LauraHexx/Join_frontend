@@ -6,8 +6,6 @@ async function initAddTask() {
   await loadUserData();
   await getLoggedUser();
   await showContentOfTemplate();
-  await loadCategorys();
-  await loadTasks();
   await sortUsersAlphabetically();
   await renderContacts();
   await renderCategorys();
@@ -22,6 +20,7 @@ async function showContentOfTemplate() {
 /*CATEGORY******************************************************************************/
 
 function renderCategorys() {
+  CATEGORYS = LOGGED_USER.categorys;
   document.getElementById("selectableCategorys").innerHTML = "";
   CATEGORYS.forEach((category) => {
     const name = category.name;
@@ -55,8 +54,8 @@ async function addNewCategory() {
   let colour = getSelectedColor();
   checkAndPushCategory(newCategory, colour);
   await sortCategorysAlphabetically();
-  setItem("categorys", JSON.stringify(CATEGORYS));
-  renderCategorys();
+  await setItem("users", JSON.stringify(USERS));
+  initAddTask();
 }
 
 function getNewCategory() {
@@ -119,7 +118,9 @@ function showErrorNoColorSelected() {
 
 async function checkAndPushCategory(newCategory, color) {
   if (newCategory && color) {
-    CATEGORYS.push({
+    let indexUserToAddCategory = CONTACTS.indexOf(LOGGED_USER);
+    let userToAddCategory = CONTACTS[indexUserToAddTask];
+    userToAddTask.categorys.push({
       name: newCategory,
       color: color,
     });
