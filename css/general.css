@@ -224,9 +224,8 @@ button:hover:not(.selectedPrioBtn) {
 /* AFTER LOGIN */
 
 .contentAfterLogin {
-  width: calc(var(--header-width) - var(--nav-width) + var(--padding));
+  max-width: calc(var(--header-width) - var(--nav-width) - var(--padding));
   margin-left: var(--nav-width);
-  padding: var(--padding);
   padding-top: calc(var(--header-height) + var(--padding-top)) !important;
-  padding-right: 0 !important;
+  padding: var(--padding);
 }

@@ -15,7 +15,7 @@ function setEventListenerScreenSize() {
 }
 
 function monitorScreenSize() {
-  if (window.innerWidth >= 952) {
+  if (window.innerWidth >= 920) {
     document.getElementById("contactList").style.display = "flex";
     document.getElementById("contactDetails").style.display = "flex";
   } else {
