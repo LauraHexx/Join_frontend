@@ -1,6 +1,6 @@
 let SELECTED_PRIO_BTN;
 let SUBTASKS = [];
-let TASKS = [];
+let CONTACTS = [];
 
 async function initAddTask() {
   await loadUserData();
@@ -118,8 +118,8 @@ function showErrorNoColorSelected() {
 
 async function checkAndPushCategory(newCategory, color) {
   if (newCategory && color) {
-    let indexUserToAddCategory = CONTACTS.indexOf(LOGGED_USER);
-    let userToAddCategory = CONTACTS[indexUserToAddTask];
+    let indexUserToAddCategory = USERS.indexOf(LOGGED_USER);
+    let userToAddCategory = USERS[indexUserToAddTask];
     userToAddTask.categorys.push({
       name: newCategory,
       color: color,
