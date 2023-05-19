@@ -372,8 +372,6 @@ function requiredDataComplete(task) {
   );
 }
 
-test;
-
 function getTitle() {
   if (titleInput.value) {
     hideError("errorTitle");
