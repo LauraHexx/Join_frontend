@@ -25,6 +25,9 @@ a {
 /*CONTENT*/
 
 #content {
+  max-width: calc(
+    var(--header-width) - var(--nav-width) + 2 * (var(--padding))
+  );
   position: absolute;
   left: var(--nav-width);
   top: var(--header-height);
@@ -244,15 +247,6 @@ a {
 
 .editContactMobileBtnContainer {
   display: none;
-}
-
-#contactCreatedSucess {
-  position: absolute;
-  left: 50%;
-  bottom: 215px;
-  transform: translateX(-50%);
-  width: 250px;
-  z-index: 5;
 }
 
 #contactCreatedSucess button {
