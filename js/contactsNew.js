@@ -1,4 +1,3 @@
-let CONTACTS = [];
 let FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_CONTACT = "";
 

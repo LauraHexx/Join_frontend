@@ -1,26 +1,41 @@
 let SELECTED_PRIO_BTN;
 let SUBTASKS = [];
 let CONTACTS = [];
+let TASKS = [];
 
 async function initAddTask() {
   await loadUserData();
   await getLoggedUser();
-  await showContentOfTemplate();
-  await sortUsersAlphabetically();
-  await renderContacts();
-  await renderCategorys();
-  eventCloseDropDown();
-}
-
-async function showContentOfTemplate() {
   init("addTask");
-  document.getElementById("content").classList.remove("d-none");
+  checkAndSortContactsAndCategorys();
+  eventCloseDropDown();
 }
 
 /*CATEGORY******************************************************************************/
 
-function renderCategorys() {
+function checkAndSortContactsAndCategorys() {
+  CONTACTS = LOGGED_USER.contacts;
   CATEGORYS = LOGGED_USER.categorys;
+
+  if (CATEGORYS) {
+    sortCategorysAlphabetically();
+    renderCategorys();
+  }
+  if (CONTACTS) {
+    sortContactsAlphabetically();
+    renderContacts();
+  }
+}
+
+function sortContactsAlphabetically() {
+  CONTACTS.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function sortCategorysAlphabetically() {
+  CATEGORYS.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function renderCategorys() {
   document.getElementById("selectableCategorys").innerHTML = "";
   CATEGORYS.forEach((category) => {
     const name = category.name;
@@ -162,12 +177,7 @@ function moveSelectedColorCircleDown() {
 
 /*CONTACTS******************************************************************************/
 
-async function sortUsersAlphabetically() {
-  USERS = USERS.sort((a, b) => a.initials.localeCompare(b.initials));
-}
-
 function renderContacts() {
-  const filteredUsers = USERS.filter((user) => user.id !== LOGGED_USER.id);
   document.getElementById("savedContacts").innerHTML = "";
   filteredUsers.forEach((user) => {
     const name = user.name;
@@ -346,8 +356,8 @@ function createTask() {
 
 async function checkAndPushTask(task) {
   if (requiredDataComplete(task)) {
-    let indexUserToAddTask = CONTACTS.indexOf(LOGGED_USER);
-    let userToAddTask = CONTACTS[indexUserToAddTask];
+    let indexUserToAddTask = USER.indexOf(LOGGED_USER);
+    let userToAddTask = USER[indexUserToAddTask];
     userToAddTask.tasks.push(task);
     await setItem("users", JSON.stringify(USERS));
   }
