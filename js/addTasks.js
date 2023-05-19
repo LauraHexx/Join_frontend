@@ -440,13 +440,13 @@ function getSelectedCheckBoxes() {
 }
 
 function getContactsId(selectedCheckBoxes) {
-  const checkedIds = [];
+  const checkedBoxesId = [];
   selectedCheckBoxes.forEach((checkbox) => {
     if (checkbox.checked) {
-      checkedIds.push(Number(checkbox.id.replace("checkBoxUser", "")));
+      checkedBoxesId.push(Number(checkbox.id.replace("checkBoxUser", "")));
     }
   });
-  return checkedIds;
+  return checkedBoxesId;
 }
 
 /**

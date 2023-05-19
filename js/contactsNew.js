@@ -291,6 +291,7 @@ async function saveEdits() {
 
 async function getDataNewContact() {
   let newContact = {
+    id: getContactId(),
     color: getRandomColor(),
     name: addContactName.value,
     initials: getInitials(addContactName.value),
@@ -298,6 +299,11 @@ async function getDataNewContact() {
     phone: addContactPhone.value,
   };
   checkIfEmailIsAlreadyExisting(newContact);
+}
+
+function getContactId() {
+  const id = CONTACTS.length + 1;
+  return id;
 }
 
 function checkIfEmailIsAlreadyExisting(newContact) {

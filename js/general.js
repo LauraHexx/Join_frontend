@@ -2,6 +2,7 @@ let USERS = [];
 
 const SAMPLE_DATA_CONTACTS = [
   {
+    id: 1,
     color: "#FF0000",
     name: "Max Mustermann",
     email: "max.mustermann@test",
@@ -9,6 +10,7 @@ const SAMPLE_DATA_CONTACTS = [
     initials: "MM",
   },
   {
+    id: 2,
     color: "#00FF00",
     name: "Erika Musterfrau",
     email: "erika.musterfrau@test",
@@ -16,6 +18,7 @@ const SAMPLE_DATA_CONTACTS = [
     initials: "EM",
   },
   {
+    id: 3,
     color: "#0000FF",
     name: "John Doe",
     email: "john.doe@test",
@@ -23,6 +26,7 @@ const SAMPLE_DATA_CONTACTS = [
     initials: "JD",
   },
   {
+    id: 4,
     color: "#FFFF00",
     name: "Johny Depp",
     email: "johny.depp@test",
@@ -30,6 +34,7 @@ const SAMPLE_DATA_CONTACTS = [
     initials: "JD",
   },
   {
+    id: 5,
     color: "#00FFFF",
     name: "Laura Residenz",
     email: "laura.residenz@test",
@@ -37,6 +42,7 @@ const SAMPLE_DATA_CONTACTS = [
     initials: "LR",
   },
   {
+    id: 6,
     color: "#FFA500",
     name: "Hannah Müller",
     email: "hannah.mueller@test",
