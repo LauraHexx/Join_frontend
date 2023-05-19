@@ -83,8 +83,12 @@
       </section>
     </div>
     <!--BUTTON - CREATED CONTACT-->
-    <div id="contactCreatedSucess" class="">
+    <div id="contactCreatedSucess" class="d-none">
       <button>Contact succesfully created</button>
+    </div>
+    <!--BUTTON - CREATED CONTACT-->
+    <div id="contactDeletedSucess" class="d-none">
+      <button>Contact succesfully deleted</button>
     </div>
     <!--ADD CONTACTS - DISPLAY-->
     <section id="contentAddDisplay" class="d-none">
@@ -122,6 +126,7 @@
               type="name"
               placeholder="Name"
               required
+              minlength="2"
               maxlength="27" />
             <div class="inputContainer">
               <input

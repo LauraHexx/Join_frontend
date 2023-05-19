@@ -205,8 +205,18 @@ async function deleteContact() {
   CONTACTS.splice(indexSelectedContact, 1);
   await setItem("users", JSON.stringify(USERS));
   initContacts();
-  hideDetailInfos();
+  showAnimationContactDeletedSuccess();
+  closeDetailInfos();
   closeEditContact();
+}
+
+async function showAnimationContactDeletedSuccess() {
+  await toggleClass("contactDeletedSucess", "d-none");
+  await playAnimation("contactDeletedSucess", "animation-moveUpAndShake");
+  setTimeout(() => {
+    toggleClass("contactDeletedSucess", "animation-moveUpAndShake");
+    toggleClass("contactDeletedSucess", "d-none");
+  }, 2000);
 }
 
 function closeEditContact() {
@@ -214,7 +224,7 @@ function closeEditContact() {
   toggleClass("body", "overflowHidden");
 }
 
-function hideDetailInfos() {
+function closeDetailInfos() {
   let detailInfos = document.getElementById("mainInfosContact");
   detailInfos.innerHTML = "";
 }
@@ -249,7 +259,7 @@ async function saveEdits() {
   contactToEdit.initials = getInitials(editContactName.value);
   await setItem("users", JSON.stringify(USERS));
   initContacts();
-  hideDetailInfos();
+  closeDetailInfos();
   closeEditContact();
 }
 
@@ -277,19 +287,29 @@ function checkIfEmailIsAlreadyExisting(newContact) {
 }
 
 async function addNewContact(newContact) {
-  closeAddContact();
   LOGGED_USER.contacts.push(newContact);
   await setItem("users", JSON.stringify(USERS));
   await initContacts();
-  await toggleClass("contactCreatedSucess", "d-none");
-  await playAnimation("contactCreatedSucess", "slideInOut");
+  closeAddContact();
   clearAddContact();
+  hideError("errorEnterANewEmail");
+  showAnimationNewContactSuccess();
 }
 
 function closeAddContact() {
   clearAddContact();
+  hideError("errorEnterANewEmail");
   hideDisplay("contentAddDisplay", "d-none");
   toggleClass("body", "overflowHidden");
+}
+
+async function showAnimationNewContactSuccess() {
+  await toggleClass("contactCreatedSucess", "d-none");
+  await playAnimation("contactCreatedSucess", "animation-moveUpAndShake");
+  setTimeout(() => {
+    toggleClass("contactCreatedSucess", "animation-moveUpAndShake");
+    toggleClass("contactCreatedSucess", "d-none");
+  }, 2000);
 }
 
 function clearAddContact() {
