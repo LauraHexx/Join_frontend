@@ -43,7 +43,6 @@ a {
   width: 30%;
   min-width: 300px;
   max-width: 380px;
-  height: calc(98vh - var(--header-height));
   padding: var(--padding);
   background: var(--bright-white);
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.08);
@@ -257,6 +256,8 @@ a {
   transform: translateX(-50%);
   width: 250px;
   z-index: 5;
+  cursor: none;
+  pointer-events: none;
 }
 
 #contactCreatedSucess button,
