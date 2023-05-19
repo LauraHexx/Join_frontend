@@ -6,7 +6,7 @@ let TASKS = [];
 async function initAddTask() {
   await loadUserData();
   await getLoggedUser();
-  init("addTask");
+  await init("addTask");
   checkAndSortContactsAndCategorys();
   eventCloseDropDown();
 }
@@ -16,7 +16,6 @@ async function initAddTask() {
 function checkAndSortContactsAndCategorys() {
   CONTACTS = LOGGED_USER.contacts;
   CATEGORYS = LOGGED_USER.categorys;
-
   if (CATEGORYS) {
     sortCategorysAlphabetically();
     renderCategorys();
@@ -68,9 +67,8 @@ async function addNewCategory() {
   let newCategory = getNewCategory();
   let colour = getSelectedColor();
   checkAndPushCategory(newCategory, colour);
-  await sortCategorysAlphabetically();
   await setItem("users", JSON.stringify(USERS));
-  initAddTask();
+  checkAndSortContactsAndCategorys();
 }
 
 function getNewCategory() {
@@ -134,8 +132,8 @@ function showErrorNoColorSelected() {
 async function checkAndPushCategory(newCategory, color) {
   if (newCategory && color) {
     let indexUserToAddCategory = USERS.indexOf(LOGGED_USER);
-    let userToAddCategory = USERS[indexUserToAddTask];
-    userToAddTask.categorys.push({
+    let userToAddCategory = USERS[indexUserToAddCategory];
+    userToAddCategory.categorys.push({
       name: newCategory,
       color: color,
     });
@@ -179,23 +177,23 @@ function moveSelectedColorCircleDown() {
 
 function renderContacts() {
   document.getElementById("savedContacts").innerHTML = "";
-  filteredUsers.forEach((user) => {
-    const name = user.name;
-    const id = user.id;
+  CONTACTS.forEach((contact) => {
+    const name = contact.name;
+    const index = CONTACTS.indexOf(contact);
     document.getElementById("savedContacts").innerHTML += renderContactsHtml(
       name,
-      id
+      index
     );
   });
   checkIfLoggedUserShouldBeRendered();
 }
 
-function renderContactsHtml(name, id) {
+function renderContactsHtml(name, index) {
   return /*html*/ `
     <li class="oneContact" onclick="event.stopPropagation();">
-      <div onclick="toggleCheckbox(${id})" class="toggleCheckbox"></div>
+      <div onclick="toggleCheckbox(${index})" class="toggleCheckbox"></div>
       <label class="nameOfContact">${name}</label>
-      <input id="checkBoxUser${id}" type="checkbox"/>
+      <input id="checkBoxUser${index}" type="checkbox"/>
     </li>
   `;
 }
@@ -356,8 +354,8 @@ function createTask() {
 
 async function checkAndPushTask(task) {
   if (requiredDataComplete(task)) {
-    let indexUserToAddTask = USER.indexOf(LOGGED_USER);
-    let userToAddTask = USER[indexUserToAddTask];
+    let indexUserToAddTask = USERS.indexOf(LOGGED_USER);
+    let userToAddTask = USERS[indexUserToAddTask];
     userToAddTask.tasks.push(task);
     await setItem("users", JSON.stringify(USERS));
   }
