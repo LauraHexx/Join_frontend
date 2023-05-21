@@ -229,11 +229,18 @@ function renderEditContactHtml() {
 async function deleteContact() {
   const indexSelectedContact = CONTACTS.indexOf(SELECTED_CONTACT);
   CONTACTS.splice(indexSelectedContact, 1);
+  deleteContactFromTasks();
   await setItem("users", JSON.stringify(USERS));
   initContacts();
   playAnimationContactDeletedSuccess();
   closeDetailInfos();
   closeEditContact();
+}
+
+function deleteContactFromTasks() {
+  const indexUserToEdit = CONTACTS.indexOf(LOGGED_USER);
+  const userToEdit = CONTACTS[indexUserToEdit];
+  const taskToEdit = userToEdit["tasks"];
 }
 
 async function playAnimationContactDeletedSuccess() {
@@ -312,7 +319,7 @@ function getContactId() {
       highestId = contact.id;
     }
   }
-  return highestId + 2;
+  return highestId + 1;
 }
 
 function checkIfEmailIsAlreadyExisting(newContact) {
