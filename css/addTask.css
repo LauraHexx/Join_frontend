@@ -298,6 +298,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 
 .imagePlus {
   top: 16px;
+  cursor: pointer;
 }
 
 #subtasks {
@@ -382,10 +383,8 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 #displayAddTask {
-  display: flex;
-  gap: 15px;
   position: relative;
-  padding: 40px;
+  padding: 40px 20px 40px 20px;
   background: var(--bright-white);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
