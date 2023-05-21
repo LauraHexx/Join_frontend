@@ -5,7 +5,7 @@ async function initContacts() {
   await loadUserData();
   await getLoggedUser();
   await init("contacts");
-  showContactList();
+  test();
   /*setEventListenerScreenSize();
   setEventCloseDropDown();
   */
@@ -28,7 +28,7 @@ function monitorScreenSize() {
 
 /*CONTACTS *******************************************/
 
-function showContactList() {
+function test() {
   console.log("test");
   CONTACTS = LOGGED_USER.contacts;
   if (CONTACTS) {
