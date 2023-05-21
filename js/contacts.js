@@ -1,30 +1,43 @@
-/*
-const FIRST_INITIALS_NO_DUPLICAT = [];
+let FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_CONTACT = "";
-let CONTACTS = [];
 
 async function initContacts() {
-  await checkIfUserLoggedIn();
+  setEventListenerScreenSize();
+  await loadUserData();
+  await getLoggedUser();
   await init("contacts");
-  await loadUsers();
-  await sortUsersAlphabetically();
-  await renderFirstInitialsList();
-  await renderContacts();
+  checkAndSortContacts();
+  checkAndSortContactsAndCategorys();
+  eventCloseDropDown();
 }
 
-
-async function sortUsersAlphabetically() {
-  USERS = USERS.sort((a, b) => a.initials.localeCompare(b.initials));
+function setEventListenerScreenSize() {
+  window.addEventListener("resize", monitorScreenSize);
 }
 
-/**
- * Generates and displays the first letters corresponding to the users' names in the contacts list.
- * @async
- * @returns {void}
- */
+function monitorScreenSize() {
+  if (window.innerWidth >= 920) {
+    document.getElementById("contactList").style.display = "flex";
+    document.getElementById("contactDetails").style.display = "flex";
+  } else {
+    document.getElementById("contactDetails").style.display = "none";
+  }
+}
+
+async function checkAndSortContacts() {
+  CONTACTS = LOGGED_USER.contacts;
+  if (CONTACTS) {
+    sortArrayAlphabetically(CONTACTS);
+    await renderFirstInitialsList();
+    renderContactsInInitialList();
+  }
+}
+
 async function renderFirstInitialsList() {
-  USERS.forEach((user) => {
-    const firstInitial = user.initials.charAt(0);
+  let FIRST_INITIALS_NO_DUPLICAT = [];
+  document.getElementById("contactList").innerHTML = "";
+  CONTACTS.forEach((contact) => {
+    const firstInitial = contact.initials.charAt(0);
     if (!FIRST_INITIALS_NO_DUPLICAT.includes(firstInitial)) {
       FIRST_INITIALS_NO_DUPLICAT.push(firstInitial);
       document.getElementById("contactList").innerHTML +=
@@ -35,47 +48,68 @@ async function renderFirstInitialsList() {
 
 function renderFirstInitialsListHtml(firstInitial) {
   return /*html*/ `
-    <div class="oneSection">
-      <span id="letterCategory">${firstInitial}</span>
-       <div class="partingLineGrey"></div>
-       <div id="contactsLetter${firstInitial}"></div>
-    </div>
-`;
-}
-
-/**
- * Sorts the users array based on their initials and renders the contacts under the respective first letters(in alphabetical order).
- * @returns {void}
- */
-function renderContacts() {
-  USERS.forEach((user) => {
-    const firstInitial = user.initials.charAt(0);
-    document.getElementById(`contactsLetter${firstInitial}`).innerHTML +=
-      renderContactsHtml(user);
-  });
-}
-
-function renderContactsHtml(user) {
-  return /*html*/ `
-   <div
-      onclick="openContactDetails(${user.id})"
-      class="singleContact">
-      <div style="background-color: ${user.color}" class="initialsOfNames smallCircle">${user.initials}</div>
-      <div id="deatilsOfUSer">
-        <span>${user.name}</span>
-        <br />
-        <a href="mailto:${user.email}"
-        onclick="event.stopPropagation();"
-        >${user.email}</a
-        >
+      <div class="oneSection">
+        <span id="letterCategory">${firstInitial}</span>
+         <div class="partingLineGrey"></div>
+         <div id="contactsLetter${firstInitial}"></div>
       </div>
-    </div>
   `;
 }
 
-async function openContactDetails(userId) {
-  SELECTED_CONTACT = getUserData(userId);
-  renderContactDetails();
+function renderContactsInInitialList() {
+  clearContacts();
+  CONTACTS.forEach((contact) => {
+    const firstInitial = contact.initials.charAt(0);
+    const indexOfContact = CONTACTS.indexOf(contact);
+    document.getElementById(`contactsLetter${firstInitial}`).innerHTML +=
+      renderContactsInInitialListHtml(contact, indexOfContact);
+  });
+}
+
+function clearContacts() {
+  const containers = document.querySelectorAll('[id^="contactsLetter"]');
+  for (let i = 0; i < containers.length; i++) {
+    const container = containers[i];
+    container.innerHTML = "";
+  }
+}
+
+function renderContactsInInitialListHtml(contact, indexOfContact) {
+  return /*html*/ `
+     <div
+        onclick="openContactDetails(${indexOfContact})"
+        class="singleContact">
+        <div style="background-color: ${contact.color}" class="initialsOfNames smallCircle">${contact.initials}</div>
+        <div id="deatilsOfUSer">
+          <span>${contact.name}</span>
+          <br />
+          <a href="mailto:${contact.email}"
+          onclick="event.stopPropagation();"
+          >${contact.email}</a
+          >
+        </div>
+      </div>
+    `;
+}
+
+async function openContactDetails(indexOfContact) {
+  if (window.innerWidth <= 920) {
+    showContactDetails();
+  }
+  const mainInfosContact = document.getElementById("mainInfosContact");
+  if (!mainInfosContact.classList.contains("animation-slideInRight")) {
+    SELECTED_CONTACT = CONTACTS[indexOfContact];
+    renderContactDetails();
+    playAnimationContactDetails();
+  }
+}
+
+function showContactDetails() {
+  document.getElementById("contactDetails").style.display = "flex";
+  document.getElementById("contactList").style.display = "none";
+}
+
+async function playAnimationContactDetails() {
   await playAnimation("mainInfosContact", "animation-slideInRight");
   setTimeout(() => {
     toggleClass("mainInfosContact", "animation-slideInRight");
@@ -90,41 +124,41 @@ function renderContactDetails() {
 
 function renderContactDetailsHtml() {
   return /*html*/ `
-   <div class="addTaskToContact gap">
-     <div class="initialsOfNames bigCircle">${SELECTED_CONTACT.initials}</div>
-     <div class="NameAndAddTask">
-       <span class="name">${SELECTED_CONTACT.name}</span>
+     <div class="addTaskToContact gap">
+       <div class="initialsOfNames bigCircle" style="background-color: ${SELECTED_CONTACT.color}">${SELECTED_CONTACT.initials}</div>
+       <div class="nameAndAddTask">
+         <span class="name">${SELECTED_CONTACT.name}</span>
+         <a
+           onclick="toggleClass('body', 'overflowHidden'); showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none')"
+           class="addTask">
+           <img
+             src="../assets/img/plusBlue.svg"
+             alt="image of icon to add a task" />
+           <span>Add Task</span>
+         </a>
+       </div>
+     </div>
+     <div class="editContact gap">
+       <span>Contact Information</span>
        <a
-         onclick="toggleClass('body', 'overflowHidden'); showAddTask('containerAdd','animation-slideInRight','d-none')"
-         class="addTask">
+         onclick="renderEditContact()">
          <img
-           src="../assets/img/plusBlue.svg"
-           alt="image of icon to add a task" />
-         <span>Add Task</span>
+           src="../assets/img/pencilBlue.svg"
+           alt="image of icon to edit contact" />
+         <span class="editContactSpan">Edit Contact</span>
        </a>
      </div>
-   </div>
-   <div class="editContact gap">
-     <span>Contact Information</span>
-     <a
-       onclick="renderEditContact()">
-       <img
-         src="../assets/img/pencilBlue.svg"
-         alt="image of icon to edit contact" />
-       <span class="editContactSpan">Edit Contact</span>
-     </a>
-   </div>
-   <div class="emailAndPhone gap">
-     <div class="email">
-       <span class="bold">Email</span>
-       <a href="mailto:${SELECTED_CONTACT.email}">${SELECTED_CONTACT.email}</a>
+     <div class="emailAndPhone gap">
+       <div class="email">
+         <span class="bold">Email</span>
+         <a href="mailto:${SELECTED_CONTACT.email}">${SELECTED_CONTACT.email}</a>
+       </div>
+       <div class="phone">
+         <span class="bold">Phone</span>
+         <a href="tel:${SELECTED_CONTACT.phone}">${SELECTED_CONTACT.phone}</a>
+       </div>
      </div>
-     <div class="phone">
-       <span class="bold">Phone</span>
-       <a href="phone:${SELECTED_CONTACT.phone}">${SELECTED_CONTACT.phone}</a>
-     </div>
-   </div>
-  `;
+    `;
 }
 
 function renderEditContact() {
@@ -136,123 +170,191 @@ function renderEditContact() {
 
 function renderEditContactHtml() {
   return /*html*/ `
-    <div class="displayEditContact">
-      <div class="leftSectionEdit">
-        <img
-        onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
-          class="cursorPointer closeWhite d-none"
-          src="../assets/img/closeWhite.svg"
-          alt="image of icon to close the editing" />
-        <img
-          class="logoEdit"
-          src="../assets/img/logoWhite.svg"
-          alt="logo of join" />
-        <h1>Edit contact</h1>
-        <div class="blueLine"></div>
-      </div>
-      <div class="rightSectionEdit">
-        <img
+      <div class="displayEditContact">
+        <div class="leftSectionEdit">
+          <img
           onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
-          class="cursorPointer closeDarkEdit"
-          src="../assets/img/closeDark.svg"
-          alt="image of icon to close the adding" />
-        <div id="editContactInitials" class="bigCircleEdit">${SELECTED_CONTACT.initials}</div>
-        <form onsubmit="saveChanges(); return false" class="formEdit">
-          <input
-            value="${SELECTED_CONTACT.name}"
-            id="editContactName"
-            class="input inputName"
-            type="name"
-            placeholder="Name"
-            required />
-          <input
-            value="${SELECTED_CONTACT.email}"
-            id="editContactEmail"
-            class="input inputEmail"
-            type="email"
-            placeholder="Email"
-            required />
-          <input
-            value="${SELECTED_CONTACT.phone}"
-            id="editContactPhone"
-            class="input inputPassword"
-            type="number"
-            placeholder="Phone"
-             />
-          <div class="editContactBtns">
-            <button onclick="deleteChanges()" type="button" class="deleteBtn">Delete</button>
-            <button type="submit" class="saveBtn">Save</button>
+            class="cursorPointer closeWhite d-none"
+            src="../assets/img/closeWhite.svg"
+            alt="image of icon to close the editing" />
+          <img
+            class="logoEdit"
+            src="../assets/img/logoWhite.svg"
+            alt="logo of join" />
+          <h1>Edit contact</h1>
+          <div class="blueLine"></div>
+        </div>
+        <div class="rightSectionEdit">
+          <img
+            onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
+            class="cursorPointer closeDarkEdit"
+            src="../assets/img/closeDark.svg"
+            alt="image of icon to close the adding" />
+          <div id="editContactInitials" class="bigCircleEdit" style="background-color:${SELECTED_CONTACT.color}">${SELECTED_CONTACT.initials}</div>
+          <div class="formEdit">
+            <input
+              value="${SELECTED_CONTACT.name}"
+              id="editContactName"
+              class="input inputName"
+              type="name"
+              placeholder="Name"
+              required />
+            <div class="editContactEmailContainer">
+              <input
+                value="${SELECTED_CONTACT.email}"
+                id="editContactEmail"
+                class="input inputEmail"
+                type="email"
+                placeholder="Email"
+                required />
+              <span id="errorEmailIsAlreadyTaken" class="d-none">Email already belongs to a contact. Please update it.</span>
+            </div>
+            <input
+              value=${SELECTED_CONTACT.phone}
+              id="editContactPhone"
+              class="input inputPhone"
+              type="number"
+              placeholder="Phone"
+               />
+            <div class="editContactBtns">
+              <button onclick="deleteContact()" class="deleteBtn">Delete</button>
+              <button onclick="checkEdits()" class="saveBtn">Save</button>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
-  `;
+    `;
 }
 
-function deleteChanges() {
-  editContactName.value = SELECTED_CONTACT.name;
-  editContactEmail.value = SELECTED_CONTACT.email;
-  editContactPhone.value = SELECTED_CONTACT.phone;
-}
-
-async function saveChanges() {
-  formatNewData();
+async function deleteContact() {
+  const indexSelectedContact = CONTACTS.indexOf(SELECTED_CONTACT);
+  CONTACTS.splice(indexSelectedContact, 1);
   await setItem("users", JSON.stringify(USERS));
-  await location.reload();
+  initContacts();
+  playAnimationContactDeletedSuccess();
+  closeDetailInfos();
+  closeEditContact();
 }
 
-function formatNewData() {
-  const name = editContactName.value;
-  const formattedName = name
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-  const email = editContactEmail.value;
-  const formattedEmail = email.toLowerCase();
-  const initials = getInitials();
-  changeData(formattedName, formattedEmail, initials);
+async function playAnimationContactDeletedSuccess() {
+  await toggleClass("contactDeletedSucess", "d-none");
+  await playAnimation("contactDeletedSucess", "animation-moveUpAndShake");
+  setTimeout(() => {
+    toggleClass("contactDeletedSucess", "animation-moveUpAndShake");
+    toggleClass("contactDeletedSucess", "d-none");
+  }, 2000);
 }
 
-function changeData(formattedName, formattedEmail, initials) {
-  let indexUserToEdit = USERS.indexOf(SELECTED_CONTACT);
-  let userToEdit = USERS[indexUserToEdit];
-  userToEdit.name = formattedName;
-  userToEdit.email = formattedEmail;
-  userToEdit.phone = document.getElementById("editContactPhone").value;
-  userToEdit.initials = initials;
+function closeEditContact() {
+  hideDisplay("contentEditDisplay", "d-none");
+  toggleClass("body", "overflowHidden");
 }
 
+function closeDetailInfos() {
+  let detailInfos = document.getElementById("mainInfosContact");
+  detailInfos.innerHTML = "";
+}
 
-function getInitials() {
-  const names = editContactName.value.trim().split(" ");
-  let initials = "";
-  if (oneName(names)) {
-    initials = getInitialsForSingleName(names[0]);
-  } else if (moreThanOneName(names)) {
-    initials = getInitialsForFullName(names);
+function checkEdits() {
+  const filteredContacts = filterContacts();
+  const foundExistingEmail = findExistingEmail(
+    filteredContacts,
+    editContactEmail.value
+  );
+  if (foundExistingEmail) {
+    showError("errorEmailIsAlreadyTaken");
+  } else {
+    saveEdits();
   }
-  return initials;
 }
 
-function oneName(names) {
-  return names.length === 1;
+function filterContacts() {
+  return CONTACTS.filter((contact) => contact !== SELECTED_CONTACT);
 }
 
-
-function getInitialsForSingleName(name) {
-  const initials = name[0].toUpperCase();
-  return initials;
+function findExistingEmail(contacts, email) {
+  return contacts.find((contact) => contact.email === email);
 }
 
-function moreThanOneName(names) {
-  return names.length > 1;
+async function saveEdits() {
+  changeData();
+  await setItem("users", JSON.stringify(USERS));
+  initContacts();
+  closeDetailInfos();
+  closeEditContact();
 }
 
-
-function getInitialsForFullName(names) {
-  const firstNameInitial = names[0][0].toUpperCase();
-  const lastNameInitial = names[names.length - 1][0].toUpperCase();
-  const initials = firstNameInitial + lastNameInitial;
-  return initials;
+function changeData() {
+  const indexContactToEdit = CONTACTS.indexOf(SELECTED_CONTACT);
+  const contactToEdit = CONTACTS[indexContactToEdit];
+  contactToEdit.name = editContactName.value;
+  contactToEdit.email = editContactEmail.value;
+  contactToEdit.phone = editContactPhone.value;
+  contactToEdit.initials = getInitials(editContactName.value);
 }
-*/
+
+async function getDataNewContact() {
+  let newContact = {
+    id: getContactId(),
+    color: getRandomColor(),
+    name: addContactName.value,
+    initials: getInitials(addContactName.value),
+    email: addContactEmail.value,
+    phone: addContactPhone.value,
+  };
+  checkIfEmailIsAlreadyExisting(newContact);
+}
+
+function getContactId() {
+  const id = CONTACTS.length + 1;
+  return id;
+}
+
+function checkIfEmailIsAlreadyExisting(newContact) {
+  const foundExistingEmail = findExistingEmail(
+    LOGGED_USER.contacts,
+    addContactEmail.value
+  );
+  if (foundExistingEmail) {
+    showError("errorEnterANewEmail");
+  } else {
+    addNewContact(newContact);
+  }
+}
+
+async function addNewContact(newContact) {
+  LOGGED_USER.contacts.push(newContact);
+  await setItem("users", JSON.stringify(USERS));
+  await initContacts();
+  closeAddContact();
+  clearAddContact();
+  hideError("errorEnterANewEmail");
+  showAnimationNewContactSuccess();
+}
+
+function closeAddContact() {
+  clearAddContact();
+  hideError("errorEnterANewEmail");
+  hideDisplay("contentAddDisplay", "d-none");
+  toggleClass("body", "overflowHidden");
+}
+
+async function showAnimationNewContactSuccess() {
+  await toggleClass("contactCreatedSucess", "d-none");
+  await playAnimation("contactCreatedSucess", "animation-moveUpAndShake");
+  setTimeout(() => {
+    toggleClass("contactCreatedSucess", "animation-moveUpAndShake");
+    toggleClass("contactCreatedSucess", "d-none");
+  }, 2000);
+}
+
+function clearAddContact() {
+  addContactName.value = "";
+  addContactEmail.value = "";
+  addContactPhone.value = "";
+}
+
+function showContactList() {
+  document.getElementById("contactDetails").style.display = "none";
+  document.getElementById("contactList").style.display = "flex";
+}
