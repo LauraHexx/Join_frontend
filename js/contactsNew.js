@@ -98,12 +98,15 @@ async function openContactDetails(indexOfContact) {
   if (window.innerWidth <= 920) {
     showContactDetails();
   }
-  SELECTED_CONTACT = CONTACTS[indexOfContact];
-  renderContactDetails();
-  await playAnimation("mainInfosContact", "animation-slideInRight");
-  setTimeout(() => {
-    toggleClass("mainInfosContact", "animation-slideInRight");
-  }, 1000);
+  const mainInfosContact = document.getElementById("mainInfosContact");
+  if (!mainInfosContact.classList.contains("animation-slideInRight")) {
+    SELECTED_CONTACT = CONTACTS[indexOfContact];
+    renderContactDetails();
+    await playAnimation("mainInfosContact", "animation-slideInRight");
+    setTimeout(() => {
+      toggleClass("mainInfosContact", "animation-slideInRight");
+    }, 1000);
+  }
 }
 
 function showContactDetails() {
