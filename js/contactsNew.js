@@ -27,14 +27,10 @@ function monitorScreenSize() {
 async function checkAndSortContacts() {
   CONTACTS = LOGGED_USER.contacts;
   if (CONTACTS) {
-    sortContactsAlphabetically();
+    sortArrayAlphabetically(CONTACTS);
     await renderFirstInitialsList();
     renderContactsInInitialList();
   }
-}
-
-function sortContactsAlphabetically() {
-  CONTACTS.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 async function renderFirstInitialsList() {

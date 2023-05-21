@@ -17,12 +17,12 @@ function checkAndSortContactsAndCategorys() {
   CONTACTS = LOGGED_USER.contacts;
   CATEGORYS = LOGGED_USER.categorys;
   if (CATEGORYS) {
-    sortCategorysAlphabetically();
+    sortArrayAlphabetically(CATEGORYS);
     renderCategorys();
     console.log(CATEGORYS);
   }
   if (CONTACTS) {
-    sortContactsAlphabetically();
+    sortArrayAlphabetically(CONTACTS);
     renderContacts();
     console.log(CONTACTS);
   }
@@ -181,21 +181,21 @@ function renderContacts() {
   document.getElementById("savedContacts").innerHTML = "";
   CONTACTS.forEach((contact) => {
     const name = contact.name;
-    const id = contact.id;
+    const index = CONTACTS.indexOf(contact);
     document.getElementById("savedContacts").innerHTML += renderContactsHtml(
       name,
-      id
+      index
     );
   });
   checkIfLoggedUserShouldBeRendered();
 }
 
-function renderContactsHtml(name, id) {
+function renderContactsHtml(name, index) {
   return /*html*/ `
     <li class="oneContact" onclick="event.stopPropagation();">
-      <div onclick="toggleCheckbox(${id})" class="toggleCheckbox"></div>
+      <div onclick="toggleCheckbox(${index})" class="toggleCheckbox"></div>
       <label class="nameOfContact">${name}</label>
-      <input id="checkBoxUser${id}" type="checkbox"/>
+      <input id="checkBoxUser${index}" type="checkbox"/>
     </li>
   `;
 }
@@ -212,9 +212,9 @@ function checkIfLoggedUserShouldBeRendered() {
 function renderLoggedUserContactHtml() {
   return /*html*/ `
      <li class="oneContact">
-      <div onclick="toggleCheckbox(${LOGGED_USER.id})" class="toggleCheckbox"></div>
+      <div onclick="toggleCheckbox(010101)" class="toggleCheckbox"></div>
       <label class="nameOfContact">You</label>
-      <input id="checkBoxUser${LOGGED_USER.id}" type="checkbox"/>
+      <input id="checkBoxUser010101" type="checkbox"/>
     </li>
   `;
 }
