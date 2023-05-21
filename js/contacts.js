@@ -29,6 +29,7 @@ function monitorScreenSize() {
 /*CONTACTS *******************************************/
 
 function showContactList() {
+  console.log("test");
   CONTACTS = LOGGED_USER.contacts;
   if (CONTACTS) {
     sortArrayAlphabetically(CONTACTS);

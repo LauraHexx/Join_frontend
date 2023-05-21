@@ -1,6 +1,7 @@
 let USERS = [];
 let CATEGORYS = [];
 let LOGGED_USER = "";
+let CONTACTS = [];
 
 const SAMPLE_DATA_CONTACTS = [
   {
