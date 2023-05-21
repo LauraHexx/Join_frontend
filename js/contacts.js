@@ -306,8 +306,13 @@ async function getDataNewContact() {
 }
 
 function getContactId() {
-  const id = CONTACTS.length + 1;
-  return id;
+  let highestId = 0;
+  for (const contact of CONTACTS) {
+    if (contact.id > highestId) {
+      highestId = contact.id;
+    }
+  }
+  return highestId + 2;
 }
 
 function checkIfEmailIsAlreadyExisting(newContact) {

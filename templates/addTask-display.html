@@ -96,7 +96,13 @@
         alt="arrow to drop down the menu of contacts" />
     </div>
     <ul id="listContacts" class="listDropDown d-none">
-      <div id="loggedUserContact"></div>
+      <div id="loggedUserContact">
+        <li class="oneContact">
+          <div onclick="toggleCheckbox(99999999)" class="toggleCheckbox"></div>
+          <label class="nameOfContact">You</label>
+          <input id="checkBoxUser99999999" type="checkbox" />
+        </li>
+      </div>
       <div id="savedContacts"></div>
     </ul>
   </div>

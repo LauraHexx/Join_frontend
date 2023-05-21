@@ -11,29 +11,17 @@ async function initAddTask() {
   eventCloseDropDown();
 }
 
-/*CATEGORY******************************************************************************/
-
 function checkAndSortContactsAndCategorys() {
   CONTACTS = LOGGED_USER.contacts;
   CATEGORYS = LOGGED_USER.categorys;
   if (CATEGORYS) {
     sortArrayAlphabetically(CATEGORYS);
     renderCategorys();
-    console.log(CATEGORYS);
   }
   if (CONTACTS) {
     sortArrayAlphabetically(CONTACTS);
     renderContacts();
-    console.log(CONTACTS);
   }
-}
-
-function sortContactsAlphabetically() {
-  CONTACTS.sort((a, b) => a.name.localeCompare(b.name));
-}
-
-function sortCategorysAlphabetically() {
-  CATEGORYS.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function renderCategorys() {
@@ -106,11 +94,6 @@ function setErrorsCategoryAlreadyExists() {
   hideError("errorNewCategoryNoNameEntered");
 }
 
-/**
- * This function retrieves the ID of the div element that has the class "selectedColor".
- *
- * @returns {string|null} The ID of the selected div element, or null if no element is selected.
- */
 function getSelectedColor() {
   const selectedColor = document.querySelector(".selectedColor");
   console.log(selectedColor);
@@ -178,6 +161,9 @@ function moveSelectedColorCircleDown() {
 /*CONTACTS******************************************************************************/
 
 function renderContacts() {
+  if (LOGGED_USER.name == "Guest") {
+    document.getElementById("loggedUserContact").classList.add("d-none");
+  }
   document.getElementById("savedContacts").innerHTML = "";
   CONTACTS.forEach((contact) => {
     const name = contact.name;
@@ -187,7 +173,6 @@ function renderContacts() {
       index
     );
   });
-  checkIfLoggedUserShouldBeRendered();
 }
 
 function renderContactsHtml(name, index) {
@@ -200,39 +185,12 @@ function renderContactsHtml(name, index) {
   `;
 }
 
-function checkIfLoggedUserShouldBeRendered() {
-  if (LOGGED_USER == "Guest") {
-    return;
-  } else {
-    document.getElementById("loggedUserContact").innerHTML =
-      renderLoggedUserContactHtml();
-  }
-}
-
-function renderLoggedUserContactHtml() {
-  return /*html*/ `
-     <li class="oneContact">
-      <div onclick="toggleCheckbox(010101)" class="toggleCheckbox"></div>
-      <label class="nameOfContact">You</label>
-      <input id="checkBoxUser010101" type="checkbox"/>
-    </li>
-  `;
-}
-
-/**
- * Toggles the state of the checkbox with the given id and updates the title to show the number of selected contacts.
- *
- * @param {string} id - The id of the checkbox to toggle.
- */
 function toggleCheckbox(id) {
   const checkbox = document.getElementById(`checkBoxUser${id}`);
   checkbox.checked = !checkbox.checked;
   changeTitleContactInput();
 }
 
-/**
- * Updates the title to show the number of selected contacts.
- */
 function changeTitleContactInput() {
   const selectedCheckBoxes = document.querySelectorAll(
     '#listContacts input[type="checkbox"]:checked'
@@ -452,10 +410,6 @@ function getContactsId(selectedCheckBoxes) {
   return checkedBoxesId;
 }
 
-/**
- * Retrieves the text content of all elements with the class "subtask".
- * @returns {Array<string>} An array of the text content of elements with the class "subtask".
- */
 function getSubtasks() {
   const subtaskElements = document.querySelectorAll(".subtask");
   const subtaskTexts = [];
