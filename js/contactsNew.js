@@ -102,16 +102,20 @@ async function openContactDetails(indexOfContact) {
   if (!mainInfosContact.classList.contains("animation-slideInRight")) {
     SELECTED_CONTACT = CONTACTS[indexOfContact];
     renderContactDetails();
-    await playAnimation("mainInfosContact", "animation-slideInRight");
-    setTimeout(() => {
-      toggleClass("mainInfosContact", "animation-slideInRight");
-    }, 1000);
+    playAnimationContactDetails();
   }
 }
 
 function showContactDetails() {
   document.getElementById("contactDetails").style.display = "flex";
   document.getElementById("contactList").style.display = "none";
+}
+
+async function playAnimationContactDetails() {
+  await playAnimation("mainInfosContact", "animation-slideInRight");
+  setTimeout(() => {
+    toggleClass("mainInfosContact", "animation-slideInRight");
+  }, 1000);
 }
 
 function showContactList() {
@@ -167,7 +171,7 @@ function renderContactDetailsHtml() {
 function renderEditContact() {
   document.getElementById("contentEditDisplay").innerHTML =
     renderEditContactHtml();
-  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
+  showDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
 }
 
@@ -234,12 +238,12 @@ async function deleteContact() {
   CONTACTS.splice(indexSelectedContact, 1);
   await setItem("users", JSON.stringify(USERS));
   initContacts();
-  showAnimationContactDeletedSuccess();
+  playAnimationContactDeletedSuccess();
   closeDetailInfos();
   closeEditContact();
 }
 
-async function showAnimationContactDeletedSuccess() {
+async function playAnimationContactDeletedSuccess() {
   await toggleClass("contactDeletedSucess", "d-none");
   await playAnimation("contactDeletedSucess", "animation-moveUpAndShake");
   setTimeout(() => {
