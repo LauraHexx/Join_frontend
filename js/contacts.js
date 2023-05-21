@@ -8,7 +8,7 @@ async function initContacts() {
   await init("contacts");
   checkAndSortContacts();
   checkAndSortContactsAndCategorys();
-  eventCloseDropDown();
+  setEventCloseDropDown();
 }
 
 function setEventListenerScreenSize() {
@@ -229,7 +229,6 @@ function renderEditContactHtml() {
 async function deleteContact() {
   const indexSelectedContact = CONTACTS.indexOf(SELECTED_CONTACT);
   const idSelectedContact = SELECTED_CONTACT.id;
-  console.log(idSelectedContact);
   deleteContactFromTasks(idSelectedContact);
   CONTACTS.splice(indexSelectedContact, 1);
   await setItem("users", JSON.stringify(USERS));

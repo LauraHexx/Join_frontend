@@ -8,7 +8,7 @@ async function initAddTask() {
   await getLoggedUser();
   await init("addTask");
   checkAndSortContactsAndCategorys();
-  eventCloseDropDown();
+  setEventCloseDropDown();
 }
 
 function checkAndSortContactsAndCategorys() {
@@ -487,7 +487,7 @@ function showSelectContacts() {
 }
 
 // Event listener for closing the dropdown menus
-function eventCloseDropDown() {
+function setEventCloseDropDown() {
   closeDropDown();
   toggleCategoryDropDownContainer();
   toggleContactDropDownContainer();
