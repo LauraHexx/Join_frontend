@@ -475,6 +475,7 @@ function clearTask() {
   document.getElementById("inputDueDate").value = "";
   clearPrioBtn();
   clearSubtasks();
+  hideErrorElements();
 }
 
 function clearPrioBtn() {
@@ -488,6 +489,14 @@ function clearSubtasks() {
   SUBTASKS = [];
   document.getElementById("subtasks").innerHTML = "";
   document.getElementById("addTaskSubtasks").value = "";
+}
+
+function hideErrorElements() {
+  const mainContainer = document.getElementsByClassName("mainContainer")[0];
+  const elements = mainContainer.querySelectorAll('[id*="error"]');
+  elements.forEach((element) => {
+    element.classList.add("d-none");
+  });
 }
 
 /*CATEGORY*/
@@ -595,4 +604,10 @@ function toggleContactDropDownContainer() {
     event.stopPropagation();
     toggleClass("listContacts", "d-none");
   }
+}
+
+function closeAddTask() {
+  toggleClass("body", "overflowHidden");
+  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
+  clearTask();
 }
