@@ -2,14 +2,16 @@ let FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_CONTACT = "";
 
 async function initContacts() {
-  setEventListenerScreenSize();
   await loadUserData();
   await getLoggedUser();
   await init("contacts");
-  checkAndSortContacts();
-  checkAndSortContactsAndCategorys();
+  showContactList();
+  /*setEventListenerScreenSize();
   setEventCloseDropDown();
+  */
 }
+
+/*EVENT LISTENER************************************/
 
 function setEventListenerScreenSize() {
   window.addEventListener("resize", monitorScreenSize);
@@ -24,17 +26,19 @@ function monitorScreenSize() {
   }
 }
 
-async function checkAndSortContacts() {
+/*CONTACTS *******************************************/
+
+function showContactList() {
   CONTACTS = LOGGED_USER.contacts;
   if (CONTACTS) {
     sortArrayAlphabetically(CONTACTS);
-    await renderFirstInitialsList();
+    renderFirstInitialsList();
     renderContactsInInitialList();
   }
 }
 
 async function renderFirstInitialsList() {
-  let FIRST_INITIALS_NO_DUPLICAT = [];
+  FIRST_INITIALS_NO_DUPLICAT = [];
   document.getElementById("contactList").innerHTML = "";
   CONTACTS.forEach((contact) => {
     const firstInitial = contact.initials.charAt(0);
@@ -301,10 +305,10 @@ async function saveEdits() {
 function changeData() {
   const indexContactToEdit = CONTACTS.indexOf(SELECTED_CONTACT);
   const contactToEdit = CONTACTS[indexContactToEdit];
-  contactToEdit.name = editContactName.value;
-  contactToEdit.email = editContactEmail.value;
-  contactToEdit.phone = editContactPhone.value;
-  contactToEdit.initials = getInitials(editContactName.value);
+  SELECTED_CONTACT.name = editContactName.value;
+  SELECTED_CONTACT.email = editContactEmail.value;
+  SELECTED_CONTACT.phone = editContactPhone.value;
+  SELECTED_CONTACT.initials = getInitials(editContactName.value);
 }
 
 async function getDataNewContact() {

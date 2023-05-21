@@ -7,11 +7,11 @@ async function initAddTask() {
   await loadUserData();
   await getLoggedUser();
   await init("addTask");
-  checkAndSortContactsAndCategorys();
+  setContactsAndCategorysDropDownMenu();
   setEventCloseDropDown();
 }
 
-function checkAndSortContactsAndCategorys() {
+function setContactsAndCategorysDropDownMenu() {
   CONTACTS = LOGGED_USER.contacts;
   CATEGORYS = LOGGED_USER.categorys;
   if (CATEGORYS) {
@@ -58,7 +58,7 @@ async function addNewCategory() {
   let colour = getSelectedColor();
   checkAndPushCategory(newCategory, colour);
   await setItem("users", JSON.stringify(USERS));
-  checkAndSortContactsAndCategorys();
+  setContactsAndCategorysDropDownMenu();
 }
 
 function getNewCategory() {
@@ -493,16 +493,9 @@ function setEventCloseDropDown() {
   toggleContactDropDownContainer();
 }
 
-/**
- * Closes the dropdown menus when clicked anywhere on the page, except for the "listContacts" element.
- */
 function closeDropDown() {
   document.addEventListener("click", handleClickOnPage);
 
-  /**
-   * Handles the click event on the page.
-   * @param {Event} event - The click event object.
-   */
   function handleClickOnPage(event) {
     if (
       !event.target.closest("#listContacts") &&
