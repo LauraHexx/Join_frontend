@@ -7,6 +7,8 @@ async function initContacts() {
   await getLoggedUser();
   await init("contacts");
   checkAndSortContacts();
+  checkAndSortContactsAndCategorys();
+  eventCloseDropDown();
 }
 
 function setEventListenerScreenSize() {

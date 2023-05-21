@@ -19,10 +19,12 @@ function checkAndSortContactsAndCategorys() {
   if (CATEGORYS) {
     sortCategorysAlphabetically();
     renderCategorys();
+    console.log(CATEGORYS);
   }
   if (CONTACTS) {
     sortContactsAlphabetically();
     renderContacts();
+    console.log(CONTACTS);
   }
 }
 

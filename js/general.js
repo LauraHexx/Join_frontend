@@ -389,3 +389,7 @@ function getFirstAndLastInitial(partsOfName) {
   const initials = firstNameInitial + lastNameInitial;
   return initials;
 }
+
+function sortArrayAlphabetically(array) {
+  array.sort((a, b) => a.name.localeCompare(b.name));
+}
