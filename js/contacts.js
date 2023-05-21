@@ -228,8 +228,10 @@ function renderEditContactHtml() {
 
 async function deleteContact() {
   const indexSelectedContact = CONTACTS.indexOf(SELECTED_CONTACT);
+  const idSelectedContact = SELECTED_CONTACT.id;
+  console.log(idSelectedContact);
+  deleteContactFromTasks(idSelectedContact);
   CONTACTS.splice(indexSelectedContact, 1);
-  deleteContactFromTasks();
   await setItem("users", JSON.stringify(USERS));
   initContacts();
   playAnimationContactDeletedSuccess();
@@ -237,10 +239,16 @@ async function deleteContact() {
   closeEditContact();
 }
 
-function deleteContactFromTasks() {
-  const indexUserToEdit = CONTACTS.indexOf(LOGGED_USER);
-  const userToEdit = CONTACTS[indexUserToEdit];
-  const taskToEdit = userToEdit["tasks"];
+function deleteContactFromTasks(idSelectedContact) {
+  const indexUserToEdit = USERS.indexOf(LOGGED_USER);
+  const userToEdit = USERS[indexUserToEdit];
+  const tasksToEdit = userToEdit["tasks"];
+  tasksToEdit.forEach((task) => {
+    const indexContactToDelete = task.contacts.indexOf(idSelectedContact);
+    if (indexContactToDelete) {
+      task.contacts.splice(indexContactToDelete, 1);
+    }
+  });
 }
 
 async function playAnimationContactDeletedSuccess() {
