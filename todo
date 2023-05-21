@@ -24,3 +24,5 @@ im ikognito modus kein local storage
 nach Erstellung eines Tasks Weiterleitung an Board
 
 Ladedinger anzeigen
+
+Überlefung: Jeder Kontakt hat Id, wenn Kontakt gelöscht wird, dann task durchsuchen und id löschen
