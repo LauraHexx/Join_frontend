@@ -116,11 +116,6 @@ async function playAnimationContactDetails() {
   }, 1000);
 }
 
-function showContactList() {
-  document.getElementById("contactDetails").style.display = "none";
-  document.getElementById("contactList").style.display = "flex";
-}
-
 function renderContactDetails() {
   document.getElementById("mainInfosContact").innerHTML = "";
   document.getElementById("mainInfosContact").innerHTML =
@@ -282,16 +277,20 @@ function findExistingEmail(contacts, email) {
 }
 
 async function saveEdits() {
-  let indexContactToEdit = CONTACTS.indexOf(SELECTED_CONTACT);
-  let contactToEdit = CONTACTS[indexContactToEdit];
-  contactToEdit.name = editContactName.value;
-  contactToEdit.email = editContactEmail.value;
-  contactToEdit.phone = editContactPhone.value;
-  contactToEdit.initials = getInitials(editContactName.value);
+  changeData();
   await setItem("users", JSON.stringify(USERS));
   initContacts();
   closeDetailInfos();
   closeEditContact();
+}
+
+function changeData() {
+  const indexContactToEdit = CONTACTS.indexOf(SELECTED_CONTACT);
+  const contactToEdit = CONTACTS[indexContactToEdit];
+  contactToEdit.name = editContactName.value;
+  contactToEdit.email = editContactEmail.value;
+  contactToEdit.phone = editContactPhone.value;
+  contactToEdit.initials = getInitials(editContactName.value);
 }
 
 async function getDataNewContact() {
@@ -353,4 +352,9 @@ function clearAddContact() {
   addContactName.value = "";
   addContactEmail.value = "";
   addContactPhone.value = "";
+}
+
+function showContactList() {
+  document.getElementById("contactDetails").style.display = "none";
+  document.getElementById("contactList").style.display = "flex";
 }
