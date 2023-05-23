@@ -272,7 +272,7 @@ function addSubtask() {
   if (subtask) {
     SUBTASKS.push({
       name: subtask,
-      status: "undone",
+      status: "unchecked",
     });
     document.getElementById("addTaskSubtasks").value = "";
     renderSubtasks();

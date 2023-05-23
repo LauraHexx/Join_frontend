@@ -70,6 +70,7 @@ function renderTaskDetails() {
   document.getElementById("containerEdit").innerHTML =
     renderTaskDetailsHtml(colorCategory);
   renderAssignedContacts();
+  renderSubtasksInDetailCard();
 }
 
 function renderTaskDetailsHtml(colorCategory) {
@@ -137,6 +138,26 @@ function renderAssignedContactsHtml(name, initials, color) {
       <div class="initialsOfNames smallCircle" style="background-color:${color}">${initials}</div>
       <span id="nameOfContact">${name}</span>
     </div> 
+  `;
+}
+
+function renderSubtasksInDetailCard() {
+  document.getElementById("containerSubtasks").innerHTML = "";
+  const subtasks = SELECTED_TASK.subtasks;
+  subtasks.forEach((subtask) => {
+    const name = subtask.name;
+    const status = subtask.status;
+    document.getElementById("containerSubtasks").innerHTML +=
+      renderSubtasksInDetailCardHtml(name, status);
+  });
+}
+
+function renderSubtasksInDetailCardHtml(name, status) {
+  return /*html*/ `
+   <div class="singleSubtask">
+       <input type="checkbox" ${status} id="" class="checkbox">
+       <span class="subtask">${name}</span>
+     </div>
   `;
 }
 
