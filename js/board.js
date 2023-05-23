@@ -22,10 +22,14 @@ function renderTasks() {
     const colorCategory = getColorCategory(category);
     const processStep = task.processStep;
     const contactsIds = task.contacts;
+    const amountSubtasks = task.subtasks.length;
+    const amountFinishedSubtasks = countAmountOfFinishedSubtasks(task);
     document.getElementById(processStep).innerHTML += renderTasksHtml(
       indexOfTask,
       task,
-      colorCategory
+      colorCategory,
+      amountSubtasks,
+      amountFinishedSubtasks
     );
     renderContactsInTaskCards(indexOfTask, contactsIds);
   });
@@ -37,7 +41,25 @@ function getColorCategory(name) {
   return searchedCategory.color;
 }
 
-function renderTasksHtml(indexOfTask, task, colorCategory) {
+function countAmountOfFinishedSubtasks(task) {
+  let amountFinishedSubtasks = 0;
+  let subtasks = task.subtasks;
+  subtasks.forEach((subtasks) => {
+    const status = subtasks.status;
+    if (status === "checked") {
+      amountFinishedSubtasks++;
+    }
+  });
+  return amountFinishedSubtasks;
+}
+
+function renderTasksHtml(
+  indexOfTask,
+  task,
+  colorCategory,
+  amountSubtasks,
+  amountFinishedSubtasks
+) {
   return /*html*/ `
     <div id=${indexOfTask} class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
       <div class="category ${colorCategory}">${task.category}</div>
@@ -47,7 +69,7 @@ function renderTasksHtml(indexOfTask, task, colorCategory) {
         <div id="progress">
           <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-        <span id="progressAmount">1/2 Done</span>
+        <span id="progressAmount">${amountFinishedSubtasks}/${amountSubtasks} Done</span>
       </div>
       <div id="contactsAndPrio">
         <div class="assignedContacts" id="contacts${indexOfTask}"></div>
