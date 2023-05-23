@@ -11,8 +11,6 @@ async function initContacts() {
   setEventCloseDropDown();
 }
 
-/*CONTACTS *******************************************/
-
 function renderContactList() {
   CONTACTS = LOGGED_USER.contacts;
   if (CONTACTS) {
@@ -83,19 +81,23 @@ function renderContactsInInitialListHtml(contact, indexOfContact) {
 
 async function openContactDetails(indexOfContact) {
   if (window.innerWidth <= 920) {
-    showContactDetailsMobile();
+    styleContactDetailsMobile();
   }
-  const mainInfosContact = document.getElementById("mainInfosContact");
-  if (!mainInfosContact.classList.contains("animation-slideInRight")) {
+  if (animationIsNotPlaying()) {
     SELECTED_CONTACT = CONTACTS[indexOfContact];
-    renderContactDetails();
     playAnimationContactDetails();
+    renderContactDetails();
   }
 }
 
-function showContactDetailsMobile() {
+function styleContactDetailsMobile() {
   document.getElementById("contactDetails").style.display = "flex";
   document.getElementById("contactList").style.display = "none";
+}
+
+function animationIsNotPlaying() {
+  const mainInfosContact = document.getElementById("mainInfosContact");
+  return !mainInfosContact.classList.contains("animation-slideInRight");
 }
 
 async function playAnimationContactDetails() {
@@ -118,7 +120,7 @@ function renderContactDetailsHtml() {
        <div class="nameAndAddTask">
          <span class="name">${SELECTED_CONTACT.name}</span>
          <a
-           onclick="toggleClass('body', 'overflowHidden'); showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none')"
+           onclick="showAddTask()"
            class="addTask">
            <img
              src="../assets/img/plusBlue.svg"
@@ -148,6 +150,11 @@ function renderContactDetailsHtml() {
        </div>
      </div>
     `;
+}
+
+function showAddTask() {
+  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
+  toggleClass("body", "overflowHidden");
 }
 
 function renderEditContact() {
