@@ -382,11 +382,6 @@ function getPriority() {
   }
 }
 
-/**
- * Retrieves an array of numbers representing the ids of checked selectedCheckBoxes within the "savedContacts" container.
- *
- * @return {Array} An array of numbers representing the ids of checked selectedCheckBoxes within the "savedContacts" container.
- */
 function getSelectedCheckBoxes() {
   const selectedCheckBoxes = document.querySelectorAll(
     '#listContacts input[type="checkbox"]:checked'
@@ -505,27 +500,16 @@ function closeDropDown() {
   }
 }
 
-/**
- * Hides the specified dropdown menu by adding the "d-none" class.
- * @param {string} id - The ID of the dropdown menu element.
- */
 function hideDropdown(id) {
   let dropDownList = document.getElementById(id);
   dropDownList.classList.add("d-none");
 }
 
-/**
- * Toggles the visibility of the category dropdown menu.
- */
 function toggleCategoryDropDownContainer() {
   document
     .getElementById("selectCategoryDiv")
     .addEventListener("click", handleClick);
 
-  /**
-   * Handles the click event on the category dropdown container.
-   * @param {Event} event - The click event object.
-   */
   function handleClick(event) {
     event.stopPropagation();
     toggleClass("listCategorys", "d-none");
