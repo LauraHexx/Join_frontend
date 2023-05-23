@@ -317,8 +317,7 @@ async function checkAndPushTask(task) {
     let userToAddTask = USERS[indexUserToAddTask];
     userToAddTask.tasks.push(task);
     await setItem("users", JSON.stringify(USERS));
-    hideDisplay("displayAddTask", "d-none");
-    await playAnimation("taskCreated", "animation-moveUpAndShake");
+
     loadTemplate("./board.html");
   }
 }
