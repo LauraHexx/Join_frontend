@@ -120,7 +120,7 @@ function renderContactDetailsHtml() {
        <div class="nameAndAddTask">
          <span class="name">${SELECTED_CONTACT.name}</span>
          <a
-           onclick="showAddTask()"
+           onclick="showAddTaskDisplay()"
            class="addTask">
            <img
              src="../assets/img/plusBlue.svg"
@@ -152,7 +152,7 @@ function renderContactDetailsHtml() {
     `;
 }
 
-function showAddTask() {
+function showAddTaskDisplay() {
   showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
 }
@@ -169,7 +169,7 @@ function renderEditContactHtml() {
       <div class="displayEditContact">
         <div class="leftSectionEdit">
           <img
-          onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
+          onclick="closeEditContactDisplay()"
             class="cursorPointer closeWhite d-none"
             src="../assets/img/closeWhite.svg"
             alt="image of icon to close the editing" />
@@ -182,7 +182,7 @@ function renderEditContactHtml() {
         </div>
         <div class="rightSectionEdit">
           <img
-            onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
+            onclick="closeEditContactDisplay()"
             class="cursorPointer closeDarkEdit"
             src="../assets/img/closeDark.svg"
             alt="image of icon to close the adding" />
@@ -222,6 +222,11 @@ function renderEditContactHtml() {
     `;
 }
 
+function closeEditContactDisplay() {
+  hideDisplay("contentEditDisplay", "d-none");
+  toggleClass("body", "overflowHidden");
+}
+
 async function deleteContact() {
   const indexSelectedContact = CONTACTS.indexOf(SELECTED_CONTACT);
   const idSelectedContact = SELECTED_CONTACT.id;
@@ -230,8 +235,8 @@ async function deleteContact() {
   await setItem("users", JSON.stringify(USERS));
   initContacts();
   playAnimationContactDeletedSuccess();
-  closeDetailInfos();
   closeEditContact();
+  closeDetailInfos();
 }
 
 function deleteContactFromTasks(idSelectedContact) {
@@ -339,15 +344,19 @@ async function addNewContact(newContact) {
   LOGGED_USER.contacts.push(newContact);
   await setItem("users", JSON.stringify(USERS));
   await initContacts();
-  closeAddContact();
   clearAddContact();
+  closeAddContact();
   hideError("errorEnterANewEmail");
   showAnimationNewContactSuccess();
 }
 
+function clearAddContact() {
+  addContactName.value = "";
+  addContactEmail.value = "";
+  addContactPhone.value = "";
+}
+
 function closeAddContact() {
-  clearAddContact();
-  hideError("errorEnterANewEmail");
   hideDisplay("contentAddDisplay", "d-none");
   toggleClass("body", "overflowHidden");
 }
@@ -359,12 +368,6 @@ async function showAnimationNewContactSuccess() {
     toggleClass("contactCreatedSucess", "animation-moveUpAndShake");
     toggleClass("contactCreatedSucess", "d-none");
   }, 2000);
-}
-
-function clearAddContact() {
-  addContactName.value = "";
-  addContactEmail.value = "";
-  addContactPhone.value = "";
 }
 
 function showContactList() {
