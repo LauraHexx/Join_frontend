@@ -1,6 +1,5 @@
 let SELECTED_PRIO_BTN;
 let SUBTASKS = [];
-let TASKS = [];
 
 async function initAddTask() {
   await loadUserData();
@@ -317,7 +316,6 @@ async function checkAndPushTask(task) {
     let userToAddTask = USERS[indexUserToAddTask];
     userToAddTask.tasks.push(task);
     await setItem("users", JSON.stringify(USERS));
-
     loadTemplate("./board.html");
   }
 }

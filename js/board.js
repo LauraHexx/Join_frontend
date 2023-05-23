@@ -1,10 +1,9 @@
 let currentDraggedElement;
+let TASKS = [];
 
 async function initBoard() {
   await loadUserData();
-  await checkIfUserLoggedIn();
-  await loadTasks();
-  await loadCategorys();
+  await getLoggedUser();
   await init("board");
   changeImageOnHover(
     "deleteBtnImage",
@@ -15,6 +14,7 @@ async function initBoard() {
 }
 
 function renderTasks() {
+  TASKS = LOGGED_USER.tasks;
   TASKS.forEach((task) => {
     const indexOfTask = TASKS.indexOf(task);
     const category = task.category;
