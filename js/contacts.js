@@ -5,31 +5,15 @@ async function initContacts() {
   await loadUserData();
   await getLoggedUser();
   await init("contacts");
-  test();
-  /*setEventListenerScreenSize();
+  renderContactList();
+  setContactsAndCategorysDropDownMenu();
+  setEventScreenSize();
   setEventCloseDropDown();
-  */
-}
-
-/*EVENT LISTENER************************************/
-
-function setEventListenerScreenSize() {
-  window.addEventListener("resize", monitorScreenSize);
-}
-
-function monitorScreenSize() {
-  if (window.innerWidth >= 920) {
-    document.getElementById("contactList").style.display = "flex";
-    document.getElementById("contactDetails").style.display = "flex";
-  } else {
-    document.getElementById("contactDetails").style.display = "none";
-  }
 }
 
 /*CONTACTS *******************************************/
 
-function test() {
-  console.log("test");
+function renderContactList() {
   CONTACTS = LOGGED_USER.contacts;
   if (CONTACTS) {
     sortArrayAlphabetically(CONTACTS);
@@ -99,7 +83,7 @@ function renderContactsInInitialListHtml(contact, indexOfContact) {
 
 async function openContactDetails(indexOfContact) {
   if (window.innerWidth <= 920) {
-    showContactDetails();
+    showContactDetailsMobile();
   }
   const mainInfosContact = document.getElementById("mainInfosContact");
   if (!mainInfosContact.classList.contains("animation-slideInRight")) {
@@ -109,7 +93,7 @@ async function openContactDetails(indexOfContact) {
   }
 }
 
-function showContactDetails() {
+function showContactDetailsMobile() {
   document.getElementById("contactDetails").style.display = "flex";
   document.getElementById("contactList").style.display = "none";
 }
@@ -304,8 +288,6 @@ async function saveEdits() {
 }
 
 function changeData() {
-  const indexContactToEdit = CONTACTS.indexOf(SELECTED_CONTACT);
-  const contactToEdit = CONTACTS[indexContactToEdit];
   SELECTED_CONTACT.name = editContactName.value;
   SELECTED_CONTACT.email = editContactEmail.value;
   SELECTED_CONTACT.phone = editContactPhone.value;
@@ -381,4 +363,19 @@ function clearAddContact() {
 function showContactList() {
   document.getElementById("contactDetails").style.display = "none";
   document.getElementById("contactList").style.display = "flex";
+}
+
+/*EVENT LISTENER************************************/
+
+function setEventScreenSize() {
+  window.addEventListener("resize", monitorScreenSize);
+}
+
+function monitorScreenSize() {
+  if (window.innerWidth >= 920) {
+    document.getElementById("contactList").style.display = "flex";
+    document.getElementById("contactDetails").style.display = "flex";
+  } else {
+    document.getElementById("contactDetails").style.display = "none";
+  }
 }

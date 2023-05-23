@@ -1,3 +1,5 @@
+/* GLOBAL VARIABLES*/
+
 let USERS = [];
 let CATEGORYS = [];
 let LOGGED_USER = "";
