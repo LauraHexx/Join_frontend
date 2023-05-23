@@ -1,15 +1,16 @@
 let currentDraggedElement;
 let TASKS = [];
+let SELECTED_TASK = "";
 
 async function initBoard() {
   await loadUserData();
   await getLoggedUser();
   await init("board");
-  changeImageOnHover(
+  /* changeImageOnHover(
     "deleteBtnImage",
     "../assets/img/boardDeleteTaskBrightBlue.svg",
     "../assets/img/boardDeleteTaskDarkBlue.svg"
-  );
+  );*/
   renderTasks();
 }
 
@@ -38,7 +39,7 @@ function getColorCategory(name) {
 
 function renderTasksHtml(indexOfTask, task, colorCategory) {
   return /*html*/ `
-    <div id=${indexOfTask} class="singleCard" onclick="openTaskDetails()">
+    <div id=${indexOfTask} class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
       <div class="category ${colorCategory}">${task.category}</div>
       <div id="title">${task.title}</div>
       <span id="description">${task.description}</span>
@@ -56,9 +57,79 @@ function renderTasksHtml(indexOfTask, task, colorCategory) {
   `;
 }
 
-function openTaskDetails() {
+function openTaskDetails(indexOfTask) {
+  SELECTED_TASK = TASKS[indexOfTask];
+  renderTaskDetails();
   toggleClass("body", "overflowHidden");
   showEditTask("containerEdit", "animation-slideInRight", "d-none");
+}
+
+function renderTaskDetails() {
+  const colorCategory = getColorCategory(SELECTED_TASK.category);
+  document.getElementById("containerEdit").innerHTML = "";
+  document.getElementById("containerEdit").innerHTML =
+    renderTaskDetailsHtml(colorCategory);
+  renderAssignedContacts();
+}
+
+function renderTaskDetailsHtml(colorCategory) {
+  return /*html*/ `
+    <div class="displayEdit">
+      <div class="headContainer">
+        <div class="category ${colorCategory}">${SELECTED_TASK.category}</div>
+        <img onclick="toggleClass('body', 'overflowHidden'); hideEditTask('containerEdit','d-none')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
+      </div>
+      <span id="titleDisplay">W${SELECTED_TASK.title}</span>
+      <span id="descriptionDisplay">${SELECTED_TASK.description}</span>
+      <section class="containerSectionBoard">
+        <span class="bold">Due date:</span>
+        <span id="dueDate">${SELECTED_TASK.dueDate}</span>
+      </section>
+      <section class="containerSectionBoard">
+        <span class="bold">Priority:</span>
+        <button id="priorityDisplay">
+          ${SELECTED_TASK.priority}
+          <img src="../assets/img/boardPriorityWhite.svg" alt="icon of priority">
+        </button>
+      </section>
+      <section class="subtasks">
+        <span class="bold">Subtasks:</span>
+        <div id="containerSubtasks"></div>
+      </section>
+      <section class="containerAssignedTo">
+        <span class="bold">Assigned To:</span>
+        <div id="assignedContactsDetailCard">
+         
+        </div>
+      </section>
+      <div class="btnContainer">
+        <button class="deleteBtn"><img id="deleteBtnImage" src="../assets/img/boardDeleteTaskDarkBlue.svg" alt="icon to delete task"></button>
+        <button class="editBtn"><img src="../assets/img/boardEditTask.svg" alt="icon to edit task"></button>
+      </div>
+    </div>  
+  `;
+}
+
+function renderAssignedContacts() {
+  document.getElementById("assignedContactsDetailCard").innerHTML = "";
+  const assignedContactIds = SELECTED_TASK.contacts;
+  assignedContactIds.forEach((contactId) => {
+    const contactData = getContactData(contactId);
+    const name = contactData.name;
+    const initials = contactData.initials;
+    const color = contactData.color;
+    document.getElementById("assignedContactsDetailCard").innerHTML +=
+      renderAssignedContactsHtml(name, initials, color);
+  });
+}
+
+function renderAssignedContactsHtml(name, initials, color) {
+  return /*html*/ `
+    <div class="singleContact">
+      <div class="initialsOfNames smallCircle" style="background-color:${color}">${initials}</div>
+      <span id="nameOfContact">${name}</span>
+    </div> 
+  `;
 }
 
 function renderContactsInTaskCards(indexOfTask, contactsIds) {
