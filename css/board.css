@@ -331,3 +331,9 @@ section {
   flex-direction: column;
   gap: 10px;
 }
+
+.subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

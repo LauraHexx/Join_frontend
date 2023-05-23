@@ -156,7 +156,7 @@ function renderSubtasksInDetailCardHtml(name, status) {
   return /*html*/ `
    <div class="singleSubtask">
        <input type="checkbox" ${status} id="" class="checkbox">
-       <span class="subtask">${name}</span>
+       <span>${name}</span>
      </div>
   `;
 }
