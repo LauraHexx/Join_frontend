@@ -270,7 +270,10 @@ function updateHoverEffect(btns, currentBtn) {
 function addSubtask() {
   let subtask = addTaskSubtasks.value;
   if (subtask) {
-    SUBTASKS.push(subtask);
+    SUBTASKS.push({
+      name: subtask,
+      status: "undone",
+    });
     document.getElementById("addTaskSubtasks").value = "";
     renderSubtasks();
   }
@@ -291,7 +294,7 @@ function renderSubtasksHtml(subtask, indexOfSubtask) {
   return /*html*/ `
     <div class="singleSubtask">
       <input type="checkbox" id="" class="checkbox">
-      <span class='subtask'>${subtask}</span>
+      <span class='subtask'>${subtask.name}</span>
     </div>
   `;
 }

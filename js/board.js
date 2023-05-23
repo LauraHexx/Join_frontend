@@ -114,12 +114,20 @@ function renderAssignedContacts() {
   document.getElementById("assignedContactsDetailCard").innerHTML = "";
   const assignedContactIds = SELECTED_TASK.contacts;
   assignedContactIds.forEach((contactId) => {
-    const contactData = getContactData(contactId);
-    const name = contactData.name;
-    const initials = contactData.initials;
-    const color = contactData.color;
-    document.getElementById("assignedContactsDetailCard").innerHTML +=
-      renderAssignedContactsHtml(name, initials, color);
+    if (contactId === 0) {
+      const name = "You";
+      const initials = "You";
+      const color = LOGGED_USER.color;
+      document.getElementById("assignedContactsDetailCard").innerHTML +=
+        renderAssignedContactsHtml(name, initials, color);
+    } else {
+      const contactData = getContactData(contactId);
+      const name = contactData.name;
+      const initials = contactData.initials;
+      const color = contactData.color;
+      document.getElementById("assignedContactsDetailCard").innerHTML +=
+        renderAssignedContactsHtml(name, initials, color);
+    }
   });
 }
 
