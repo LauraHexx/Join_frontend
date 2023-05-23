@@ -38,7 +38,7 @@ function getColorCategory(name) {
 
 function renderTasksHtml(indexOfTask, task, colorCategory) {
   return /*html*/ `
-    <div id=${indexOfTask} class="singleCard" onclick="toggleClass('body', 'overflowHidden'); showEditTask('containerEdit','animation-slideInRight','d-none')">
+    <div id=${indexOfTask} class="singleCard" onclick="openTaskDetails()">
       <div class="category ${colorCategory}">${task.category}</div>
       <div id="title">${task.title}</div>
       <span id="description">${task.description}</span>
@@ -50,10 +50,15 @@ function renderTasksHtml(indexOfTask, task, colorCategory) {
       </div>
       <div id="contactsAndPrio">
         <div class="assignedContacts" id="contacts${indexOfTask}"></div>
-        <img id="prio" src="../assets/img/prioLow.svg" alt="icon to show priority">
+        <img id="prio" src="../assets/img/prio${task.priority}.svg" alt="icon to show priority">
       </div>
     </div>
   `;
+}
+
+function openTaskDetails() {
+  toggleClass("body", "overflowHidden");
+  showEditTask("containerEdit", "animation-slideInRight", "d-none");
 }
 
 function renderContactsInTaskCards(indexOfTask, contactsIds) {
