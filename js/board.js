@@ -83,13 +83,13 @@ function openTaskDetails(indexOfTask) {
   SELECTED_TASK = TASKS[indexOfTask];
   renderTaskDetails();
   toggleClass("body", "overflowHidden");
-  showEditTask("containerEdit", "animation-slideInRight", "d-none");
+  showEditTask("containerDetails", "animation-slideInRight", "d-none");
 }
 
 function renderTaskDetails() {
   const colorCategory = getColorCategory(SELECTED_TASK.category);
-  document.getElementById("containerEdit").innerHTML = "";
-  document.getElementById("containerEdit").innerHTML =
+  document.getElementById("containerDetails").innerHTML = "";
+  document.getElementById("containerDetails").innerHTML =
     renderTaskDetailsHtml(colorCategory);
   renderAssignedContacts();
   renderSubtasksInDetailCard();
@@ -100,7 +100,7 @@ function renderTaskDetailsHtml(colorCategory) {
     <div class="displayEdit">
       <div class="headContainer">
         <div class="category ${colorCategory}">${SELECTED_TASK.category}</div>
-        <img onclick="toggleClass('body', 'overflowHidden'); hideEditTask('containerEdit','d-none')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
+        <img onclick="closeTaskDetails('containerEdit','d-none')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
       </div>
       <span id="titleDisplay">W${SELECTED_TASK.title}</span>
       <span id="descriptionDisplay">${SELECTED_TASK.description}</span>
@@ -235,13 +235,20 @@ function allowDrop(ev) {
 
 function moveTo(category) {}
 
+function closeEditTask() {
+  toggleClass("body", "overflowHidden");
+  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
+  clearTask();
+}
+
 function showEditTask(id, animationClass, className) {
   toggleClass(id, className);
   playAnimation(id, animationClass);
   toggleBlurFilter();
 }
 
-function hideEditTask(id, className) {
+function closeTaskDetails(id, className) {
   toggleClass(id, className);
   toggleBlurFilter();
+  toggleClass("body", "overflowHidden");
 }

@@ -55,10 +55,9 @@ function renderContactsInInitialList() {
 
 function clearContacts() {
   const containers = document.querySelectorAll('[id^="contactsLetter"]');
-  for (let i = 0; i < containers.length; i++) {
-    const container = containers[i];
+  containers.forEach((container) => {
     container.innerHTML = "";
-  }
+  });
 }
 
 function renderContactsInInitialListHtml(contact, indexOfContact) {
@@ -80,7 +79,7 @@ function renderContactsInInitialListHtml(contact, indexOfContact) {
 }
 
 async function openContactDetails(indexOfContact) {
-  if (window.innerWidth <= 920) {
+  if (!bigScreen()) {
     styleContactDetailsMobile();
   }
   if (animationIsNotPlaying()) {
@@ -229,9 +228,9 @@ function closeEditContactDisplay() {
 
 async function deleteContact() {
   const indexSelectedContact = CONTACTS.indexOf(SELECTED_CONTACT);
+  CONTACTS.splice(indexSelectedContact, 1);
   const idSelectedContact = SELECTED_CONTACT.id;
   deleteContactFromTasks(idSelectedContact);
-  CONTACTS.splice(indexSelectedContact, 1);
   await setItem("users", JSON.stringify(USERS));
   initContacts();
   playAnimationContactDeletedSuccess();
@@ -240,9 +239,7 @@ async function deleteContact() {
 }
 
 function deleteContactFromTasks(idSelectedContact) {
-  const indexUserToEdit = USERS.indexOf(LOGGED_USER);
-  const userToEdit = USERS[indexUserToEdit];
-  const tasksToEdit = userToEdit["tasks"];
+  const tasksToEdit = LOGGED_USER.tasks;
   tasksToEdit.forEach((task) => {
     const indexContactToDelete = task.contacts.indexOf(idSelectedContact);
     if (indexContactToDelete) {
@@ -320,11 +317,11 @@ async function getDataNewContact() {
 
 function getContactId() {
   let highestId = 0;
-  for (const contact of CONTACTS) {
+  CONTACTS.forEach((contact) => {
     if (contact.id > highestId) {
       highestId = contact.id;
     }
-  }
+  });
   return highestId + 1;
 }
 
@@ -382,10 +379,29 @@ function setEventScreenSize() {
 }
 
 function monitorScreenSize() {
-  if (window.innerWidth >= 920) {
-    document.getElementById("contactList").style.display = "flex";
-    document.getElementById("contactDetails").style.display = "flex";
-  } else {
-    document.getElementById("contactDetails").style.display = "none";
+  const contactList = document.getElementById("contactList");
+  const contactDetails = document.getElementById("contactDetails");
+  const mainInfosContact = document.getElementById("mainInfosContact");
+  if (bigScreen()) {
+    contactList.style.display = "flex";
+    contactDetails.style.display = "flex";
+  } else if (!mainInfosAreKlicked(mainInfosContact)) {
+    contactList.style.display = "flex";
+    contactDetails.style.display = "none";
+  } else if (mainInfosAreKlicked() && contactListStyleIsFlex()) {
+    contactList.style.display = "flex";
+    contactDetails.style.display = "none";
   }
+}
+
+function bigScreen() {
+  return window.innerWidth > 920;
+}
+
+function mainInfosAreKlicked() {
+  return mainInfosContact.innerHTML.trim() !== "";
+}
+
+function contactListStyleIsFlex() {
+  return contactList.style.display === "flex";
 }

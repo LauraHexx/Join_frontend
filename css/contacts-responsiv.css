@@ -50,10 +50,6 @@
     display: none;
   }
 
-  #contactDetails {
-    display: none;
-  }
-
   #contactList {
     width: unset;
     max-width: unset;
@@ -64,7 +60,7 @@
 
   .newContactBtnMobileContainer {
     display: flex;
-    padding: var(--padding);
+    padding: 20px;
   }
 
   .newContactBtn {

@@ -184,7 +184,8 @@ section {
 
 /*EDIT TASKS-DISPLAY*/
 
-#containerEdit {
+#containerEdit,
+#containerDetails {
   width: 100%;
   height: 100vh;
   position: absolute;
@@ -336,4 +337,29 @@ section {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.containerDisplayEdit {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.okayBtnEditTaskContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.okayBtnEditTaskContainer button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 40px;
+  padding: 10px;
+}
+
+.okayBtnEditTaskContainer img {
+  width: 15px;
+  height: 15px;
 }
