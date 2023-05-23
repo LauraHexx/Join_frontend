@@ -30,15 +30,10 @@ function renderTasks() {
   });
 }
 
-/**
- * Get the color based on the given name.
- *
- * @param {string} name - The name to look up.
- * @returns {string} The color associated with the given name.
- */
 function getColorCategory(name) {
-  const category = CATEGORYS.find((category) => category.name === name);
-  return category.color;
+  CATEGORYS = LOGGED_USER.categorys;
+  const searchedCategory = CATEGORYS.find((category) => category.name === name);
+  return searchedCategory.color;
 }
 
 function renderTasksHtml(indexOfTask, task, colorCategory) {
@@ -61,37 +56,30 @@ function renderTasksHtml(indexOfTask, task, colorCategory) {
   `;
 }
 
-/**
- * Renders the contacts in a task.
- * @param {number} indexOfTask - The index of the task.
- * @param {string[]} contactsIds - The IDs of the contacts.
- */
 function renderContactsInTaskCards(indexOfTask, contactsIds) {
   const amountContacts = contactsIds.length;
   renderFirstTwoContacts(indexOfTask, contactsIds);
   renderRemainingAmountOfContacts(indexOfTask, amountContacts);
 }
 
-/**
- * Renders the first two contacts in a task.
- * @param {number} indexOfTask - The index of the task.
- * @param {string[]} contactsIds - The IDs of the contacts.
- */
 function renderFirstTwoContacts(indexOfTask, contactsIds) {
+  CONTACTS = LOGGED_USER.contacts;
   const maxContacts = Math.min(2, contactsIds.length);
   for (let i = 0; i < maxContacts; i++) {
-    const contactData = getUserData(contactsIds[i]);
-    const initials = contactData.initials;
-    const color = contactData.color;
-    appendContactHtml(indexOfTask, initials, color);
+    let initials, color;
+    if (contactsIds[i] === 0) {
+      initials = "You";
+      color = LOGGED_USER.color;
+      appendContactHtml(indexOfTask, initials, color);
+    } else {
+      const contactData = getContactData(contactsIds[i]);
+      initials = contactData.initials;
+      color = contactData.color;
+      appendContactHtml(indexOfTask, initials, color);
+    }
   }
 }
 
-/**
- * Renders the remaining contacts in a task.
- * @param {number} indexOfTask - The index of the task.
- * @param {number} amountContacts - The total number of contacts.
- */
 function renderRemainingAmountOfContacts(indexOfTask, amountContacts) {
   if (amountContacts > 2) {
     const remainingContacts = "+" + (amountContacts - 2);
@@ -99,12 +87,6 @@ function renderRemainingAmountOfContacts(indexOfTask, amountContacts) {
   }
 }
 
-/**
- * Appends the contact HTML to the specified task.
- * @param {number} indexOfTask - The index of the task.
- * @param {string} initials - The initials of the contact.
- * @param {string} color - The color of the contact.
- */
 function appendContactHtml(indexOfTask, initials, color) {
   document.getElementById(`contacts${indexOfTask}`).innerHTML +=
     renderContactsInTaskCardsHtml(initials, color);

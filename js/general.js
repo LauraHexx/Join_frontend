@@ -198,9 +198,14 @@ function toggleClass(elementId, className) {
   element.classList.toggle(className);
 }
 
-function getUserData(userId) {
-  let user = USERS.find((user) => user.id === userId);
+function getUserData(id) {
+  const user = USERS.find((user) => user.id === id);
   return user;
+}
+
+function getContactData(id) {
+  const contact = CONTACTS.find((contact) => contact.id === id);
+  return contact;
 }
 
 function getDataLoggedUser() {
