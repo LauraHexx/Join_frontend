@@ -17,7 +17,6 @@
 @media only screen and (max-width: 920px) {
   .headlineMobile {
     display: flex !important;
-    margin-bottom: var(--margin-bottom);
   }
 
   .headContainer {

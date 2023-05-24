@@ -100,10 +100,12 @@ function animationIsNotPlaying() {
 }
 
 async function playAnimationContactDetails() {
-  await playAnimation("mainInfosContact", "animation-slideInRight");
-  setTimeout(() => {
-    toggleClass("mainInfosContact", "animation-slideInRight");
-  }, 1000);
+  if (window.innerWidth > 700) {
+    await playAnimation("mainInfosContact", "animation-slideInRight");
+    setTimeout(() => {
+      toggleClass("mainInfosContact", "animation-slideInRight");
+    }, 1000);
+  }
 }
 
 function renderContactDetails() {
@@ -204,7 +206,7 @@ function renderEditContactHtml() {
                 type="email"
                 placeholder="Email"
                 maxlength="25"
-              minlength="2"
+                minlength="2"
                 required />
               <span id="errorEmailIsAlreadyTaken" class="d-none">Email already belongs to a contact. Please update it.</span>
             </div>
@@ -346,13 +348,13 @@ async function addNewContact(newContact) {
   LOGGED_USER.contacts.push(newContact);
   await setItem("users", JSON.stringify(USERS));
   await initContacts();
-  clearAddContact();
+  cancelAddContact();
   closeAddContact();
   hideError("errorEnterANewEmail");
   showAnimationNewContactSuccess();
 }
 
-function clearAddContact() {
+function cancelAddContact() {
   addContactName.value = "";
   addContactEmail.value = "";
   addContactPhone.value = "";

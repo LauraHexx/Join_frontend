@@ -184,7 +184,9 @@ function removeItemFromLocalStorage(key) {
 
 function showDisplay(id, animationClass, className) {
   toggleClass(id, className);
-  playAnimation(id, animationClass);
+  if (window.innerWidth > 700) {
+    playAnimation(id, animationClass);
+  }
   toggleBlurFilter();
 }
 
