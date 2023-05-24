@@ -10,9 +10,6 @@
 
   .headlineMobile {
     display: flex !important;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--margin-bottom);
   }
 
   .headlineMobile img {

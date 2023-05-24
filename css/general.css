@@ -221,6 +221,13 @@ button:hover:not(.selectedPrioBtn) {
   background-size: 19px 16px;
 }
 
+.headlineMobile {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--margin-bottom);
+}
+
 /* AFTER LOGIN */
 
 .contentAfterLogin {
