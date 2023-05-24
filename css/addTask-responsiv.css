@@ -1,7 +1,7 @@
 @media only screen and (max-width: 760px) {
   .mainContainer {
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
 
   .leftSection,
@@ -16,6 +16,10 @@
   .singlePrioBtn {
     width: 33%;
     font-size: 13px;
+  }
+
+  .clearAndCreateBtns {
+    position: unset;
   }
 }
 

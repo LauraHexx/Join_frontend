@@ -1,5 +1,5 @@
 .bigHeadline {
-  margin-bottom: 25px !important;
+  margin-bottom: var(--margin-bottom) !important;
 }
 
 .mainContainer {
@@ -36,7 +36,7 @@ input::placeholder {
   width: 45%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
 #descriptionInput {
@@ -249,7 +249,7 @@ input::placeholder {
   width: 45%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator:hover {
