@@ -261,3 +261,7 @@ a {
 #contactDeletedSucess button {
   width: 100% !important;
 }
+
+.editContactEmailContainer {
+  position: relative;
+}

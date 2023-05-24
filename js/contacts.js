@@ -292,7 +292,7 @@ async function saveEdits() {
   changeData();
   await setItem("users", JSON.stringify(USERS));
   initContacts();
-  closeDetailInfos();
+ // closeDetailInfos();
   closeEditContact();
 }
 
