@@ -193,6 +193,8 @@ function renderEditContactHtml() {
               class="input inputName"
               type="name"
               placeholder="Name"
+              maxlength="25"
+              minlength="2"
               required />
             <div class="editContactEmailContainer">
               <input
@@ -201,6 +203,8 @@ function renderEditContactHtml() {
                 class="input inputEmail"
                 type="email"
                 placeholder="Email"
+                maxlength="25"
+              minlength="2"
                 required />
               <span id="errorEmailIsAlreadyTaken" class="d-none">Email already belongs to a contact. Please update it.</span>
             </div>
@@ -292,7 +296,8 @@ async function saveEdits() {
   changeData();
   await setItem("users", JSON.stringify(USERS));
   initContacts();
- // closeDetailInfos();
+  closeDetailInfos();
+  showContactList();
   closeEditContact();
 }
 
