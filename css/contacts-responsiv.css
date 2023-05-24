@@ -42,6 +42,11 @@
     overflow: unset !important;
   }
 
+  .headlineMobile {
+    margin-bottom: 0;
+    margin-top: 20px;
+  }
+
   .newContactBtnMobileContainer {
     display: flex !important;
   }
@@ -61,6 +66,7 @@
   .newContactBtnMobileContainer {
     display: flex;
     padding: 20px;
+    padding-bottom: 0;
   }
 
   .newContactBtn {

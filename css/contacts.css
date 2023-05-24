@@ -265,3 +265,9 @@ a {
 .editContactEmailContainer {
   position: relative;
 }
+
+#closeDisplay {
+  display: flex !important;
+  top: -25px !important;
+  right: -5px !important;
+}

@@ -100,7 +100,7 @@ function animationIsNotPlaying() {
 }
 
 async function playAnimationContactDetails() {
-  if (window.innerWidth > 700) {
+  if (window.innerWidth > 920) {
     await playAnimation("mainInfosContact", "animation-slideInRight");
     setTimeout(() => {
       toggleClass("mainInfosContact", "animation-slideInRight");
@@ -298,10 +298,13 @@ async function saveEdits() {
   changeData();
   await setItem("users", JSON.stringify(USERS));
   initContacts();
-  closeDetailInfos();
+  if (window.innerWidth < 920) {
+    closeDetailInfos();
+  }
   showContactList();
   closeEditContact();
 }
+s;
 
 function changeData() {
   SELECTED_CONTACT.name = editContactName.value;
@@ -375,7 +378,6 @@ async function showAnimationNewContactSuccess() {
 }
 
 function showContactList() {
-  document.getElementById("contactDetails").style.display = "none";
   document.getElementById("contactList").style.display = "flex";
 }
 
@@ -386,18 +388,16 @@ function setEventScreenSize() {
 }
 
 function monitorScreenSize() {
-  const contactList = document.getElementById("contactList");
-  const contactDetails = document.getElementById("contactDetails");
   const mainInfosContact = document.getElementById("mainInfosContact");
   if (bigScreen()) {
-    contactList.style.display = "flex";
-    contactDetails.style.display = "flex";
+    document.getElementById("contactList").style.display = "flex";
+    document.getElementById("contactDetails").style.display = "flex";
   } else if (!mainInfosAreKlicked(mainInfosContact)) {
-    contactList.style.display = "flex";
-    contactDetails.style.display = "none";
+    document.getElementById("contactList").style.display = "flex";
+    document.getElementById("contactDetails").style.display = "none";
   } else if (mainInfosAreKlicked() && contactListStyleIsFlex()) {
-    contactList.style.display = "flex";
-    contactDetails.style.display = "none";
+    document.getElementById("contactList").style.display = "flex";
+    document.getElementById("contactDetails").style.display = "none";
   }
 }
 
@@ -410,5 +410,5 @@ function mainInfosAreKlicked() {
 }
 
 function contactListStyleIsFlex() {
-  return contactList.style.display === "flex";
+  return document.getElementById("contactList").style.display === "flex";
 }
