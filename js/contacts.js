@@ -301,10 +301,10 @@ async function saveEdits() {
   if (window.innerWidth < 920) {
     closeDetailInfos();
   }
+  closeDetailInfos();
   showContactList();
   closeEditContact();
 }
-s;
 
 function changeData() {
   SELECTED_CONTACT.name = editContactName.value;
