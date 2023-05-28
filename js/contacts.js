@@ -121,7 +121,7 @@ function renderContactDetailsHtml() {
        <div class="nameAndAddTask">
          <span class="name">${SELECTED_CONTACT.name}</span>
          <a
-           onclick="showAddTaskDisplay()"
+           onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"
            class="addTask">
            <img
              src="../assets/img/plusBlue.svg"
@@ -153,11 +153,6 @@ function renderContactDetailsHtml() {
     `;
 }
 
-function showAddTaskDisplay() {
-  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
-  toggleClass("body", "overflowHidden");
-}
-
 function renderEditContact() {
   document.getElementById("contentEditDisplay").innerHTML =
     renderEditContactHtml();
@@ -170,7 +165,7 @@ function renderEditContactHtml() {
       <div class="displayEditContact">
         <div class="leftSectionEdit">
           <img
-          onclick="closeEditContactDisplay()"
+            onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
             class="cursorPointer closeWhite d-none"
             src="../assets/img/closeWhite.svg"
             alt="image of icon to close the editing" />
@@ -183,7 +178,7 @@ function renderEditContactHtml() {
         </div>
         <div class="rightSectionEdit">
           <img
-            onclick="closeEditContactDisplay()"
+            onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
             class="cursorPointer closeDarkEdit"
             src="../assets/img/closeDark.svg"
             alt="image of icon to close the adding" />
@@ -227,11 +222,6 @@ function renderEditContactHtml() {
     `;
 }
 
-function closeEditContactDisplay() {
-  hideDisplay("contentEditDisplay", "d-none");
-  toggleClass("body", "overflowHidden");
-}
-
 async function deleteContact() {
   const indexSelectedContact = CONTACTS.indexOf(SELECTED_CONTACT);
   CONTACTS.splice(indexSelectedContact, 1);
@@ -240,7 +230,8 @@ async function deleteContact() {
   await setItem("users", JSON.stringify(USERS));
   initContacts();
   playAnimationContactDeletedSuccess();
-  closeEditContact();
+  hideDisplay("contentEditDisplay", "d-none");
+  toggleClass("body", "overflowHidden");
   closeDetailInfos();
 }
 
@@ -263,18 +254,13 @@ async function playAnimationContactDeletedSuccess() {
   }, 2000);
 }
 
-function closeEditContact() {
-  hideDisplay("contentEditDisplay", "d-none");
-  toggleClass("body", "overflowHidden");
-}
-
 function closeDetailInfos() {
   let detailInfos = document.getElementById("mainInfosContact");
   detailInfos.innerHTML = "";
 }
 
 function checkEdits() {
-  const filteredContacts = filterContacts();
+  const filteredContacts = filteredContacts();
   const foundExistingEmail = findExistingEmail(
     filteredContacts,
     editContactEmail.value
@@ -286,7 +272,7 @@ function checkEdits() {
   }
 }
 
-function filterContacts() {
+function filteredContacts() {
   return CONTACTS.filter((contact) => contact !== SELECTED_CONTACT);
 }
 
@@ -303,7 +289,8 @@ async function saveEdits() {
   }
   closeDetailInfos();
   showContactList();
-  closeEditContact();
+  hideDisplay("contentEditDisplay", "d-none");
+  toggleClass("body", "overflowHidden");
 }
 
 function changeData() {
