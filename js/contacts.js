@@ -86,7 +86,6 @@ async function openContactDetails(indexOfContact) {
   }
   if (animationIsNotPlaying()) {
     SELECTED_CONTACT = CONTACTS[indexOfContact];
-    console.log("selected;", SELECTED_CONTACT);
     playAnimationContactDetails();
     renderContactDetails();
   }

@@ -380,3 +380,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   right: 20px;
   cursor: pointer;
 }
+
+.closeDisplayLeftSectionDiv {
+  display: none;
+}

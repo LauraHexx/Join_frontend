@@ -108,8 +108,9 @@
 
 @media only screen and (max-width: 760px) {
   #contentAddTaskDisplay {
+    height: 99vh;
     position: relative;
-    top: unset;
+    top: 4px;
     bottom: unset;
     left: unset;
     right: unset;
@@ -120,9 +121,31 @@
   #displayAddTask {
     width: 80%;
     overflow-y: scroll;
+    padding: 20px;
+    border-radius: 0;
   }
 
   .rightSection {
     position: unset !important;
+  }
+
+  .closeDisplayLeftSectionDiv {
+    display: flex !important;
+    justify-content: flex-end;
+  }
+
+  #closeDisplayLeftSection {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+  }
+
+  #closeDisplay {
+    display: none;
+  }
+
+  .leftSection,
+  .rightSection {
+    width: 100% !important;
   }
 }
