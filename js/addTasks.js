@@ -184,10 +184,6 @@ function renderContactsHtml(name, id) {
 }
 
 function toggleCheckbox(id) {
-  if (id === 0) {
-    document.getElementById("checkBoxUser" + id).checked = true;
-    return;
-  }
   const checkbox = document.getElementById(`checkBoxUser${id}`);
   checkbox.checked = !checkbox.checked;
   changeTitleContactInput();
