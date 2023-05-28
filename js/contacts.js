@@ -260,7 +260,7 @@ function closeDetailInfos() {
 }
 
 function checkEdits() {
-  const filteredContacts = filteredContacts();
+  const filteredContacts = filterContacts();
   const foundExistingEmail = findExistingEmail(
     filteredContacts,
     editContactEmail.value
@@ -272,7 +272,7 @@ function checkEdits() {
   }
 }
 
-function filteredContacts() {
+function filterContacts() {
   return CONTACTS.filter((contact) => contact !== SELECTED_CONTACT);
 }
 

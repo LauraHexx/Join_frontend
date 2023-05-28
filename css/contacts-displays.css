@@ -99,14 +99,12 @@
 }
 
 #cancelAddContact {
-  height: 40px;
   width: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  background-color: var(--bright-white);
   color: var(--dark-blue);
+  border-color: var(--dark-blue);
+  text-align: center;
+  padding: 0;
+  cursor: pointer;
 }
 
 #cancelAddContact:hover {
