@@ -105,3 +105,24 @@
     font-size: 21px;
   }
 }
+
+@media only screen and (max-width: 760px) {
+  #contentAddTaskDisplay {
+    position: relative;
+    top: unset;
+    bottom: unset;
+    left: unset;
+    right: unset;
+    align-items: unset;
+    z-index: 3;
+  }
+
+  #displayAddTask {
+    width: 80%;
+    overflow-y: scroll;
+  }
+
+  .rightSection {
+    position: unset !important;
+  }
+}

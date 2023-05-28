@@ -86,6 +86,7 @@ async function openContactDetails(indexOfContact) {
   }
   if (animationIsNotPlaying()) {
     SELECTED_CONTACT = CONTACTS[indexOfContact];
+    console.log("selected;", SELECTED_CONTACT);
     playAnimationContactDetails();
     renderContactDetails();
   }
@@ -283,16 +284,12 @@ function findExistingEmail(contacts, email) {
 }
 
 async function saveEdits() {
+  closeDetailInfos();
+  hideDisplay("contentEditDisplay", "d-none");
+  toggleClass("body", "overflowHidden");
   changeData();
   await setItem("users", JSON.stringify(USERS));
   initContacts();
-  if (window.innerWidth < 920) {
-    closeDetailInfos();
-  }
-  closeDetailInfos();
-  showContactList();
-  hideDisplay("contentEditDisplay", "d-none");
-  toggleClass("body", "overflowHidden");
 }
 
 function changeData() {
@@ -369,6 +366,7 @@ async function showAnimationNewContactSuccess() {
 
 function showContactList() {
   document.getElementById("contactList").style.display = "flex";
+  document.getElementById("contactDetails").style.display = "none";
 }
 
 /*EVENT LISTENER************************************/
