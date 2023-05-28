@@ -2,6 +2,7 @@ let FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_CONTACT = "";
 
 async function initContacts() {
+  toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();
   await init("contacts");
@@ -51,6 +52,7 @@ function renderContactsInInitialList() {
     document.getElementById(`contactsLetter${firstInitial}`).innerHTML +=
       renderContactsInInitialListHtml(contact, indexOfContact);
   });
+  toggleClass("loadingContainer", "d-none");
 }
 
 function clearContacts() {
@@ -227,12 +229,12 @@ async function deleteContact() {
   CONTACTS.splice(indexSelectedContact, 1);
   const idSelectedContact = SELECTED_CONTACT.id;
   deleteContactFromTasks(idSelectedContact);
-  await setItem("users", JSON.stringify(USERS));
-  initContacts();
-  playAnimationContactDeletedSuccess();
   hideDisplay("contentEditDisplay", "d-none");
   toggleClass("body", "overflowHidden");
   closeDetailInfos();
+  await setItem("users", JSON.stringify(USERS));
+  await initContacts();
+  playAnimationContactDeletedSuccess();
 }
 
 function deleteContactFromTasks(idSelectedContact) {
@@ -336,11 +338,11 @@ function checkIfEmailIsAlreadyExisting(newContact) {
 
 async function addNewContact(newContact) {
   LOGGED_USER.contacts.push(newContact);
-  await setItem("users", JSON.stringify(USERS));
-  await initContacts();
   cancelAddContact();
   closeAddContact();
   hideError("errorEnterANewEmail");
+  await setItem("users", JSON.stringify(USERS));
+  await initContacts();
   showAnimationNewContactSuccess();
 }
 
@@ -351,6 +353,7 @@ function cancelAddContact() {
 }
 
 function closeAddContact() {
+  cancelAddContact();
   hideDisplay("contentAddDisplay", "d-none");
   toggleClass("body", "overflowHidden");
 }

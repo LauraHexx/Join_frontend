@@ -271,3 +271,16 @@ a {
   top: -25px !important;
   right: -5px !important;
 }
+
+#loadingContainer {
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
