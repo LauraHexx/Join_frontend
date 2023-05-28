@@ -205,11 +205,6 @@ function changeTitleContactInput() {
 
 /*PRIO BUTTONS*******************************************************************************/
 
-/**
- * Changes the style of the clicked button and deselects the previously selected button.
- * @param {string} id - The id of the clicked button.
- * @param {string} backgroundColor - The background color to apply to the clicked button.
- */
 function changeStylePrioBtn(id, backgroundColor) {
   const btns = document.querySelectorAll(".singlePrioBtn");
   const currentBtn = document.getElementById(id);
@@ -223,22 +218,12 @@ function changeStylePrioBtn(id, backgroundColor) {
   updateHoverEffect(btns, currentBtn);
 }
 
-/**
- * Selects the provided button and updates its style and image.
- * @param {HTMLElement} currentBtn - The button element to select.
- * @param {string} backgroundColor - The background color to apply to the button.
- * @param {HTMLImageElement} img - The image element within the button.
- */
 function selectBtn(currentBtn, backgroundColor, img) {
   currentBtn.style.backgroundColor = backgroundColor;
   currentBtn.style.color = "white";
   img.src = img.src.replace(".svg", "White.svg");
 }
 
-/**
- * Deselects the provided button and updates its style and image.
- * @param {HTMLElement} btn - The button element to deselect.
- */
 function deselectBtn(SELECTED_PRIO_BTN) {
   if (SELECTED_PRIO_BTN) {
     const img = SELECTED_PRIO_BTN.querySelector("img");
@@ -248,13 +233,6 @@ function deselectBtn(SELECTED_PRIO_BTN) {
   }
 }
 
-/**
- * Updates the hover effect for a group of buttons.
- *
- * @param {<HTMLElement>} btns - An array of button elements to update the hover effect for.
- * @param {Element} hoveredBtn - The currently hovered button element.
- * @param {string} backgroundColor - The background color to apply to the selected button.
- */
 function updateHoverEffect(btns, currentBtn) {
   btns.forEach((btn) => {
     if (btn === currentBtn) {
@@ -482,7 +460,6 @@ function showSelectContacts() {
   toggleClass("listContacts", "d-none");
 }
 
-// Event listener for closing the dropdown menus
 function setEventCloseDropDown() {
   closeDropDown();
   toggleCategoryDropDownContainer();
@@ -520,18 +497,11 @@ function toggleCategoryDropDownContainer() {
   }
 }
 
-/**
- * Toggles the visibility of the contact dropdown menu.
- */
 function toggleContactDropDownContainer() {
   document
     .getElementById("selectContactsDiv")
     .addEventListener("click", handleClick);
 
-  /**
-   * Handles the click event on the contact dropdown container.
-   * @param {Event} event - The click event object.
-   */
   function handleClick(event) {
     event.stopPropagation();
     toggleClass("listContacts", "d-none");
