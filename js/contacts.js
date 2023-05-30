@@ -71,10 +71,10 @@ function renderContactsInInitialListHtml(contact, indexOfContact) {
         <div id="deatilsOfUSer">
           <span>${contact.name}</span>
           <br />
-          <a href="mailto:${contact.email}"
-          onclick="event.stopPropagation();"
-          >${contact.email}</a
-          >
+          <a 
+          href="mailto:${contact.email}"
+          onclick="event.stopPropagation();">
+          ${contact.email}</a>
         </div>
       </div>
     `;
