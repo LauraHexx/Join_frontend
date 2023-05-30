@@ -2,10 +2,10 @@ let FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_CONTACT = "";
 
 async function initContacts() {
+  await init("contacts");
   toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();
-  await init("contacts");
   renderContactList();
   setContactsAndCategorysDropDownMenu();
   setEventScreenSize();

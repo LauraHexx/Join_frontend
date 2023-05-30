@@ -297,7 +297,6 @@ a {
   justify-content: center;
   align-items: center;
   z-index: 3;
-  overflow-y: scroll;
 }
 
 #displayAddTask {
