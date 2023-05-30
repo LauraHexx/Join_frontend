@@ -471,8 +471,8 @@ function closeDropDown() {
 
   function handleClickOnPage(event) {
     if (
-      !event.target.closest("#listContacts") &&
-      !event.target.closest("#selectContactsDiv")
+      !event.target.closest("#selectContactsDiv") ||
+      !event.target.closest("#selectCategoryDiv")
     ) {
       hideDropdown("listContacts");
       hideDropdown("listCategorys");
@@ -493,7 +493,6 @@ function toggleCategoryDropDownContainer() {
   function handleClick(event) {
     event.stopPropagation();
     toggleClass("listCategorys", "d-none");
-    hideDropdown("listContacts");
   }
 }
 

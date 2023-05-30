@@ -104,7 +104,7 @@
     </div>
     <ul id="listContacts" class="listDropDown d-none">
       <div id="loggedUserContact">
-        <li class="oneContact">
+        <li class="oneContact" onclick="event.stopPropagation();">
           <div onclick="toggleCheckbox(0)" class="toggleCheckbox"></div>
           <label class="nameOfContact">You</label>
           <input id="checkBoxUser0" type="checkbox" />
