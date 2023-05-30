@@ -10,7 +10,10 @@
     z-index: 100;
   }
 
-  /*LEFT-SECTION*/
+  .bigCircleEdit {
+    width: 75px;
+    height: 75px;
+  }
 
   .leftSectionAdd {
     position: relative;
@@ -41,8 +44,6 @@
   #cancelAddContact {
     display: none;
   }
-
-  /*RIGHT-SECTION*/
 
   .formAdd {
     margin-top: 60px;
@@ -77,8 +78,6 @@
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
     background: var(--bright-white);
   }
-
-  /*LEFT-SECTION*/
 
   .leftSectionEdit {
     position: relative;

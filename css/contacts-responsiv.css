@@ -77,6 +77,11 @@
   #contactDetails {
     display: none;
   }
+
+  .bigCircleEdit {
+    width: 75px;
+    height: 75px;
+  }
 }
 
 @media only screen and (max-width: 380px) {
