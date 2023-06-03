@@ -200,7 +200,7 @@ section {
 }
 
 .displayEdit {
-  width: 350px;
+  width: 450px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -223,13 +223,13 @@ section {
 }
 
 #titleDisplay {
-  font-size: 25px;
+  font-size: 35px;
   color: var(--dark-blue);
   font-weight: bold;
 }
 
 #descriptionDisplay {
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .containerSectionBoard {
