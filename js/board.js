@@ -100,7 +100,7 @@ function renderTaskDetailsHtml(colorCategory) {
     <div class="displayEdit">
       <div class="headContainer">
         <div class="category ${colorCategory}">${SELECTED_TASK.category}</div>
-        <img onclick="closeTaskDetails('containerEdit','d-none')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
+        <img onclick="hideDisplay('containerDetails', 'd-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
       </div>
       <span id="titleDisplay">W${SELECTED_TASK.title}</span>
       <span id="descriptionDisplay">${SELECTED_TASK.description}</span>
