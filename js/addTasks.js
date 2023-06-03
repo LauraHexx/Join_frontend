@@ -246,7 +246,7 @@ function updateHoverEffect(btns, currentBtn) {
 /*SUBTASKS*******************************************************************************/
 
 function addSubtask() {
-  let subtask = addTaskSubtasks.value;
+  const subtask = addTaskSubtasks.value;
   if (subtask) {
     SUBTASKS.push({
       name: subtask,
@@ -271,10 +271,22 @@ function renderSubtasks() {
 function renderSubtasksHtml(subtask, indexOfSubtask) {
   return /*html*/ `
     <div class="singleSubtask">
-      <input type="checkbox" id="" class="checkbox">
-      <span class='subtask'>${subtask.name}</span>
+      <input onclick="changeStatusSubtask(${indexOfSubtask})" type="checkbox" id="subtask${indexOfSubtask}" class="checkbox">
+      <span class="subtask">${subtask.name}</span>
     </div>
   `;
+}
+
+function changeStatusSubtask(indexOfSubtask) {
+  const checkbox = document.getElementById(`subtask${indexOfSubtask}`);
+  let status;
+  if (checkbox.checked) {
+    status = "checked";
+  } else {
+    status = "unchecked";
+  }
+  SUBTASKS[indexOfSubtask].status = status;
+  console.log(SUBTASKS); // Optional: Überprüfung der Aktualisierung im Konsolenprotokoll
 }
 
 function createTask() {
@@ -481,7 +493,6 @@ function setEventCloseDropDown() {
 
 function closeDropDown() {
   document.addEventListener("click", handleClickOnPage);
-
   function handleClickOnPage(event) {
     if (
       !event.target.closest("#selectContactsDiv") ||

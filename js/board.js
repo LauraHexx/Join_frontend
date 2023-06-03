@@ -175,16 +175,17 @@ function renderSubtasksInDetailCard() {
   subtasks.forEach((subtask) => {
     const name = subtask.name;
     const status = subtask.status;
+    const indexOfSubtask = subtasks.indexOf(subtask);
     console.log(status);
     document.getElementById("containerSubtasks").innerHTML +=
-      renderSubtasksInDetailCardHtml(name, status);
+      renderSubtasksInDetailCardHtml(name, status, indexOfSubtask);
   });
 }
 
-function renderSubtasksInDetailCardHtml(name, status) {
+function renderSubtasksInDetailCardHtml(name, status, indexOfSubtask) {
   return /*html*/ `
    <div class="singleSubtask">
-       <input type="checkbox" ${status} id="" class="checkbox">
+       <input type="checkbox" onclick="changeStatusSubtask(${indexOfSubtask})" ${status} id="subtask${indexOfSubtask}" class="checkbox">
        <span>${name}</span>
      </div>
   `;
