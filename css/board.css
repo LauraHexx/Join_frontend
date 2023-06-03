@@ -299,7 +299,7 @@ section {
 }
 
 .deleteBtn:hover {
-  background-color: unset;
+  background-color: unset !important;
   transition: 0.5s;
 }
 

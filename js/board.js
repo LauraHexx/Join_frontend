@@ -6,11 +6,7 @@ async function initBoard() {
   await loadUserData();
   await getLoggedUser();
   await init("board");
-  /* changeImageOnHover(
-    "deleteBtnImage",
-    "../assets/img/boardDeleteTaskBrightBlue.svg",
-    "../assets/img/boardDeleteTaskDarkBlue.svg"
-  );*/
+
   renderTasks();
 }
 
@@ -84,6 +80,11 @@ function openTaskDetails(indexOfTask) {
   renderTaskDetails();
   toggleClass("body", "overflowHidden");
   showEditTask("containerDetails", "animation-slideInRight", "d-none");
+  changeImageOnHover(
+    "deleteBtnImage",
+    "../assets/img/boardDeleteTaskBrightBlue.svg",
+    "../assets/img/boardDeleteTaskDarkBlue.svg"
+  );
 }
 
 function renderTaskDetails() {
