@@ -312,9 +312,10 @@ function requiredDataComplete(task) {
 }
 
 function getTitle() {
-  if (titleInput.value) {
+  const title = document.getElementById("titleInput").value;
+  if (title) {
     hideError("errorTitle");
-    return titleInput.value;
+    return title;
   } else {
     showError("errorTitle");
     return undefined;
@@ -322,9 +323,10 @@ function getTitle() {
 }
 
 function getDescription() {
-  if (descriptionInput.value) {
+  const description = document.getElementById("descriptionInput").value;
+  if (description) {
     hideError("errorDescription");
-    return descriptionInput.value;
+    return description;
   } else {
     showError("errorDescription");
     return undefined;
@@ -343,9 +345,10 @@ function getCategory() {
 }
 
 function getDueDate() {
-  if (inputDueDate.value) {
+  const dueDate = document.getElementById("inputDueDate").value;
+  if (dueDate) {
     hideError("errorDueDate");
-    return inputDueDate.value;
+    return dueDate;
   } else {
     showError("errorDueDate");
     return undefined;
@@ -394,16 +397,26 @@ function getSubtasks() {
 }
 
 function clearTask() {
-  titleInput.value = "";
-  descriptionInput.value = "";
+  document.getElementById("titleInput").value = "";
+  document.getElementById("descriptionInput").value = "";
   document.getElementById("selectCategoryTitle").innerHTML =
     "Select task category";
   document.getElementById("selectContactsTitle").innerHTML =
     "Select contacts to assign";
+  clearCheckedContacts();
   document.getElementById("inputDueDate").value = "";
   clearPrioBtn();
   clearSubtasks();
   hideErrorElements();
+}
+
+function clearCheckedContacts() {
+  const checkboxes = document.querySelectorAll(
+    '.listDropDown input[type="checkbox"]'
+  );
+  checkboxes.forEach(function (checkbox) {
+    checkbox.checked = false;
+  });
 }
 
 function clearPrioBtn() {

@@ -7,6 +7,8 @@ async function initBoard() {
   toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();
+  setContactsAndCategorysDropDownMenu();
+  setEventCloseDropDown();
   renderTasks();
 }
 

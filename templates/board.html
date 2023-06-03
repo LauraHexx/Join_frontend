@@ -27,10 +27,13 @@
   <body id="body" onload="initBoard()">
     <header w3-include-html="header.html"></header>
     <nav w3-include-html="nav.html"></nav>
-    <div
-    w3-include-html="addTask-display.html"
-    id="containerAdd"
-    class="d-none"></div>
+    <section id="contentAddTaskDisplay" class="d-none">
+      <div
+        id="displayAddTask"
+        class="mainContainer"
+        w3-include-html="addTask-display.html">
+      </div>
+    </section>
      <!--LOADING CONTAINER-->
      <div id="loadingContainer" class="d-none">
       <img src="../assets/img/spinner-loading.svg" alt="loading image" />
@@ -53,11 +56,11 @@
               alt="icon for searching tasks" />
           </div>
         </div>
-        <button onclick="toggleClass('body', 'overflowHidden'); showAddTask('containerAdd','animation-slideInRight','d-none')">
+        <button onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"">
           Add Task
           <img src="../assets/img/boardPlusWhite.svg" alt="icon to add tasks" />
         </button>
-        <img onclick="toggleClass('body', 'overflowHidden'); showAddTask('containerAdd','animation-slideInRight','d-none')" class="addTaskMobile d-none" src="../assets/img/boardPlusFilled.svg" alt="icon to add tasks">
+        <img onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"class="addTaskMobile d-none" src="../assets/img/boardPlusFilled.svg" alt="icon to add tasks">
       </div>
       <!--MAIN-->
       <main class="mainBoard">
