@@ -6,11 +6,11 @@ async function initBoard() {
   await loadUserData();
   await getLoggedUser();
   await init("board");
-
   renderTasks();
 }
 
 function renderTasks() {
+  document.getElementById("todo").innerHTML = "";
   TASKS = LOGGED_USER.tasks;
   TASKS.forEach((task) => {
     const indexOfTask = TASKS.indexOf(task);
@@ -103,7 +103,7 @@ function renderTaskDetailsHtml(colorCategory) {
         <div class="category ${colorCategory}">${SELECTED_TASK.category}</div>
         <img onclick="hideDisplay('containerDetails', 'd-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
       </div>
-      <span id="titleDisplay">W${SELECTED_TASK.title}</span>
+      <span id="titleDisplay">${SELECTED_TASK.title}</span>
       <span id="descriptionDisplay">${SELECTED_TASK.description}</span>
       <section class="containerSectionBoard">
         <span class="bold">Due date:</span>
@@ -127,7 +127,7 @@ function renderTaskDetailsHtml(colorCategory) {
         </div>
       </section>
       <div class="btnContainer">
-        <button class="deleteBtn"><img id="deleteBtnImage" src="../assets/img/boardDeleteTaskDarkBlue.svg" alt="icon to delete task"></button>
+        <button onclick="deleteTask()" class="deleteBtn"><img id="deleteBtnImage" src="../assets/img/boardDeleteTaskDarkBlue.svg" alt="icon to delete task"></button>
         <button class="editBtn"><img src="../assets/img/boardEditTask.svg" alt="icon to edit task"></button>
       </div>
     </div>  
@@ -225,6 +225,17 @@ function renderContactsInTaskCardsHtml(initials, color) {
     <div class="initialsOfNames smallCircle" style="background-color:${color}">${initials}</div>
   `;
 }
+
+async function deleteTask() {
+  const indexOfTask = TASKS.indexOf(SELECTED_TASK);
+  TASKS.splice(indexOfTask, 1);
+  await setItem("users", JSON.stringify(USERS));
+  hideDisplay("containerDetails", "d-none");
+  toggleClass("body", "overflowHidden");
+  initBoard();
+}
+
+/*DRAG AND DROP */
 
 function startDragging(id) {
   currentDraggedElement = id;
