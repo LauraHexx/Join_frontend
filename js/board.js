@@ -3,32 +3,37 @@ let TASKS = [];
 let SELECTED_TASK = "";
 
 async function initBoard() {
+  await init("board");
+  toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();
-  await init("board");
   renderTasks();
 }
 
 function renderTasks() {
   document.getElementById("todo").innerHTML = "";
   TASKS = LOGGED_USER.tasks;
-  TASKS.forEach((task) => {
-    const indexOfTask = TASKS.indexOf(task);
-    const category = task.category;
-    const colorCategory = getColorCategory(category);
-    const processStep = task.processStep;
-    const contactsIds = task.contacts;
-    const amountSubtasks = task.subtasks.length;
-    const amountFinishedSubtasks = countAmountOfFinishedSubtasks(task);
-    document.getElementById(processStep).innerHTML += renderTasksHtml(
-      indexOfTask,
-      task,
-      colorCategory,
-      amountSubtasks,
-      amountFinishedSubtasks
-    );
-    renderContactsInTaskCards(indexOfTask, contactsIds);
-  });
+  if (TASKS.length === 0) {
+    toggleClass("loadingContainer", "d-none");
+  } else {
+    TASKS.forEach((task) => {
+      const indexOfTask = TASKS.indexOf(task);
+      const category = task.category;
+      const colorCategory = getColorCategory(category);
+      const processStep = task.processStep;
+      const contactsIds = task.contacts;
+      const amountSubtasks = task.subtasks.length;
+      const amountFinishedSubtasks = countAmountOfFinishedSubtasks(task);
+      document.getElementById(processStep).innerHTML += renderTasksHtml(
+        indexOfTask,
+        task,
+        colorCategory,
+        amountSubtasks,
+        amountFinishedSubtasks
+      );
+      renderContactsInTaskCards(indexOfTask, contactsIds);
+    });
+  }
 }
 
 function getColorCategory(name) {
@@ -122,9 +127,7 @@ function renderTaskDetailsHtml(colorCategory) {
       </section>
       <section class="containerAssignedTo">
         <span class="bold">Assigned To:</span>
-        <div id="assignedContactsDetailCard">
-         
-        </div>
+        <div id="assignedContactsDetailCard"></div>
       </section>
       <div class="btnContainer">
         <button onclick="deleteTask()" class="deleteBtn"><img id="deleteBtnImage" src="../assets/img/boardDeleteTaskDarkBlue.svg" alt="icon to delete task"></button>
@@ -170,6 +173,7 @@ function renderSubtasksInDetailCard() {
   subtasks.forEach((subtask) => {
     const name = subtask.name;
     const status = subtask.status;
+    console.log(status);
     document.getElementById("containerSubtasks").innerHTML +=
       renderSubtasksInDetailCardHtml(name, status);
   });
@@ -184,10 +188,11 @@ function renderSubtasksInDetailCardHtml(name, status) {
   `;
 }
 
-function renderContactsInTaskCards(indexOfTask, contactsIds) {
+async function renderContactsInTaskCards(indexOfTask, contactsIds) {
   const amountContacts = contactsIds.length;
-  renderFirstTwoContacts(indexOfTask, contactsIds);
-  renderRemainingAmountOfContacts(indexOfTask, amountContacts);
+  await renderFirstTwoContacts(indexOfTask, contactsIds);
+  await renderRemainingAmountOfContacts(indexOfTask, amountContacts);
+  document.getElementById("loadingContainer").classList.add("d-none");
 }
 
 function renderFirstTwoContacts(indexOfTask, contactsIds) {

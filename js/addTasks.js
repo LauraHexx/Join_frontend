@@ -260,7 +260,7 @@ function addSubtask() {
 function renderSubtasks() {
   document.getElementById("subtasks").innerHTML = "";
   SUBTASKS.forEach((subtask) => {
-    let indexOfSubtask = SUBTASKS.indexOf(subtask);
+    const indexOfSubtask = SUBTASKS.indexOf(subtask);
     document.getElementById("subtasks").innerHTML += renderSubtasksHtml(
       subtask,
       indexOfSubtask

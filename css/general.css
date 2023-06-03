@@ -231,6 +231,7 @@ button:hover:not(.selectedPrioBtn) {
 /* AFTER LOGIN */
 
 .contentAfterLogin {
+  position: relative;
   max-width: calc(var(--header-width) - var(--nav-width) - var(--padding));
   margin-left: var(--nav-width);
   padding-top: calc(var(--header-height) + var(--padding-top)) !important;
