@@ -286,7 +286,7 @@ function changeStatusSubtask(indexOfSubtask) {
     status = "unchecked";
   }
   SUBTASKS[indexOfSubtask].status = status;
-  console.log(SUBTASKS); // Optional: Überprüfung der Aktualisierung im Konsolenprotokoll
+  console.log(SUBTASKS);
 }
 
 function createTask() {

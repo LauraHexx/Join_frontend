@@ -1,8 +1,8 @@
 /* GLOBAL VARIABLES*/
 
 let USERS = [];
-let CATEGORYS = [];
 let LOGGED_USER = "";
+let CATEGORYS = [];
 let CONTACTS = [];
 
 const SAMPLE_DATA_CONTACTS = [
