@@ -35,6 +35,7 @@ function renderTasks() {
       );
       renderContactsInTaskCards(indexOfTask, contactsIds);
     });
+    toggleClass("loadingContainer", "d-none");
   }
 }
 
