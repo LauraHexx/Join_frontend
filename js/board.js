@@ -13,7 +13,7 @@ async function initBoard() {
 }
 
 function renderTasks() {
-  document.getElementById("todo").innerHTML = "";
+  clearBoard();
   TASKS = LOGGED_USER.tasks;
   if (TASKS.length === 0) {
     toggleClass("loadingContainer", "d-none");
@@ -37,6 +37,13 @@ function renderTasks() {
     });
     toggleClass("loadingContainer", "d-none");
   }
+}
+
+function clearBoard() {
+  document.getElementById("todo").innerHTML = "";
+  document.getElementById("inProgress").innerHTML = "";
+  document.getElementById("awaitingFeedback").innerHTML = "";
+  document.getElementById("done").innerHTML = "";
 }
 
 function getColorCategory(name) {
@@ -177,7 +184,6 @@ function renderSubtasksInDetailCard() {
     const name = subtask.name;
     const status = subtask.status;
     const indexOfSubtask = subtasks.indexOf(subtask);
-    console.log(status);
     document.getElementById("containerSubtasks").innerHTML +=
       renderSubtasksInDetailCardHtml(name, status, indexOfSubtask);
   });
@@ -191,6 +197,8 @@ function renderSubtasksInDetailCardHtml(name, status, indexOfSubtask) {
      </div>
   `;
 }
+
+function 
 
 async function renderContactsInTaskCards(indexOfTask, contactsIds) {
   const amountContacts = contactsIds.length;

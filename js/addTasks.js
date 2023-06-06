@@ -280,10 +280,8 @@ function renderSubtasksHtml(subtask, indexOfSubtask) {
 function changeStatusSubtask(indexOfSubtask) {
   if (SUBTASKS.length === 0) {
     getAllSubtasks();
-    console.log(SUBTASKS);
   }
   const checkbox = document.getElementById(`subtask${indexOfSubtask}`);
-
   let status;
   if (checkbox.checked) {
     status = "checked";
@@ -291,11 +289,12 @@ function changeStatusSubtask(indexOfSubtask) {
     status = "unchecked";
   }
   SUBTASKS[indexOfSubtask].status = status;
+  initBoard();
 }
 
 function getAllSubtasks() {
   TASKS.forEach((task) => {
-    const subtask = task.subtask;
+    const subtask = task.subtasks;
     SUBTASKS.push(subtask);
   });
 }
