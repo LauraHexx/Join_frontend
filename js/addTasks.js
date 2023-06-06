@@ -271,16 +271,13 @@ function renderSubtasks() {
 function renderSubtasksHtml(subtask, indexOfSubtask) {
   return /*html*/ `
     <div class="singleSubtask">
-      <input onclick="changeStatusSubtask(${indexOfSubtask})" type="checkbox" id="subtask${indexOfSubtask}" class="checkbox">
+      <input onclick="setStatusCheckbox(${indexOfSubtask})" type="checkbox" id="subtask${indexOfSubtask}" class="checkbox">
       <span class="subtask">${subtask.name}</span>
     </div>
   `;
 }
 
-function changeStatusSubtask(indexOfSubtask) {
-  if (SUBTASKS.length === 0) {
-    getAllSubtasks();
-  }
+function setStatusCheckbox(indexOfSubtask) {
   const checkbox = document.getElementById(`subtask${indexOfSubtask}`);
   let status;
   if (checkbox.checked) {
@@ -289,14 +286,6 @@ function changeStatusSubtask(indexOfSubtask) {
     status = "unchecked";
   }
   SUBTASKS[indexOfSubtask].status = status;
-  initBoard();
-}
-
-function getAllSubtasks() {
-  TASKS.forEach((task) => {
-    const subtask = task.subtasks;
-    SUBTASKS.push(subtask);
-  });
 }
 
 function createTask() {
@@ -356,7 +345,7 @@ function getDescription() {
 }
 
 function getCategory() {
-  let cateGoryName = document.getElementById("selectedCategoryName");
+  const cateGoryName = document.getElementById("selectedCategoryName");
   if (cateGoryName) {
     hideError("errorNoCategorySelected");
     return cateGoryName.innerHTML;
@@ -378,7 +367,7 @@ function getDueDate() {
 }
 
 function getPriority() {
-  let priority = document.querySelector(".selectedPrioBtn");
+  const priority = document.querySelector(".selectedPrioBtn");
   if (priority) {
     hideError("errorPriority");
     return priority.getAttribute("id");

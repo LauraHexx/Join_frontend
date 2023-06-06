@@ -72,7 +72,7 @@ function renderTasksHtml(
   amountFinishedSubtasks
 ) {
   return /*html*/ `
-    <div id=${indexOfTask} class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
+    <div id="task${indexOfTask}" class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
       <div class="category ${colorCategory}">${task.category}</div>
       <div id="title">${task.title}</div>
       <span id="description">${task.description}</span>
@@ -179,26 +179,45 @@ function renderAssignedContactsHtml(name, initials, color) {
 
 function renderSubtasksInDetailCard() {
   document.getElementById("containerSubtasks").innerHTML = "";
+  const indexOfTask = TASKS.indexOf(SELECTED_TASK);
   const subtasks = SELECTED_TASK.subtasks;
   subtasks.forEach((subtask) => {
     const name = subtask.name;
     const status = subtask.status;
     const indexOfSubtask = subtasks.indexOf(subtask);
     document.getElementById("containerSubtasks").innerHTML +=
-      renderSubtasksInDetailCardHtml(name, status, indexOfSubtask);
+      renderSubtasksInDetailCardHtml(name, status, indexOfSubtask, indexOfTask);
   });
 }
 
-function renderSubtasksInDetailCardHtml(name, status, indexOfSubtask) {
+function renderSubtasksInDetailCardHtml(
+  name,
+  status,
+  indexOfSubtask,
+  indexOfTask
+) {
   return /*html*/ `
-   <div class="singleSubtask">
-       <input type="checkbox" onclick="changeStatusSubtask(${indexOfSubtask})" ${status} id="subtask${indexOfSubtask}" class="checkbox">
+    <div class="singleSubtask">
+       <input type="checkbox" onclick="changeStatusSubtask(${indexOfTask},${indexOfSubtask})" ${status} id="task${indexOfTask}subtask${indexOfSubtask}" class="checkbox">
        <span>${name}</span>
-     </div>
+    </div>
   `;
 }
 
-function 
+async function changeStatusSubtask(indexOfTask, indexOfSubtask) {
+  const checkbox = document.getElementById(
+    `task${indexOfTask}subtask${indexOfSubtask}`
+  );
+  let status;
+  if (checkbox.checked) {
+    status = "checked";
+  } else {
+    status = "unchecked";
+  }
+  TASKS[indexOfTask].subtasks[indexOfSubtask].status = status;
+  await setItem("users", JSON.stringify(USERS));
+  initBoard();
+}
 
 async function renderContactsInTaskCards(indexOfTask, contactsIds) {
   const amountContacts = contactsIds.length;
