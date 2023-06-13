@@ -167,15 +167,15 @@ function renderEditTaskHtml() {
   return /*html*/ `
     <div id="displayAddTask" class="containerDisplayEdit">
   	  <span class="bold">Title</span>
-  	  <input type="text" id="titleInput" placeholder="Enter a title">
+  	  <input type="text" id="titleInput" value="${SELECTED_TASK.title}">
   	  <span id="errorTitleEdit" class="error d-none">Please enter a title</span>
   	  <span class="bold">Description</span>
-  	  <input type="text" id="descriptionInput" placeholder="Enter a description">
+  	  <input type="text" id="descriptionInput" value="${SELECTED_TASK.description}">
   	  <span id="errorDescriptionEdit" class="error d-none">Please enter a description</span>
   	  <img onclick="closeEditTask()" id="closeDisplay" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
   	  <span class="bold">Due date</span>
   	  <div>
-  	    <input type="date" id="inputDueDate" placeholder="dd/mm/yyyy">
+  	    <input type="date" id="inputDueDate" value="${SELECTED_TASK.dueDate}">
   	  </div>
   	  <span id="errorDueDateEdit" class="error d-none">Please select a due day</span>
   	  <span class="bold">Prio</span>
