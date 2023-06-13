@@ -149,7 +149,7 @@ section {
   color: var(--grey);
   text-align: center;
   white-space: nowrap;
-  background-color: var(--red);
+  background-color: #29abe2;
 }
 
 #progressAmount {

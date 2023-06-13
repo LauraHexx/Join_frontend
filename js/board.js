@@ -103,7 +103,7 @@ function openTaskDetails(indexOfTask) {
   SELECTED_TASK = TASKS[indexOfTask];
   renderTaskDetails();
   toggleClass("body", "overflowHidden");
-  showEditTask("containerDetails", "animation-slideInRight", "d-none");
+  showDisplay("containerDetails", "animation-slideInRight", "d-none");
   changeImageOnHover(
     "deleteBtnImage",
     "../assets/img/boardDeleteTaskBrightBlue.svg",
@@ -150,9 +150,72 @@ function renderTaskDetailsHtml(colorCategory) {
       </section>
       <div class="btnContainer">
         <button onclick="deleteTask()" class="deleteBtn"><img id="deleteBtnImage" src="../assets/img/boardDeleteTaskDarkBlue.svg" alt="icon to delete task"></button>
-        <button class="editBtn"><img src="../assets/img/boardEditTask.svg" alt="icon to edit task"></button>
+        <button onclick="renderEditTask()" class="editBtn"><img src="../assets/img/boardEditTask.svg" alt="icon to edit task"></button>
       </div>
     </div>  
+  `;
+}
+
+function renderEditTask() {
+  document.getElementById("containerEdit").innerHTML = "";
+  document.getElementById("containerEdit").innerHTML = renderEditTaskHtml();
+  showDisplay("containerEdit", "animation-slideInRight", "d-none");
+}
+
+function renderEditTaskHtml() {
+  return /*html*/ `
+    <div id="displayAddTask" class="containerDisplayEdit">
+  	  <span class="bold">Title</span>
+  	  <input type="text" id="titleInput" placeholder="Enter a title">
+  	  <span id="errorTitleEdit" class="error d-none">Please enter a title</span>
+  	  <span class="bold">Description</span>
+  	  <input type="text" id="descriptionInput" placeholder="Enter a description">
+  	  <span id="errorDescriptionEdit" class="error d-none">Please enter a description</span>
+  	  <img onclick="closeEditTask()" id="closeDisplay" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
+  	  <span class="bold">Due date</span>
+  	  <div>
+  	    <input type="date" id="inputDueDate" placeholder="dd/mm/yyyy">
+  	  </div>
+  	  <span id="errorDueDateEdit" class="error d-none">Please select a due day</span>
+  	  <span class="bold">Prio</span>
+  	  <div class="prioBtns">
+  	    <button type="button" id="urgent" class="singlePrioBtn" onclick="changeStylePrioBtn('urgent','red', '../assets/img/prioUrgent.svg')">
+  	      Urgent
+  	      <img src="../assets/img/prioUrgent.svg" alt="icon to show priority">
+  	    </button>
+  	    <button type="button" id="medium" class="singlePrioBtn" onclick="changeStylePrioBtn('medium','orange', '../assets/img/prioMedium.svg')">
+  	      Medium
+  	      <img src="../assets/img/prioMedium.svg" alt="icon to show priority">
+  	    </button>
+  	    <button type="button" id="low" class="singlePrioBtn" onclick="changeStylePrioBtn('low','green','../assets/img/prioLow.svg')">
+  	      Low
+  	      <img src="../assets/img/prioLow.svg" alt="icon to show priority">
+  	    </button>
+  	  </div>
+  	  <span class="bold">Assigned to</span>   
+  	  <div id="selectContactsDiv" class="containerSection">
+  	    <div id="selectContactsTitleDiv" class="containerTitle">
+  	      <span class="bold" id="selectContactsTitle">Select contacts to assign</span>
+  	      <img class="inputImage" src="../assets/img/addTaskDropDownArrow.svg" alt="arrow to drop down the menu of contacts">
+  	    </div>
+  	    <ul id="listContacts" class="listDropDown d-none">
+  	      <div id="loggedUserContact">
+  	        <li class="oneContact">
+  	          <div onclick="toggleCheckbox(0)" class="toggleCheckbox"></div>
+  	          <label class="nameOfContact">You</label>
+  	          <input id="checkBoxUser0" type="checkbox">
+  	        </li>
+  	      </div>
+  	      <div id="savedContacts"></div>
+  	    </ul>
+  	  </div>    
+  	  <div class="okayBtnEditTaskContainer">
+  	    <button>
+  	        <span>Ok</span>
+  	        <img src="../assets/img/addTaskCreate.svg" alt="icon to clear the create a new Task">
+  	    </button>
+  	  </div>
+  	</div>  
   `;
 }
 
@@ -291,6 +354,8 @@ function allowDrop(ev) {
 
 function moveTo(category) {}
 
+/*
+
 function closeEditTask() {
   toggleClass("body", "overflowHidden");
   showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
@@ -308,3 +373,4 @@ function closeTaskDetails(id, className) {
   toggleBlurFilter();
   toggleClass("body", "overflowHidden");
 }
+*/
