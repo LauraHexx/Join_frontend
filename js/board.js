@@ -160,6 +160,7 @@ function renderEditTask() {
   document.getElementById("containerEdit").innerHTML = "";
   document.getElementById("containerEdit").innerHTML = renderEditTaskHtml();
   showDisplay("containerEdit", "animation-slideInRight", "d-none");
+  hideDisplay("containerDetails", "d-none");
 }
 
 function renderEditTaskHtml() {
