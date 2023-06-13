@@ -157,7 +157,6 @@ function renderTaskDetailsHtml(colorCategory) {
 }
 
 function renderEditTask() {
-  //setPrioBtn();
   hideDisplay("containerDetails", "d-none");
   showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
   setTask();
@@ -169,13 +168,22 @@ function setTask() {
   document.getElementById("titleInput").value = SELECTED_TASK.title;
   document.getElementById("descriptionInput").value = SELECTED_TASK.description;
   setSelectedCategory(selectedCategory, colorCategory);
+  let contacts = SELECTED_TASK.contacts;
+  contacts.forEach((contact) => {
+    toggleCheckbox(contact);
+  });
+  document.getElementById("inputDueDate").value = SELECTED_TASK.dueDate;
+  setPrioBtn();
+  SUBTASKS = SELECTED_TASK.subtasks;
+  renderSubtasks();
 }
 
 function setPrioBtn() {
   let priority = SELECTED_TASK.priority;
+  console.log(priority);
   let backgroundColor = getColorOfPrio(priority);
-  priority.classList.add("selectedPrioBtn");
-  changeStylePrioBtn(idPrioBtn, backgroundColor);
+  document.getElementById(priority).classList.add("selectedPrioBtn");
+  changeStylePrioBtn(priority, backgroundColor);
 }
 
 function getColorOfPrio(priority) {

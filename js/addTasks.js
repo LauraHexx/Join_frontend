@@ -261,17 +261,19 @@ function renderSubtasks() {
   document.getElementById("subtasks").innerHTML = "";
   SUBTASKS.forEach((subtask) => {
     const indexOfSubtask = SUBTASKS.indexOf(subtask);
+    const status = subtask.status;
     document.getElementById("subtasks").innerHTML += renderSubtasksHtml(
       subtask,
-      indexOfSubtask
+      indexOfSubtask,
+      status
     );
   });
 }
 
-function renderSubtasksHtml(subtask, indexOfSubtask) {
+function renderSubtasksHtml(subtask, indexOfSubtask, status) {
   return /*html*/ `
     <div class="singleSubtask">
-      <input onclick="setStatusCheckbox(${indexOfSubtask})" type="checkbox" id="subtask${indexOfSubtask}" class="checkbox">
+      <input onclick="setStatusCheckbox(${indexOfSubtask})" ${status} type="checkbox" id="subtask${indexOfSubtask}" class="checkbox">
       <span class="subtask">${subtask.name}</span>
     </div>
   `;
