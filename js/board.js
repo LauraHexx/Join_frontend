@@ -78,16 +78,25 @@ function renderTasksHtml(
       <span id="description">${task.description}</span>
       <div id="progressContainer">
         <div id="progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          <div class="progress-bar" style="width: ${getPercentageProgress(
+            amountSubtasks,
+            amountFinishedSubtasks
+          )}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <span id="progressAmount">${amountFinishedSubtasks}/${amountSubtasks} Done</span>
       </div>
       <div id="contactsAndPrio">
         <div class="assignedContacts" id="contacts${indexOfTask}"></div>
-        <img id="prio" src="../assets/img/prio${task.priority}.svg" alt="icon to show priority">
+        <img id="prio" src="../assets/img/prio${
+          task.priority
+        }.svg" alt="icon to show priority">
       </div>
     </div>
   `;
+}
+
+function getPercentageProgress(amountSubtasks, amountFinishedSubtasks) {
+  return `${(amountFinishedSubtasks / amountSubtasks) * 100}%`;
 }
 
 function openTaskDetails(indexOfTask) {
