@@ -177,8 +177,9 @@ section {
 
 .smallCircle {
   font-size: 14px;
-  padding: 8px 10px 8px 10px;
   border: 1px solid var(--bright-white);
+  width: 42px;
+  height: 42px;
 }
 
 /*EDIT TASKS-DISPLAY*/

@@ -125,7 +125,7 @@ function renderTaskDetailsHtml(colorCategory) {
     <div class="displayEdit">
       <div class="headContainer">
         <div class="category ${colorCategory}">${SELECTED_TASK.category}</div>
-        <img onclick="hideDisplay('containerDetails', 'd-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
+        <img onclick="initBoard(); hideDisplay('containerDetails', 'd-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
       </div>
       <span id="titleDisplay">${SELECTED_TASK.title}</span>
       <span id="descriptionDisplay">${SELECTED_TASK.description}</span>
@@ -225,7 +225,6 @@ async function changeStatusSubtask(indexOfTask, indexOfSubtask) {
   }
   TASKS[indexOfTask].subtasks[indexOfSubtask].status = status;
   await setItem("users", JSON.stringify(USERS));
-  initBoard();
 }
 
 async function renderContactsInTaskCards(indexOfTask, contactsIds) {
