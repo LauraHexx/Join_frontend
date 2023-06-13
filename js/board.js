@@ -159,6 +159,7 @@ function renderTaskDetailsHtml(colorCategory) {
 function renderEditTask() {
   document.getElementById("containerEdit").innerHTML = "";
   document.getElementById("containerEdit").innerHTML = renderEditTaskHtml();
+  setPrioBtn();
   showDisplay("containerEdit", "animation-slideInRight", "d-none");
   hideDisplay("containerDetails", "d-none");
 }
@@ -180,15 +181,15 @@ function renderEditTaskHtml() {
   	  <span id="errorDueDateEdit" class="error d-none">Please select a due day</span>
   	  <span class="bold">Prio</span>
   	  <div class="prioBtns">
-  	    <button type="button" id="urgent" class="singlePrioBtn" onclick="changeStylePrioBtn('urgent','red', '../assets/img/prioUrgent.svg')">
+  	    <button type="button" id="urgentEdit" class="singlePrioBtn" onclick="changeStylePrioBtn('urgentEdit','red', '../assets/img/prioUrgent.svg')">
   	      Urgent
   	      <img src="../assets/img/prioUrgent.svg" alt="icon to show priority">
   	    </button>
-  	    <button type="button" id="medium" class="singlePrioBtn" onclick="changeStylePrioBtn('medium','orange', '../assets/img/prioMedium.svg')">
+  	    <button type="button" id="mediumEdit" class="singlePrioBtn" onclick="changeStylePrioBtn('mediumEdit','orange', '../assets/img/prioMedium.svg')">
   	      Medium
   	      <img src="../assets/img/prioMedium.svg" alt="icon to show priority">
   	    </button>
-  	    <button type="button" id="low" class="singlePrioBtn" onclick="changeStylePrioBtn('low','green','../assets/img/prioLow.svg')">
+  	    <button type="button" id="lowEdit" class="singlePrioBtn" onclick="changeStylePrioBtn('lowEdit','green','../assets/img/prioLow.svg')">
   	      Low
   	      <img src="../assets/img/prioLow.svg" alt="icon to show priority">
   	    </button>
@@ -218,6 +219,26 @@ function renderEditTaskHtml() {
   	  </div>
   	</div>  
   `;
+}
+
+function setPrioBtn() {
+  let priority = SELECTED_TASK.priority;
+  let idPrioBtn = priority + "Edit";
+  let backgroundColor = getColorOfPrio(priority);
+
+  let selectedPrio = document.querySelector('[id*="' + priority + "Edit");
+  selectedPrio.classList.add("selectedPrioBtn");
+  changeStylePrioBtn(idPrioBtn, backgroundColor);
+}
+
+function getColorOfPrio(priority) {
+  if (priority === "urgent") {
+    return "red";
+  } else if (priority === "medium") {
+    return "orange";
+  } else if (priority === "low") {
+    return "green";
+  }
 }
 
 function renderAssignedContacts() {
