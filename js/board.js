@@ -96,7 +96,7 @@ function renderTasksHtml(
 }
 
 function getPercentageProgress(amountSubtasks, amountFinishedSubtasks) {
-  return `${(amountFinishedSubtasks / amountSubtasks) * 100}%`;
+  return (amountFinishedSubtasks / amountSubtasks) * 100 + "%";
 }
 
 function openTaskDetails(indexOfTask) {
