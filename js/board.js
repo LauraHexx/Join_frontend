@@ -225,7 +225,6 @@ function setPrioBtn() {
   let priority = SELECTED_TASK.priority;
   let idPrioBtn = priority + "Edit";
   let backgroundColor = getColorOfPrio(priority);
-
   let selectedPrio = document.querySelector('[id*="' + priority + "Edit");
   selectedPrio.classList.add("selectedPrioBtn");
   changeStylePrioBtn(idPrioBtn, backgroundColor);
