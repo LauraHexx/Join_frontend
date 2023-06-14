@@ -69,28 +69,28 @@
             <span>To Do</span>
             <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"/>
           </div>
-          <div id="todo" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          <div id="todo" ondrop="moveTo('todo')" ondragover="allowDrop(event); highlightArea('todo')" ondragend="unhighlightArea('todo')"></div>
         </section>
         <section>
           <div class="processStep">
             <span>In progress</span>
             <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')" />
           </div>
-          <div id="inProgress" ondrop="drop(event)" ondragover="allowDrop(event)" >
+          <div id="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event); highlightArea('inProgress')" ondragend="unhighlightArea('inProgress')" >
         </section>
         <section>
           <div class="processStep">
             <span>Awaiting Feedback</span>
             <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"/>
           </div>
-          <div id="awaitingFeedback" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          <div id="awaitingFeedback" ondrop="moveTo('awaitingFeedback')" ondragover="allowDrop(event); highlightArea('awaitingFeedback')" ondragend="unhighlightArea('awaitingFeedback')"></div>
         </section>
         <section>
           <div class="processStep">
             <span>Done</span>
             <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"/>
           </div>
-          <div id="done" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          <div id="done" ondrop="moveTo('done')" ondragover="allowDrop(event); highlightArea('done')" ondragend="unhighlightArea('done')"></div>
         </section>
       </main>
     </div>    

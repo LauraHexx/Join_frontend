@@ -93,6 +93,13 @@ section {
   margin-bottom: 15px;
 }
 
+#todo,
+#inProgress,
+#awaitingFeedback,
+#done {
+  min-height: 300px;
+}
+
 /*SINGLE CARD*/
 
 .singleCard {
@@ -403,4 +410,12 @@ section {
   display: flex !important;
   top: -25px !important;
   right: -5px !important;
+}
+
+/*DRAG & DROP*/
+
+.dragArea {
+  background-color: #eae8e8;
+  border: 3px solid #afa9a9;
+  border-radius: 30px;
 }

@@ -359,7 +359,19 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
-function moveTo(category) {}
+async function moveTo(processStep) {
+  TASKS[currentDraggedElement].processStep = processStep;
+  await setItem("users", JSON.stringify(USERS));
+  renderTasks();
+}
+
+function highlightArea(id) {
+  document.getElementById(id).classList.add("dragArea");
+}
+
+function unhighlightArea(id) {
+  document.getElementById(id).classList.remove("dragArea");
+}
 
 /*
 function closeEditTask() {
