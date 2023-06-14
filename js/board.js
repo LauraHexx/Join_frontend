@@ -183,9 +183,9 @@ function setTask() {
 
 function setPrioBtn() {
   let priority = SELECTED_TASK.priority;
-  console.log(priority);
   let backgroundColor = getColorOfPrio(priority);
   document.getElementById(priority).classList.add("selectedPrioBtn");
+  SELECTED_PRIO_BTN = "";
   changeStylePrioBtn(priority, backgroundColor);
 }
 
