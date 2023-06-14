@@ -72,7 +72,7 @@ function renderTasksHtml(
   amountFinishedSubtasks
 ) {
   return /*html*/ `
-    <div id="task${indexOfTask}" class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
+    <div draggable="true" ondragstart="startDragging(${indexOfTask})" id="task${indexOfTask}" class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
       <div class="category ${colorCategory}">${task.category}</div>
       <div id="title">${task.title}</div>
       <span id="description">${task.description}</span>
