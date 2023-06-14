@@ -67,28 +67,28 @@
         <section>
           <div class="processStep">
             <span>To Do</span>
-            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
+            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')" />
           </div>
           <div id="todo"></div>
         </section>
         <section>
           <div class="processStep">
             <span>In progress</span>
-            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
+            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')" />
           </div>
           <div id="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event)" >
         </section>
         <section>
           <div class="processStep">
             <span>Awaiting Feedback</span>
-            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
+            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')" />
           </div>
           <div id="awaitingFeedback" ondrop="moveTo('awaitingFeedback')" ondragover="allowDrop(event)"></div>
         </section>
         <section>
           <div class="processStep">
             <span>Done</span>
-            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" />
+            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')" />
           </div>
           <div id="done" ondrop="moveTo('done')" ondragover="allowDrop(event)"></div>
         </section>
