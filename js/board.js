@@ -322,6 +322,33 @@ async function deleteTask() {
   initBoard();
 }
 
+function editTask() {
+  let task = {
+    title: getTitle(),
+    description: getDescription(),
+    category: getCategory(),
+    contacts: getSelectedCheckBoxes(),
+    dueDate: getDueDate(),
+    priority: getPriority(),
+    subtasks: SUBTASKS,
+  };
+  checkAndOverwriteTask(task);
+}
+
+async function checkAndOverwriteTask(task) {
+  if (requiredDataComplete(task)) {
+    SELECTED_TASK.title = task.title;
+    SELECTED_TASK.description = task.description;
+    SELECTED_TASK.category = task.category;
+    SELECTED_TASK.contacts = task.contacts;
+    SELECTED_TASK.dueDate = task.dueDate;
+    SELECTED_TASK.priority = task.priority;
+    SELECTED_TASK.subtasks = task.subtasks;
+    await setItem("users", JSON.stringify(USERS));
+    loadTemplate("./board.html");
+  }
+}
+
 /*DRAG AND DROP */
 
 function startDragging(id) {

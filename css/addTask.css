@@ -344,6 +344,10 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   align-items: center;
 }
 
+#editBtn {
+  width: 126px;
+}
+
 #clearBtn {
   width: 100px;
   background-color: var(--bright-white) !important;
