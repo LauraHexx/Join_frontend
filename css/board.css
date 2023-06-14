@@ -97,7 +97,7 @@ section {
 #inProgress,
 #awaitingFeedback,
 #done {
-  min-height: 300px;
+  min-height: 500px;
 }
 
 /*SINGLE CARD*/

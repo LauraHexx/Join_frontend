@@ -362,6 +362,7 @@ function allowDrop(ev) {
 async function moveTo(processStep) {
   TASKS[currentDraggedElement].processStep = processStep;
   await setItem("users", JSON.stringify(USERS));
+  unhighlightArea(processStep);
   renderTasks();
 }
 
