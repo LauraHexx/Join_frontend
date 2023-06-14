@@ -166,7 +166,7 @@
   </div>
   <div id="subtasks"></div>
   <div class="clearAndCreateBtns">
-    <button onclick="clearTask()" class="clearBtn">
+    <button onclick="clearTask()" id="clearBtn">
       <span>Clear</span>
       <img
         onmouseenter="changeImageOnHover('clearBtnIcon',
@@ -180,11 +180,15 @@
         alt="icon of plus to add
         a subtask" />
     </button>
-    <button onclick="createTask()" class="createBtn">
+    <button onclick="createTask()" id="createBtn">
       <span>Create Task</span>
       <img
         src="../assets/img/addTaskCreate.svg"
-        alt="icon to clear the create a new Task" />
+        alt="icon to create a new task" />
+    </button>
+    <button onclick="editTask()" id="editBtn" class="d-none">
+      <span>Edit Task</span>
+      <img src="../assets/img/addTaskCreate.svg" alt="icon to edit a task" />
     </button>
   </div>
 </section>

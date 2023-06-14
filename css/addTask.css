@@ -337,14 +337,6 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   gap: 20px;
 }
 
-.clearBtn {
-  width: 100px;
-}
-
-.createBtn {
-  width: 150px;
-}
-
 .clearAndCreateBtns button {
   height: 35px;
   display: flex;
@@ -352,23 +344,28 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   align-items: center;
 }
 
-.clearBtn {
+#clearBtn {
+  width: 100px;
   background-color: var(--bright-white) !important;
   color: var(--dark-blue) !important;
 }
 
-.clearBtn img {
+#createBtn {
+  width: 150px;
+}
+
+#clearBtn img {
   width: 11px;
   height: 11px;
 }
 
-.clearBtn:hover {
+#clearBtn:hover {
   color: var(--bright-blue) !important;
   border: 1px solid var(--bright-blue);
   transition: 0.2s;
 }
 
-.createBtn:hover {
+#createBtn:hover {
   transition: 0.2s;
 }
 

@@ -536,4 +536,7 @@ function closeAddTask() {
   toggleClass("body", "overflowHidden");
   showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
   clearTask();
+  document.getElementById("clearBtn").classList.remove("d-none");
+  document.getElementById("createBtn").classList.remove("d-none");
+  document.getElementById("editBtn").classList.add("d-none");
 }

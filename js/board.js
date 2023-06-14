@@ -159,6 +159,9 @@ function renderTaskDetailsHtml(colorCategory) {
 function renderEditTask() {
   hideDisplay("containerDetails", "d-none");
   showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
+  document.getElementById("clearBtn").classList.add("d-none");
+  document.getElementById("createBtn").classList.add("d-none");
+  document.getElementById("editBtn").classList.remove("d-none");
   setTask();
 }
 
