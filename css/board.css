@@ -97,7 +97,7 @@ section {
 #inProgress,
 #awaitingFeedback,
 #done {
-  height: 95%;
+  height: 95vh;
 }
 
 /*SINGLE CARD*/

@@ -3,6 +3,14 @@
     flex-wrap: wrap;
   }
 
+  #todo,
+  #inProgress,
+  #awaitingFeedback,
+  #done {
+    min-height: 250px;
+    height: unset;
+  }
+
   section {
     width: 45%;
   }
