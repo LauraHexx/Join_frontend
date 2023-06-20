@@ -28,22 +28,32 @@ function setEventListener() {
   );
 }
 
+/*GREETING*********************************************************************/
+
 function greeting() {
   setGreetingForTimeOfDay();
   greetUser();
 }
 
 function setGreetingForTimeOfDay() {
-  const currentHour = new Date().getHours();
-  let greeting;
-  if (isMorning(currentHour)) {
-    greeting = "Good morning,";
-  } else if (isMidday(currentHour)) {
-    greeting = "Good day,";
+  const currentHour = getCurrentHour();
+  const greeting = getGreeting(currentHour);
+  setGreetingElement(greeting);
+  return greeting;
+}
+
+function getGreeting(hour) {
+  if (isMorning(hour)) {
+    return "Good morning,";
+  } else if (isMidday(hour)) {
+    return "Good day,";
   } else {
-    greeting = "Good evening,";
+    return "Good evening,";
   }
-  document.getElementById("greetingTimeOfDay").innerHTML = greeting;
+}
+
+function getCurrentHour() {
+  return new Date().getHours();
 }
 
 function isMorning(currentHour) {
@@ -54,13 +64,21 @@ function isMidday(currentHour) {
   return currentHour >= 12 && currentHour < 18;
 }
 
+function setGreetingElement(greeting) {
+  const greetingElement = document.getElementById("greetingTimeOfDay");
+  greetingElement.innerHTML = greeting;
+}
+
 function greetUser() {
+  const greetedUser = document.getElementById("greetedUser");
   if (LOGGED_USER === "Guest") {
-    document.getElementById("greetedUser").innerHTML = "Guest";
+    greetedUser.innerHTML = "Guest";
   } else {
-    document.getElementById("greetedUser").innerHTML = `${LOGGED_USER.name}`;
+    greetedUser.innerHTML = LOGGED_USER.name;
   }
 }
+
+/*DATA SUMMARY****************************************************************/
 
 function setSummary() {
   TASKS = LOGGED_USER.tasks;
