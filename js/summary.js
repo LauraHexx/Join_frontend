@@ -99,7 +99,9 @@ function getNextDueDate() {
   const dueDates = TASKS.map((task) => new Date(task.dueDate));
   dueDates.sort((a, b) => a - b);
   const maxDueDate = dueDates[dueDates.length - 1];
+  console.log(maxDueDate);
   const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   if (maxDueDate >= today) {
     const options = { month: "long", day: "numeric", year: "numeric" };
