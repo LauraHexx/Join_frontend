@@ -71,6 +71,8 @@ function renderSummary() {
   document.getElementById("tasksUrgent").innerHTML = AMOUNT_TASKS_URGENT;
   document.getElementById("tasksUrgent").innerHTML = AMOUNT_TASKS_URGENT;
   document.getElementById("upcomingDeadline").innerHTML = NEXT_DUE_DATE;
+  document.getElementById("tasksToDo").innerHTML = AMOUNT_TASKS_TO_DO;
+  document.getElementById("tasksDone").innerHTML = AMOUNT_TASKS_DONE;
 }
 
 function countTasksInProcessStep(processStep) {
@@ -98,11 +100,10 @@ function getNextDueDate() {
   dueDates.sort((a, b) => a - b);
   const maxDueDate = dueDates[dueDates.length - 1];
   const today = new Date();
+
   if (maxDueDate >= today) {
-    const month = months[maxDueDate.getMonth()];
-    const day = maxDueDate.getDate();
-    const year = maxDueDate.getFullYear();
-    return `${month} ${day}, ${year}`;
+    const options = { month: "long", day: "numeric", year: "numeric" };
+    return maxDueDate.toLocaleDateString(undefined, options);
   } else {
     return "none";
   }
