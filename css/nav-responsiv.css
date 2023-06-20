@@ -98,3 +98,21 @@
     height: 84px;
   }
 }
+
+@media only screen and (max-height: 660px) {
+  nav {
+    gap: 45px;
+  }
+
+  nav span {
+    font-size: 14px;
+  }
+
+  .logo img {
+    height: 84px;
+  }
+
+  .navSections {
+    gap: 25px;
+  }
+}
