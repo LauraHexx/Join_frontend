@@ -10,6 +10,12 @@ async function initSummary() {
   await loadUserData();
   await getLoggedUser();
   await init("summary");
+  setEventListener();
+  greeting();
+  setSummary();
+}
+
+function setEventListener() {
   changeImageOnHover(
     "pencilLogo",
     "../assets/img/toDosPencilWhite.svg",
@@ -20,8 +26,6 @@ async function initSummary() {
     "../assets/img/doneCheckWhite.svg",
     "../assets/img/doneCheckBlue.svg"
   );
-  greeting();
-  setSummary();
 }
 
 function greeting() {
@@ -32,14 +36,22 @@ function greeting() {
 function setGreetingForTimeOfDay() {
   const currentHour = new Date().getHours();
   let greeting;
-  if (currentHour >= 0 && currentHour < 12) {
+  if (isMorning(currentHour)) {
     greeting = "Good morning,";
-  } else if (currentHour >= 12 && currentHour < 18) {
+  } else if (isMidday(currentHour)) {
     greeting = "Good day,";
   } else {
     greeting = "Good evening,";
   }
   document.getElementById("greetingTimeOfDay").innerHTML = greeting;
+}
+
+function isMorning(currentHour) {
+  return currentHour >= 0 && currentHour < 12;
+}
+
+function isMidday(currentHour) {
+  return currentHour >= 12 && currentHour < 18;
 }
 
 function greetUser() {
@@ -60,19 +72,6 @@ function setSummary() {
   AMOUNT_TASKS_URGENT = countTasksUrgentPrio();
   NEXT_DUE_DATE = getNextDueDate();
   renderSummary();
-}
-
-function renderSummary() {
-  document.getElementById("tasksInBoard").innerHTML = AMOUNT_TASKS_IN_BOARD;
-  document.getElementById("tasksInProgress").innerHTML =
-    AMOUNT_TASKS_IN_PROGRESS;
-  document.getElementById("tasksAwaitingFeedback").innerHTML =
-    AMOUNT_TASKS_AWAITING_FEEDBACK;
-  document.getElementById("tasksUrgent").innerHTML = AMOUNT_TASKS_URGENT;
-  document.getElementById("tasksUrgent").innerHTML = AMOUNT_TASKS_URGENT;
-  document.getElementById("upcomingDeadline").innerHTML = NEXT_DUE_DATE;
-  document.getElementById("tasksToDo").innerHTML = AMOUNT_TASKS_TO_DO;
-  document.getElementById("tasksDone").innerHTML = AMOUNT_TASKS_DONE;
 }
 
 function countTasksInProcessStep(processStep) {
@@ -96,17 +95,46 @@ function countTasksUrgentPrio() {
 }
 
 function getNextDueDate() {
-  const dueDates = TASKS.map((task) => new Date(task.dueDate));
-  dueDates.sort((a, b) => a - b);
-  const maxDueDate = dueDates[dueDates.length - 1];
-  console.log(maxDueDate);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const dueDates = getDueDates();
+  const maxDueDate = getMaxDueDate(dueDates);
+  const today = getToday();
 
   if (maxDueDate >= today) {
-    const options = { month: "long", day: "numeric", year: "numeric" };
-    return maxDueDate.toLocaleDateString(undefined, options);
+    return formatDueDate(maxDueDate);
   } else {
     return "none";
   }
+}
+
+function getDueDates() {
+  return TASKS.map((task) => new Date(task.dueDate));
+}
+
+function getMaxDueDate(dueDates) {
+  dueDates.sort((a, b) => a - b);
+  return dueDates[dueDates.length - 1];
+}
+
+function getToday() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
+}
+
+function formatDueDate(date) {
+  const options = { month: "long", day: "numeric", year: "numeric" };
+  return date.toLocaleDateString(undefined, options);
+}
+
+function renderSummary() {
+  document.getElementById("tasksInBoard").innerHTML = AMOUNT_TASKS_IN_BOARD;
+  document.getElementById("tasksInProgress").innerHTML =
+    AMOUNT_TASKS_IN_PROGRESS;
+  document.getElementById("tasksAwaitingFeedback").innerHTML =
+    AMOUNT_TASKS_AWAITING_FEEDBACK;
+  document.getElementById("tasksUrgent").innerHTML = AMOUNT_TASKS_URGENT;
+  document.getElementById("tasksUrgent").innerHTML = AMOUNT_TASKS_URGENT;
+  document.getElementById("upcomingDeadline").innerHTML = NEXT_DUE_DATE;
+  document.getElementById("tasksToDo").innerHTML = AMOUNT_TASKS_TO_DO;
+  document.getElementById("tasksDone").innerHTML = AMOUNT_TASKS_DONE;
 }
