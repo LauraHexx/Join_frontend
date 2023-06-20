@@ -151,7 +151,6 @@ function renderSummary() {
   document.getElementById("tasksAwaitingFeedback").innerHTML =
     AMOUNT_TASKS_AWAITING_FEEDBACK;
   document.getElementById("tasksUrgent").innerHTML = AMOUNT_TASKS_URGENT;
-  document.getElementById("tasksUrgent").innerHTML = AMOUNT_TASKS_URGENT;
   document.getElementById("upcomingDeadline").innerHTML = NEXT_DUE_DATE;
   document.getElementById("tasksToDo").innerHTML = AMOUNT_TASKS_TO_DO;
   document.getElementById("tasksDone").innerHTML = AMOUNT_TASKS_DONE;
