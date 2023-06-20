@@ -74,10 +74,10 @@ function renderTasksHtml(
   return /*html*/ `
     <div draggable="true" ondragstart="startDragging(${indexOfTask})" id="task${indexOfTask}" class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
       <div class="category ${colorCategory}">${task.category}</div>
-      <div id="title">${task.title}</div>
-      <span id="description">${task.description}</span>
-      <div id="progressContainer">
-        <div id="progress">
+      <div class="bold title">${task.title}</div>
+      <span class="description">${task.description}</span>
+      <div class="progressContainer">
+        <div class="progress">
           <div class="progress-bar" style="width: ${getPercentageProgress(
             amountSubtasks,
             amountFinishedSubtasks
@@ -85,9 +85,9 @@ function renderTasksHtml(
         </div>
         <span id="progressAmount">${amountFinishedSubtasks}/${amountSubtasks} Done</span>
       </div>
-      <div id="contactsAndPrio">
+      <div class="contactsAndPrio">
         <div class="assignedContacts" id="contacts${indexOfTask}"></div>
-        <img id="prio" src="../assets/img/prio${
+        <img class="prio" src="../assets/img/prio${
           task.priority
         }.svg" alt="icon to show priority">
       </div>
@@ -372,6 +372,47 @@ function highlightArea(id) {
 
 function unhighlightArea(id) {
   document.getElementById(id).classList.remove("dragArea");
+}
+
+function searchCards(event) {
+  const searchText = event.target.value.toLowerCase();
+  console.log(searchText);
+
+  const todoCards = document.querySelectorAll("#todo .singleCard");
+  const inProgressCards = document.querySelectorAll("#inProgress .singleCard");
+  const awaitingFeedbackCards = document.querySelectorAll(
+    "#awaitingFeedback .singleCard"
+  );
+  const doneCards = document.querySelectorAll("#done .singleCard");
+
+  hideCards(todoCards);
+  hideCards(inProgressCards);
+  hideCards(awaitingFeedbackCards);
+  hideCards(doneCards);
+
+  searchInCards(searchText, todoCards);
+  searchInCards(searchText, inProgressCards);
+  searchInCards(searchText, awaitingFeedbackCards);
+  searchInCards(searchText, doneCards);
+}
+
+function hideCards(cards) {
+  cards.forEach((card) => {
+    card.style.display = "none";
+  });
+}
+
+function searchInCards(searchText, cards) {
+  cards.forEach((card) => {
+    const title = card.querySelector(".title").textContent.toLowerCase();
+    const description = card
+      .querySelector(".description")
+      .textContent.toLowerCase();
+
+    if (title.includes(searchText) || description.includes(searchText)) {
+      card.style.display = "flex";
+    }
+  });
 }
 
 /*
