@@ -123,7 +123,7 @@ function renderTaskDetails() {
 
 function renderTaskDetailsHtml(colorCategory) {
   return /*html*/ `
-    <div class="displayEdit">
+    <div onclick="event.stopPropagation()" class="displayEdit">
       <div class="headContainer">
         <div class="category ${colorCategory}">${SELECTED_TASK.category}</div>
         <img onclick="initBoard(); hideDisplay('containerDetails', 'd-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">

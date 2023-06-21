@@ -16,7 +16,6 @@
   position: absolute;
   right: 200px;
   box-sizing: border-box;
-  padding: 13px 21px;
   background: #ffffff;
   border: 1px solid #a8a8a8;
   border-radius: 10px;
@@ -29,11 +28,12 @@
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  padding: 0px;
+  padding-left: 12px;
 }
 
 .containerSearchTasksContent img {
   width: 40px;
+  padding-right: 10px;
 }
 
 .containerSearchTasks input {
