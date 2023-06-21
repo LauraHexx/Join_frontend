@@ -293,3 +293,49 @@ function setEventListenerHoverBtn() {
     "../assets/img/addTaskCancelDark.svg"
   );
 }
+
+function setEventCloseDropDown() {
+  closeDropDown();
+  toggleCategoryDropDownContainer();
+  toggleContactDropDownContainer();
+}
+
+function closeDropDown() {
+  document.addEventListener("click", handleClickOnPage);
+  function handleClickOnPage(event) {
+    if (
+      !event.target.closest("#selectContactsDiv") ||
+      !event.target.closest("#selectCategoryDiv")
+    ) {
+      hideDropdown("listContacts");
+      hideDropdown("listCategorys");
+    }
+  }
+}
+
+function hideDropdown(id) {
+  let dropDownList = document.getElementById(id);
+  dropDownList.classList.add("d-none");
+}
+
+function toggleCategoryDropDownContainer() {
+  document
+    .getElementById("selectCategoryDiv")
+    .addEventListener("click", handleClick);
+
+  function handleClick(event) {
+    event.stopPropagation();
+    toggleClass("listCategorys", "d-none");
+  }
+}
+
+function toggleContactDropDownContainer() {
+  document
+    .getElementById("selectContactsDiv")
+    .addEventListener("click", handleClick);
+
+  function handleClick(event) {
+    event.stopPropagation();
+    toggleClass("listContacts", "d-none");
+  }
+}
