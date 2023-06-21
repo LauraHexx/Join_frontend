@@ -280,3 +280,16 @@ function sortArrayAlphabetically(array) {
 function goBackToPreviousPage() {
   window.history.back();
 }
+
+function setEventListenerHoverBtn() {
+  changeImageOnHover(
+    "clearBtnIcon",
+    "../assets/img/addTaskCancelBright.svg",
+    "../assets/img/addTaskCancelDark.svg"
+  );
+  changeImageOnHover(
+    "clearBtnIcon",
+    "../assets/img/addTaskCancelBright.svg",
+    "../assets/img/addTaskCancelDark.svg"
+  );
+}

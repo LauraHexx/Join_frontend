@@ -5,22 +5,9 @@ async function initAddTask() {
   await loadUserData();
   await getLoggedUser();
   await init("addTask");
-  setEventListener();
+  setEventListenerHoverBtn();
   setContactsAndCategorysDropDownMenu();
   setEventCloseDropDown();
-}
-
-function setEventListener() {
-  changeImageOnHover(
-    "clearBtnIcon",
-    "../assets/img/addTaskCancelBright.svg",
-    "../assets/img/addTaskCancelDark.svg"
-  );
-  changeImageOnHover(
-    "clearBtnIcon",
-    "../assets/img/addTaskCancelBright.svg",
-    "../assets/img/addTaskCancelDark.svg"
-  );
 }
 
 function setContactsAndCategorysDropDownMenu() {

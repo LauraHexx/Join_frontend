@@ -9,6 +9,7 @@ async function initBoard() {
   await getLoggedUser();
   setContactsAndCategorysDropDownMenu();
   setEventCloseDropDown();
+  setEventListenerHoverBtn();
   renderTasks();
 }
 

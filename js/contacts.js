@@ -10,6 +10,7 @@ async function initContacts() {
   setContactsAndCategorysDropDownMenu();
   setEventScreenSize();
   setEventCloseDropDown();
+  setEventListenerHoverBtn();
 }
 
 function renderContactList() {
