@@ -13,8 +13,9 @@ async function initSummary() {
   await init("summary");
   setEventListener();
   greeting();
-  await setSummary();
-  renderSummary();
+  await setSummaryData();
+  await renderSummary();
+  toggleClass("loadingContainer", "d-none");
 }
 
 function setEventListener() {
@@ -102,7 +103,7 @@ function setGreetingElement(greeting) {
 }
 
 /**
- * Greets the user by displaying their name or "Guest" if not logged in.
+ * Greets the user by displaying their name or "Guest" if not registered.
  */
 function greetUser() {
   const greetedUser = document.getElementById("greetedUser");
@@ -117,25 +118,30 @@ function greetUser() {
 
 /**
  * Sets the summary data by updating various task-related information.
- * @async
- * @returns {Promise<void>} A Promise that resolves when the summary data is set.
  */
-async function setSummary() {
-  await setTasks();
+function setSummaryData() {
+  setTasksOfLoggedUser();
+  countTasks();
+  determineDeadline();
+}
+
+/**
+ * Sets the global variable TASKS with the logged user's tasks.
+ */
+function setTasksOfLoggedUser() {
+  TASKS = LOGGED_USER.tasks;
+}
+
+/**
+ * Sets variables with the amount of the tasks in the specified process step
+ */
+function countTasks() {
   AMOUNT_TASKS_IN_BOARD = TASKS.length;
   AMOUNT_TASKS_TO_DO = countTasksInProcessStep("todo");
   AMOUNT_TASKS_IN_PROGRESS = countTasksInProcessStep("inProgress");
   AMOUNT_TASKS_AWAITING_FEEDBACK = countTasksInProcessStep("awaitingFeedback");
   AMOUNT_TASKS_DONE = countTasksInProcessStep("done");
   AMOUNT_TASKS_URGENT = countTasksUrgentPrio();
-  NEXT_DUE_DATE = getNextDueDate();
-}
-
-/**
- * Sets the global variable TASKS with the logged user's tasks.
- */
-async function setTasks() {
-  TASKS = LOGGED_USER.tasks;
 }
 
 /**
@@ -167,6 +173,18 @@ function countTasksUrgentPrio() {
   return count;
 }
 
+/**
+ * Sets variable with the next deadline for a task.
+ * @returns {string} The formatted due date or "none" if there is no upcoming due date.
+ */
+function determineDeadline() {
+  NEXT_DUE_DATE = getNextDueDate();
+}
+
+/**
+ * Sets the next due date from the list of tasks.
+ * @returns {string} The formatted due date or "none" if there is no upcoming due date.
+ */
 function getNextDueDate() {
   const dueDates = getDueDates();
   const maxDueDate = getMaxDueDate(dueDates);
@@ -179,27 +197,48 @@ function getNextDueDate() {
   }
 }
 
+/**
+ * Sets the due dates for all tasks.
+ * @returns {Array} An array of Date objects representing the due dates.
+ */
 function getDueDates() {
   return TASKS.map((task) => new Date(task.dueDate));
 }
 
+/**
+ * Finds the maximum due date from the given array of due dates.
+ * @param {Array} dueDates - An array of Date objects representing the due dates.
+ * @returns {Date} The maximum due date.
+ */
 function getMaxDueDate(dueDates) {
   dueDates.sort((a, b) => a - b);
   return dueDates[dueDates.length - 1];
 }
 
+/**
+ * Sets today's date with the time set to 00:00:00.
+ * @returns {Date} Today's date with the time set to 00:00:00.
+ */
 function getToday() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return today;
 }
 
+/**
+ * Formats the given date into a string representation.
+ * @param {Date} date - The date to format.
+ * @returns {string} The formatted date string.
+ */
 function formatDueDate(date) {
   const options = { month: "long", day: "numeric", year: "numeric" };
   return date.toLocaleDateString(undefined, options);
 }
 
-function renderSummary() {
+/**
+ * Renders the data in the summary on the webpage.
+ */
+async function renderSummary() {
   document.getElementById("tasksInBoard").innerHTML = AMOUNT_TASKS_IN_BOARD;
   document.getElementById("tasksInProgress").innerHTML =
     AMOUNT_TASKS_IN_PROGRESS;
@@ -209,5 +248,4 @@ function renderSummary() {
   document.getElementById("upcomingDeadline").innerHTML = NEXT_DUE_DATE;
   document.getElementById("tasksToDo").innerHTML = AMOUNT_TASKS_TO_DO;
   document.getElementById("tasksDone").innerHTML = AMOUNT_TASKS_DONE;
-  toggleClass("loadingContainer", "d-none");
 }
