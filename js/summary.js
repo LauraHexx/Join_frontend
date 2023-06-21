@@ -51,6 +51,11 @@ function setGreetingForTimeOfDay() {
   return greeting;
 }
 
+/**
+ * Determines the appropriate greeting based on the hour.
+ * @param {number} hour - The current hour.
+ * @returns {string} The greeting message.
+ */
 function getGreeting(hour) {
   if (isMorning(hour)) {
     return "Good morning,";
@@ -61,23 +66,44 @@ function getGreeting(hour) {
   }
 }
 
+/**
+ * Retrieves the current hour.
+ * @returns {number} The current hour.
+ */
 function getCurrentHour() {
   return new Date().getHours();
 }
 
+/**
+ * Checks if the current hour corresponds to the morning.
+ * @param {number} currentHour - The current hour.
+ * @returns {boolean} True if it's morning, false otherwise.
+ */
 function isMorning(currentHour) {
   return currentHour >= 0 && currentHour < 12;
 }
 
+/**
+ * Checks if the current hour corresponds to midday.
+ * @param {number} currentHour - The current hour.
+ * @returns {boolean} True if it's midday, false otherwise.
+ */
 function isMidday(currentHour) {
   return currentHour >= 12 && currentHour < 18;
 }
 
+/**
+ * Sets the greeting element with the specified greeting.
+ * @param {string} greeting - The greeting message to be set.
+ */
 function setGreetingElement(greeting) {
   const greetingElement = document.getElementById("greetingTimeOfDay");
   greetingElement.innerHTML = greeting;
 }
 
+/**
+ * Greets the user by displaying their name or "Guest" if not logged in.
+ */
 function greetUser() {
   const greetedUser = document.getElementById("greetedUser");
   if (LOGGED_USER === "Guest") {
@@ -89,8 +115,13 @@ function greetUser() {
 
 /*DATA SUMMARY****************************************************************/
 
+/**
+ * Sets the summary data by updating various task-related information.
+ * @async
+ * @returns {Promise<void>} A Promise that resolves when the summary data is set.
+ */
 async function setSummary() {
-  TASKS = LOGGED_USER.tasks;
+  await setTasks();
   AMOUNT_TASKS_IN_BOARD = TASKS.length;
   AMOUNT_TASKS_TO_DO = countTasksInProcessStep("todo");
   AMOUNT_TASKS_IN_PROGRESS = countTasksInProcessStep("inProgress");
@@ -100,6 +131,18 @@ async function setSummary() {
   NEXT_DUE_DATE = getNextDueDate();
 }
 
+/**
+ * Sets the global variable TASKS with the logged user's tasks.
+ */
+async function setTasks() {
+  TASKS = LOGGED_USER.tasks;
+}
+
+/**
+ * Counts the tasks in the specified process step.
+ * @param {string} processStep - The process step to count tasks for.
+ * @returns {number} The number of tasks in the specified process step.
+ */
 function countTasksInProcessStep(processStep) {
   let count = 0;
   TASKS.forEach((task) => {
@@ -110,6 +153,10 @@ function countTasksInProcessStep(processStep) {
   return count;
 }
 
+/**
+ * Counts the tasks with urgent priority.
+ * @returns {number} The number of tasks with urgent priority.
+ */
 function countTasksUrgentPrio() {
   let count = 0;
   TASKS.forEach((task) => {
