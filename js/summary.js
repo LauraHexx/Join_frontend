@@ -9,7 +9,6 @@ let NEXT_DUE_DATE;
 async function initSummary() {
   toggleClass("loadingContainer", "d-none");
   setDashboard()
-
   setEventListener();
   toggleClass("loadingContainer", "d-none");
 }
