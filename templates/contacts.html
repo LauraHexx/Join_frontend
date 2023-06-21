@@ -29,9 +29,9 @@
   <body id="body" onload="initContacts()">
     <header w3-include-html="header.html"></header>
     <nav w3-include-html="nav.html"></nav>
-    <section onclick="closeAddTask()" id="contentAddTaskDisplay" class="d-none">
+    <section id="contentAddTaskDisplay" class="d-none">
+      <div onclick="closeAddTask()" class="backgroundDisplay"></div>
       <div
-        onclick="event.stopPropagation()"
         id="displayAddTask"
         class="mainContainer"
         w3-include-html="addTask-display.html"></div>

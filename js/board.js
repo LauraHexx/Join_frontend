@@ -10,10 +10,11 @@ async function initBoard() {
   setContactsAndCategorysDropDownMenu();
   setEventCloseDropDown();
   setEventListenerHoverBtn();
-  renderTasks();
+  await renderTasks();
+  toggleClass("loadingContainer", "d-none");
 }
 
-function renderTasks() {
+async function renderTasks() {
   clearBoard();
   TASKS = LOGGED_USER.tasks;
   if (TASKS.length === 0) {
@@ -36,7 +37,6 @@ function renderTasks() {
       );
       renderContactsInTaskCards(indexOfTask, contactsIds);
     });
-    toggleClass("loadingContainer", "d-none");
   }
 }
 
