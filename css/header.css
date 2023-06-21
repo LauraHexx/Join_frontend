@@ -60,6 +60,15 @@ header {
   border-radius: 10px 0px 10px 10px;
 }
 
+#menuHeaderBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+}
+
 #menuHeader {
   display: flex;
   flex-direction: column;
@@ -72,6 +81,7 @@ header {
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px 0px 10px 10px;
   color: var(--bright-white);
+  z-index: 2;
 }
 
 #menuHeader a {
@@ -86,5 +96,3 @@ header {
 .optionMenu {
   display: none;
 }
-
-/*ANIMATION*/
