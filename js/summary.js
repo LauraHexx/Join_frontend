@@ -7,12 +7,14 @@ let AMOUNT_TASKS_URGENT;
 let NEXT_DUE_DATE;
 
 async function initSummary() {
+  toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();
   await init("summary");
   setEventListener();
   greeting();
   await setSummary();
+
   renderSummary();
 }
 
@@ -154,4 +156,5 @@ function renderSummary() {
   document.getElementById("upcomingDeadline").innerHTML = NEXT_DUE_DATE;
   document.getElementById("tasksToDo").innerHTML = AMOUNT_TASKS_TO_DO;
   document.getElementById("tasksDone").innerHTML = AMOUNT_TASKS_DONE;
+  toggleClass("loadingContainer", "d-none");
 }
