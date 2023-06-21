@@ -367,19 +367,6 @@ section {
   height: 15px;
 }
 
-#loadingContainer {
-  backdrop-filter: blur(10px);
-  z-index: 100;
-  position: absolute;
-  top: 0;
-  left: var(--nav-width);
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 #contentAddTaskDisplay {
   width: 100%;
   height: 100vh;
