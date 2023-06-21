@@ -184,13 +184,11 @@ function showDisplay(id, animationClass, className) {
   }
   toggleClass(id, className);
   toggleBlurFilter();
-
 }
 
 function hideDisplay(id, className) {
   toggleClass(id, className);
   toggleBlurFilter();
-
 }
 
 function toggleClass(elementId, className) {

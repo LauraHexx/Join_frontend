@@ -12,7 +12,8 @@ async function initSummary() {
   await init("summary");
   setEventListener();
   greeting();
-  setSummary();
+  await setSummary();
+  renderSummary();
 }
 
 function setEventListener() {
@@ -80,7 +81,7 @@ function greetUser() {
 
 /*DATA SUMMARY****************************************************************/
 
-function setSummary() {
+async function setSummary() {
   TASKS = LOGGED_USER.tasks;
   AMOUNT_TASKS_IN_BOARD = TASKS.length;
   AMOUNT_TASKS_TO_DO = countTasksInProcessStep("todo");
@@ -89,7 +90,6 @@ function setSummary() {
   AMOUNT_TASKS_DONE = countTasksInProcessStep("done");
   AMOUNT_TASKS_URGENT = countTasksUrgentPrio();
   NEXT_DUE_DATE = getNextDueDate();
-  renderSummary();
 }
 
 function countTasksInProcessStep(processStep) {
