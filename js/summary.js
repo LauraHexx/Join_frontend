@@ -8,16 +8,24 @@ let NEXT_DUE_DATE;
 
 async function initSummary() {
   toggleClass("loadingContainer", "d-none");
-  await loadUserData();
-  await getLoggedUser();
-  await init("summary");
+  setDashboard()
+
   setEventListener();
-  greeting();
-  await setSummaryData();
-  await renderSummary();
   toggleClass("loadingContainer", "d-none");
 }
 
+function setDashboard() {
+  await loadUserData();
+  await getLoggedUser();
+  await init("summary");
+  await setSummaryData();
+  await renderSummary();
+  greeting();
+}
+
+/**
+ * Sets event listeners for image elements to change their source on hover.
+ */
 function setEventListener() {
   changeImageOnHover(
     "pencilLogo",
