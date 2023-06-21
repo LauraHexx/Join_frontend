@@ -67,6 +67,7 @@ header {
   right: 0;
   bottom: 0;
   height: 100vh;
+  background-color: transparent;
 }
 
 #menuHeader {

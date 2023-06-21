@@ -534,7 +534,7 @@ function toggleContactDropDownContainer() {
 
 function closeAddTask() {
   toggleClass("body", "overflowHidden");
-  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
+  hideDisplay("contentAddTaskDisplay", "d-none");
   clearTask();
   document.getElementById("clearBtn").classList.remove("d-none");
   document.getElementById("createBtn").classList.remove("d-none");

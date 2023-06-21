@@ -134,11 +134,7 @@ function toggleClass(elementId, className) {
 function toggleBlurFilter() {
   const elements = document.querySelectorAll("nav, header, #content");
   elements.forEach((element) => {
-    if (element.classList.contains("filterBlur")) {
-      element.classList.remove("filterBlur");
-    } else {
-      element.classList.add("filterBlur");
-    }
+    element.classList.toggle("filterBlur");
   });
 }
 
@@ -208,15 +204,6 @@ function getUserData(id) {
 function getContactData(id) {
   const contact = CONTACTS.find((contact) => contact.id === id);
   return contact;
-}
-
-function getDataLoggedUser() {
-  let loggedUserId = getItemFromLocalStorage("loggedUserId");
-  if (loggedUserId === "Guest") {
-    LOGGED_USER.name = "Guest";
-  } else {
-    LOGGED_USER = getUserData(loggedUserId);
-  }
 }
 
 async function getLoggedUser() {
