@@ -29,8 +29,9 @@
   <body id="body" onload="initContacts()">
     <header w3-include-html="header.html"></header>
     <nav w3-include-html="nav.html"></nav>
-    <section id="contentAddTaskDisplay" class="d-none">
+    <section onclick="closeAddTask()" id="contentAddTaskDisplay" class="d-none">
       <div
+        onclick="event.stopPropagation()"
         id="displayAddTask"
         class="mainContainer"
         w3-include-html="addTask-display.html"></div>
@@ -97,8 +98,8 @@
       <button>Contact succesfully deleted</button>
     </div>
     <!--ADD CONTACTS - DISPLAY-->
-    <section id="contentAddDisplay" class="d-none">
-      <div id="displayAddContact">
+    <section onclick="closeAddContact()" id="contentAddDisplay" class="d-none">
+      <div onclick="event.stopPropagation()" id="displayAddContact">
         <div class="leftSectionAdd">
           <img
             onclick="closeAddContact()"
@@ -166,6 +167,9 @@
       </div>
     </section>
     <!--EDIT CONTACTS - DISPLAY-->
-    <section id="contentEditDisplay" class="d-none"></section>
+    <section
+      onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
+      id="contentEditDisplay"
+      class="d-none"></section>
   </body>
 </html>

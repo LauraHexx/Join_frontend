@@ -164,7 +164,7 @@ function renderEditContact() {
 
 function renderEditContactHtml() {
   return /*html*/ `
-      <div class="displayEditContact">
+      <div onclick="event.stopPropagation()" class="displayEditContact">
         <div class="leftSectionEdit">
           <img
             onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
