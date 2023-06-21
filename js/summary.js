@@ -32,11 +32,18 @@ function setEventListener() {
 
 /*GREETING*********************************************************************/
 
+/**
+ * Sets the greeting for the time of day and greets the user.
+ */
 function greeting() {
   setGreetingForTimeOfDay();
   greetUser();
 }
 
+/**
+ * Sets the greeting based on the current time of day.
+ * @returns {string} The generated greeting.
+ */
 function setGreetingForTimeOfDay() {
   const currentHour = getCurrentHour();
   const greeting = getGreeting(currentHour);
