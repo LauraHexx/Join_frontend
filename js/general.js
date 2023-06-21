@@ -289,3 +289,7 @@ function getFirstAndLastInitial(partsOfName) {
 function sortArrayAlphabetically(array) {
   array.sort((a, b) => a.name.localeCompare(b.name));
 }
+
+function goBackToPreviousPage() {
+  window.history.back();
+}
