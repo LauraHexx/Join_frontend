@@ -14,7 +14,6 @@ async function initSummary() {
   setEventListener();
   greeting();
   await setSummary();
-
   renderSummary();
 }
 
