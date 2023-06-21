@@ -17,6 +17,9 @@
     width: 20px;
     height: 20px;
   }
+
+  #loadingContainer {
+    left: 0;
 }
 
 @media (max-width: 750px) {
