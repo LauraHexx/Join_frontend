@@ -1,5 +1,5 @@
 /**
- * Opens the menu by clicking on "profile image" in the header,
+ * Opens the menu by clicking on "profile image" in the header
  */
 function openMenu() {
   toggleClass("menuHeaderBg", "d-none");
@@ -8,7 +8,7 @@ function openMenu() {
 }
 
 /**
- * Closes the menu of the header,
+ * Closes the menu of the header
  */
 function closeMenu() {
   toggleClass("menuHeaderBg", "d-none");
