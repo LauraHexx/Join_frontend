@@ -27,7 +27,12 @@ Ladedinger anzeigen
 
 Überlefung: Jeder Kontakt hat Id, wenn Kontakt gelöscht wird, dann task durchsuchen und id löschen
 
-drop down
+
 backend emai
-animation loadingContainer
+
 btn animation -- task erstellt
+
+form signin
+email forgot password
+animation login
+button task erstellt
