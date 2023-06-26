@@ -6,14 +6,23 @@ let AMOUNT_TASKS_DONE;
 let AMOUNT_TASKS_URGENT;
 let NEXT_DUE_DATE;
 
+/**
+ * Initializes the summary.
+ * Displays a loading image during the loading time.
+ * @async
+ */
 async function initSummary() {
   toggleClass("loadingContainer", "d-none");
-  setDashboard()
+  setDashboard();
   setEventListener();
   toggleClass("loadingContainer", "d-none");
 }
 
-function setDashboard() {
+/**
+ * Sets up the dashboard by setting data, rendering the summary and greeting the user.
+ * @async
+ */
+async function setDashboard() {
   await loadUserData();
   await getLoggedUser();
   await init("summary");
@@ -38,7 +47,7 @@ function setEventListener() {
   );
 }
 
-/*GREETING*********************************************************************/
+/*GREETING**********************************************************************************************************/
 
 /**
  * Sets the greeting for the time of day and greets the user.
@@ -101,7 +110,7 @@ function isMidday(currentHour) {
 }
 
 /**
- * Sets the greeting element with the specified greeting.
+ * Sets the greeting element with the specified html greeting.
  * @param {string} greeting - The greeting message to be set.
  */
 function setGreetingElement(greeting) {
@@ -121,7 +130,7 @@ function greetUser() {
   }
 }
 
-/*DATA SUMMARY****************************************************************/
+/*DATA SUMMARY*******************************************************************************************************/
 
 /**
  * Sets the summary data by updating various task-related information.
@@ -244,6 +253,7 @@ function formatDueDate(date) {
 
 /**
  * Renders the data in the summary on the webpage.
+ * @async
  */
 async function renderSummary() {
   document.getElementById("tasksInBoard").innerHTML = AMOUNT_TASKS_IN_BOARD;

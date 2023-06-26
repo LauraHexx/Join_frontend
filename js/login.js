@@ -16,7 +16,6 @@ function changeZindexAnimation() {
 
 /**
  * Retrieves values from local storage and sets them as the values of the input fields in the login form.
- * @returns {void}
  */
 function getLocalStorage() {
   loginEmail.value = getItemFromLocalStorage("email");
@@ -25,8 +24,7 @@ function getLocalStorage() {
 
 /**
  * Checks if the data provided by the user is correct.
- * If the login data is correct, it checks if "Remember Me" is activated
- * and loads the summary template. Otherwise, it calls the `wrongData` function.
+ * If the login data is correct, it checks if "Remember Me" is activated and loads the summary template. Otherwise, it calls the `wrongData` function.
  */
 function checkIfDataCorrect() {
   const correctUserData = lookForUserData();
@@ -68,8 +66,12 @@ function wrongData() {
     .getElementById("dataIncorrect")
     .classList.remove("d-none");
 }
-
-async function guestLogin() {
+^
+/**
+ * Creates a guest user and adds the newly created guest user to the USERS array.
+ * @async
+ */
+async function createGuestUser() {
   const newGuestUser = {
     color: getRandomColor(),
     id: getUserId(),
@@ -81,6 +83,14 @@ async function guestLogin() {
   };
   USERS.push(newGuestUser);
   await setItem("users", JSON.stringify(USERS));
-  setDataForGreeting(newGuestUser.id);
+  initializeUserGreeting(newGuestUser.id);
+}
+
+/**
+ * Initializes the user greeting by setting data and loading the summary template.
+ * @param {string} newGuestUserId - The ID of the newly created guest user.
+ */
+function initializeUserGreeting(newGuestUserId) {
+  setDataForGreeting(newGuestUserId);
   loadTemplate("templates/summary.html");
 }

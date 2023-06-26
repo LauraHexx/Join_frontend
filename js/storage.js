@@ -3,11 +3,10 @@ const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
 
 /**
  * Sets an item in the storage.
- *
- * @async
  * @param {string} key - The key for the item.
  * @param {any} value - The value to be stored.
  * @returns {Promise<object>} A Promise that resolves to the response JSON object.
+ * @async
  */
 async function setItem(key, value) {
   const payload = { key, value, token: STORAGE_TOKEN };
@@ -18,12 +17,11 @@ async function setItem(key, value) {
 }
 
 /**
- *Retrieves the value of an item from the storage.
- *
- * @async
+ * Retrieves the value of an item from the storage.
  * @param {string} key - The key of the item to retrieve.
  * @returns {Promise<any>} A Promise that resolves to the value of the item.
  * @throws {string} Throws an error if the item with the specified key is not found.
+ * @async
  */
 async function getItem(key) {
   const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;

@@ -1,4 +1,3 @@
-let currentDraggedElement;
 let TASKS = [];
 let SELECTED_TASK = "";
 
@@ -7,13 +6,18 @@ async function initBoard() {
   toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();
+  await renderTasks();
   setContactsAndCategorysDropDownMenu();
   setEventCloseDropDown();
   setEventListenerHoverBtn();
-  await renderTasks();
   toggleClass("loadingContainer", "d-none");
 }
 
+/*SHOW TASKS IN BOARD***********************************************************************************/
+
+/**
+ * Renders the tasks on the board.
+ */
 async function renderTasks() {
   clearBoard();
   TASKS = LOGGED_USER.tasks;
@@ -21,25 +25,15 @@ async function renderTasks() {
     toggleClass("loadingContainer", "d-none");
   } else {
     TASKS.forEach((task) => {
-      const indexOfTask = TASKS.indexOf(task);
-      const category = task.category;
-      const colorCategory = getColorCategory(category);
-      const processStep = task.processStep;
-      const contactsIds = task.contacts;
-      const amountSubtasks = task.subtasks.length;
-      const amountFinishedSubtasks = countAmountOfFinishedSubtasks(task);
-      document.getElementById(processStep).innerHTML += renderTasksHtml(
-        indexOfTask,
-        task,
-        colorCategory,
-        amountSubtasks,
-        amountFinishedSubtasks
-      );
+      setDataTaskCard(task);
       renderContactsInTaskCards(indexOfTask, contactsIds);
     });
   }
 }
 
+/**
+ * Clears the task board by emptying the innerHTML of the board containers.
+ */
 function clearBoard() {
   document.getElementById("todo").innerHTML = "";
   document.getElementById("inProgress").innerHTML = "";
@@ -47,12 +41,43 @@ function clearBoard() {
   document.getElementById("done").innerHTML = "";
 }
 
+/**
+ * Sets the data for a task card.
+ * @param {Object} task - The task object.
+ */
+function setDataTaskCard() {
+  const indexOfTask = TASKS.indexOf(task);
+  const category = task.category;
+  const colorCategory = getColorCategory(category);
+  const processStep = task.processStep;
+  const contactsIds = task.contacts;
+  const amountSubtasks = task.subtasks.length;
+  const amountFinishedSubtasks = countAmountOfFinishedSubtasks(task);
+  document.getElementById(processStep).innerHTML += renderTasksHtml(
+    indexOfTask,
+    task,
+    colorCategory,
+    amountSubtasks,
+    amountFinishedSubtasks
+  );
+}
+
+/**
+ * Gets the color of a category by name.
+ * @param {string} name - The name of the category.
+ * @returns {string} The color of the category.
+ */
 function getColorCategory(name) {
   CATEGORYS = LOGGED_USER.categorys;
   const searchedCategory = CATEGORYS.find((category) => category.name === name);
   return searchedCategory.color;
 }
 
+/**
+ * Counts the number of finished subtasks in a task.
+ * @param {Object} task - The task object.
+ * @returns {number} The number of finished subtasks.
+ */
 function countAmountOfFinishedSubtasks(task) {
   let amountFinishedSubtasks = 0;
   let subtasks = task.subtasks;
@@ -65,41 +90,107 @@ function countAmountOfFinishedSubtasks(task) {
   return amountFinishedSubtasks;
 }
 
-function renderTasksHtml(
-  indexOfTask,
-  task,
-  colorCategory,
-  amountSubtasks,
-  amountFinishedSubtasks
-) {
-  return /*html*/ `
-    <div draggable="true" ondragstart="startDragging(${indexOfTask})" id="task${indexOfTask}" class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
-      <div class="category ${colorCategory}">${task.category}</div>
-      <div class="bold title">${task.title}</div>
-      <span class="description">${task.description}</span>
-      <div class="progressContainer">
-        <div class="progress">
-          <div class="progress-bar" style="width: ${getPercentageProgress(
-            amountSubtasks,
-            amountFinishedSubtasks
-          )}" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-        <span id="progressAmount">${amountFinishedSubtasks}/${amountSubtasks} Done</span>
-      </div>
-      <div class="contactsAndPrio">
-        <div class="assignedContacts" id="contacts${indexOfTask}"></div>
-        <img class="prio" src="../assets/img/prio${
-          task.priority
-        }.svg" alt="icon to show priority">
-      </div>
-    </div>
-  `;
+/**
+ * Renders contacts initials in single task cards.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {Array<number>} contactsIds - The IDs of the contacts.
+ * @async
+ */
+async function renderContactsInTaskCards(indexOfTask, contactsIds) {
+  const amountContacts = contactsIds.length;
+  await renderFirstTwoContacts(indexOfTask, contactsIds);
+  await renderRemainingAmountOfContacts(indexOfTask, amountContacts);
+  document.getElementById("loadingContainer").classList.add("d-none");
 }
 
+/**
+ * Renders the first two contacts in a task card.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {Array<number>} contactsIds - The IDs of the contacts.
+ */
+function renderFirstTwoContacts(indexOfTask, contactsIds) {
+  CONTACTS = LOGGED_USER.contacts;
+  const maxContacts = Math.min(2, contactsIds.length);
+  for (let i = 0; i < maxContacts; i++) {
+    if (assignedContactIsLoggedUser(i)) {
+      renderYouContact(indexOfTask)
+    } else {
+      renderInitialsContacts()
+    }
+  }
+}
+
+/**
+ * Checks if the contact at the given index is the logged-in user.
+ * @param {number} index - The index of the contact.
+ * @returns {boolean} True if the contact is the logged-in user, false otherwise.
+ */
+function assignedContactIsLoggedUser(index) {
+  return contactsIds[index] === 0
+}
+
+/**
+ * Renders the "You" contact in a task card.
+ * @param {number} indexOfTask - The index of the task.
+ */
+function renderYouContact(indexOfTask) {
+  const initials = "You";
+  const color = LOGGED_USER.color;
+  appendContactHtml(indexOfTask, initials, color);
+}
+
+/**
+ * Renders initials-based contacts in a task card.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {number} indexOfAssignedContact - The index of the assigned contact.
+ */
+function renderInitialsContacts(indexOfTask, indexOfAssignedContact) {
+  const contactData = getContactData(contactsIds[indexOfAssignedContact]);
+  const initials = contactData.initials;
+  const color = contactData.color;
+  appendContactHtml(indexOfTask, initials, color);
+}
+
+/**
+ * Renders the remaining amount of contacts in a task card.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {number} amountContacts - The total number of contacts.
+ */
+function renderRemainingAmountOfContacts(indexOfTask, amountContacts) {
+  if (amountContacts > 2) {
+    const remainingContacts = "+" + (amountContacts - 2);
+    appendContactHtml(indexOfTask, remainingContacts, "blue");
+  }
+}
+
+/**
+ * Appends contact HTML to the specified task card.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {string} initials - The initials of the contact.
+ * @param {string} color - The color of the contact.
+ */
+function appendContactHtml(indexOfTask, initials, color) {
+  document.getElementById(`contacts${indexOfTask}`).innerHTML +=
+    renderContactsInTaskCardsHtml(initials, color);
+}
+
+/**
+ * Calculates the percentage progress of a task based on the amount of subtasks and finished subtasks.
+ * @param {number} amountSubtasks - The total number of subtasks.
+ * @param {number} amountFinishedSubtasks - The number of finished subtasks.
+ * @returns {string} The percentage progress of the task.
+ */
 function getPercentageProgress(amountSubtasks, amountFinishedSubtasks) {
   return (amountFinishedSubtasks / amountSubtasks) * 100 + "%";
 }
 
+/*DETAILS OF SINGLE TASK***********************************************************************************/
+
+
+/**
+ * Opens the task details for the selected/clicked index.
+ * @param {number} indexOfTask - The index of the task.
+ */
 function openTaskDetails(indexOfTask) {
   SELECTED_TASK = TASKS[indexOfTask];
   renderTaskDetails();
@@ -112,6 +203,9 @@ function openTaskDetails(indexOfTask) {
   );
 }
 
+/**
+ * Renders the task details.
+ */
 function renderTaskDetails() {
   const colorCategory = getColorCategory(SELECTED_TASK.category);
   document.getElementById("containerDetails").innerHTML = "";
@@ -121,84 +215,6 @@ function renderTaskDetails() {
   renderSubtasksInDetailCard();
 }
 
-function renderTaskDetailsHtml(colorCategory) {
-  return /*html*/ `
-    <div onclick="event.stopPropagation()" class="displayEdit">
-      <div class="headContainer">
-        <div class="category ${colorCategory}">${SELECTED_TASK.category}</div>
-        <img onclick="initBoard(); hideDisplay('containerDetails', 'd-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
-      </div>
-      <span id="titleDisplay">${SELECTED_TASK.title}</span>
-      <span id="descriptionDisplay">${SELECTED_TASK.description}</span>
-      <section class="containerSectionBoard">
-        <span class="bold">Due date:</span>
-        <span id="dueDate">${SELECTED_TASK.dueDate}</span>
-      </section>
-      <section class="containerSectionBoard">
-        <span class="bold">Priority:</span>
-        <button id="priorityDisplay">
-          ${SELECTED_TASK.priority}
-          <img src="../assets/img/boardPriorityWhite.svg" alt="icon of priority">
-        </button>
-      </section>
-      <section class="subtasks">
-        <span class="bold">Subtasks:</span>
-        <div id="containerSubtasks"></div>
-      </section>
-      <section class="containerAssignedTo">
-        <span class="bold">Assigned To:</span>
-        <div id="assignedContactsDetailCard"></div>
-      </section>
-      <div class="btnContainer">
-        <button onclick="deleteTask()" class="deleteBtn"><img id="deleteBtnImage" src="../assets/img/boardDeleteTaskDarkBlue.svg" alt="icon to delete task"></button>
-        <button onclick="renderEditTask()" class="editBtn"><img src="../assets/img/boardEditTask.svg" alt="icon to edit task"></button>
-      </div>
-    </div>  
-  `;
-}
-
-function renderEditTask() {
-  hideDisplay("containerDetails", "d-none");
-  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
-  document.getElementById("clearBtn").classList.add("d-none");
-  document.getElementById("createBtn").classList.add("d-none");
-  document.getElementById("editBtn").classList.remove("d-none");
-  setTask();
-}
-
-function setTask() {
-  let selectedCategory = SELECTED_TASK.category;
-  let colorCategory = getColorCategory(selectedCategory);
-  document.getElementById("titleInput").value = SELECTED_TASK.title;
-  document.getElementById("descriptionInput").value = SELECTED_TASK.description;
-  setSelectedCategory(selectedCategory, colorCategory);
-  let contacts = SELECTED_TASK.contacts;
-  contacts.forEach((contact) => {
-    toggleCheckbox(contact);
-  });
-  document.getElementById("inputDueDate").value = SELECTED_TASK.dueDate;
-  setPrioBtn();
-  SUBTASKS = SELECTED_TASK.subtasks;
-  renderSubtasks();
-}
-
-function setPrioBtn() {
-  let priority = SELECTED_TASK.priority;
-  let backgroundColor = getColorOfPrio(priority);
-  document.getElementById(priority).classList.add("selectedPrioBtn");
-  SELECTED_PRIO_BTN = "";
-  changeStylePrioBtn(priority, backgroundColor);
-}
-
-function getColorOfPrio(priority) {
-  if (priority === "urgent") {
-    return "red";
-  } else if (priority === "medium") {
-    return "orange";
-  } else if (priority === "low") {
-    return "green";
-  }
-}
 
 function renderAssignedContacts() {
   document.getElementById("assignedContactsDetailCard").innerHTML = "";
@@ -221,15 +237,62 @@ function renderAssignedContacts() {
   });
 }
 
-function renderAssignedContactsHtml(name, initials, color) {
-  return /*html*/ `
-    <div class="singleContact">
-      <div class="initialsOfNames smallCircle" style="background-color:${color}">${initials}</div>
-      <span id="nameOfContact">${name}</span>
-    </div> 
-  `;
+/*EDIT TASK************************************************************************************************/
+
+function renderEditTask() {
+  hideDisplay("containerDetails", "d-none");
+  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
+  document.getElementById("clearBtn").classList.add("d-none");
+  document.getElementById("createBtn").classList.add("d-none");
+  document.getElementById("editBtn").classList.remove("d-none");<
+  setTask();
 }
 
+function setTask() {
+  let selectedCategory = SELECTED_TASK.category;
+  let colorCategory = getColorCategory(selectedCategory);
+  document.getElementById("titleInput").value = SELECTED_TASK.title;
+  document.getElementById("descriptionInput").value = SELECTED_TASK.description;
+  setSelectedCategory(selectedCategory, colorCategory);
+  let contacts = SELECTED_TASK.contacts;
+  contacts.forEach((contact) => {
+    toggleCheckbox(contact);
+  });
+  document.getElementById("inputDueDate").value = SELECTED_TASK.dueDate;
+  setPrioBtn();
+  SUBTASKS = SELECTED_TASK.subtasks;
+  renderSubtasks();
+}
+
+/**
+ * Changes the style of the priority button for the selected task.
+ */
+function setPrioBtn() {
+  let priority = SELECTED_TASK.priority;
+  let backgroundColor = getColorOfPrio(priority);
+  document.getElementById(priority).classList.add("selectedPrioBtn");
+  SELECTED_PRIO_BTN = "";
+  changeStylePrioBtn(priority, backgroundColor);
+}
+
+/**
+ * Returns the color associated with the given priority level.
+ * @param {string} priority - The priority level.
+ * @returns {string} The color associated with the priority level.
+ */
+function getColorOfPrio(priority) {
+  if (priority === "urgent") {
+    return "red";
+  } else if (priority === "medium") {
+    return "orange";
+  } else if (priority === "low") {
+    return "green";
+  }
+}
+
+/**
+ * Renders the subtasks in the task details card.
+ */
 function renderSubtasksInDetailCard() {
   document.getElementById("containerSubtasks").innerHTML = "";
   const indexOfTask = TASKS.indexOf(SELECTED_TASK);
@@ -243,20 +306,11 @@ function renderSubtasksInDetailCard() {
   });
 }
 
-function renderSubtasksInDetailCardHtml(
-  name,
-  status,
-  indexOfSubtask,
-  indexOfTask
-) {
-  return /*html*/ `
-    <div class="singleSubtask">
-       <input type="checkbox" onclick="changeStatusSubtask(${indexOfTask},${indexOfSubtask})" ${status} id="task${indexOfTask}subtask${indexOfSubtask}" class="checkbox">
-       <span>${name}</span>
-    </div>
-  `;
-}
-
+/**
+ * Changes the status of a subtask.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {number} indexOfSubtask - The index of the subtask.
+ */
 async function changeStatusSubtask(indexOfTask, indexOfSubtask) {
   const checkbox = document.getElementById(
     `task${indexOfTask}subtask${indexOfSubtask}`
@@ -271,49 +325,9 @@ async function changeStatusSubtask(indexOfTask, indexOfSubtask) {
   await setItem("users", JSON.stringify(USERS));
 }
 
-async function renderContactsInTaskCards(indexOfTask, contactsIds) {
-  const amountContacts = contactsIds.length;
-  await renderFirstTwoContacts(indexOfTask, contactsIds);
-  await renderRemainingAmountOfContacts(indexOfTask, amountContacts);
-  document.getElementById("loadingContainer").classList.add("d-none");
-}
-
-function renderFirstTwoContacts(indexOfTask, contactsIds) {
-  CONTACTS = LOGGED_USER.contacts;
-  const maxContacts = Math.min(2, contactsIds.length);
-  for (let i = 0; i < maxContacts; i++) {
-    let initials, color;
-    if (contactsIds[i] === 0) {
-      initials = "You";
-      color = LOGGED_USER.color;
-      appendContactHtml(indexOfTask, initials, color);
-    } else {
-      const contactData = getContactData(contactsIds[i]);
-      initials = contactData.initials;
-      color = contactData.color;
-      appendContactHtml(indexOfTask, initials, color);
-    }
-  }
-}
-
-function renderRemainingAmountOfContacts(indexOfTask, amountContacts) {
-  if (amountContacts > 2) {
-    const remainingContacts = "+" + (amountContacts - 2);
-    appendContactHtml(indexOfTask, remainingContacts, "blue");
-  }
-}
-
-function appendContactHtml(indexOfTask, initials, color) {
-  document.getElementById(`contacts${indexOfTask}`).innerHTML +=
-    renderContactsInTaskCardsHtml(initials, color);
-}
-
-function renderContactsInTaskCardsHtml(initials, color) {
-  return /*html*/ `
-    <div class="initialsOfNames smallCircle" style="background-color:${color}">${initials}</div>
-  `;
-}
-
+/**
+ * Deletes the selected task and closes the opened display.
+ */
 async function deleteTask() {
   const indexOfTask = TASKS.indexOf(SELECTED_TASK);
   TASKS.splice(indexOfTask, 1);
@@ -323,6 +337,9 @@ async function deleteTask() {
   initBoard();
 }
 
+/**
+ * Edits the selected task.
+ */
 function editTask() {
   let task = {
     title: getTitle(),
@@ -336,6 +353,11 @@ function editTask() {
   checkAndOverwriteTask(task);
 }
 
+/**
+ * Checks if the task has all the required data and overwrites the selected task with the new data.
+ * @param {Object} task - The task object containing the updated data.
+ * @async
+ */
 async function checkAndOverwriteTask(task) {
   if (requiredDataComplete(task)) {
     SELECTED_TASK.title = task.title;
@@ -349,89 +371,3 @@ async function checkAndOverwriteTask(task) {
     loadTemplate("./board.html");
   }
 }
-
-/*DRAG AND DROP */
-
-function startDragging(id) {
-  currentDraggedElement = id;
-}
-
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-
-async function moveTo(processStep) {
-  TASKS[currentDraggedElement].processStep = processStep;
-  await setItem("users", JSON.stringify(USERS));
-  unhighlightArea(processStep);
-  renderTasks();
-}
-
-function highlightArea(id) {
-  document.getElementById(id).classList.add("dragArea");
-}
-
-function unhighlightArea(id) {
-  document.getElementById(id).classList.remove("dragArea");
-}
-
-function searchCards(event) {
-  const searchText = event.target.value.toLowerCase();
-  console.log(searchText);
-
-  const todoCards = document.querySelectorAll("#todo .singleCard");
-  const inProgressCards = document.querySelectorAll("#inProgress .singleCard");
-  const awaitingFeedbackCards = document.querySelectorAll(
-    "#awaitingFeedback .singleCard"
-  );
-  const doneCards = document.querySelectorAll("#done .singleCard");
-
-  hideCards(todoCards);
-  hideCards(inProgressCards);
-  hideCards(awaitingFeedbackCards);
-  hideCards(doneCards);
-
-  searchInCards(searchText, todoCards);
-  searchInCards(searchText, inProgressCards);
-  searchInCards(searchText, awaitingFeedbackCards);
-  searchInCards(searchText, doneCards);
-}
-
-function hideCards(cards) {
-  cards.forEach((card) => {
-    card.style.display = "none";
-  });
-}
-
-function searchInCards(searchText, cards) {
-  cards.forEach((card) => {
-    const title = card.querySelector(".title").textContent.toLowerCase();
-    const description = card
-      .querySelector(".description")
-      .textContent.toLowerCase();
-
-    if (title.includes(searchText) || description.includes(searchText)) {
-      card.style.display = "flex";
-    }
-  });
-}
-
-/*
-function closeEditTask() {
-  toggleClass("body", "overflowHidden");
-  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
-  clearTask();
-}
-
-function showEditTask(id, animationClass, className) {
-  toggleClass(id, className);
-  playAnimation(id, animationClass);
-  toggleBlurFilter();
-}
-
-function closeTaskDetails(id, className) {
-  toggleClass(id, className);
-  toggleBlurFilter();
-  toggleClass("body", "overflowHidden");
-}
-*/

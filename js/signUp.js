@@ -1,7 +1,19 @@
+/**
+ * Initializes the sign-up process by loading the user Data.
+ * Displays a loading image during the loading time.
+ * @async
+ */
 async function initSignUp() {
+  toggleClass("loadingContainer", "d-none");
   await loadUserData();
+  toggleClass("loadingContainer", "d-none");
 }
 
+/**
+ * Checks the sign-up data.
+ * If an existing user with the same email address is found, an error message is displayed.
+ * Otherwise, a new user is registered.
+ */
 function checkSignUpData() {
   const existingUser = checkForExistingUser();
   if (existingUser) {
@@ -11,16 +23,28 @@ function checkSignUpData() {
   }
 }
 
+/**
+ * Checks if an existing user with the given email address exists.
+ * @returns {User|undefined} The existing user if found, or undefined if not.
+ */
 function checkForExistingUser() {
   return USERS.find((user) => user.email === signUpEmail.value);
 }
 
+/**
+ * Registers a new user and loads summary template.
+ * @async
+ */
 async function registerNewUser() {
   pushNewUserToArray();
   await setItem("users", JSON.stringify(USERS));
   loadTemplate("summary.html");
 }
 
+/**
+ * It creates a new user object with the provided sign-up details and pushes it into the USERS array
+ * Sets the user id for the greeting in the summary template.
+ */
 function pushNewUserToArray() {
   const newUser = {
     color: getRandomColor(),
@@ -35,33 +59,4 @@ function pushNewUserToArray() {
   };
   USERS.push(newUser);
   setDataForGreeting(newUser.id);
-}
-
-function getInitials(fullname) {
-  const partsOfName = fullname.trim().split(" ");
-  let initials = "";
-  if (oneName(partsOfName)) {
-    initials = getFirstTwoInitials(partsOfName[0]);
-  } else {
-    initials = getFirstAndLastInitial(partsOfName);
-  }
-  return initials;
-}
-
-function oneName(partsOfName) {
-  return partsOfName.length === 1;
-}
-
-function getFirstTwoInitials(name) {
-  const firstInitial = name[0].toUpperCase();
-  const secondInitial = name[1].toUpperCase();
-  const initials = firstInitial + secondInitial;
-  return initials;
-}
-
-function getFirstAndLastInitial(partsOfName) {
-  const firstNameInitial = partsOfName[0][0].toUpperCase();
-  const lastNameInitial = partsOfName[partsOfName.length - 1][0].toUpperCase();
-  const initials = firstNameInitial + lastNameInitial;
-  return initials;
 }
