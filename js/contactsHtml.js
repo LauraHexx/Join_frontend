@@ -89,16 +89,19 @@ function renderEditContactHtml() {
             alt="image of icon to close the adding" />
           <div id="editContactInitials" class="bigCircleEdit" style="background-color:${SELECTED_CONTACT.color}">${SELECTED_CONTACT.initials}</div>
           <div class="formEdit">
-            <input
-              value="${SELECTED_CONTACT.name}"
-              id="editContactName"
-              class="input inputName"
-              type="name"
-              placeholder="Name"
-              maxlength="25"
-              minlength="2"
-              required />
-            <div class="editContactEmailContainer">
+            <div class="inputContainer">
+              <input
+                value="${SELECTED_CONTACT.name}"
+                id="editContactName"
+                class="input inputName"
+                type="name"
+                placeholder="Name"
+                maxlength="25"
+                minlength="2"
+                required />
+              <span id="errorNoName" class="error d-none">Please enter a name</span>
+            </div>
+            <div class="inputContainer">
               <input
                 value="${SELECTED_CONTACT.email}"
                 id="editContactEmail"
@@ -108,18 +111,22 @@ function renderEditContactHtml() {
                 maxlength="25"
                 minlength="2"
                 required />
-              <span id="errorEmailIsAlreadyTaken" class="d-none">Email already belongs to a contact. Please update it.</span>
+              <span id="errorEmailIsAlreadyTaken" class="error d-none">Email already belongs to a contact. Please update it.</span>
+              <span id="errorNoEmail" class="error d-none">Please enter an Email</span>
             </div>
-            <input
-              value=${SELECTED_CONTACT.phone}
-              id="editContactPhone"
-              class="input inputPhone"
-              type="number"
-              placeholder="Phone"
-               />
+            <div class="inputContainer">
+              <input
+                value="${SELECTED_CONTACT.phone}"
+                id="editContactPhone"
+                class="input inputPhone"
+                type="number"
+                placeholder="Phone"
+                />
+              <span id="errorNoNumber" class="error d-none">Please enter a phone number</span>
+            </div>
             <div class="editContactBtns">
               <button onclick="deleteContact()" class="deleteBtn">Delete</button>
-              <button onclick="checkEdits()" class="saveBtn">Save</button>
+              <button onclick="getDataFromInputEditContact()" class="saveBtn">Save</button>
             </div>
           </div>
         </div>

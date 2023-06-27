@@ -94,11 +94,34 @@ function renderEditContact() {
   toggleClass("body", "overflowHidden");
 }
 
+function getDataFromInputEditContact() {
+  let editedContact = {
+    name: getDataFromInput("editContactName", "errorNoName"),
+    email: getDataFromInput("editContactEmail", "errorNoEmail"),
+    phone: getDataFromInput("editContactPhone", "errorNoNumber"),
+  };
+  checkDataEdited(editedContact);
+}
+
+function checkDataEdited(editedContact) {
+  if (requiredDataEditedContactComplete(editedContact)) {
+    checkFilteredContactsforExistingEmail(editedContact);
+  }
+}
+
+function requiredDataEditedContactComplete(editedContact) {
+  return (
+    editedContact.name !== undefined &&
+    editedContact.email !== undefined &&
+    editedContact.phone !== undefined
+  );
+}
+
 /**
  * Checks if email edits are not possible because the email is already taken.
  * Displays an error message if the email is already existing, otherwise saves the edits.
  */
-function checkEdits() {
+function checkFilteredContactsforExistingEmail() {
   const filteredContacts = filterContacts();
   const foundExistingEmail = findExistingEmail(
     filteredContacts,
@@ -106,6 +129,7 @@ function checkEdits() {
   );
   if (foundExistingEmail) {
     showError("errorEmailIsAlreadyTaken");
+    hideError("errorNoEmail");
   } else {
     saveEdits();
   }
@@ -134,12 +158,12 @@ function findExistingEmail(contacts, email) {
  * @async
  */
 async function saveEdits() {
-  closeDetailInfos();
-  hideDisplay("contentEditDisplay", "d-none");
-  toggleClass("body", "overflowHidden");
   changeData();
   await setItem("users", JSON.stringify(USERS));
   initContacts();
+  closeDetailInfos();
+  hideDisplay("contentEditDisplay", "d-none");
+  toggleClass("body", "overflowHidden");
 }
 
 /**
@@ -209,14 +233,14 @@ async function playAnimationContactDeletedSuccess() {
  * Retrieves data for a new contact, including generating an ID, random color,
  * name, initials, email, and phone number.
  */
-async function getDataNewContact() {
+async function getDataFromInputNewContact() {
   let newContact = {
     id: getContactId(),
     color: getRandomColor(),
-    name: getData("addContactName", "errorEnterName"),
+    name: getDataFromInput("addContactName", "errorEnterName"),
     initials: getInitials(addContactName.value),
-    email: getData("addContactEmail", "errorEnterAEmail"),
-    phone: getData("addContactPhone", "errorEnterAnNumber"),
+    email: getDataFromInput("addContactEmail", "errorEnterAEmail"),
+    phone: getDataFromInput("addContactPhone", "errorEnterAnNumber"),
   };
   checkDataNewContact(newContact);
 }
@@ -242,7 +266,7 @@ function getContactId() {
  * @param {string} idError - The ID of the HTML element to display error messages.
  * @returns {string|undefined} - The retrieved data if it is valid, otherwise undefined.
  */
-function getData(id, idError) {
+function getDataFromInput(id, idError) {
   const dataToBeChecked = document.getElementById(id).value;
   if (dataToBeChecked) {
     hideError(idError);
