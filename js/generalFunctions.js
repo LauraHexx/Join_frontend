@@ -173,7 +173,15 @@ function showError(id) {
  * @returns {string} A randomly selected color from the predefined set.
  */
 function getRandomColor() {
-  const colors = ["#BCC9DE", "#BB871E", "#F1F1E6"];
+  const colors = [
+    "#FC71FF",
+    "#29ABE2",
+    "#02CF2F",
+    "#AF1616",
+    "#462F8A",
+    "#FFC700",
+    "#9327FF",
+  ];
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex];
 }

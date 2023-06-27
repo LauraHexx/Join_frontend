@@ -1,7 +1,7 @@
 const SAMPLE_DATA_CONTACTS = [
   {
     id: 1,
-    color: "#BCC9DE",
+    color: "#9327FF",
     name: "Max Mustermann",
     email: "max.mustermann@test",
     phone: 0123456789,
@@ -9,7 +9,7 @@ const SAMPLE_DATA_CONTACTS = [
   },
   {
     id: 2,
-    color: "#BCC9DE",
+    color: "#29ABE2",
     name: "Erika Musterfrau",
     email: "erika.musterfrau@test",
     phone: 0123456788,
@@ -17,7 +17,7 @@ const SAMPLE_DATA_CONTACTS = [
   },
   {
     id: 3,
-    color: "#BB871E",
+    color: "#02CF2F",
     name: "John Doe",
     email: "john.doe@test",
     phone: 0123456799,
@@ -25,7 +25,7 @@ const SAMPLE_DATA_CONTACTS = [
   },
   {
     id: 4,
-    color: "#BB871E",
+    color: "#AF1616",
     name: "Johny Depp",
     email: "johny.depp@test",
     phone: 0123456777,
@@ -33,7 +33,7 @@ const SAMPLE_DATA_CONTACTS = [
   },
   {
     id: 5,
-    color: "#F1F1E6",
+    color: "#462F8A",
     name: "Laura Residenz",
     email: "laura.residenz@test",
     phone: 0123456766,
@@ -41,7 +41,7 @@ const SAMPLE_DATA_CONTACTS = [
   },
   {
     id: 6,
-    color: "#F1F1E6",
+    color: "#FFC700",
     name: "Hannah Müller",
     email: "hannah.mueller@test",
     phone: 01234566789,
