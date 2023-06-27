@@ -34,18 +34,34 @@ let AMOUNT_TASKS_DONE;
 let AMOUNT_TASKS_URGENT;
 let NEXT_DUE_DATE;
 
+/**
+ * Initializes the summary.
+ * Displays a loading image during the loading time.
+ * @async
+ */
 async function initSummary() {
   toggleClass("loadingContainer", "d-none");
-  await loadUserData();
-  await getLoggedUser();
-  await init("summary");
+  setDashboard();
   setEventListener();
-  greeting();
-  await setSummaryData();
-  await renderSummary();
   toggleClass("loadingContainer", "d-none");
 }
 
+/**
+ * Sets up the dashboard by setting data, rendering the summary and greeting the user.
+ * @async
+ */
+async function setDashboard() {
+  await loadUserData();
+  await getLoggedUser();
+  await init("summary");
+  await setSummaryData();
+  await renderSummary();
+  greeting();
+}
+
+/**
+ * Sets event listeners for image elements to change their source on hover.
+ */
 function setEventListener() {
   changeImageOnHover(
     "pencilLogo",
@@ -59,7 +75,7 @@ function setEventListener() {
   );
 }
 
-/*GREETING*********************************************************************/
+/*GREETING**********************************************************************************************************/
 
 /**
  * Sets the greeting for the time of day and greets the user.
@@ -122,7 +138,7 @@ function isMidday(currentHour) {
 }
 
 /**
- * Sets the greeting element with the specified greeting.
+ * Sets the greeting element with the specified html greeting.
  * @param {string} greeting - The greeting message to be set.
  */
 function setGreetingElement(greeting) {
@@ -142,7 +158,7 @@ function greetUser() {
   }
 }
 
-/*DATA SUMMARY****************************************************************/
+/*DATA SUMMARY*******************************************************************************************************/
 
 /**
  * Sets the summary data by updating various task-related information.
@@ -265,6 +281,7 @@ function formatDueDate(date) {
 
 /**
  * Renders the data in the summary on the webpage.
+ * @async
  */
 async function renderSummary() {
   document.getElementById("tasksInBoard").innerHTML = AMOUNT_TASKS_IN_BOARD;
@@ -287,13 +304,13 @@ async function renderSummary() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#countTasks">countTasks</a></li><li><a href="global.html#countTasksInProcessStep">countTasksInProcessStep</a></li><li><a href="global.html#countTasksUrgentPrio">countTasksUrgentPrio</a></li><li><a href="global.html#determineDeadline">determineDeadline</a></li><li><a href="global.html#formatDueDate">formatDueDate</a></li><li><a href="global.html#getCurrentHour">getCurrentHour</a></li><li><a href="global.html#getDueDates">getDueDates</a></li><li><a href="global.html#getGreeting">getGreeting</a></li><li><a href="global.html#getMaxDueDate">getMaxDueDate</a></li><li><a href="global.html#getNextDueDate">getNextDueDate</a></li><li><a href="global.html#getToday">getToday</a></li><li><a href="global.html#greetUser">greetUser</a></li><li><a href="global.html#greeting">greeting</a></li><li><a href="global.html#isMidday">isMidday</a></li><li><a href="global.html#isMorning">isMorning</a></li><li><a href="global.html#renderSummary">renderSummary</a></li><li><a href="global.html#setGreetingElement">setGreetingElement</a></li><li><a href="global.html#setGreetingForTimeOfDay">setGreetingForTimeOfDay</a></li><li><a href="global.html#setSummaryData">setSummaryData</a></li><li><a href="global.html#setTasksOfLoggedUser">setTasksOfLoggedUser</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#changeImageOnHover">changeImageOnHover</a></li><li><a href="global.html#checkForExistingUser">checkForExistingUser</a></li><li><a href="global.html#checkSignUpData">checkSignUpData</a></li><li><a href="global.html#closeDropDown">closeDropDown</a></li><li><a href="global.html#closeMenu">closeMenu</a></li><li><a href="global.html#countTasks">countTasks</a></li><li><a href="global.html#countTasksInProcessStep">countTasksInProcessStep</a></li><li><a href="global.html#countTasksUrgentPrio">countTasksUrgentPrio</a></li><li><a href="global.html#determineDeadline">determineDeadline</a></li><li><a href="global.html#formatDueDate">formatDueDate</a></li><li><a href="global.html#getContactData">getContactData</a></li><li><a href="global.html#getCurrentHour">getCurrentHour</a></li><li><a href="global.html#getDueDates">getDueDates</a></li><li><a href="global.html#getFirstAndLastInitial">getFirstAndLastInitial</a></li><li><a href="global.html#getFirstTwoInitials">getFirstTwoInitials</a></li><li><a href="global.html#getGreeting">getGreeting</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getItem">getItem</a></li><li><a href="global.html#getItemFromLocalStorage">getItemFromLocalStorage</a></li><li><a href="global.html#getLoggedUser">getLoggedUser</a></li><li><a href="global.html#getMaxDueDate">getMaxDueDate</a></li><li><a href="global.html#getNextDueDate">getNextDueDate</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getToday">getToday</a></li><li><a href="global.html#getUserData">getUserData</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#goBackToPreviousPage">goBackToPreviousPage</a></li><li><a href="global.html#greetUser">greetUser</a></li><li><a href="global.html#greeting">greeting</a></li><li><a href="global.html#hideDisplay">hideDisplay</a></li><li><a href="global.html#hideDropdown">hideDropdown</a></li><li><a href="global.html#hideError">hideError</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initSignUp">initSignUp</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#isMidday">isMidday</a></li><li><a href="global.html#isMorning">isMorning</a></li><li><a href="global.html#loadTemplate">loadTemplate</a></li><li><a href="global.html#loadUserData">loadUserData</a></li><li><a href="global.html#logOut">logOut</a></li><li><a href="global.html#oneName">oneName</a></li><li><a href="global.html#openMenu">openMenu</a></li><li><a href="global.html#playAnimation">playAnimation</a></li><li><a href="global.html#pushNewUserToArray">pushNewUserToArray</a></li><li><a href="global.html#registerNewUser">registerNewUser</a></li><li><a href="global.html#removeItemFromLocalStorage">removeItemFromLocalStorage</a></li><li><a href="global.html#renderSummary">renderSummary</a></li><li><a href="global.html#setDashboard">setDashboard</a></li><li><a href="global.html#setDataForGreeting">setDataForGreeting</a></li><li><a href="global.html#setEventChangeImageOnHover">setEventChangeImageOnHover</a></li><li><a href="global.html#setEventCloseDropDown">setEventCloseDropDown</a></li><li><a href="global.html#setEventListener">setEventListener</a></li><li><a href="global.html#setEventListenerHoverBtn">setEventListenerHoverBtn</a></li><li><a href="global.html#setGreetingElement">setGreetingElement</a></li><li><a href="global.html#setGreetingForTimeOfDay">setGreetingForTimeOfDay</a></li><li><a href="global.html#setItem">setItem</a></li><li><a href="global.html#setItemInLocalStorage">setItemInLocalStorage</a></li><li><a href="global.html#setSummaryData">setSummaryData</a></li><li><a href="global.html#setTasksOfLoggedUser">setTasksOfLoggedUser</a></li><li><a href="global.html#showDisplay">showDisplay</a></li><li><a href="global.html#showError">showError</a></li><li><a href="global.html#sortArrayAlphabetically">sortArrayAlphabetically</a></li><li><a href="global.html#styleCurrentSectionInNav">styleCurrentSectionInNav</a></li><li><a href="global.html#toggleBlurFilter">toggleBlurFilter</a></li><li><a href="global.html#toggleCategoryDropDownContainer">toggleCategoryDropDownContainer</a></li><li><a href="global.html#toggleClass">toggleClass</a></li><li><a href="global.html#toggleContactDropDownContainer">toggleContactDropDownContainer</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Jun 21 2023 19:49:18 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jun 26 2023 17:34:47 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

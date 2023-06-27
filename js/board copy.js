@@ -115,14 +115,14 @@ function renderFirstTwoContacts(indexOfTask, contactsIds) {
     if (assignedContactIsLoggedUser(contactsIds[i])) {
       renderYouContact(indexOfTask);
     } else {
-      renderInitialsContacts(indexOfTask, contactsIds[i]);
+      renderInitialsContacts(contactsIds);
     }
   }
 }
 
 /**
- * Checks if the contact at the given id is the logged-in user.
- * @param {number} contactId - The id of the contact.
+ * Checks if the contact at the given index is the logged-in user.
+ * @param {number} index - The index of the contact.
  * @returns {boolean} True if the contact is the logged-in user, false otherwise.
  */
 function assignedContactIsLoggedUser(contactId) {
@@ -142,10 +142,14 @@ function renderYouContact(indexOfTask) {
 /**
  * Renders initials-based contacts in a task card.
  * @param {number} indexOfTask - The index of the task.
- * @param {number} contactId - The id of the contact.
+ * @param {number} indexOfAssignedContact - The index of the assigned contact.
  */
-function renderInitialsContacts(indexOfTask, contactId) {
-  const contactData = getContactData(contactId);
+function renderInitialsContacts(
+  indexOfTask,
+  contactsIds,
+  indexOfAssignedContact
+) {
+  const contactData = getContactData(contactsIds[indexOfAssignedContact]);
   const initials = contactData.initials;
   const color = contactData.color;
   appendContactHtml(indexOfTask, initials, color);

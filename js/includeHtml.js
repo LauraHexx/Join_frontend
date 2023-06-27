@@ -1,4 +1,3 @@
-
 /**
  * Includes HTML content with the attribute 'w3-include-html' into the current document.
  * @async
@@ -24,7 +23,7 @@ async function loadHTML(_element, _file) {
   } else {
     element = document.getElementById(_element);
   }
-  renderHtml(element, file)
+  await renderHtml(element, file);
 }
 
 /**
@@ -33,7 +32,7 @@ async function loadHTML(_element, _file) {
  * @param {string} file - The file path to load the HTML content from.
  * @async
  */
-function renderHtml(file) {
+async function renderHtml(element, file) {
   let resp = await fetch(file);
   if (resp.ok) {
     element.innerHTML = await resp.text();
