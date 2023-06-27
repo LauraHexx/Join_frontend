@@ -66,7 +66,7 @@ function wrongData() {
     .getElementById("dataIncorrect")
     .classList.remove("d-none");
 }
-^
+
 /**
  * Creates a guest user and adds the newly created guest user to the USERS array.
  * @async
