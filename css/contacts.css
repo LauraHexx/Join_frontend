@@ -189,8 +189,7 @@ a {
   width: 100% !important;
 }
 
-#errorEmailIsAlreadyTaken,
-#errorEnterANewEmail {
+.error {
   position: absolute;
   top: 39px;
   left: 0;

@@ -131,7 +131,7 @@
               src="../assets/img/contactsNewImage.svg"
               alt="icon as a placeholder for a image of the new contact" />
           </div>
-          <form onsubmit="getDataNewContact(); return false" class="formAdd">
+          <div class="containerAddNewContact">
             <input
               id="addContactName"
               class="input inputName"
@@ -141,6 +141,9 @@
               maxlength="25"
               minlength="2" />
             <div class="inputContainer">
+              <span id="errorEnterName" class="error d-none"
+                >Please enter a name</span
+              >
               <input
                 id="addContactEmail"
                 class="input inputEmail"
@@ -149,8 +152,11 @@
                 maxlength="25"
                 minlength="2"
                 required />
-              <span id="errorEnterANewEmail" class="d-none"
-                >Email already belongs to a contact. Please update it.</span
+              <span id="errorEnterAEmail" class="error d-none"
+                >Please enter an Email</span
+              >
+              <span id="errorEnterANewEmail" class="error d-none"
+                >Email already belongs to a contact. Please update it</span
               >
             </div>
             <input
@@ -158,16 +164,19 @@
               class="input inputPassword"
               type="number"
               placeholder="Phone" />
+            <span id="errorEnterAnNumber" class="d-none"
+              >Please enter a phone number</span
+            >
             <div class="addDisplayBtns">
               <input id="cancelAddContact" type="reset" value="Cancel X" />
-              <button class="createNewContact">
+              <button onclick="getDataNewContact()" class="createNewContact">
                 Create contact
                 <img
                   src="../assets/img/contactsCheck.svg"
                   alt="image of icon to create a new contact" />
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </section>

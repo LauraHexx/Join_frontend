@@ -268,12 +268,23 @@ async function getDataNewContact() {
   let newContact = {
     id: getContactId(),
     color: getRandomColor(),
-    name: addContactName.value,
+    name: getData("addContactName", "errorEnterName"),
     initials: getInitials(addContactName.value),
-    email: addContactEmail.value,
-    phone: addContactPhone.value,
+    email: getData("addContactEmail", "errorEnterAEmail"),
+    phone: getData("addContactPhone", "errorEnterAnNumber"),
   };
   checkIfEmailIsAlreadyExisting(newContact);
+}
+
+function getData(idValue, idError) {
+  const dataToBeChecked = document.getElementById(idValue).value;
+  if (dataToBeChecked) {
+    hideError(idError);
+    return dataToBeChecked;
+  } else {
+    showError(idError);
+    return undefined;
+  }
 }
 
 /**

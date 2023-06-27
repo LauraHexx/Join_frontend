@@ -97,7 +97,7 @@ function getSelectedColor() {
   const selectedColor = document.querySelector(".selectedColor");
   console.log(selectedColor);
   if (selectedColor) {
-    deleteColorError(selectedColor);
+    deleteColorError();
     return selectedColor.id;
   } else {
     showErrorNoColorSelected();

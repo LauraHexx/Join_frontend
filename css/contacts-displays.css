@@ -73,14 +73,14 @@
   height: 40px;
 }
 
-.formAdd {
+.containerAddNewContact {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
-.formAdd input {
+.containerAddNewContact input {
   width: 100%;
 }
 
