@@ -18,61 +18,6 @@ async function initContacts() {
   setEventListenerHoverBtn();
 }
 
-/*SHOW CONTACTS***********************************************************************************/
-
-/**
- * Renders the contact list.
- */
-function renderContactList() {
-  CONTACTS = LOGGED_USER.contacts;
-  if (CONTACTS) {
-    sortArrayAlphabetically(CONTACTS);
-    renderFirstInitialsList();
-    renderContactsInInitialList();
-  }
-}
-
-/**
- * Renders the first initials list without duplicates.
- * @async
- */
-async function renderFirstInitialsList() {
-  FIRST_INITIALS_NO_DUPLICAT = [];
-  document.getElementById("contactList").innerHTML = "";
-  CONTACTS.forEach((contact) => {
-    const firstInitial = contact.initials.charAt(0);
-    if (!FIRST_INITIALS_NO_DUPLICAT.includes(firstInitial)) {
-      FIRST_INITIALS_NO_DUPLICAT.push(firstInitial);
-      document.getElementById("contactList").innerHTML +=
-        renderFirstInitialsListHtml(firstInitial);
-    }
-  });
-}
-
-/**
- * Renders the contacts in the initial list.
- */
-function renderContactsInInitialList() {
-  clearContacts();
-  CONTACTS.forEach((contact) => {
-    const firstInitial = contact.initials.charAt(0);
-    const indexOfContact = CONTACTS.indexOf(contact);
-    document.getElementById(`contactsLetter${firstInitial}`).innerHTML +=
-      renderContactsInInitialListHtml(contact, indexOfContact);
-  });
-  toggleClass("loadingContainer", "d-none");
-}
-
-/**
- * Clears the contacts from the first initials list.
- */
-function clearContacts() {
-  const containers = document.querySelectorAll('[id^="contactsLetter"]');
-  containers.forEach((container) => {
-    container.innerHTML = "";
-  });
-}
-
 /*CONTACT DETAILS***********************************************************************************/
 
 /**
@@ -262,7 +207,7 @@ async function playAnimationContactDeletedSuccess() {
 
 /**
  * Retrieves data for a new contact, including generating an ID, random color,
- * name, initials, email, and phone number. Then checks if the email is already existing.
+ * name, initials, email, and phone number.
  */
 async function getDataNewContact() {
   let newContact = {
@@ -291,6 +236,12 @@ function getContactId() {
   return highestId + 1;
 }
 
+/**
+ * Retrieves data from an HTML element by its ID.
+ * @param {string} id - The ID of the HTML element to retrieve data from.
+ * @param {string} idError - The ID of the HTML element to display error messages.
+ * @returns {string|undefined} - The retrieved data if it is valid, otherwise undefined.
+ */
 function getData(id, idError) {
   const dataToBeChecked = document.getElementById(id).value;
   if (dataToBeChecked) {
@@ -302,12 +253,21 @@ function getData(id, idError) {
   }
 }
 
+/**
+ * Checks if the required data for a new contact is complete and performs additional checks.
+ * @param {Object} newContact - The object representing the new contact.
+ */
 function checkDataNewContact(newContact) {
   if (requiredDataNewContactComplete(newContact)) {
     checkIfEmailIsAlreadyExisting(newContact);
   }
 }
 
+/**
+ * Checks if the required data for a new contact is complete.
+ * @param {Object} newContact - The object representing the new contact.
+ * @returns {boolean} - Returns true if all required data is present, otherwise false.
+ */
 function requiredDataNewContactComplete(newContact) {
   return (
     newContact.name !== undefined &&
@@ -351,7 +311,7 @@ async function addNewContact(newContact) {
 }
 
 /**
- * Cancels the process of adding a new contact by clearing the input fields.
+ * Cancels the process of adding a new contact by clearing the input fields and errors.
  */
 function cancelAddContact() {
   document.getElementById("addContactName").innerHTML = "";
