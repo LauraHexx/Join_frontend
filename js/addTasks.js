@@ -306,7 +306,7 @@ function createTask() {
 }
 
 async function checkAndPushTask(task) {
-  if (requiredDataComplete(task)) {
+  if (requiredDataTaskComplete(task)) {
     let indexUserToAddTask = USERS.indexOf(LOGGED_USER);
     let userToAddTask = USERS[indexUserToAddTask];
     userToAddTask.tasks.push(task);
@@ -315,7 +315,7 @@ async function checkAndPushTask(task) {
   }
 }
 
-function requiredDataComplete(task) {
+function requiredDataTaskComplete(task) {
   return (
     task.title !== undefined &&
     task.description !== undefined &&

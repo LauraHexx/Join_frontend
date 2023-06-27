@@ -273,18 +273,7 @@ async function getDataNewContact() {
     email: getData("addContactEmail", "errorEnterAEmail"),
     phone: getData("addContactPhone", "errorEnterAnNumber"),
   };
-  checkIfEmailIsAlreadyExisting(newContact);
-}
-
-function getData(idValue, idError) {
-  const dataToBeChecked = document.getElementById(idValue).value;
-  if (dataToBeChecked) {
-    hideError(idError);
-    return dataToBeChecked;
-  } else {
-    showError(idError);
-    return undefined;
-  }
+  checkDataNewContact(newContact);
 }
 
 /**
@@ -302,6 +291,31 @@ function getContactId() {
   return highestId + 1;
 }
 
+function getData(id, idError) {
+  const dataToBeChecked = document.getElementById(id).value;
+  if (dataToBeChecked) {
+    hideError(idError);
+    return dataToBeChecked;
+  } else {
+    showError(idError);
+    return undefined;
+  }
+}
+
+function checkDataNewContact(newContact) {
+  if (requiredDataNewContactComplete(newContact)) {
+    checkIfEmailIsAlreadyExisting(newContact);
+  }
+}
+
+function requiredDataNewContactComplete(newContact) {
+  return (
+    newContact.name !== undefined &&
+    newContact.email !== undefined &&
+    newContact.phone !== undefined
+  );
+}
+
 /**
  * Checks if the email of a new contact is already existing. Displays an error message
  * if the email is already taken, otherwise adds the new contact.
@@ -314,6 +328,7 @@ function checkIfEmailIsAlreadyExisting(newContact) {
   );
   if (foundExistingEmail) {
     showError("errorEnterANewEmail");
+    hideError("errorEnterName");
   } else {
     addNewContact(newContact);
   }
@@ -339,9 +354,13 @@ async function addNewContact(newContact) {
  * Cancels the process of adding a new contact by clearing the input fields.
  */
 function cancelAddContact() {
-  addContactName.value = "";
-  addContactEmail.value = "";
-  addContactPhone.value = "";
+  document.getElementById("addContactName").innerHTML = "";
+  document.getElementById("addContactEmail").innerHTML = "";
+  document.getElementById("addContactPhone").innerHTML = "";
+  document.getElementById("errorEnterName").classList.add("d-none");
+  document.getElementById("errorEnterAEmail").classList.add("d-none");
+  document.getElementById("errorEnterAnNumber").classList.add("d-none");
+  document.getElementById("errorEnterANewEmail").classList.add("d-none");
 }
 
 /**
