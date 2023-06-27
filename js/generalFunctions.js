@@ -63,15 +63,22 @@ function playAnimation(id, animationClass) {
 function changeImageOnHover(elementId, imgSrcOnHover, imgSrcOnMouseOut) {
   const element = document.getElementById(elementId);
   const parent = element.parentElement;
-  setEventChangeImageOnHover(element, parent);
+  setEventChangeImageOnHover(element, parent, imgSrcOnHover, imgSrcOnMouseOut);
 }
 
 /**
  * Sets event listeners to change the image of an element on hover and mouseout events.
  * @param {HTMLElement} element - The element to add event listeners to.
  * @param {HTMLElement} parent - The parent element for additional mouseover and mouseout events.
+ * @param {string} imgSrcOnHover - The image source on hover.
+ * @param {string} imgSrcOnMouseOut - The image source on mouseout.
  */
-function setEventChangeImageOnHover(element, parent) {
+function setEventChangeImageOnHover(
+  element,
+  parent,
+  imgSrcOnHover,
+  imgSrcOnMouseOut
+) {
   element.addEventListener("mouseover", () => {
     element.src = imgSrcOnHover;
   });
