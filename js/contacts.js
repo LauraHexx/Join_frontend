@@ -114,7 +114,9 @@ function animationIsNotPlaying() {
 async function playAnimationContactDetails() {
   await playAnimation("mainInfosContact", "animation-slideInRight");
   setTimeout(() => {
-    toggleClass("mainInfosContact", "animation-slideInRight");
+    document
+      .getElementById("mainInfosContact")
+      .classList.remove("animation-slideInRight");
   }, 1000);
 }
 
