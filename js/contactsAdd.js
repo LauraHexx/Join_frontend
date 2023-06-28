@@ -1,4 +1,4 @@
-/*ADD NEW CONTACT****************************************/
+/*ADD NEW CONTACT*************************************************************************/
 
 /**
  * Retrieves data for a new contact, including generating an ID, random color,
