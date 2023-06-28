@@ -96,26 +96,10 @@ function checkIfEmailIsAlreadyExisting(newContact) {
  * @async
  */
 async function addNewContact(newContact) {
-  LOGGED_USER.contacts.push(newContact);
-  cancelAddContact();
   closeAddContact();
-  hideError("errorEnterANewEmail");
-  await setItem("users", JSON.stringify(USERS));
-  await initContacts();
+  LOGGED_USER.contacts.push(newContact);
+  await loadDataAndRender();
   showAnimationNewContactSuccess();
-}
-
-/**
- * Cancels the process of adding a new contact by clearing the input fields and errors.
- */
-function cancelAddContact() {
-  document.getElementById("addContactName").innerHTML = "";
-  document.getElementById("addContactEmail").innerHTML = "";
-  document.getElementById("addContactPhone").innerHTML = "";
-  document.getElementById("errorEnterName").classList.add("d-none");
-  document.getElementById("errorEnterAEmail").classList.add("d-none");
-  document.getElementById("errorEnterAnNumber").classList.add("d-none");
-  document.getElementById("errorEnterANewEmail").classList.add("d-none");
 }
 
 /**
@@ -126,6 +110,19 @@ function closeAddContact() {
   cancelAddContact();
   hideDisplay("contentAddDisplay", "d-none");
   toggleClass("body", "overflowHidden");
+}
+
+/**
+ * Cancels the process of adding a new contact by clearing the input fields and errors.
+ */
+function cancelAddContact() {
+  document.getElementById("addContactName").value = "";
+  document.getElementById("addContactEmail").value = "";
+  document.getElementById("addContactPhone").value = "";
+  document.getElementById("errorEnterName").classList.add("d-none");
+  document.getElementById("errorEnterAEmail").classList.add("d-none");
+  document.getElementById("errorEnterAnNumber").classList.add("d-none");
+  document.getElementById("errorEnterANewEmail").classList.add("d-none");
 }
 
 /**

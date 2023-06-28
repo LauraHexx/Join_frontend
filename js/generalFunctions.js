@@ -5,7 +5,7 @@
  * @param {string} currentHtmlTemplate - The current HTML template to mark in the nav.
  * @async
  */
-async function init(currentHtmlTemplate) {
+async function setNavAndHeader(currentHtmlTemplate) {
   await includeHTML();
   styleCurrentSectionInNav(currentHtmlTemplate);
 }

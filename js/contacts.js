@@ -2,17 +2,31 @@ let FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_CONTACT = "";
 
 /**
- * Initializes the contacts by loading data, set EventListeners and Rendering Html.
- * Displays a loading image during the loading time.
+ * Initializes contacts by performing necessary setup tasks.
+ * Sets the navigation and header for the contacts page, loads data and renders the contacts, and sets the contacts and categories drop-down menu n the add task display.
  * @async
  */
 async function initContacts() {
-  await init("contacts");
+  await setNavAndHeader("contacts");
+  await loadDataAndRender();
+  setContactsAndCategorysDropDownMenu();
+}
+
+/**
+ * Loads user data and renders the contact list.
+ * @async
+ */
+async function loadDataAndRender() {
   toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();
   renderContactList();
-  setContactsAndCategorysDropDownMenu();
+}
+
+/**
+ * Sets event listeners for the contacts page.
+ */
+function setEventsContacts() {
   setEventScreenSize();
   setEventCloseDropDown();
   setEventListenerHoverBtn();
@@ -72,7 +86,6 @@ function clearContacts() {
     container.innerHTML = "";
   });
 }
-
 
 /*CONTACT DETAILS***********************************************************************************/
 

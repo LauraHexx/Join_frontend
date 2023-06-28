@@ -88,12 +88,12 @@ function findExistingEmail(contacts, email) {
  * @async
  */
 async function saveEdits() {
-  changeData();
-  await setItem("users", JSON.stringify(USERS));
-  initContacts();
   closeDetailInfos();
   hideDisplay("contentEditDisplay", "d-none");
   toggleClass("body", "overflowHidden");
+  changeData();
+  await setItem("users", JSON.stringify(USERS));
+  await loadDataAndRender();
 }
 
 /**
@@ -112,13 +112,13 @@ function changeData() {
  * Deletes the selected contact.
  */
 async function deleteContact() {
-  deleteContactFromContactList();
-  deleteContactFromTasks();
   hideDisplay("contentEditDisplay", "d-none");
   toggleClass("body", "overflowHidden");
   closeDetailInfos();
+  deleteContactFromContactList();
+  deleteContactFromTasks();
   await setItem("users", JSON.stringify(USERS));
-  await initContacts();
+  await loadDataAndRender();
   playAnimationContactDeletedSuccess();
 }
 
