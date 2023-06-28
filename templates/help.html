@@ -13,12 +13,13 @@
     <link rel="stylesheet" href="../css/header-responsiv.css" />
     <link rel="stylesheet" href="../css/animations.css" />
     <link rel="stylesheet" href="../css/help.css" />
-    <script src="../js/general.js"></script>
+    <script src="../js/includeHtml.js"></script>
+    <script src="../js/generalFunctions.js"></script>
     <script src="../js/header.js"></script>
     <link rel="icon" type="image/x-icon" href="../assets/img/logoWhite.svg" />
   </head>
 
-    <body onload="includeHTML()">
+    <body onload="setNavAndHeader()">
       <header w3-include-html="header.html"></header>
       <nav w3-include-html="nav.html" class="navNotMobil"></nav>
       <div class="contentAfterLogin">  
