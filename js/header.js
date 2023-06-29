@@ -35,11 +35,3 @@ function closeMenu() {
   toggleClass("menuHeaderBg", "d-none");
   toggleClass("menuHeader", "d-none");
 }
-function closeMenu() {
-  toggleClass("menuHeaderBg", "d-none");
-  toggleClass("menuHeader", "d-none");
-}
-function closeMenu() {
-  toggleClass("menuHeaderBg", "d-none");
-  toggleClass("menuHeader", "d-none");
-}
