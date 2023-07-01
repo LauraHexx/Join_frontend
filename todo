@@ -1,41 +1,12 @@
 
-add Task Template: new Contact 2ter Input wenn neuer Contact
-
-
-getInitialsForFullName - 2 mal contacts/signup
-
-alphabetisch sortieren user, categorys - 2mal
-
-
-bei task wird soritert und dann gepusht
-
-bei contacts wird geladen und dann sortiert
-
-addTask: drop down für gesamten input
-button: task wurde erstellt und alle inhalte löschen
-new Category bug
-
-allgemeine error Funktion - id geben und d-none - gibt es schon?
-
-Kontake müssen nicht bei Task erstellt werden
-
-im ikognito modus kein local storage
-
-nach Erstellung eines Tasks Weiterleitung an Board
-
-Ladedinger anzeigen
-
-Überlefung: Jeder Kontakt hat Id, wenn Kontakt gelöscht wird, dann task durchsuchen und id löschen
 
 
 backend emai
-
 btn animation -- task erstellt
-
-form signin
 email forgot password
-animation login
-button task erstellt
+in details der task in board subtasks nicht bearbeitne?
+
+
 
 
 /**
