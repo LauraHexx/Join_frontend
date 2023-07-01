@@ -1,6 +1,10 @@
 let SELECTED_PRIO_BTN;
 let SUBTASKS = [];
 
+/**
+ * Sets the navigation and header for the add task page, loads data and sets the contacts and categories drop-down menu in the add task display.
+ * @async
+ */
 async function initAddTask() {
   await setNavAndHeader("addTask");
   await loadDataAndRenderDropDown();
@@ -78,7 +82,6 @@ async function addNewCategory() {
   let newCategory = getNewCategory();
   let colour = getSelectedColor();
   checkDataAndDisplayNewCategory(newCategory, colour);
-
   renderDropDownAddTaskDisplay();
 }
 
@@ -241,6 +244,11 @@ function moveSelectedColorCircleDown() {
 
 /*CONTACTS******************************************************************************/
 
+/**
+ * Renders the contacts based on the logged-in user status.
+ * If the logged-in user is a guest, it hides the user's own contact.
+ * Renders all saved contacts.
+ */
 function renderContacts() {
   if (loggedUserIsGuest()) {
     dontShowYouContact();
@@ -248,14 +256,24 @@ function renderContacts() {
   renderSavedContacts();
 }
 
+/**
+ * Checks if the logged-in user is a guest.
+ * @returns {boolean} True if the logged-in user is a guest, otherwise false.
+ */
 function loggedUserIsGuest() {
   return LOGGED_USER.name == "Guest";
 }
 
+/**
+ * Hides the logged-in user's contact by adding the 'd-none' class to it.
+ */
 function dontShowYouContact() {
   document.getElementById("loggedUserContact").classList.add("d-none");
 }
 
+/**
+ * Renders all contacts of the user.
+ */
 function renderSavedContacts() {
   document.getElementById("savedContacts").innerHTML = "";
   CONTACTS.forEach((contact) => {
@@ -268,12 +286,20 @@ function renderSavedContacts() {
   });
 }
 
+/**
+ * Toggles the checkbox state of a contact with the given id.
+ * If the checkbox is checked, it will be unchecked, and vice versa.
+ * @param {string} id - The id of the checkbox to toggle.
+ */
 function toggleCheckbox(id) {
   const checkbox = document.getElementById(`checkBoxUser${id}`);
   checkbox.checked = !checkbox.checked;
   changeTitleContactInput();
 }
 
+/**
+ * Updates the title of the contact input based on the number of selected contacts.
+ */
 function changeTitleContactInput() {
   let selectedCheckboxes = getSelectedCheckboxes();
   let amountSelectedContacts = selectedCheckboxes.length;
@@ -287,12 +313,21 @@ function changeTitleContactInput() {
   }
 }
 
+/**
+ * Retrieves all selected checkboxes in the 'listContacts' element.
+ * @returns {NodeList} A NodeList containing all selected checkboxes.
+ */
 function getSelectedCheckboxes() {
   return document.querySelectorAll(
     '#listContacts input[type="checkbox"]:checked'
   );
 }
 
+/**
+ * Checks if no contacts are selected.
+ * @param {number} amountSelectedContacts - The number of selected contacts.
+ * @returns {boolean} True if no contacts are selected, otherwise false.
+ */
 function noContactsSelected(amountSelectedContacts) {
   return amountSelectedContacts === 0;
 }
