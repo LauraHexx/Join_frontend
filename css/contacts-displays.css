@@ -202,34 +202,31 @@
   gap: 30px;
 }
 
-.formEdit input {
-  width: unset !important;
-}
-
 .editContactBtns {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 10px;
 }
 
-.deleteBtn {
-  background-color: var(--bright-white) !important;
-  color: var(--dark-blue) !important;
-  width: 130px;
+.closeEdit {
+  width: 115px;
+  font-size: 16px;
   height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: var(--dark-blue);
+  border-color: var(--dark-blue);
+  text-align: center;
+  padding: 0;
+  cursor: pointer;
 }
 
-.deleteBtn:hover {
+.closeEdit:hover {
   color: var(--bright-blue) !important;
   border: 1px solid var(--bright-blue);
 }
 
 .saveBtn {
-  width: 130px;
+  width: 115px;
   height: 40px;
   display: flex;
   justify-content: center;

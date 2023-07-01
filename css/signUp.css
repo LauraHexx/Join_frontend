@@ -1,7 +1,13 @@
 .error {
+  margin-top: -8px;
+  color: #f24822;
+  font-size: 12px !important;
+}
+
+.inputContainer {
   width: 100%;
-  padding-left: 13px;
-  margin: -15px 0px;
-  color: red;
-  font-size: 12px;
+}
+
+#loadingContainer {
+  left: 0;
 }

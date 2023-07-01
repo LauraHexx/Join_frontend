@@ -28,7 +28,7 @@ input::placeholder {
 }
 
 .error {
-  margin-top: -8px;
+  margin-top: -17px;
   color: #f24822;
   font-size: 12px !important;
 }
@@ -116,9 +116,10 @@ input::placeholder {
   background-color: var(--grey);
 }
 
-#savedContacts li:last-child:hover {
-  border-bottom-left-radius: 9px;
-  border-bottom-right-radius: 9px;
+#savedContacts li:last-child:hover,
+#selectableCategorys li:last-child:hover {
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
 }
 
 .singleCategory {

@@ -8,8 +8,9 @@
     <link rel="icon" type="image/x-icon" href="../assets/img/logoWhite.svg" />
     <link rel="stylesheet" href="../css/general.css" />
     <link rel="stylesheet" href="../css/signUp.css" />
+    <link rel="stylesheet" href="../css/signUp-responsiv.css" />
     <script src="../js/storage.js"></script>
-    <script src="../js/general.js"></script>
+    <script src="../js/generalFunctions.js"></script>
     <script src="../js/signUp.js"></script>
   </head>
   <body onload="initSignUp()">
@@ -42,25 +43,29 @@
             maxlength="25"
             minlength="2"
             required />
-          <input
-            required
-            id="signUpEmail"
-            class="input inputEmail"
-            type="email"
-            placeholder="Email"
-            maxlength="25"
-            minlength="2"
-            required />
-          <span class="d-none error" id="userIsAlreadyRegistered"
-            >Please enter a new email. User is already registred</span
-          >
-          <input
-            required
-            id="signUpPassword"
-            class="input inputPassword"
-            type="password"
-            placeholder="Password"
-            required />
+          <div class="inputContainer">
+            <input
+              required
+              id="signUpEmail"
+              class="input inputEmail"
+              type="email"
+              placeholder="Email"
+              maxlength="25"
+              minlength="2"
+              required />
+            <span class="d-none error" id="userIsAlreadyRegistered"
+              >Please enter a new email. User is already registred</span
+            >
+          </div>
+          <div class="inputContainer">
+            <input
+              required
+              id="signUpPassword"
+              class="input inputPassword"
+              type="password"
+              placeholder="Password"
+              required />
+          </div>
           <button id="signUpButton">Sign up</button>
         </form>
       </div>

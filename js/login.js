@@ -11,7 +11,7 @@ function changeZindexAnimation() {
   setTimeout(() => {
     const animationDiv = document.getElementById("animationDiv");
     animationDiv.style.zIndex = 0;
-  }, 1500);
+  }, 800);
 }
 
 /**

@@ -14,36 +14,13 @@ function renderEditContact() {
  * Retrieves data from input fields to create an edited contact object.
  * @returns {object} The edited contact object with name, email, and phone properties.
  */
-function getDataFromInputEditContact() {
+function getDataEditContact() {
   let editedContact = {
-    name: getDataFromInput("editContactName", "errorNoName"),
-    email: getDataFromInput("editContactEmail", "errorNoEmail"),
-    phone: getDataFromInput("editContactPhone", "errorNoNumber"),
+    name: editContactName.value,
+    email: editContactEmail.value,
+    phone: editContactPhone.value,
   };
-  checkDataEditedContact(editedContact);
-}
-
-/**
- * Checks if the required data for the edited contact is complete and proceeds to the next step.
- * @param {object} editedContact - The edited contact object.
- */
-function checkDataEditedContact(editedContact) {
-  if (requiredDataEditedContactComplete(editedContact)) {
-    checkFilteredContactsforExistingEmail(editedContact);
-  }
-}
-
-/**
- * Checks if the required data for the edited contact is complete.
- * @param {Object} editedContact - The object representing the edited contact.
- * @returns {boolean} - Returns true if all required data is present, otherwise false.
- */
-function requiredDataEditedContactComplete(editedContact) {
-  return (
-    editedContact.name !== undefined &&
-    editedContact.email !== undefined &&
-    editedContact.phone !== undefined
-  );
+  checkEditContactData(editedContact);
 }
 
 /**
@@ -51,7 +28,7 @@ function requiredDataEditedContactComplete(editedContact) {
  * Displays an error message if the email is already taken, otherwise adds the new contact.
  * @param {object} editedContact - The edited contact object.
  */
-function checkFilteredContactsforExistingEmail() {
+function checkEditContactData(editedContact) {
   const filteredContacts = filterContacts();
   const foundExistingEmail = findExistingEmail(
     filteredContacts,
@@ -59,7 +36,6 @@ function checkFilteredContactsforExistingEmail() {
   );
   if (foundExistingEmail) {
     showError("errorEmailIsAlreadyTaken");
-    hideError("errorNoEmail");
   } else {
     saveEdits();
   }
@@ -74,16 +50,6 @@ function filterContacts() {
 }
 
 /**
- * Finds an existing contact with the specified email.
- * @param {Array} contacts - The contacts array to search in.
- * @param {string} email - The email to search for.
- * @returns {Object} The contact object if an existing email is found, otherwise null.
- */
-function findExistingEmail(contacts, email) {
-  return contacts.find((contact) => contact.email === email);
-}
-
-/**
  * Saves the edits made to the contact.
  * @async
  */
@@ -93,7 +59,7 @@ async function saveEdits() {
   toggleClass("body", "overflowHidden");
   changeData();
   await setItem("users", JSON.stringify(USERS));
-  await loadDataAndRender();
+  await loadDataAndRenderContacts();
 }
 
 /**
@@ -113,12 +79,12 @@ function changeData() {
  */
 async function deleteContact() {
   hideDisplay("contentEditDisplay", "d-none");
-  toggleClass("body", "overflowHidden");
+  toggleClass("body", "ovegetDataEditContactrflowHidden");
   closeDetailInfos();
   deleteContactFromContactList();
   deleteContactFromTasks();
   await setItem("users", JSON.stringify(USERS));
-  await loadDataAndRender();
+  await loadDataAndRenderContacts();
   playAnimationContactDeletedSuccess();
 }
 
@@ -149,10 +115,12 @@ function deleteContactFromTasks() {
  * @async
  */
 async function playAnimationContactDeletedSuccess() {
-  await toggleClass("contactDeletedSucess", "d-none");
-  await playAnimation("contactDeletedSucess", "animation-moveUpAndShake");
-  setTimeout(() => {
-    toggleClass("contactDeletedSucess", "animation-moveUpAndShake");
-    toggleClass("contactDeletedSucess", "d-none");
-  }, 2000);
+  if (bigScreen()) {
+    await toggleClass("contactDeletedSucess", "d-none");
+    await playAnimation("contactDeletedSucess", "animation-moveUpAndShake");
+    setTimeout(() => {
+      toggleClass("contactDeletedSucess", "animation-moveUpAndShake");
+      toggleClass("contactDeletedSucess", "d-none");
+    }, 2000);
+  }
 }

@@ -100,6 +100,23 @@ function setEventChangeImageOnHover(
 }
 
 /**
+ * Retrieves data from an HTML element by its ID.
+ * @param {string} id - The ID of the HTML element to retrieve data from.
+ * @param {string} idError - The ID of the HTML element to display error messages.
+ * @returns {string|undefined} - The retrieved data if it is valid, otherwise undefined.
+ */
+function getDataFromInput(id, idError) {
+  const dataToBeChecked = document.getElementById(id).value;
+  if (dataToBeChecked) {
+    hideError(idError);
+    return dataToBeChecked;
+  } else {
+    showError(idError);
+    return undefined;
+  }
+}
+
+/**
  * Sets event listeners to change images on hover on the add Task display.
  */
 function setEventListenerHoverBtn() {
@@ -146,6 +163,16 @@ async function logOut() {
 function getContactData(id) {
   const contact = CONTACTS.find((contact) => contact.id === id);
   return contact;
+}
+
+/**
+ * Finds an existing contact with the specified email.
+ * @param {Array} contacts - The contacts array to search in.
+ * @param {string} email - The email to search for.
+ * @returns {Object} The contact object if an existing email is found, otherwise null.
+ */
+function findExistingEmail(contacts, email) {
+  return contacts.find((contact) => contact.email === email);
 }
 
 /**

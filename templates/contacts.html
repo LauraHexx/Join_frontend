@@ -133,20 +133,17 @@
               src="../assets/img/contactsNewImage.svg"
               alt="icon as a placeholder for a image of the new contact" />
           </div>
-          <div class="containerAddNewContact">
-            <div class="inputContainer">
-              <input
-                id="addContactName"
-                class="input inputName"
-                type="name"
-                placeholder="Name"
-                required
-                maxlength="25"
-                minlength="2" />
-              <span id="errorEnterName" class="error d-none"
-                >Please enter a name</span
-              >
-            </div>
+          <form
+            onsubmit="getDataNewContact(); return false"
+            class="containerAddNewContact">
+            <input
+              id="addContactName"
+              class="input inputName"
+              type="name"
+              placeholder="Name"
+              required
+              maxlength="25"
+              minlength="2" />
             <div class="inputContainer">
               <input
                 id="addContactEmail"
@@ -156,38 +153,29 @@
                 maxlength="25"
                 minlength="2"
                 required />
-              <span id="errorEnterAEmail" class="error d-none"
-                >Please enter an Email</span
-              >
               <span id="errorEnterANewEmail" class="error d-none"
                 >Email already belongs to a contact. Please update it</span
               >
             </div>
-            <div class="inputContainer">
-              <input
-                id="addContactPhone"
-                class="input inputPassword"
-                type="number"
-                placeholder="Phone" />
-              <span id="errorEnterAnNumber" class="error d-none"
-                >Please enter a phone number</span
-              >
-            </div>
+            <input
+              id="addContactPhone"
+              class="input inputPassword"
+              type="number"
+              placeholder="Phone"
+              required />
             <div class="addDisplayBtns">
               <input
                 onclick="closeAddContact()"
                 id="cancelAddContact"
                 value="Cancel X" />
-              <button
-                onclick="getDataFromInputNewContact()"
-                class="createNewContact">
+              <button class="createNewContact">
                 Create contact
                 <img
                   src="../assets/img/contactsCheck.svg"
                   alt="image of icon to create a new contact" />
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </section>

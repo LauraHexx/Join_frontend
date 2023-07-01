@@ -5,6 +5,17 @@
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .logoDiv img {
+    width: 40px;
+    height: 45px;
+  }
+
+  h1 {
+    font-size: 35px;
+  }
+}
+
 @media (max-height: 520px) {
   .loginHeader img {
     width: 30px;

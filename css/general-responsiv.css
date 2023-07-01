@@ -35,6 +35,13 @@
   }
 }
 
+@media only screen and (max-width: 600px) {
+  .arrowBackBlue {
+    width: 23px;
+    height: 22px;
+  }
+}
+
 @media (max-height: 560px) {
   .logoDiv img {
     width: 40px;

@@ -7,34 +7,35 @@ let AMOUNT_TASKS_URGENT;
 let NEXT_DUE_DATE;
 
 /**
- * Initializes the summary.
+ * Sets the navigation and header for the summary page, loads data and renders the summary.
  * Displays a loading image during the loading time.
  * @async
  */
 async function initSummary() {
-  toggleClass("loadingContainer", "d-none");
-  setDashboard();
-  setEventListener();
-  toggleClass("loadingContainer", "d-none");
+  await setNavAndHeader("summary");
+  await loadDataAndRenderSummary();
+  setEventsSummary();
 }
 
 /**
- * Sets up the dashboard by setting data, rendering the summary and greeting the user.
+ * Loads user data, renders the summary and initialize greeting the user.
+ * Displays a loading image during the loading time.
  * @async
  */
-async function setDashboard() {
+async function loadDataAndRenderSummary() {
+  toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();
-  await init("summary");
   await setSummaryData();
   await renderSummary();
   greeting();
+  toggleClass("loadingContainer", "d-none");
 }
 
 /**
  * Sets event listeners for image elements to change their source on hover.
  */
-function setEventListener() {
+function setEventsSummary() {
   changeImageOnHover(
     "pencilLogo",
     "../assets/img/toDosPencilWhite.svg",

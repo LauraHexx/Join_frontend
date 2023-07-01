@@ -4,16 +4,16 @@
  * Retrieves data for a new contact, including generating an ID, random color,
  * name, initials, email, and phone number.
  */
-async function getDataFromInputNewContact() {
+async function getDataNewContact() {
   let newContact = {
     id: getContactId(),
     color: getRandomColor(),
-    name: getDataFromInput("addContactName", "errorEnterName"),
+    name: addContactName.value,
     initials: getInitials(addContactName.value),
-    email: getDataFromInput("addContactEmail", "errorEnterAEmail"),
-    phone: getDataFromInput("addContactPhone", "errorEnterAnNumber"),
+    email: addContactEmail.value,
+    phone: addContactPhone.value,
   };
-  checkDataNewContact(newContact);
+  checkNewContactData(newContact);
 }
 
 /**
@@ -32,58 +32,17 @@ function getContactId() {
 }
 
 /**
- * Retrieves data from an HTML element by its ID.
- * @param {string} id - The ID of the HTML element to retrieve data from.
- * @param {string} idError - The ID of the HTML element to display error messages.
- * @returns {string|undefined} - The retrieved data if it is valid, otherwise undefined.
- */
-function getDataFromInput(id, idError) {
-  const dataToBeChecked = document.getElementById(id).value;
-  if (dataToBeChecked) {
-    hideError(idError);
-    return dataToBeChecked;
-  } else {
-    showError(idError);
-    return undefined;
-  }
-}
-
-/**
- * Checks if the required data for a new contact is complete and performs additional checks.
- * @param {Object} newContact - The object representing the new contact.
- */
-function checkDataNewContact(newContact) {
-  if (requiredDataNewContactComplete(newContact)) {
-    checkIfEmailIsAlreadyExisting(newContact);
-  }
-}
-
-/**
- * Checks if the required data for a new contact is complete.
- * @param {Object} newContact - The object representing the new contact.
- * @returns {boolean} - Returns true if all required data is present, otherwise false.
- */
-function requiredDataNewContactComplete(newContact) {
-  return (
-    newContact.name !== undefined &&
-    newContact.email !== undefined &&
-    newContact.phone !== undefined
-  );
-}
-
-/**
  * Checks if the email of a new contact is already existing. Displays an error message
  * if the email is already taken, otherwise adds the new contact.
  * @param {Object} newContact - The new contact object to be checked and added.
  */
-function checkIfEmailIsAlreadyExisting(newContact) {
+function checkNewContactData(newContact) {
   const foundExistingEmail = findExistingEmail(
     LOGGED_USER.contacts,
     addContactEmail.value
   );
   if (foundExistingEmail) {
     showError("errorEnterANewEmail");
-    hideError("errorEnterName");
   } else {
     addNewContact(newContact);
   }
@@ -98,7 +57,8 @@ function checkIfEmailIsAlreadyExisting(newContact) {
 async function addNewContact(newContact) {
   closeAddContact();
   LOGGED_USER.contacts.push(newContact);
-  await loadDataAndRender();
+  await setItem("users", JSON.stringify(USERS));
+  await loadDataAndRenderContacts();
   showAnimationNewContactSuccess();
 }
 
@@ -119,9 +79,6 @@ function cancelAddContact() {
   document.getElementById("addContactName").value = "";
   document.getElementById("addContactEmail").value = "";
   document.getElementById("addContactPhone").value = "";
-  document.getElementById("errorEnterName").classList.add("d-none");
-  document.getElementById("errorEnterAEmail").classList.add("d-none");
-  document.getElementById("errorEnterAnNumber").classList.add("d-none");
   document.getElementById("errorEnterANewEmail").classList.add("d-none");
 }
 
@@ -130,10 +87,12 @@ function cancelAddContact() {
  * @async
  */
 async function showAnimationNewContactSuccess() {
-  await toggleClass("contactCreatedSucess", "d-none");
-  await playAnimation("contactCreatedSucess", "animation-moveUpAndShake");
-  setTimeout(() => {
-    toggleClass("contactCreatedSucess", "animation-moveUpAndShake");
-    toggleClass("contactCreatedSucess", "d-none");
-  }, 2000);
+  if (bigScreen()) {
+    await toggleClass("contactCreatedSucess", "d-none");
+    await playAnimation("contactCreatedSucess", "animation-moveUpAndShake");
+    setTimeout(() => {
+      toggleClass("contactCreatedSucess", "animation-moveUpAndShake");
+      toggleClass("contactCreatedSucess", "d-none");
+    }, 2000);
+  }
 }

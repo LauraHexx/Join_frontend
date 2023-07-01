@@ -1,18 +1,19 @@
 /*LOGIN*/
 
 .animate-fadeOpacityOut {
-  animation: fadeOpacityOut 1.5s ease 0s 1 normal forwards;
+  animation: fadeOpacityOut 0.8s ease normal forwards;
 }
 
 .animate-joinlogo {
-  animation: joinlogo 1.5s ease 0s 1 normal forwards;
+  animation: joinlogo 0.8s ease normal forwards;
 }
 
 @keyframes fadeOpacityOut {
-  from {
+  0% {
     opacity: 1;
   }
-  to {
+
+  100% {
     opacity: 0;
   }
 }

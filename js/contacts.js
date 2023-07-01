@@ -2,21 +2,22 @@ let FIRST_INITIALS_NO_DUPLICAT = [];
 let SELECTED_CONTACT = "";
 
 /**
- * Initializes contacts by performing necessary setup tasks.
- * Sets the navigation and header for the contacts page, loads data and renders the contacts, and sets the contacts and categories drop-down menu n the add task display.
+ * Sets the navigation and header for the contacts page, loads data and renders the contacts, and sets the contacts and categories drop-down menu in the add task display.
  * @async
  */
 async function initContacts() {
   await setNavAndHeader("contacts");
-  await loadDataAndRender();
-  setContactsAndCategorysDropDownMenu();
+  await loadDataAndRenderContacts();
+  setEventsContacts();
+  renderDropDownAddTaskDisplay();
 }
 
 /**
  * Loads user data and renders the contact list.
+ * Displays a loading image during the loading time.
  * @async
  */
-async function loadDataAndRender() {
+async function loadDataAndRenderContacts() {
   toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();

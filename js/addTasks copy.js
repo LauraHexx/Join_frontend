@@ -2,39 +2,15 @@ let SELECTED_PRIO_BTN;
 let SUBTASKS = [];
 
 async function initAddTask() {
-  await setNavAndHeader("addTask");
-  await loadDataAndRenderDropDown();
-  setEventsAddTask();
-}
-
-/**
- * Loads user data and renders the drop down menues.
- * Displays a loading image during the loading time.
- * @async
- */
-async function loadDataAndRenderDropDown() {
-  toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();
-  await renderDropDownAddTaskDisplay();
-  toggleClass("loadingContainer", "d-none");
-}
-
-/**
- * Sets event listeners for the add task page.
- */
-function setEventsAddTask() {
+  await init("addTask");
   setEventListenerHoverBtn();
+  setContactsAndCategorysDropDownMenu();
   setEventCloseDropDown();
 }
 
-/*RENDER DATA DROP DOWN - CATEGORY + CONTACTS***********************************************************/
-
-/**
- * It retrieves the contacts and categories associated with the logged-in user and sorts it alphabetically.
- * It´s responsible for setting up the initial state of the dropdown menus
- */
-function renderDropDownAddTaskDisplay() {
+function setContactsAndCategorysDropDownMenu() {
   CONTACTS = LOGGED_USER.contacts;
   CATEGORYS = LOGGED_USER.categorys;
   if (CATEGORYS) {
@@ -47,9 +23,6 @@ function renderDropDownAddTaskDisplay() {
   }
 }
 
-/**
- * Renders the categories in drop down menu.
- */
 function renderCategorys() {
   document.getElementById("selectableCategorys").innerHTML = "";
   CATEGORYS.forEach((category) => {
@@ -60,32 +33,33 @@ function renderCategorys() {
   });
 }
 
-/**
- * Renders the selected category when clicking on one.
- * @param {string} name - The name of the category.
- * @param {string} color - The color of the category.
- */
-function renderSelectedCategory(name, color) {
-  const selectCategoryTitle = document.getElementById("selectCategoryTitle");
-  selectCategoryTitle.innerHTML = renderSelectedCategoryHtml(name, color);
+function renderCategorysHtml(name, color) {
+  return /*html*/ `
+    <li onclick="setSelectedCategory('${name}','${color}')" class="singleCategory">
+      <span>${name}</span>
+      <div class="circle ${color}"></div>
+    </li>
+  `;
 }
 
-/**
- * Adds a new category to select.
- * @async
- */
+function setSelectedCategory(name, color) {
+  const selectCategoryTitle = document.getElementById("selectCategoryTitle");
+  selectCategoryTitle.innerHTML = /*html*/ `
+    <li class="selectedCategory">
+      <span id='selectedCategoryName'>${name}</span>
+      <div class="${color} circle colorOfCategory"></div>
+    </li>
+  `;
+}
+
 async function addNewCategory() {
   let newCategory = getNewCategory();
   let colour = getSelectedColor();
-  checkDataAndDisplayNewCategory(newCategory, colour);
+  checkAndPushCategory(newCategory, colour);
   await setItem("users", JSON.stringify(USERS));
-  renderDropDownAddTaskDisplay();
+  setContactsAndCategorysDropDownMenu();
 }
 
-/**
- * Retrieves the value of the new category input or an error if no value entered.
- * @returns {string | undefined} The new category value, or undefined if no value is entered or if the category name already exists.
- */
 function getNewCategory() {
   let newCategory = document.getElementById("newCategoryInput").value;
   if (noCategoryNameEntered(newCategory)) {
@@ -99,124 +73,72 @@ function getNewCategory() {
   return newCategory;
 }
 
-/**
- * Retrieves the value of the new category input.
- * @returns {string | undefined} The new category name, or undefined if no value is entered or if the category name already exists.
- */
 function noCategoryNameEntered(newCategory) {
   return newCategory === "";
 }
 
-/**
- * Sets error messages for not entering a category name.
- */
 function setErrorsNoCategoryEntered() {
   showError("errorNewCategoryNoNameEntered");
   hideError("errorNoCategorySelected");
   hideError("errorNewCategoryNameAlreadyExists");
 }
 
-/**
- * Checks if the category name already exists.
- * @param {string} newCategory - The new category value.
- * @returns {boolean} True if the category name already exists, false otherwise.
- */
 function categoryNameAlreadyExists(newCategory) {
   return CATEGORYS.find((category) => category.name === newCategory);
 }
 
-/**
- * Sets error messages for the category name already existing.
- */
 function setErrorsCategoryAlreadyExists() {
   showError("errorNewCategoryNameAlreadyExists");
   hideError("errorNoCategorySelected");
   hideError("errorNewCategoryNoNameEntered");
 }
 
-/**
- * Retrieves the selected color.
- * @returns {string | undefined} The ID of the selected color, or undefined if no color is selected.
- */
 function getSelectedColor() {
   const selectedColor = document.querySelector(".selectedColor");
+  console.log(selectedColor);
   if (selectedColor) {
-    hideError("errorNewCategoryNoColorSelected");
+    deleteColorError();
     return selectedColor.id;
   } else {
-    showError("errorNewCategoryNoColorSelected");
+    showErrorNoColorSelected();
     return;
   }
 }
 
-/**
- * Initializes the process of checking if the data for a new category is complete, pushes the new category to the user, and displays it.
- * @param {string} newCategory - The name of the new category.
- * @param {string} color - The color of the new category.
- * @async
- */
-async function checkDataAndDisplayNewCategory(newCategory, color) {
-  if (requiredDataNewCategoryComplete(newCategory, color)) {
-    pushNewCategoryToUser();
-    resetNewCategory();
-    renderSelectedCategory(newCategory, color);
+function deleteColorError() {
+  hideError("errorNewCategoryNoColorSelected");
+}
+
+function showErrorNoColorSelected() {
+  showError("errorNewCategoryNoColorSelected");
+}
+
+async function checkAndPushCategory(newCategory, color) {
+  if (newCategory && color) {
+    let indexUserToAddCategory = USERS.indexOf(LOGGED_USER);
+    let userToAddCategory = USERS[indexUserToAddCategory];
+    userToAddCategory.categorys.push({
+      name: newCategory,
+      color: color,
+    });
     changeStyleCategory();
     deleteAllErrors();
+    resetNewCategory();
+    setSelectedCategory(newCategory, color);
   }
 }
 
-/**
- * Checks if the required data for a new category is complete.
- * @returns {boolean} - Returns true if both newCategory and color are defined, false otherwise.
- */
-function requiredDataNewCategoryComplete(newCategory, color) {
-  return newCategory && color;
-}
-
-/**
- * Adds a new category to the current user.
- * @param {string} newCategory - The name of the new category.
- * @param {string} color - The color of the new category.
- */
-function pushNewCategoryToUser(newCategory, color) {
-  let indexUserToAddCategory = USERS.indexOf(LOGGED_USER);
-  let userToAddCategory = USERS[indexUserToAddCategory];
-  userToAddCategory.categorys.push({
-    name: newCategory,
-    color: color,
-  });
-}
-
-/**
- * Resets the new category by moving the selected color circle down, hiding specific error messages, and clearing the new category input.
- */
-function resetNewCategory() {
-  moveSelectedColorCircleDown();
+function deleteAllErrors() {
   hideError("errorNewCategoryNoNameEntered");
-  hideError("errorNewCategoryNoColorSelected");
-  document.getElementById("newCategoryInput").value = "";
+  hideError("errorNewCategoryNameAlreadyExists");
 }
 
-/**
- * Changes the style of the category elements.
- */
 function changeStyleCategory() {
   toggleClass("selectCategoryDiv", "d-none");
   toggleClass("newCategoryDiv", "d-none");
   toggleClass("newCategoryColorSelection", "d-none");
 }
 
-/**
- * Deletes all error messages related to the new category.
- */
-function deleteAllErrors() {
-  hideError("errorNewCategoryNoNameEntered");
-  hideError("errorNewCategoryNameAlreadyExists");
-}
-
-/**
- * Moves the selected color circle up by removing the "selectedColor" class from all circles.
- */
 function moveSelectedColorCircleUp(event) {
   const circles = document.querySelectorAll(".circle");
   circles.forEach((circle) => {
@@ -228,9 +150,6 @@ function moveSelectedColorCircleUp(event) {
   });
 }
 
-/**
- * Moves color circle down by removing the "selectedColor" class from all circles.
- */
 function moveSelectedColorCircleDown() {
   const circles = document.querySelectorAll(".circle");
   circles.forEach((circle) => {
@@ -241,21 +160,9 @@ function moveSelectedColorCircleDown() {
 /*CONTACTS******************************************************************************/
 
 function renderContacts() {
-  if (loggedUserIsGuest()) {
-    dontShowYouContact();
+  if (LOGGED_USER.name == "Guest") {
+    document.getElementById("loggedUserContact").classList.add("d-none");
   }
-  renderSavedContacts();
-}
-
-function loggedUserIsGuest() {
-  return LOGGED_USER.name == "Guest";
-}
-
-function dontShowYouContact() {
-  document.getElementById("loggedUserContact").classList.add("d-none");
-}
-
-function renderSavedContacts() {
   document.getElementById("savedContacts").innerHTML = "";
   CONTACTS.forEach((contact) => {
     const name = contact.name;
@@ -267,6 +174,16 @@ function renderSavedContacts() {
   });
 }
 
+function renderContactsHtml(name, id) {
+  return /*html*/ `
+    <li class="oneContact" onclick="event.stopPropagation();">
+      <div onclick="toggleCheckbox(${id})" class="toggleCheckbox"></div>
+      <label class="nameOfContact">${name}</label>
+      <input id="checkBoxUser${id}" type="checkbox"/>
+    </li>
+  `;
+}
+
 function toggleCheckbox(id) {
   const checkbox = document.getElementById(`checkBoxUser${id}`);
   checkbox.checked = !checkbox.checked;
@@ -274,30 +191,17 @@ function toggleCheckbox(id) {
 }
 
 function changeTitleContactInput() {
-  let selectedCheckboxes = getSelectedCheckboxes();
-  let amountSelectedContacts = selectedCheckboxes.length;
-  const selectContactsTitle = document.getElementById("selectContactsTitle");
-  if (noContactsSelected(amountSelectedContacts)) {
-    selectContactsTitle.innerHTML = "Select contacts to assign";
-  } else if (oneContactSelected(amountSelectedContacts)) {
-    selectContactsTitle.innerHTML = "1 Contact selected";
-  } else {
-    selectContactsTitle.innerHTML = `${amountSelectedContacts} Contacts selected`;
-  }
-}
-
-function getSelectedCheckboxes() {
-  return document.querySelectorAll(
+  const selectedCheckBoxes = document.querySelectorAll(
     '#listContacts input[type="checkbox"]:checked'
   );
-}
-
-function noContactsSelected(amountSelectedContacts) {
-  return amountSelectedContacts === 0;
-}
-
-function oneContactSelected(amountSelectedContacts) {
-  return amountSelectedContacts === 1;
+  const selectContactsTitle = document.getElementById("selectContactsTitle");
+  if (selectedCheckBoxes.length === 0) {
+    selectContactsTitle.innerHTML = "Select contacts to assign";
+  } else if (selectedCheckBoxes.length === 1) {
+    selectContactsTitle.innerHTML = "1 Contact selected";
+  } else {
+    selectContactsTitle.innerHTML = `${selectedCheckBoxes.length} Contacts selected`;
+  }
 }
 
 /*PRIO BUTTONS*******************************************************************************/
@@ -365,6 +269,15 @@ function renderSubtasks() {
       status
     );
   });
+}
+
+function renderSubtasksHtml(subtask, indexOfSubtask, status) {
+  return /*html*/ `
+    <div class="singleSubtask">
+      <input onclick="setStatusCheckbox(${indexOfSubtask})" ${status} type="checkbox" id="subtask${indexOfSubtask}" class="checkbox">
+      <span class="subtask">${subtask.name}</span>
+    </div>
+  `;
 }
 
 function setStatusCheckbox(indexOfSubtask) {
@@ -520,6 +433,13 @@ function stopAddingNewCategory() {
   resetNewCategory();
   toggleNewCategory();
   toggleClass("listCategorys", "d-none");
+}
+
+function resetNewCategory() {
+  moveSelectedColorCircleDown();
+  hideError("errorNewCategoryNoNameEntered");
+  hideError("errorNewCategoryNoColorSelected");
+  document.getElementById("newCategoryInput").value = "";
 }
 
 /*CONTACTS*/
