@@ -1,16 +1,35 @@
 let TASKS = [];
 let SELECTED_TASK = "";
 
+/**
+ * Sets the navigation and header for the board page, loads data and renders the contacts, and sets the contacts and categories drop-down menu in the add task display.
+ * @async
+ */
 async function initBoard() {
-  await init("board");
+  await setNavAndHeader("board");
+  await loadDataAndRenderTasks();
+  setEventsBoard();
+  renderDropDownAddTaskDisplay();
+}
+
+/**
+ * Loads user data and renders the tasks.
+ * Displays a loading image during the loading time.
+ * @async
+ */
+async function loadDataAndRenderTasks() {
   toggleClass("loadingContainer", "d-none");
   await loadUserData();
   await getLoggedUser();
   await renderTasks();
-  setContactsAndCategorysDropDownMenu();
-  setEventCloseDropDown();
-  setEventListenerHoverBtn();
   toggleClass("loadingContainer", "d-none");
+}
+
+/**
+ * Sets event listeners for the board page.
+ */
+function setEventsBoard() {
+  setEventCloseDropDown();
 }
 
 /*SHOW TASKS IN BOARD***********************************************************************************/
@@ -21,13 +40,9 @@ async function initBoard() {
 async function renderTasks() {
   clearBoard();
   TASKS = LOGGED_USER.tasks;
-  if (TASKS.length === 0) {
-    toggleClass("loadingContainer", "d-none");
-  } else {
-    TASKS.forEach((task) => {
-      setDataTaskCard(task);
-    });
-  }
+  TASKS.forEach((task) => {
+    setDataTaskCard(task);
+  });
 }
 
 /**
@@ -115,14 +130,14 @@ function renderFirstTwoContacts(indexOfTask, contactsIds) {
     if (assignedContactIsLoggedUser(contactsIds[i])) {
       renderYouContact(indexOfTask);
     } else {
-      renderInitialsContacts(contactsIds);
+      renderInitialsContacts(indexOfTask, contactsIds[i]);
     }
   }
 }
 
 /**
- * Checks if the contact at the given index is the logged-in user.
- * @param {number} index - The index of the contact.
+ * Checks if the contact at the given id is the logged-in user.
+ * @param {number} contactId - The id of the contact.
  * @returns {boolean} True if the contact is the logged-in user, false otherwise.
  */
 function assignedContactIsLoggedUser(contactId) {
@@ -136,20 +151,17 @@ function assignedContactIsLoggedUser(contactId) {
 function renderYouContact(indexOfTask) {
   const initials = "You";
   const color = LOGGED_USER.color;
-  appendContactHtml(indexOfTask, initials, color);
+  document.getElementById(`contacts${indexOfTask}`).innerHTML +=
+    appendContactHtml(indexOfTask, initials, color);
 }
 
 /**
  * Renders initials-based contacts in a task card.
  * @param {number} indexOfTask - The index of the task.
- * @param {number} indexOfAssignedContact - The index of the assigned contact.
+ * @param {number} contactId - The id of the contact.
  */
-function renderInitialsContacts(
-  indexOfTask,
-  contactsIds,
-  indexOfAssignedContact
-) {
-  const contactData = getContactData(contactsIds[indexOfAssignedContact]);
+function renderInitialsContacts(indexOfTask, contactId) {
+  const contactData = getContactData(contactId);
   const initials = contactData.initials;
   const color = contactData.color;
   appendContactHtml(indexOfTask, initials, color);
@@ -222,7 +234,7 @@ function renderAssignedContacts() {
   document.getElementById("assignedContactsDetailCard").innerHTML = "";
   const assignedContactIds = SELECTED_TASK.contacts;
   assignedContactIds.forEach((contactId) => {
-    if (contactId === 0) {
+    if (assignedContactIsLoggedUser(contactId)) {
       const name = "You";
       const initials = "You";
       const color = LOGGED_USER.color;
@@ -255,7 +267,7 @@ function setTask() {
   let colorCategory = getColorCategory(selectedCategory);
   document.getElementById("titleInput").value = SELECTED_TASK.title;
   document.getElementById("descriptionInput").value = SELECTED_TASK.description;
-  setSelectedCategory(selectedCategory, colorCategory);
+  renderSelectedCategory(selectedCategory, colorCategory);
   let contacts = SELECTED_TASK.contacts;
   contacts.forEach((contact) => {
     toggleCheckbox(contact);
@@ -372,4 +384,46 @@ async function checkAndOverwriteTask(task) {
     await setItem("users", JSON.stringify(USERS));
     loadTemplate("./board.html");
   }
+}
+
+//SEARCH IN TASKS
+
+function searchCards(event) {
+  const searchText = event.target.value.toLowerCase();
+  console.log(searchText);
+  const todoCards = document.querySelectorAll("#todo .singleCard");
+  const inProgressCards = document.querySelectorAll("#inProgress .singleCard");
+  const awaitingFeedbackCards = document.querySelectorAll(
+    "#awaitingFeedback .singleCard"
+  );
+  const doneCards = document.querySelectorAll("#done .singleCard");
+
+  hideCards(todoCards);
+  hideCards(inProgressCards);
+  hideCards(awaitingFeedbackCards);
+  hideCards(doneCards);
+
+  searchInCards(searchText, todoCards);
+  searchInCards(searchText, inProgressCards);
+  searchInCards(searchText, awaitingFeedbackCards);
+  searchInCards(searchText, doneCards);
+}
+
+function hideCards(cards) {
+  cards.forEach((card) => {
+    card.style.display = "none";
+  });
+}
+
+function searchInCards(searchText, cards) {
+  cards.forEach((card) => {
+    const title = card.querySelector(".title").textContent.toLowerCase();
+    const description = card
+      .querySelector(".description")
+      .textContent.toLowerCase();
+
+    if (title.includes(searchText) || description.includes(searchText)) {
+      card.style.display = "flex";
+    }
+  });
 }
