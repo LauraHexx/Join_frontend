@@ -1,8 +1,7 @@
-let TASKS = [];
 let SELECTED_TASK = "";
 
 /**
- * Sets the navigation and header for the board page, loads data and renders the contacts, and sets the contacts and categories drop-down menu in the add task display.
+ * Sets the navigation and header for the board page, loads data and sets the contacts and categories drop-down menu in the add task display.
  * @async
  */
 async function initBoard() {
@@ -145,14 +144,13 @@ function assignedContactIsLoggedUser(contactId) {
 }
 
 /**
- * Renders the "You" contact in a task card.
+ * Renders the "You" contact in a task card if the logged user is not a guest.
  * @param {number} indexOfTask - The index of the task.
  */
 function renderYouContact(indexOfTask) {
   const initials = "You";
   const color = LOGGED_USER.color;
-  document.getElementById(`contacts${indexOfTask}`).innerHTML +=
-    appendContactHtml(indexOfTask, initials, color);
+  appendContactHtml(indexOfTask, initials, color);
 }
 
 /**
@@ -226,28 +224,62 @@ function renderTaskDetails() {
   document.getElementById("containerDetails").innerHTML = "";
   document.getElementById("containerDetails").innerHTML =
     renderTaskDetailsHtml(colorCategory);
-  renderAssignedContacts();
+  renderContactsInDetailCard();
   renderSubtasksInDetailCard();
 }
 
-function renderAssignedContacts() {
+/**
+ * Renders the assigned contacts in the detail card.
+ */
+function renderContactsInDetailCard() {
   document.getElementById("assignedContactsDetailCard").innerHTML = "";
   const assignedContactIds = SELECTED_TASK.contacts;
   assignedContactIds.forEach((contactId) => {
     if (assignedContactIsLoggedUser(contactId)) {
-      const name = "You";
-      const initials = "You";
-      const color = LOGGED_USER.color;
-      document.getElementById("assignedContactsDetailCard").innerHTML +=
-        renderAssignedContactsHtml(name, initials, color);
+      renderYouContactInDetailCard();
     } else {
-      const contactData = getContactData(contactId);
-      const name = contactData.name;
-      const initials = contactData.initials;
-      const color = contactData.color;
-      document.getElementById("assignedContactsDetailCard").innerHTML +=
-        renderAssignedContactsHtml(name, initials, color);
+      renderSavedContactsInDetailCard(contactId);
     }
+  });
+}
+
+/**
+ * Renders the "You" contact in the detail task card if the logged user is not a guest.
+ */
+function renderYouContactInDetailCard() {
+  const name = "You";
+  const initials = "You";
+  const color = LOGGED_USER.color;
+  document.getElementById("assignedContactsDetailCard").innerHTML +=
+    renderContactsInDetailCardHtml(name, initials, color);
+}
+
+/**
+ * Renders the saved contacts in the detail card.
+ * @param {string} contactId - The ID of the contact.
+ */
+function renderSavedContactsInDetailCard(contactId) {
+  const contactData = getContactData(contactId);
+  const name = contactData.name;
+  const initials = contactData.initials;
+  const color = contactData.color;
+  document.getElementById("assignedContactsDetailCard").innerHTML +=
+    renderContactsInDetailCardHtml(name, initials, color);
+}
+
+/**
+ * Renders the subtasks in the task details card.
+ */
+function renderSubtasksInDetailCard() {
+  document.getElementById("containerSubtasks").innerHTML = "";
+  const indexOfTask = TASKS.indexOf(SELECTED_TASK);
+  const subtasks = SELECTED_TASK.subtasks;
+  subtasks.forEach((subtask) => {
+    const name = subtask.name;
+    const status = subtask.status;
+    const indexOfSubtask = subtasks.indexOf(subtask);
+    document.getElementById("containerSubtasks").innerHTML +=
+      renderSubtasksInDetailCardHtml(name, status, indexOfSubtask, indexOfTask);
   });
 }
 
@@ -256,32 +288,51 @@ function renderAssignedContacts() {
 function renderEditTask() {
   hideDisplay("containerDetails", "d-none");
   showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
+  changeStyleBtnsInEditTask();
+  setDataTaskToEditDisplay();
+}
+
+function changeStyleBtnsInEditTask() {
   document.getElementById("clearBtn").classList.add("d-none");
   document.getElementById("createBtn").classList.add("d-none");
   document.getElementById("editBtn").classList.remove("d-none");
-  setTask();
 }
 
-function setTask() {
-  let selectedCategory = SELECTED_TASK.category;
-  let colorCategory = getColorCategory(selectedCategory);
+function setDataTaskToEditDisplay() {
+  setTitleAndDescriptionToEditDisplay();
+  setCategoryToEditDisplay();
+  setContactsToEditDisplay();
+  setDueDateToEditDisplay();
+  setPrioBtnsToEditDisplay();
+  setSubtasksToEditDisplay();
+}
+
+function setTitleAndDescriptionToEditDisplay() {
   document.getElementById("titleInput").value = SELECTED_TASK.title;
   document.getElementById("descriptionInput").value = SELECTED_TASK.description;
+}
+
+function setCategoryToEditDisplay() {
+  let selectedCategory = SELECTED_TASK.category;
+  let colorCategory = getColorCategory(selectedCategory);
   renderSelectedCategory(selectedCategory, colorCategory);
+}
+
+function setContactsToEditDisplay() {
   let contacts = SELECTED_TASK.contacts;
   contacts.forEach((contact) => {
     toggleCheckbox(contact);
   });
+}
+
+function setDueDateToEditDisplay() {
   document.getElementById("inputDueDate").value = SELECTED_TASK.dueDate;
-  setPrioBtn();
-  SUBTASKS = SELECTED_TASK.subtasks;
-  renderSubtasks();
 }
 
 /**
  * Changes the style of the priority button for the selected task.
  */
-function setPrioBtn() {
+function setPrioBtnsToEditDisplay() {
   let priority = SELECTED_TASK.priority;
   let backgroundColor = getColorOfPrio(priority);
   document.getElementById(priority).classList.add("selectedPrioBtn");
@@ -304,20 +355,9 @@ function getColorOfPrio(priority) {
   }
 }
 
-/**
- * Renders the subtasks in the task details card.
- */
-function renderSubtasksInDetailCard() {
-  document.getElementById("containerSubtasks").innerHTML = "";
-  const indexOfTask = TASKS.indexOf(SELECTED_TASK);
-  const subtasks = SELECTED_TASK.subtasks;
-  subtasks.forEach((subtask) => {
-    const name = subtask.name;
-    const status = subtask.status;
-    const indexOfSubtask = subtasks.indexOf(subtask);
-    document.getElementById("containerSubtasks").innerHTML +=
-      renderSubtasksInDetailCardHtml(name, status, indexOfSubtask, indexOfTask);
-  });
+function setSubtasksToEditDisplay() {
+  SUBTASKS = SELECTED_TASK.subtasks;
+  renderSubtasks();
 }
 
 /**

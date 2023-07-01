@@ -65,7 +65,7 @@ function renderTaskDetailsHtml(colorCategory) {
     `;
 }
 
-function renderAssignedContactsHtml(name, initials, color) {
+function renderContactsInDetailCardHtml(name, initials, color) {
   return /*html*/ `
       <div class="singleContact">
         <div class="initialsOfNames smallCircle" style="background-color:${color}">${initials}</div>
