@@ -78,7 +78,7 @@ async function addNewCategory() {
   let newCategory = getNewCategory();
   let colour = getSelectedColor();
   checkDataAndDisplayNewCategory(newCategory, colour);
-  await setItem("users", JSON.stringify(USERS));
+
   renderDropDownAddTaskDisplay();
 }
 
@@ -157,7 +157,8 @@ function getSelectedColor() {
  */
 async function checkDataAndDisplayNewCategory(newCategory, color) {
   if (requiredDataNewCategoryComplete(newCategory, color)) {
-    pushNewCategoryToUser();
+    pushNewCategoryToUser(newCategory, color);
+    await setItem("users", JSON.stringify(USERS));
     resetNewCategory();
     renderSelectedCategory(newCategory, color);
     changeStyleCategory();
