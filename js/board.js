@@ -160,9 +160,11 @@ function renderYouContact(indexOfTask) {
  */
 function renderInitialsContacts(indexOfTask, contactId) {
   const contactData = getContactData(contactId);
-  const initials = contactData.initials;
-  const color = contactData.color;
-  appendContactHtml(indexOfTask, initials, color);
+  if (contactData) {
+    const initials = contactData.initials;
+    const color = contactData.color;
+    appendContactHtml(indexOfTask, initials, color);
+  }
 }
 
 /**
