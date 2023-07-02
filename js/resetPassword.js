@@ -9,7 +9,6 @@ async function initResetPassword() {
   toggleClass("loadingContainer", "d-none");
   await loadUserData();
   toggleClass("loadingContainer", "d-none");
-  checkIfLinkActivated();
 }
 
 function checkIfLinkActivated() {
@@ -23,11 +22,16 @@ function checkIfBothPasswordsAreSame() {
   let newPassword = newPasswordInput.value;
   let confirmPassword = confirmPasswordInput.value;
   if (newPassword === confirmPassword) {
-    changePassword();
+    changePassword(newPassword);
   }
 }
 
-function changePassword() {
-  let userToChangePasswordFor = checkForExistingUser("emailToResetPassword");
-  console.log(userToChangePasswordFor);
+async function changePassword(newPassword) {
+  let userToChangePasswordFor = getUserToChangePassword();
+  userToChangePasswordFor.password = newPassword;
+  await setItem("users", JSON.stringify(USERS));
+}
+
+function getUserToChangePassword(id) {
+  return USERS.find((user) => user.email === emailToReset);
 }
