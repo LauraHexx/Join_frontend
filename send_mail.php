@@ -43,7 +43,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $subject = "Join - Password Reset Request";
         $headers = "From: noreply@developerakademie.com";
 
-        $message = "Dear Join user\n\nWe have received a request to reset your password for your Join account.\n\nTo proceed with resetting your password, please click on the following link:\n\nhttp://laura-hesidenz.developerakademie.net/templates/resetPassword.html\n\nIf you did not request a password reset, please ignore this email. No changes have been made.\n\nHave a great day :)";
+        $message = "Dear Join user\n\nWe have received a request to reset your password for your Join account.\n\nTo proceed with resetting your password, please click on the following link:\n\nhttp://laura-hesidenz.developerakademie.net/Joim/templates/resetPassword.html\n\nIf you did not request a password reset, please ignore this email. No changes have been made.\n\nHave a great day :)";
 
         mail($recipient, $subject, $message, $headers);
         header("Location: " . $redirect); 
