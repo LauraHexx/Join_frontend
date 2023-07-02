@@ -11,6 +11,9 @@ async function initResetPassword() {
   toggleClass("loadingContainer", "d-none");
 }
 
+/**
+ * Checks if the link has been activated.
+ */
 function checkIfLinkActivated() {
   emailToReset = getItemFromLocalStorage("emailToResetPassword");
   if (emailToReset) {
@@ -22,6 +25,9 @@ function checkIfLinkActivated() {
   }
 }
 
+/**
+ * Checks if both passwords are the same.
+ */
 function checkIfBothPasswordsAreSame() {
   let newPassword = newPasswordInput.value;
   let confirmPassword = confirmPasswordInput.value;
@@ -30,22 +36,31 @@ function checkIfBothPasswordsAreSame() {
   }
 }
 
+/**
+ * Changes the password.
+ * @param {string} newPassword - The new password.
+ */
 async function changePassword(newPassword) {
   let userToChangePasswordFor = getUserToChangePassword();
   userToChangePasswordFor.password = newPassword;
   await setItem("users", JSON.stringify(USERS));
-  showAnimationNewContactSuccess();
+  showAnimationNewPasswordSuccess();
 }
 
+/**
+ * Retrieves the user to change the password for.
+ * @param {string} id - The user ID.
+ * @returns {Object} - The user to change the password for.
+ */
 function getUserToChangePassword(id) {
   return USERS.find((user) => user.email === emailToReset);
 }
 
 /**
- * Shows a success animation after successfully adding a new contact.
+ * Shows a success animation after successfully reseting the password.
  * @async
  */
-async function showAnimationNewContactSuccess() {
+async function showAnimationNewPasswordSuccess() {
   removeItemFromLocalStorage("emailToResetPassword");
   await toggleClass("passwordResetSucess", "d-none");
   await playAnimation("passwordResetSucess", "animation-moveUpAndShake");
@@ -58,6 +73,9 @@ async function showAnimationNewContactSuccess() {
   }, 1000);
 }
 
+/**
+ * Disables the button.
+ */
 function disableButton() {
   document.getElementById("continueResetPasswordBtn").disabled = true;
   document
