@@ -304,7 +304,7 @@ function toggleContactDropDownContainer() {
  * @param {string} className - The class to be toggled.
  */
 function showDisplay(id, animationClass, className) {
-  if (window.innerWidth > 920) {
+  if (bigScreen()) {
     playAnimation(id, animationClass);
   }
   toggleClass(id, className);

@@ -6,8 +6,8 @@
 function renderEditContact() {
   document.getElementById("contentEditDisplay").innerHTML =
     renderEditContactHtml();
-  showDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
+  showDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
 }
 
 /**
@@ -115,12 +115,10 @@ function deleteContactFromTasks() {
  * @async
  */
 async function playAnimationContactDeletedSuccess() {
-  if (bigScreen()) {
-    await toggleClass("contactDeletedSucess", "d-none");
-    await playAnimation("contactDeletedSucess", "animation-moveUpAndShake");
-    setTimeout(() => {
-      toggleClass("contactDeletedSucess", "animation-moveUpAndShake");
-      toggleClass("contactDeletedSucess", "d-none");
-    }, 2000);
-  }
+  await toggleClass("contactDeletedSucess", "d-none");
+  await playAnimation("contactDeletedSucess", "animation-moveUpAndShake");
+  setTimeout(() => {
+    toggleClass("contactDeletedSucess", "animation-moveUpAndShake");
+    toggleClass("contactDeletedSucess", "d-none");
+  }, 2000);
 }

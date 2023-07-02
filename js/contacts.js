@@ -127,12 +127,14 @@ function animationIsNotPlaying() {
  * @async
  */
 async function playAnimationContactDetails() {
-  await playAnimation("mainInfosContact", "animation-slideInRight");
-  setTimeout(() => {
-    document
-      .getElementById("mainInfosContact")
-      .classList.remove("animation-slideInRight");
-  }, 1000);
+  if (bigScreen()) {
+    await playAnimation("mainInfosContact", "animation-slideInRight");
+    setTimeout(() => {
+      document
+        .getElementById("mainInfosContact")
+        .classList.remove("animation-slideInRight");
+    }, 1000);
+  }
 }
 
 /**

@@ -32,18 +32,19 @@ header {
 
 .profilImageDiv {
   border-radius: 50%;
-  border: 3px solid var(--dark-blue);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2px;
   cursor: pointer;
+  background: var(--grey);
+  width: 35px;
+  height: 35px;
 }
 
 .profilImage {
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
+  width: 17px;
+  height: 20px;
 }
 
 #optionsHeader {

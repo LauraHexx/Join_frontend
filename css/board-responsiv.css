@@ -16,6 +16,51 @@
   }
 }
 
+@media only screen and (max-width: 760px) {
+  #contentAddTaskDisplay {
+    height: 99vh;
+    position: relative;
+    top: 4px;
+    bottom: unset;
+    left: unset;
+    right: unset;
+    align-items: unset;
+    z-index: 3;
+  }
+
+  #displayAddTask {
+    width: 80%;
+    overflow-y: scroll;
+    padding: 20px;
+    border-radius: 0;
+  }
+
+  .rightSection {
+    position: unset !important;
+  }
+
+  .closeDisplayLeftSectionDiv {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #closeDisplayLeftSection {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+  }
+
+  #closeDisplay {
+    display: none;
+  }
+
+  .leftSection,
+  .rightSection {
+    width: 100% !important;
+  }
+}
+
 @media only screen and (max-width: 780px) {
   .headerBoard {
     position: relative;
