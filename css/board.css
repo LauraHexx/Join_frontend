@@ -255,6 +255,11 @@ section {
   border: none;
 }
 
+#priorityDisplay:hover {
+  box-shadow: none !important;
+  cursor: default !important;
+}
+
 #priorityDisplay img {
   width: 11px;
   height: 15px;

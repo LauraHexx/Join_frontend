@@ -135,11 +135,11 @@ async function deleteTask() {
  */
 function editTask() {
   let task = {
-    title: getTitle(),
-    description: getDescription(),
+    title: getDataFromInput("titleInput", "errorTitle"),
+    description: getDataFromInput("descriptionInput", "errorDescription"),
     category: getCategory(),
     contacts: getSelectedCheckBoxes(),
-    dueDate: getDueDate(),
+    dueDate: getDataFromInput("inputDueDate", "errorDueDate"),
     priority: getPriority(),
     subtasks: SUBTASKS,
   };
@@ -152,7 +152,7 @@ function editTask() {
  * @async
  */
 async function checkAndOverwriteTask(task) {
-  if (requiredDataComplete(task)) {
+  if (requiredDataTaskComplete(task)) {
     SELECTED_TASK.title = task.title;
     SELECTED_TASK.description = task.description;
     SELECTED_TASK.category = task.category;

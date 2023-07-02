@@ -34,7 +34,7 @@ function renderTaskDetailsHtml(colorCategory) {
       <div onclick="event.stopPropagation()" class="displayEdit">
         <div class="headContainer">
           <div class="category ${colorCategory}">${SELECTED_TASK.category}</div>
-          <img onclick="initBoard(); hideDisplay('containerDetails', 'd-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
+          <img onclick= "hideDisplay('containerDetails', 'd-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
         </div>
         <span id="titleDisplay">${SELECTED_TASK.title}</span>
         <span id="descriptionDisplay">${SELECTED_TASK.description}</span>
@@ -82,7 +82,7 @@ function renderSubtasksInDetailCardHtml(
 ) {
   return /*html*/ `
       <div class="singleSubtask">
-         <input type="checkbox" onclick="changeStatusSubtask(${indexOfTask},${indexOfSubtask})" ${status} id="task${indexOfTask}subtask${indexOfSubtask}" class="checkbox">
+         <input disabled type="checkbox" onclick="changeStatusSubtask(${indexOfTask},${indexOfSubtask})" ${status} id="task${indexOfTask}subtask${indexOfSubtask}" class="checkbox">
          <span>${name}</span>
       </div>
     `;

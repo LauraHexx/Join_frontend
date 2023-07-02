@@ -262,11 +262,13 @@ function renderYouContactInDetailCard() {
  */
 function renderSavedContactsInDetailCard(contactId) {
   const contactData = getContactData(contactId);
-  const name = contactData.name;
-  const initials = contactData.initials;
-  const color = contactData.color;
-  document.getElementById("assignedContactsDetailCard").innerHTML +=
-    renderContactsInDetailCardHtml(name, initials, color);
+  if (contactData) {
+    const name = contactData.name;
+    const initials = contactData.initials;
+    const color = contactData.color;
+    document.getElementById("assignedContactsDetailCard").innerHTML +=
+      renderContactsInDetailCardHtml(name, initials, color);
+  }
 }
 
 /**
