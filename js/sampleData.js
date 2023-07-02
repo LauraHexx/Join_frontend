@@ -73,7 +73,7 @@ const SAMPLE_DATA_TASKS = [
     title: "Develop new feature",
     description: "Implement a new feature in the software",
     category: "Developing",
-    contacts: [1, 3],
+    contacts: [1, 3, 4, 5],
     dueDate: "2023-07-05",
     priority: "medium",
     subtasks: [
@@ -130,7 +130,7 @@ const SAMPLE_DATA_TASKS = [
     title: "Follow up with potential leads",
     description: "Contact potential leads and follow up on sales inquiries",
     category: "Sales",
-    contacts: [6],
+    contacts: [6, 2, 3],
     dueDate: "2023-07-12",
     priority: "low",
     subtasks: [
@@ -168,7 +168,7 @@ const SAMPLE_DATA_TASKS = [
     title: "Create sales presentation",
     description: "Develop a sales presentation for a client meeting",
     category: "Sales",
-    contacts: [4, 5],
+    contacts: [4, 5, 6],
     dueDate: "2023-07-20",
     priority: "urgent",
     subtasks: [

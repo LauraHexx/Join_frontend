@@ -223,9 +223,12 @@ function openTaskDetails(indexOfTask) {
  */
 function renderTaskDetails() {
   const colorCategory = getColorCategory(SELECTED_TASK.category);
+  const colorPrio = getColorOfPrio(SELECTED_TASK.priority);
   document.getElementById("containerDetails").innerHTML = "";
-  document.getElementById("containerDetails").innerHTML =
-    renderTaskDetailsHtml(colorCategory);
+  document.getElementById("containerDetails").innerHTML = renderTaskDetailsHtml(
+    colorCategory,
+    colorPrio
+  );
   renderContactsInDetailCard();
   renderSubtasksInDetailCard();
 }

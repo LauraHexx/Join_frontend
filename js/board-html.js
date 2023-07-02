@@ -7,9 +7,11 @@ function renderTasksHtml(
 ) {
   return /*html*/ `
       <div draggable="true" ondragstart="startDragging(${indexOfTask})" id="task${indexOfTask}" class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
-        <div class="category ${colorCategory}">${task.category}</div>
-        <div class="bold title">${task.title}</div>
-        <span class="description">${task.description}</span>
+        <div class="category fontSize14px ${colorCategory}">${
+    task.category
+  }</div>
+        <div class="bold fontSize14px title">${task.title}</div>
+        <span class="description fontSize14px">${task.description}</span>
         <div class="progressContainer">
           <div class="progress">
             <div class="progress-bar" style="width: ${getPercentageProgress(
@@ -29,7 +31,7 @@ function renderTasksHtml(
     `;
 }
 
-function renderTaskDetailsHtml(colorCategory) {
+function renderTaskDetailsHtml(colorCategory, colorPrio) {
   return /*html*/ `
       <div onclick="event.stopPropagation()" class="displayEdit">
         <div class="headContainer">
@@ -44,7 +46,7 @@ function renderTaskDetailsHtml(colorCategory) {
         </section>
         <section class="containerSectionBoard">
           <span class="bold">Priority:</span>
-          <button id="priorityDisplay">
+          <button style="background-color: ${colorPrio}" id="priorityDisplay">
             ${SELECTED_TASK.priority}
             <img src="../assets/img/boardPriorityWhite.svg" alt="icon of priority">
           </button>

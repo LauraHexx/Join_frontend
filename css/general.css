@@ -4,12 +4,12 @@
   --header-height: 89px;
   --header-width: 2000px;
   --nav-width: 200px;
+  --nav-height-mobile: 74px;
   --padding-top: 20px;
   --padding: 25px;
   --margin-top: 35px;
   --margin-bottom: 20px;
   --padding-mobile: 25px;
-  --nav-height-mobile: 50px;
   --dark-white: #f6f7f8;
   --bright-white: #ffffff;
   --bright-blue: #29abe2;
@@ -60,6 +60,10 @@ p {
 
 input:focus {
   outline: none;
+}
+
+.fontSize14px {
+  font-size: 14px;
 }
 
 button {
@@ -241,7 +245,7 @@ button:hover:not(.selectedPrioBtn) {
   backdrop-filter: blur(10px);
   z-index: 100;
   position: absolute;
-  top: 0;
+  top: var(--header-height);
   left: var(--nav-width);
   right: 0;
   bottom: 0;

@@ -20,6 +20,7 @@
 
   #loadingContainer {
     left: 0;
+    bottom: var(--nav-height-mobile);
   }
 }
 

@@ -292,11 +292,6 @@ a {
   z-index: 2;
 }
 
-.listDropDown {
-  max-height: 130px;
-  overflow-y: scroll;
-}
-
 #loadingContainer {
   backdrop-filter: blur(10px);
   z-index: 100;

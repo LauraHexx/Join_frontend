@@ -9,16 +9,20 @@
       alt="icon to close display" />
   </div>
   <span class="titleBigScreen">Title</span>
-  <input type="text" id="titleInput" placeholder="Enter a title" />
+  <input type="text" id="titleInput" placeholder="Enter a title" tabindex="1" />
   <span id="errorTitle" class="error d-none">Please enter a title</span>
   <span>Description</span>
-  <input type="text" id="descriptionInput" placeholder="Enter a description" />
+  <input
+    type="text"
+    id="descriptionInput"
+    placeholder="Enter a description"
+    tabindex="2" />
   <span id="errorDescription" class="error d-none"
     >Please enter a description</span
   >
   <span>Category</span>
   <!--CATEGORY-->
-  <div id="selectCategoryDiv">
+  <div id="selectCategoryDiv" tabindex="3">
     <div id="selectCategoryTitleDiv">
       <span id="selectCategoryTitle">Select task category</span>
       <img
@@ -95,7 +99,7 @@
   >
   <!--CONTACTS-->
   <span>Assigned to</span>
-  <div id="selectContactsDiv" class="containerSection">
+  <div id="selectContactsDiv" class="containerSection" tabindex="4">
     <div id="selectContactsTitleDiv" class="containerTitle">
       <span id="selectContactsTitle">Select contacts to assign</span>
       <img
@@ -125,12 +129,17 @@
     alt="icon to close display" />
   <span>Due date</span>
   <div>
-    <input type="date" id="inputDueDate" placeholder="dd/mm/yyyy" />
+    <input
+      type="date"
+      id="inputDueDate"
+      placeholder="dd/mm/yyyy"
+      tabindex="5" />
   </div>
   <span id="errorDueDate" class="error d-none">Please select a due day</span>
   <span>Prio</span>
   <div class="prioBtns">
     <button
+      tabindex="6"
       type="button"
       id="urgent"
       class="singlePrioBtn"
@@ -139,6 +148,7 @@
       <img src="../assets/img/prioUrgent.svg" alt="icon to show priority" />
     </button>
     <button
+      tabindex="7"
       type="button"
       id="medium"
       class="singlePrioBtn"
@@ -147,6 +157,7 @@
       <img src="../assets/img/prioMedium.svg" alt="icon to show priority" />
     </button>
     <button
+      tabindex="8"
       type="button"
       id="low"
       class="singlePrioBtn"
@@ -157,7 +168,7 @@
   </div>
   <span id="errorPriority" class="error d-none">Please select a priority</span>
   <span>Subtasks</span>
-  <div class="inputContainer">
+  <div class="inputContainer" tabindex="9">
     <input type="text" id="addTaskSubtasks" placeholder="Add new subtask" />
     <img
       onclick="addSubtask()"
@@ -167,7 +178,7 @@
   </div>
   <div class="listDropDown" id="subtasks"></div>
   <div class="clearAndCreateBtns">
-    <button onclick="clearTask()" id="clearBtn">
+    <button onclick="clearTask()" id="clearBtn" tabindex="10">
       <span>Clear</span>
       <img
         id="clearBtnIcon"
@@ -175,7 +186,7 @@
         alt="icon of plus to add
         a subtask" />
     </button>
-    <button onclick="createTask()" id="createBtn">
+    <button onclick="createTask()" id="createBtn" tabindex="11">
       <span>Create Task</span>
       <img
         src="../assets/img/addTaskCreate.svg"

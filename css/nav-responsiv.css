@@ -8,6 +8,7 @@
   }
 
   nav {
+    height: var(--nav-height-mobile);
     all: unset;
     display: flex;
     align-items: center;
