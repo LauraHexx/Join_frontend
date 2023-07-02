@@ -204,11 +204,10 @@ function determineDeadline() {
  */
 function getNextDueDate() {
   const dueDates = getDueDates();
-  const maxDueDate = getMaxDueDate(dueDates);
-  const today = getToday();
+  const nextDueDate = findNextDueDate(dueDates);
 
-  if (maxDueDate >= today) {
-    return formatDueDate(maxDueDate);
+  if (nextDueDate) {
+    return formatDueDate(nextDueDate);
   } else {
     return "none";
   }
@@ -223,13 +222,21 @@ function getDueDates() {
 }
 
 /**
- * Finds the maximum due date from the given array of due dates.
+ * Finds the next due date from the given array of due dates.
  * @param {Array} dueDates - An array of Date objects representing the due dates.
- * @returns {Date} The maximum due date.
+ * @returns {Date} The next due date.
  */
-function getMaxDueDate(dueDates) {
-  dueDates.sort((a, b) => a - b);
-  return dueDates[dueDates.length - 1];
+function findNextDueDate(dueDates) {
+  const today = getToday();
+  const sortedDueDates = dueDates.slice().sort((a, b) => b - a); //From the biggest to the smallest
+  let nextDueDate;
+  sortedDueDates.forEach((dueDate) => {
+    if (dueDate >= today) {
+      nextDueDate = dueDate;
+      return;
+    }
+  });
+  return nextDueDate;
 }
 
 /**
