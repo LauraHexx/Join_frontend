@@ -23,7 +23,7 @@ function renderTasksHtml(
         </div>
         <div class="contactsAndPrio">
           <div class="assignedContacts" id="contacts${indexOfTask}"></div>
-          <img class="prio" src="../assets/img/prio${
+          <img class="prio" src="../assets/img/${
             task.priority
           }.svg" alt="icon to show priority">
         </div>
