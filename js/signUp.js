@@ -45,7 +45,7 @@ function pushNewUserToArray() {
     initials: getInitials(signUpName.value),
     email: signUpEmail.value,
     password: signUpPassword.value,
-    tasks: [],
+    tasks: SAMPLE_DATA_TASKS,
     contacts: SAMPLE_DATA_CONTACTS,
     categorys: SAMPLE_DATA_CATEGORYS,
   };
