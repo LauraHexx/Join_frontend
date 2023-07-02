@@ -256,13 +256,13 @@ button:hover:not(.selectedPrioBtn) {
 }
 
 ::-webkit-scrollbar {
-  width: 1px; /* Breite des Scrollbalkens */
+  width: 1px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Hintergrundfarbe des Scrollbalkens */
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888; /* Farbe des Scrollbalken-Griffs */
+  background: #888;
 }
