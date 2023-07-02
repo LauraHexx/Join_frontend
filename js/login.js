@@ -77,7 +77,7 @@ async function createGuestUser() {
     id: getUserId(),
     name: "Guest",
     initials: "GU",
-    tasks: [],
+    tasks: SAMPLE_DATA_TASKS,
     contacts: SAMPLE_DATA_CONTACTS,
     categorys: SAMPLE_DATA_CATEGORYS,
   };
