@@ -38,6 +38,6 @@ function saveEmailToResetPassword() {
  */
 function sendResetEmail() {
   document.querySelector("form").action =
-    "http://laura-hesidenz.developerakademie.net/send_mail.php";
+    "http://laura-hesidenz.developerakademie.net/Join/send_mail.php";
   document.querySelector("form").submit();
 }
