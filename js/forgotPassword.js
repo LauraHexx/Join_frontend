@@ -9,16 +9,35 @@ async function initForgotPassword() {
   toggleClass("loadingContainer", "d-none");
 }
 
-function saveEmailToResetPassword() {
-  event.preventDefault(); // Verhindert das automatische Absenden des Formulars
-  let email = document.querySelector('input[name="recipient"]').value;
+/**
+ * Checks the email to reset the password.
+ * @param {Event} event - The event object.
+ */
+function checkEmailToResetPassword() {
+  event.preventDefault();
   let existingUser = checkForExistingUser("emailForgotPassword");
   if (existingUser) {
     hideError("noUserWithThisEmail");
-    document.querySelector("form").action =
-      "http://laura-hesidenz.developerakademie.net/send_mail.php";
-    document.querySelector("form").submit();
+    saveEmailToResetPassword();
+    sendResetEmail();
   } else {
     showError("noUserWithThisEmail");
   }
+}
+
+/**
+ * Saves the email in the local storage.
+ */
+function saveEmailToResetPassword() {
+  let email = document.querySelector('input[name="recipient"]').value;
+  setItemInLocalStorage("emailToResetPassword", email);
+}
+
+/**
+ * Sends the reset email.
+ */
+function sendResetEmail() {
+  document.querySelector("form").action =
+    "http://laura-hesidenz.developerakademie.net/send_mail.php";
+  document.querySelector("form").submit();
 }
