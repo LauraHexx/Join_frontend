@@ -50,10 +50,8 @@ function toggleBlurFilter() {
  * @param {string} animationClass - The animation class to add.
  */
 function playAnimation(id, animationClass) {
-  if (bigScreen()) {
-    let element = document.getElementById(id);
-    element.classList.add(animationClass);
-  }
+  let element = document.getElementById(id);
+  element.classList.add(animationClass);
 }
 
 function bigScreen() {

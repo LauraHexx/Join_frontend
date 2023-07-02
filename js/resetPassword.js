@@ -15,6 +15,10 @@ function checkIfLinkActivated() {
   emailToReset = getItemFromLocalStorage("emailToResetPassword");
   if (emailToReset) {
     checkIfBothPasswordsAreSame();
+    hideError("linkExpired");
+  } else {
+    showError("linkExpired");
+    disableButton();
   }
 }
 
@@ -42,10 +46,21 @@ function getUserToChangePassword(id) {
  * @async
  */
 async function showAnimationNewContactSuccess() {
+  removeItemFromLocalStorage("emailToResetPassword");
   await toggleClass("passwordResetSucess", "d-none");
   await playAnimation("passwordResetSucess", "animation-moveUpAndShake");
-  setTimeout(() => {
+  await setTimeout(() => {
     toggleClass("passwordResetSucess", "animation-moveUpAndShake");
     toggleClass("passwordResetSucess", "d-none");
   }, 2000);
+  await setTimeout(() => {
+    loadTemplate("../index.html");
+  }, 1000);
+}
+
+function disableButton() {
+  document.getElementById("continueResetPasswordBtn").disabled = true;
+  document
+    .getElementById("continueResetPasswordBtn")
+    .classList.add("disableButton");
 }
