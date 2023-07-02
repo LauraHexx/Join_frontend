@@ -166,6 +166,15 @@ function getContactData(id) {
 }
 
 /**
+ * Checks if an existing user with the given email address exists.
+ * @param {string} id - The email ID to search for in the USERS array.
+ * @returns {User|undefined} The existing user if found, or undefined if not.
+ */
+function checkForExistingUser(id) {
+  return USERS.find((user) => user.email === document.getElementById(id).value);
+}
+
+/**
  * Finds an existing contact with the specified email.
  * @param {Array} contacts - The contacts array to search in.
  * @param {string} email - The email to search for.

@@ -2,7 +2,7 @@
 
 ########### CONFIG ###############
 
-$redirect = 'http://laura-hesidenz.developerakademie.net/Sakura%20-%20Resp%20Design/index.html';
+$redirect = 'http://laura-hesidenz.developerakademie.net/Join/templates/emailHasBeenSent.html';
 
 ########### CONFIG END ###########
 

@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="../css/signUp.css" />
     <link rel="stylesheet" href="../css/signUp-responsiv.css" />
     <script src="../js/storage.js"></script>
+    <script src="../js/globalVariables.js"></script>
     <script src="../js/generalFunctions.js"></script>
+    <script src="../js/sampleData.js"></script>
     <script src="../js/signUp.js"></script>
   </head>
   <body onload="initSignUp()">
@@ -34,15 +36,17 @@
         </div>
         <div class="blueLine marginTop"></div>
         <form class="form marginTop" onsubmit="checkSignUpData(); return false">
-          <input
-            required
-            id="signUpName"
-            class="input inputName"
-            type="name"
-            placeholder="Name"
-            maxlength="25"
-            minlength="2"
-            required />
+          <div class="inputContainer">
+            <input
+              required
+              id="signUpName"
+              class="input inputName"
+              type="name"
+              placeholder="Name"
+              maxlength="25"
+              minlength="2"
+              required />
+          </div>
           <div class="inputContainer">
             <input
               required

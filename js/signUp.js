@@ -15,20 +15,12 @@ async function initSignUp() {
  * Otherwise, a new user is registered.
  */
 function checkSignUpData() {
-  const existingUser = checkForExistingUser();
+  const existingUser = checkForExistingUser("signUpEmail");
   if (existingUser) {
     showError("userIsAlreadyRegistered");
   } else {
     registerNewUser();
   }
-}
-
-/**
- * Checks if an existing user with the given email address exists.
- * @returns {User|undefined} The existing user if found, or undefined if not.
- */
-function checkForExistingUser() {
-  return USERS.find((user) => user.email === signUpEmail.value);
 }
 
 /**
