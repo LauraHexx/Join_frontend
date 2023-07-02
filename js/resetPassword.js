@@ -30,8 +30,22 @@ async function changePassword(newPassword) {
   let userToChangePasswordFor = getUserToChangePassword();
   userToChangePasswordFor.password = newPassword;
   await setItem("users", JSON.stringify(USERS));
+  showAnimationNewContactSuccess();
 }
 
 function getUserToChangePassword(id) {
   return USERS.find((user) => user.email === emailToReset);
+}
+
+/**
+ * Shows a success animation after successfully adding a new contact.
+ * @async
+ */
+async function showAnimationNewContactSuccess() {
+  await toggleClass("passwordResetSucess", "d-none");
+  await playAnimation("passwordResetSucess", "animation-moveUpAndShake");
+  setTimeout(() => {
+    toggleClass("passwordResetSucess", "animation-moveUpAndShake");
+    toggleClass("passwordResetSucess", "d-none");
+  }, 2000);
 }
