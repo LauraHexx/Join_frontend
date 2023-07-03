@@ -22,12 +22,20 @@
     height: 50px;
   }
 }
+
 @media (max-width: 493px) {
   .loginNoUser {
     display: none;
   }
   .loginNoUserResponsiv {
     display: flex;
+  }
+}
+
+@media (max-width: 470px) {
+  .loginForgotPassword,
+  .loginRememberMe {
+    font-size: 13px;
   }
 }
 

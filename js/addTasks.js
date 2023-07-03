@@ -1,5 +1,6 @@
 let SELECTED_PRIO_BTN;
 let SUBTASKS = [];
+let CLICKED_PROCESS_STEP;
 
 /**
  * Sets the navigation and header for the add task page, loads data and sets the contacts and categories drop-down menu in the add task display.
@@ -8,6 +9,7 @@ let SUBTASKS = [];
 async function initAddTask() {
   await setNavAndHeader("addTask");
   await loadDataAndRenderDropDown();
+  setProcessStepForNewTask("todo");
   setEventsAddTask();
 }
 
@@ -173,6 +175,20 @@ function oneContactSelected(amountSelectedContacts) {
 
 /*CREATE NEW TASK*****************************************************************/
 
+function openAddTask(processStep) {
+  showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
+  toggleClass("body", "overflowHidden");
+  setProcessStepForNewTask(processStep);
+}
+
+function setProcessStepForNewTask(processStep) {
+  if (processStep) {
+    CLICKED_PROCESS_STEP = processStep;
+  } else {
+    CLICKED_PROCESS_STEP = "todo";
+  }
+}
+
 /**
  * Creates a task object with the provided data and initialize pushing it to the user's task list.
  */
@@ -185,7 +201,7 @@ function createTask() {
     dueDate: getDataFromInput("inputDueDate", "errorDueDate"),
     priority: getPriority(),
     subtasks: SUBTASKS,
-    processStep: "todo",
+    processStep: CLICKED_PROCESS_STEP,
   };
   checkAndPushTask(task);
 }

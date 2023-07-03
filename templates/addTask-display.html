@@ -143,27 +143,27 @@
       type="button"
       id="urgent"
       class="singlePrioBtn"
-      onclick="changeStylePrioBtn('urgent','red', '../assets/img/prioUrgent.svg')">
+      onclick="changeStylePrioBtn('urgent','red', '../assets/img/urgent.svg')">
       Urgent
-      <img src="../assets/img/prioUrgent.svg" alt="icon to show priority" />
+      <img src="../assets/img/urgent.svg" alt="icon to show priority" />
     </button>
     <button
       tabindex="7"
       type="button"
       id="medium"
       class="singlePrioBtn"
-      onclick="changeStylePrioBtn('medium','orange', '../assets/img/prioMedium.svg')">
+      onclick="changeStylePrioBtn('medium','orange', '../assets/img/medium.svg')">
       Medium
-      <img src="../assets/img/prioMedium.svg" alt="icon to show priority" />
+      <img src="../assets/img/medium.svg" alt="icon to show priority" />
     </button>
     <button
       tabindex="8"
       type="button"
       id="low"
       class="singlePrioBtn"
-      onclick="changeStylePrioBtn('low','green','../assets/img/prioLow.svg')">
+      onclick="changeStylePrioBtn('low','green','../assets/img/low.svg')">
       Low
-      <img src="../assets/img/prioLow.svg" alt="icon to show priority" />
+      <img src="../assets/img/low.svg" alt="icon to show priority" />
     </button>
   </div>
   <span id="errorPriority" class="error d-none">Please select a priority</span>
@@ -186,7 +186,7 @@
         alt="icon of plus to add
         a subtask" />
     </button>
-    <button onclick="createTask()" id="createBtn" tabindex="11">
+    <button onclick="createTask('todo')" id="createBtn" tabindex="11">
       <span>Create Task</span>
       <img
         src="../assets/img/addTaskCreate.svg"

@@ -16,10 +16,6 @@
     <link rel="stylesheet" href="../css/board-responsiv.css" />
     <link rel="stylesheet" href="../css/addTask.css" />
     <link rel="stylesheet" href="../css/addTask-responsiv.css" />
-  
-
-
-  
     <script src="../js/storage.js"></script>
     <script src="../js/globalVariables.js"></script>
     <script src="../js/sampleData.js"></script>
@@ -31,6 +27,7 @@
     <script src="../js/board-searchTasks.js"></script>
     <script src="../js/board-editAndDelete.js"></script>
     <script src="../js/addTasks.js"></script>
+    <script src="../js/addTasks-dropDown.js"></script>
     <script src="../js/addTasks-newCategory.js"></script>
     <script src="../js/addTasks-prioBtns.js"></script>
     <script src="../js/addTasks-subtasks.js"></script>
@@ -72,39 +69,47 @@
               alt="icon for searching tasks" />
           </div>
         </div>
-        <button onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"">
+        <button onclick="openAddTask('todo')">
           Add Task
           <img src="../assets/img/boardPlusWhite.svg" alt="icon to add tasks" />
         </button>
-        <img onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"class="addTaskMobile d-none" src="../assets/img/boardPlusFilled.svg" alt="icon to add tasks">
+        <img onclick="openAddTask('todo')" class="addTaskMobile d-none" src="../assets/img/boardPlusFilled.svg" alt="icon to add tasks">
       </div>
       <!--MAIN-->
       <main class="mainBoard">
         <section>
           <div class="processStep">
             <span>To Do</span>
-            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"/>
+            <div>
+              <img id="addTaskToDoImage" src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="openAddTask('todo')"/>
+            </div>
           </div>
           <div id="todo" ondrop="moveTo('todo')" ondragover="allowDrop(event); highlightArea('todo')" ondragleave="unhighlightArea('todo')" ></div>
         </section>
         <section>
           <div class="processStep">
             <span>In progress</span>
-            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')" />
+            <div>
+              <img id="addTaskInProgressImage" src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="openAddTask('inProgress')"/>
+            </div>
           </div>
           <div id="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event); highlightArea('inProgress')" ondragleave="unhighlightArea('inProgress')"  >
         </section>
         <section>
           <div class="processStep">
             <span>Awaiting Feedback</span>
-            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"/>
+            <div>
+              <img id="addTaskAwaitingFeedbackImage"  src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="openAddTask('awaitingFeedback')"/>
+            </div>   
           </div>
           <div id="awaitingFeedback" ondrop="moveTo('awaitingFeedback')" ondragover="allowDrop(event); highlightArea('awaitingFeedback')" ondragleave="unhighlightArea('awaitingFeedback')"></div>
         </section>
         <section>
           <div class="processStep">
             <span>Done</span>
-            <img src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="showDisplay('contentAddTaskDisplay', 'animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"/>
+            <div>
+              <img id="addTaskDoneImage"  src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="openAddTask('done')"/>
+            </div>
           </div>
           <div id="done" ondrop="moveTo('done')" ondragover="allowDrop(event); highlightArea('done')" ondragleave="unhighlightArea('done')"></div>
         </section>

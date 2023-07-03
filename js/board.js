@@ -29,6 +29,22 @@ async function loadDataAndRenderTasks() {
  */
 function setEventsBoard() {
   setEventCloseDropDown();
+  setEventsImageHoverAddTask("addTaskToDoImage");
+  setEventsImageHoverAddTask("addTaskInProgressImage");
+  setEventsImageHoverAddTask("addTaskAwaitingFeedbackImage");
+  setEventsImageHoverAddTask("addTaskDoneImage");
+}
+
+/**
+ * This function changes the source the add task image on hover.
+ * @param {string} id - The ID of the image element.
+ */
+function setEventsImageHoverAddTask(id) {
+  changeImageOnHover(
+    id,
+    "../assets/img/boardPlusBrightBlue.svg",
+    "../assets/img/boardPlus.svg"
+  );
 }
 
 /*SHOW TASKS IN BOARD***********************************************************************************/

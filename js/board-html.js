@@ -84,7 +84,6 @@ function renderSubtasksInDetailCardHtml(
 ) {
   return /*html*/ `
       <div class="singleSubtask">
-         <input disabled type="checkbox" onclick="changeStatusSubtask(${indexOfTask},${indexOfSubtask})" ${status} id="task${indexOfTask}subtask${indexOfSubtask}" class="checkbox">
          <span>${name}</span>
       </div>
     `;

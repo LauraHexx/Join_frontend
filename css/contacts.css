@@ -25,9 +25,6 @@ a {
 /*CONTENT*/
 
 #content {
-  max-width: calc(
-    var(--header-width) - var(--nav-width) + 2 * (var(--padding))
-  );
   position: absolute;
   left: var(--nav-width);
   top: var(--header-height);
@@ -46,6 +43,8 @@ a {
   min-width: 300px;
   max-width: 380px;
   padding: var(--padding);
+  padding-left: 60px;
+  padding-right: 60px;
   background: var(--bright-white);
   box-shadow: 4px 0px 6px rgba(0, 0, 0, 0.08);
   overflow-y: scroll;
@@ -224,6 +223,7 @@ a {
 
 .newContactBtnContainer {
   position: absolute;
+  right: 20px;
   bottom: 20px;
 }
 

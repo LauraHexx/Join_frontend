@@ -1,3 +1,14 @@
+@media only screen and (max-width: 1300px) {
+  #contactList {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .headline {
+    padding-left: 200px;
+  }
+}
+
 @media only screen and (max-width: 1020px) {
   .gap {
     gap: 20px;
@@ -47,10 +58,6 @@
     margin-top: 20px;
   }
 
-  .newContactBtnMobileContainer {
-    display: flex !important;
-  }
-
   .newContactBtnContainer {
     display: none;
   }
@@ -64,14 +71,17 @@
   }
 
   .newContactBtnMobileContainer {
-    display: flex;
+    position: fixed;
+    bottom: var(--nav-height-mobile);
+    right: 4px;
+    display: flex !important;
     padding: 20px;
-    padding-bottom: 0;
+    padding-bottom: 13px;
   }
 
   .newContactBtn {
-    width: 165px;
-    height: 43px;
+    width: 151px;
+    height: 35px;
   }
 
   #contactDetails {
