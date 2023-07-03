@@ -3,7 +3,8 @@ function renderTasksHtml(
   task,
   colorCategory,
   amountSubtasks,
-  amountFinishedSubtasks
+  amountFinishedSubtasks,
+  classSubtasts
 ) {
   return /*html*/ `
       <div draggable="true" ondragstart="startDragging(${indexOfTask})" id="task${indexOfTask}" class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
@@ -12,7 +13,7 @@ function renderTasksHtml(
   }</div>
         <div class="bold fontSize14px title">${task.title}</div>
         <span class="description fontSize14px">${task.description}</span>
-        <div class="progressContainer">
+        <div class="${classSubtasts}">
           <div class="progress">
             <div class="progress-bar" style="width: ${getPercentageProgress(
               amountSubtasks,

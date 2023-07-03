@@ -81,15 +81,30 @@ function setDataTaskCard(task) {
   const processStep = task.processStep;
   const contactsIds = task.contacts;
   const amountSubtasks = task.subtasks.length;
+  const classSubtasts = getStyleClassForSubtasks(amountSubtasks);
   const amountFinishedSubtasks = countAmountOfFinishedSubtasks(task);
   document.getElementById(processStep).innerHTML += renderTasksHtml(
     indexOfTask,
     task,
     colorCategory,
     amountSubtasks,
-    amountFinishedSubtasks
+    amountFinishedSubtasks,
+    classSubtasts
   );
   renderContactsInTaskCards(indexOfTask, contactsIds);
+}
+
+/**
+ * Returns the style class for subtasks based on the amount of subtasks.
+ * If the amount of subtasks is greater than 0, it returns "progressContainer".
+ * Otherwise, it returns "d-none".
+ * @param {number} amountSubtasks - The number of subtasks.
+ * @returns {string} The style class for subtasks.
+ */
+function getStyleClassForSubtasks(amountSubtasks) {
+  if (amountSubtasks > 0) {
+    return "progressContainer";
+  } else return "d-none";
 }
 
 /**
