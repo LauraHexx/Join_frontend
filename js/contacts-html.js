@@ -70,7 +70,7 @@ function renderEditContactHtml() {
       <div onclick="event.stopPropagation()" class="displayEditContact">
         <div class="leftSectionEdit">
           <img
-            onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
+            onclick="hideDisplay('contentEditDisplay','animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"
             class="cursorPointer closeWhite d-none"
             src="../assets/img/closeWhite.svg"
             alt="image of icon to close the editing" />
@@ -83,7 +83,7 @@ function renderEditContactHtml() {
         </div>
         <div class="rightSectionEdit">
           <img
-            onclick="hideDisplay('contentEditDisplay', 'd-none'); toggleClass('body', 'overflowHidden')"
+            onclick="hideDisplay('contentEditDisplay','animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')"
             class="cursorPointer closeDarkEdit"
             src="../assets/img/closeDark.svg"
             alt="image of icon to close the adding" />

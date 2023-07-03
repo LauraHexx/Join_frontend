@@ -68,7 +68,7 @@ async function addNewContact(newContact) {
  */
 function closeAddContact() {
   cancelAddContact();
-  hideDisplay("contentAddDisplay", "d-none");
+  hideDisplay("contentAddDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
 }
 

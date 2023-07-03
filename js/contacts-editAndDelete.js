@@ -4,10 +4,10 @@
  * Renders the edit contact display.
  */
 function renderEditContact() {
+  showDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
+  toggleClass("body", "overflowHidden");
   document.getElementById("contentEditDisplay").innerHTML =
     renderEditContactHtml();
-  toggleClass("body", "overflowHidden");
-  showDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
 }
 
 /**
@@ -55,7 +55,7 @@ function filterContacts() {
  */
 async function saveEdits() {
   closeDetailInfos();
-  hideDisplay("contentEditDisplay", "d-none");
+  hideDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
   changeData();
   await setItem("users", JSON.stringify(USERS));
@@ -78,7 +78,7 @@ function changeData() {
  * Deletes the selected contact.
  */
 async function deleteContact() {
-  hideDisplay("contentEditDisplay", "d-none");
+  hideDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "ovegetDataEditContactrflowHidden");
   closeDetailInfos();
   deleteContactFromContactList();

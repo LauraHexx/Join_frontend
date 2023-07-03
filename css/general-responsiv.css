@@ -59,15 +59,3 @@
     height: 50px;
   }
 }
-
-@media (max-width: 470px) {
-  .display {
-    width: 297px !important;
-    padding: 20px;
-  }
-
-  button {
-    width: 125px;
-    height: 35px;
-  }
-}

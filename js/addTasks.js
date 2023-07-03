@@ -386,7 +386,7 @@ function toggleNewCategory() {
  */
 function closeAddTask() {
   toggleClass("body", "overflowHidden");
-  hideDisplay("contentAddTaskDisplay", "d-none");
+  hideDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
   clearTask();
   document.getElementById("clearBtn").classList.remove("d-none");
   document.getElementById("createBtn").classList.remove("d-none");

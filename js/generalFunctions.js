@@ -54,6 +54,18 @@ function playAnimation(id, animationClass) {
   element.classList.add(animationClass);
 }
 
+/**
+ * Delets an animation on an element by removing the specified animation class.
+ * @param {string} id - The ID of the element.
+ * @param {string} animationClass - The animation class to remove.
+ */
+function deleteAnimation(id, animationClass) {
+  let element = document.getElementById(id);
+  if (element.classList.contains(animationClass)) {
+    element.classList.remove(animationClass);
+  }
+}
+
 function bigScreen() {
   return window.innerWidth > 920;
 }
@@ -251,7 +263,8 @@ function showDisplay(id, animationClass, className) {
  * @param {string} id - The ID of the display element.
  * @param {string} className - The class to be toggled.
  */
-function hideDisplay(id, className) {
+function hideDisplay(id, animationClass, className) {
+  deleteAnimation(id, animationClass);
   toggleClass(id, className);
   toggleBlurFilter();
 }

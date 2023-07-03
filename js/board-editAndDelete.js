@@ -4,7 +4,7 @@
  * Renders the edit task display.
  */
 function renderEditTask() {
-  hideDisplay("containerDetails", "d-none");
+  hideDisplay("containerDetails", "animation-slideInRight", "d-none");
   showDisplay("contentAddTaskDisplay", "animation-slideInRight", "d-none");
   changeStyleBtnsInEditTask();
   setDataTaskToEditDisplay();
@@ -125,7 +125,7 @@ async function deleteTask() {
   const indexOfTask = TASKS.indexOf(SELECTED_TASK);
   TASKS.splice(indexOfTask, 1);
   await setItem("users", JSON.stringify(USERS));
-  hideDisplay("containerDetails", "d-none");
+  hideDisplay("containerDetails", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
   initBoard();
 }
