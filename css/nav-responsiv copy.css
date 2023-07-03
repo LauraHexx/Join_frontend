@@ -102,7 +102,7 @@
 
 @media only screen and (max-height: 660px) {
   nav {
-    gap: 60px;
+    gap: 45px;
   }
 
   nav span {
@@ -115,27 +115,5 @@
 
   .navSections {
     gap: 25px;
-  }
-}
-
-@media only screen and (max-height: 590px) {
-  nav {
-    gap: 40px;
-  }
-}
-
-@media only screen and (max-height: 550px) {
-  nav {
-    gap: 25px;
-  }
-}
-
-@media only screen and (max-height: 520px) {
-  .logo img {
-    height: 69px;
-  }
-
-  nav {
-    padding-top: 35px;
   }
 }
