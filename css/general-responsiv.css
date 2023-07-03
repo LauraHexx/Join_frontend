@@ -5,7 +5,7 @@
 
   .contentAfterLogin {
     margin-left: unset;
-    padding-bottom: var(--nav-height-mobile) !important;
+    padding-bottom: calc(var(--nav-height-mobile) + 10px) !important;
     padding: var(--padding);
   }
 
@@ -20,7 +20,9 @@
   }
 
   #loadingContainer {
+    position: fixed;
     left: 0;
+    top: var(--header-height);
     bottom: var(--nav-height-mobile);
   }
 }

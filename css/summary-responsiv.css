@@ -102,4 +102,8 @@
   .fontBig {
     font-size: 35px;
   }
+
+  .descriptionProgressAmount {
+    font-size: 13px;
+  }
 }
