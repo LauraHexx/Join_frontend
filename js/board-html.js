@@ -37,7 +37,7 @@ function renderTaskDetailsHtml(colorCategory, colorPrio) {
       <div onclick="event.stopPropagation()" class="displayEdit">
         <div class="headContainer">
           <div class="category ${colorCategory}">${SELECTED_TASK.category}</div>
-          <img onclick= "hideDisplay('containerDetails','animation-slideInRight','d-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
+          <img onclick= "hideDisplay('containerDetails','animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
         </div>
         <span id="titleDisplay">${SELECTED_TASK.title}</span>
         <span id="descriptionDisplay">${SELECTED_TASK.description}</span>

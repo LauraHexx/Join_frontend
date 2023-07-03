@@ -44,7 +44,7 @@
   }
 
   .clearAndCreateBtns button {
-    width: 32px;
+    width: 32px !important;
     height: 31px;
     justify-content: center;
     padding: 5px;

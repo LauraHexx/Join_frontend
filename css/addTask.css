@@ -334,8 +334,8 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   position: absolute;
   bottom: 0;
   display: flex;
-  justify-content: flex-start;
-  gap: 20px;
+  justify-content: flex-end;
+  gap: 9px;
 }
 
 .clearAndCreateBtns button {

@@ -97,9 +97,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 15px;
 }
 
 #cancelAddContact {
+  font-size: 15px;
   width: 150px;
   color: var(--dark-blue);
   border-color: var(--dark-blue);

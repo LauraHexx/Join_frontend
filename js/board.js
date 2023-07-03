@@ -28,6 +28,7 @@ async function loadDataAndRenderTasks() {
  * Sets event listeners for the board page.
  */
 function setEventsBoard() {
+  setEventListenerHoverBtn();
   setEventCloseDropDown();
   setEventsImageHoverAddTask("addTaskToDoImage");
   setEventsImageHoverAddTask("addTaskInProgressImage");
