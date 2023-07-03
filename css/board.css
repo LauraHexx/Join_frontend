@@ -402,10 +402,8 @@ section {
   right: -5px !important;
 }
 
-/*DRAG & DROP*/
-
-.dragArea {
-  background-color: #eae8e8;
-  border: 3px solid #afa9a9;
-  border-radius: 30px;
+#containerSubtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }

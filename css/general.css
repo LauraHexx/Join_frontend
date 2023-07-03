@@ -271,3 +271,9 @@ button:hover:not(.selectedPrioBtn) {
 ::-webkit-scrollbar-thumb {
   background: #888;
 }
+
+.dragArea {
+  background-color: #eae8e8;
+  border: 3px solid #afa9a9;
+  border-radius: 30px;
+}

@@ -42,3 +42,30 @@ function highlightArea(id) {
 function unhighlightArea(id) {
   document.getElementById(id).classList.remove("dragArea");
 }
+
+// Touch events for drag and drop
+function touchStart(event, index) {
+  event.preventDefault();
+  startDragging(index);
+}
+
+function touchMove(event) {
+  event.preventDefault();
+}
+
+function touchEnd(event, processStep) {
+  event.preventDefault();
+  moveTo(processStep);
+}
+
+// Add touch event handlers to draggable elements
+const draggableElements = document.getElementsByClassName("singleCard");
+for (let i = 0; i < draggableElements.length; i++) {
+  draggableElements[i].addEventListener("touchstart", (event) =>
+    touchStart(event, i)
+  );
+  draggableElements[i].addEventListener("touchmove", touchMove);
+  draggableElements[i].addEventListener("touchend", (event) =>
+    touchEnd(event, draggableElements[i].parentNode.id)
+  );
+}
