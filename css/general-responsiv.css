@@ -5,7 +5,7 @@
 
   .contentAfterLogin {
     margin-left: unset;
-    padding-bottom: var(--header-height);
+    padding-bottom: var(--nav-height-mobile) !important;
     padding: var(--padding);
   }
 
