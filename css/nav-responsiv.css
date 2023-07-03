@@ -27,6 +27,10 @@
     gap: unset;
   }
 
+  .navSectionLegalNotice {
+    display: none;
+  }
+
   .navSections a {
     display: flex;
     flex-direction: column;
