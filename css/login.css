@@ -10,6 +10,10 @@
   background-color: var(--dark-blue);
 }
 
+input {
+  font-size: 17px;
+}
+
 /*HEADER*/
 
 .loginHeader {

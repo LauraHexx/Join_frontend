@@ -1,3 +1,10 @@
+@media only screen and (max-width: 1150px) {
+  .display {
+    padding: 20px;
+    width: 387px;
+  }
+}
+
 @media (max-height: 920px) {
   .loginHeader img {
     width: 40px;
@@ -8,6 +15,15 @@
 @media only screen and (max-width: 600px) {
   h1 {
     font-size: 35px;
+  }
+
+  button {
+    width: 130px;
+    height: 40px;
+  }
+
+  input {
+    font-size: 15px;
   }
 }
 
@@ -25,12 +41,23 @@
   .loginNoUserResponsiv {
     display: flex;
   }
+  .display {
+    padding: 15px;
+    width: 340px;
+  }
 }
 
 @media (max-width: 470px) {
   .loginForgotPassword,
   .loginRememberMe {
     font-size: 13px;
+  }
+}
+
+@media (max-width: 400px) {
+  .display {
+    padding: 15px 10px;
+    width: 320px;
   }
 }
 
