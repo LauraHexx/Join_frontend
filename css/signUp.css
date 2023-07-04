@@ -11,3 +11,7 @@
 #loadingContainer {
   left: 0;
 }
+
+input {
+  font-size: 17px;
+}

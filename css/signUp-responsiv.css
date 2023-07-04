@@ -7,4 +7,29 @@
   h1 {
     font-size: 35px;
   }
+
+  input {
+    font-size: 15px;
+  }
+
+  button {
+    width: 118px;
+    height: 37px;
+  }
+}
+
+@media only screen and (max-width: 460px) {
+  h1 {
+    font-size: 25px;
+  }
+
+  .display {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  h1 {
+    font-size: 22px;
+  }
 }
