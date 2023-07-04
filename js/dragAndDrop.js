@@ -20,10 +20,10 @@ function allowDrop(ev) {
  * Moves the dragged element to the specified process step.
  * @param {string} processStep - The process step to move the element to.
  */
-async function moveTo(processStep) {
+async function moveTo(processStep, highlightArea) {
   TASKS[currentDraggedElement].processStep = processStep;
   await setItem("users", JSON.stringify(USERS));
-  unhighlightArea(processStep);
+  unhighlightArea(highlightArea);
   renderTasks();
 }
 

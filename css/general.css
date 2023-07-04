@@ -275,5 +275,5 @@ button:hover:not(.selectedPrioBtn) {
 .dragArea {
   background-color: #eae8e8;
   border: 3px solid #afa9a9;
-  border-radius: 30px;
+  border-radius: 0px 0px 30px 30px;
 }

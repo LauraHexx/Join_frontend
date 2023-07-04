@@ -75,6 +75,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 7px;
 }
 
 .processStep span {
@@ -86,10 +87,6 @@ section {
   width: 23px;
   height: 23px;
   cursor: pointer;
-}
-
-.processStep {
-  margin-bottom: 15px;
 }
 
 #todo,

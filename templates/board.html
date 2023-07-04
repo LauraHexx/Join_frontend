@@ -77,41 +77,41 @@
       </div>
       <!--MAIN-->
       <main class="mainBoard">
-        <section>
+        <section id="sectionToDo" ondrop="moveTo('todo', 'sectionToDo')" ondragover="allowDrop(event); highlightArea('sectionToDo')" ondragleave="unhighlightArea('sectionToDo')" >
           <div class="processStep">
             <span>To Do</span>
             <div>
               <img id="addTaskToDoImage" src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="openAddTask('todo')"/>
             </div>
           </div>
-          <div id="todo" ondrop="moveTo('todo')" ondragover="allowDrop(event); highlightArea('todo')" ondragleave="unhighlightArea('todo')" ></div>
+          <div id="todo"></div>
         </section>
-        <section>
+        <section id="sectionInProgress" ondrop="moveTo('inProgress', 'sectionInProgress')" ondragover="allowDrop(event); highlightArea('sectionInProgress')" ondragleave="unhighlightArea('sectionInProgress')" >
           <div class="processStep">
             <span>In progress</span>
             <div>
               <img id="addTaskInProgressImage" src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="openAddTask('inProgress')"/>
             </div>
           </div>
-          <div id="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event); highlightArea('inProgress')" ondragleave="unhighlightArea('inProgress')"  >
+          <div id="inProgress">
         </section>
-        <section>
+        <section id="sectionAwaitingFeedback" ondrop="moveTo('awaitingFeedback', 'sectionAwaitingFeedback')" ondragover="allowDrop(event); highlightArea('sectionAwaitingFeedback')" ondragleave="unhighlightArea('sectionAwaitingFeedback')">
           <div class="processStep">
             <span>Awaiting Feedback</span>
             <div>
               <img id="addTaskAwaitingFeedbackImage"  src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="openAddTask('awaitingFeedback')"/>
             </div>   
           </div>
-          <div id="awaitingFeedback" ondrop="moveTo('awaitingFeedback')" ondragover="allowDrop(event); highlightArea('awaitingFeedback')" ondragleave="unhighlightArea('awaitingFeedback')"></div>
+          <div id="awaitingFeedback"></div>
         </section>
-        <section>
+        <section id="sectionDone" ondrop="moveTo('done', 'sectionDone')" ondragover="allowDrop(event); highlightArea('sectionDone')" ondragleave="unhighlightArea('sectionDone')">
           <div class="processStep">
             <span>Done</span>
             <div>
               <img id="addTaskDoneImage"  src="../assets/img/boardPlus.svg" alt="icon to add a task" onclick="openAddTask('done')"/>
             </div>
           </div>
-          <div id="done" ondrop="moveTo('done')" ondragover="allowDrop(event); highlightArea('done')" ondragleave="unhighlightArea('done')"></div>
+          <div id="done"></div>
         </section>
       </main>
     </div>    
