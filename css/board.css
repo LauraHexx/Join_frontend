@@ -407,3 +407,21 @@ section {
   flex-direction: column;
   gap: 4px;
 }
+
+.headTaskCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.containerArrows {
+  display: none;
+  align-items: center;
+  gap: 15px;
+}
+
+.headTaskCard img {
+  width: 23px;
+  height: 23px;
+}

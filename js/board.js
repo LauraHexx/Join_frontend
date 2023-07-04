@@ -1,4 +1,5 @@
 let SELECTED_TASK = "";
+let PROCESS_STEPS = ["todo", "inProgress", "awaitingFeedback", "done"];
 
 /**
  * Sets the navigation and header for the board page, loads data and sets the contacts and categories drop-down menu in the add task display.
@@ -230,6 +231,68 @@ function appendContactHtml(indexOfTask, initials, color) {
  */
 function getPercentageProgress(amountSubtasks, amountFinishedSubtasks) {
   return (amountFinishedSubtasks / amountSubtasks) * 100 + "%";
+}
+
+/*CHANGE PROCESS STEPS WITH ARROWS ON MOBILE DEVICES*******************************************************/
+
+/**
+ * Changes the process step of a task based on the given direction.
+ * @param {number} indexOfTask - The index of the task in the TASKS array.
+ * @param {string} direction - The direction of the process step change ("back" or "forward").
+ */
+function changeProcessStepOfTask(indexOfTask, direction) {
+  let currentProcessStep = TASKS[indexOfTask].processStep;
+  if (direction == "back") {
+    let newProcessStepIndex = changeProcessStepOfTaskBack(currentProcessStep);
+    changeProcessStepInData(indexOfTask, newProcessStepIndex);
+  }
+  if (direction == "forward") {
+    let newProcessStepIndex =
+      changeProcessStepOfTaskForward(currentProcessStep);
+    changeProcessStepInData(indexOfTask, newProcessStepIndex);
+  }
+}
+
+/**
+ * Changes the process step of a task to the previous step.
+ * @param {string} currentProcessStep - The current process step of the task.
+ * @returns {number} - The index of the new process step.
+ */
+function changeProcessStepOfTaskBack(currentProcessStep) {
+  let processStepsAmount = PROCESS_STEPS.length;
+  let currentProcessStepIndex = PROCESS_STEPS.indexOf(currentProcessStep);
+
+  let newProcessStepIndex = currentProcessStepIndex - 1;
+  if (newProcessStepIndex < 0) {
+    newProcessStepIndex = processStepsAmount - 1;
+  }
+  return newProcessStepIndex;
+}
+
+/**
+ * Changes the process step of a task to the next step.
+ * @param {string} currentProcessStep - The current process step of the task.
+ * @returns {number} - The index of the new process step.
+ */
+function changeProcessStepOfTaskForward(currentProcessStep) {
+  let processStepsAmount = PROCESS_STEPS.length;
+  let currentProcessStepIndex = PROCESS_STEPS.indexOf(currentProcessStep);
+  let newProcessStepIndex = currentProcessStepIndex + 1;
+  if (newProcessStepIndex > processStepsAmount - 1) {
+    newProcessStepIndex = 0;
+  }
+  return newProcessStepIndex;
+}
+
+/**
+ * Changes the process step of a task in the data.
+ * @param {number} indexOfTask - The index of the task in the TASKS array.
+ * @param {number} newProcessStepIndex - The index of the new process step.
+ */
+async function changeProcessStepInData(indexOfTask, newProcessStepIndex) {
+  TASKS[indexOfTask].processStep = PROCESS_STEPS[newProcessStepIndex];
+  await setItem("users", JSON.stringify(USERS));
+  initBoard();
 }
 
 /*DETAILS OF SINGLE TASK***********************************************************************************/
