@@ -41,3 +41,20 @@ function sendResetEmail() {
     "http://laura-hesidenz.developerakademie.net/Join/send_mail.php";
   document.querySelector("form").submit();
 }
+
+/**
+ * Sends form data
+ * @param {FormData} formData - The form data to send.
+ */
+function sendMail(formData) {
+  event.preventDefault();
+  fetch("https://formspree.io/f/xbjngpll", {
+    method: "POST",
+    body: formData,
+    headers: {
+      Accept: "application/json",
+    },
+  }).catch((error) => {
+    console.log(error);
+  });
+}
