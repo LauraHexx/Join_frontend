@@ -34,10 +34,10 @@ const SAMPLE_DATA_CONTACTS = [
   {
     id: 5,
     color: "#462F8A",
-    name: "Laura Residenz",
-    email: "laura.residenz@test",
-    phone: 0123456766,
-    initials: "LR",
+    name: "Laura Hesidenz",
+    email: "l.hesidenz@gmail.com",
+    phone: 015782536044,
+    initials: "LH",
   },
   {
     id: 6,
