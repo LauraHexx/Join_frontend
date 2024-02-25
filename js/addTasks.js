@@ -122,11 +122,14 @@ function renderSavedContacts() {
  * Toggles the checkbox state of a contact with the given id.
  * If the checkbox is checked, it will be unchecked, and vice versa.
  * @param {string} id - The id of the checkbox to toggle.
+ * @param {string} name - name of the selected contact.
  */
-function toggleCheckbox(id) {
+function toggleCheckbox(id, name) {
   const checkbox = document.getElementById(`checkBoxUser${id}`);
   checkbox.checked = !checkbox.checked;
   changeTitleContactInput();
+
+  showSelectedContact(name);
 }
 
 /**

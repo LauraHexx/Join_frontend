@@ -20,8 +20,8 @@
   <span id="errorDescription" class="error d-none"
     >Please enter a description</span
   >
-  <span>Category</span>
   <!--CATEGORY-->
+  <span>Category</span>
   <div id="selectCategoryDiv" tabindex="3">
     <div id="selectCategoryTitleDiv">
       <span id="selectCategoryTitle">Select task category</span>
@@ -64,7 +64,6 @@
   <span id="errorNewCategoryNoNameEntered" class="d-none"
     >Please enter a name for the new category</span
   >
-
   <div id="newCategoryColorSelection" class="d-none">
     <div
       onclick="moveSelectedColorCircleUp(event)"
@@ -110,13 +109,20 @@
     <ul id="listContacts" class="listDropDown d-none">
       <div id="loggedUserContact">
         <li class="oneContact" onclick="event.stopPropagation();">
-          <div onclick="toggleCheckbox(0)" class="toggleCheckbox"></div>
+          <div
+            onclick="toggleCheckbox(0, LOGGED_USER.name)"
+            class="toggleCheckbox"></div>
           <label class="nameOfContact">You</label>
           <input id="checkBoxUser0" type="checkbox" />
         </li>
       </div>
       <div id="savedContacts"></div>
     </ul>
+  </div>
+  <div id="clickedContacts">
+    <div style="background-color: blue" class="initialsOfClickedContact circle">
+      EM
+    </div>
   </div>
 </section>
 <div class="partingLine"></div>
@@ -127,11 +133,13 @@
     id="closeDisplay"
     src="../assets/img/boardCloseDisplay.svg"
     alt="icon to close display" />
+  <!--Due date-->
   <span>Due date</span>
   <div>
     <input type="date" id="inputDueDate" value="dd/mm/yyyy" tabindex="5" />
   </div>
   <span id="errorDueDate" class="error d-none">Please select a due day</span>
+  <!--Prio-->
   <span>Prio</span>
   <div class="prioBtns">
     <button
