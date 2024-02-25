@@ -1,6 +1,7 @@
 let SELECTED_PRIO_BTN;
 let SUBTASKS = [];
 let CLICKED_PROCESS_STEP;
+let CLICKED_CONTACTS = [];
 
 /**
  * Sets the navigation and header for the add task page, loads data and sets the contacts and categories drop-down menu in the add task display.
@@ -111,33 +112,80 @@ function renderSavedContacts() {
   CONTACTS.forEach((contact) => {
     const name = contact.name;
     const id = contact.id;
+    const color = contact.color;
     document.getElementById("savedContacts").innerHTML += renderContactsHtml(
       name,
-      id
+      id,
+      color
     );
   });
 }
 
 /**
- * Toggles the checkbox state of a contact with the given id.
- * If the checkbox is checked, it will be unchecked, and vice versa.
- * @param {string} id - The id of the checkbox to toggle.
- * @param {string} name - name of the selected contact.
+ * Toggles the checkbox state and initializes the display of clicked contacts.
+ * @param {string} id - The ID of the checkbox to toggle.
  */
-function toggleCheckbox(id, name) {
+function toggleCheckbox(id) {
   const checkbox = document.getElementById(`checkBoxUser${id}`);
   checkbox.checked = !checkbox.checked;
-  changeTitleContactInput();
-
-  showSelectedContact(name);
+  let selectedCheckboxes = getSelectedCheckboxes();
+  let amountSelectedContacts = selectedCheckboxes.length;
+  addOrRemoveContactToArray(checkbox, id);
+  renderTwoClickedContacts(id, checkbox, amountSelectedContacts);
+  renderRestAmountClickedContacts(amountSelectedContacts);
+  changeTitleContactInput(amountSelectedContacts);
 }
 
 /**
- * Updates the title of the contact input based on the number of selected contacts.
+ * Adds or removes the contact ID from the CLICKED_CONTACTS array based on the checkbox state.
+ * @param {HTMLInputElement} checkbox - The checkbox element.
+ * @param {string} id - The ID of the contact.
  */
-function changeTitleContactInput() {
-  let selectedCheckboxes = getSelectedCheckboxes();
-  let amountSelectedContacts = selectedCheckboxes.length;
+function addOrRemoveContactToArray(checkbox, id) {
+  if (checkbox.checked) {
+    CLICKED_CONTACTS.push(id);
+  } else {
+    const index = CLICKED_CONTACTS.indexOf(id);
+    CLICKED_CONTACTS.splice(index, 1);
+  }
+}
+
+/**
+ * Renders the two clicked contacts.
+ * @param {string} id - The ID of the clicked contact.
+ * @param {HTMLInputElement} checkbox - The checkbox element of the clicked contact.
+ * @param {number} amountSelectedContacts - The total number of clicked contacts.
+ */
+function renderTwoClickedContacts(id, checkbox, amountSelectedContacts) {
+  document.getElementById("clickedContacts").innerHTML = "";
+  for (let i = 0; i < 2; i++) {
+    const id = CLICKED_CONTACTS[i];
+    if (id) {
+      const clickedContact = getContactData(id);
+      document.getElementById("clickedContacts").innerHTML +=
+        renderTwoClickedContactsHtml(clickedContact);
+    }
+  }
+}
+
+/**
+ * Renders the remaining amount of clicked contacts.
+ * @param {number} amountSelectedContacts - The total number of clicked contacts.
+ */
+function renderRestAmountClickedContacts(amountSelectedContacts) {
+  document.getElementById("restAmountContacts").innerHTML = "";
+  if (CLICKED_CONTACTS.length > 2) {
+    const furtherAmountOfContacts = amountSelectedContacts - 2;
+    document.getElementById("restAmountContacts").innerHTML =
+      renderRestAmountClickedContactsHtml(furtherAmountOfContacts);
+  }
+}
+
+/**
+ * Changes the title of the contact input based on the number of clicked contacts.
+ * @param {number} amountSelectedContacts - The total number of clicked contacts.
+ */
+function changeTitleContactInput(amountSelectedContacts) {
   const selectContactsTitle = document.getElementById("selectContactsTitle");
   if (noContactsSelected(amountSelectedContacts)) {
     selectContactsTitle.innerHTML = "Select contacts to assign";
@@ -312,6 +360,9 @@ function clearTask() {
     "Select task category";
   document.getElementById("selectContactsTitle").innerHTML =
     "Select contacts to assign";
+  document.getElementById("clickedContacts").innerHTML = "";
+  document.getElementById("restAmountContacts").innerHTML = "";
+  CLICKED_CONTACTS = [];
   clearCheckedContacts();
   document.getElementById("inputDueDate").value = "";
   clearPrioBtn();

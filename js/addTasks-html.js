@@ -16,14 +16,30 @@ function renderSelectedCategoryHtml(name, color) {
   `;
 }
 
-function renderContactsHtml(name, id) {
+function renderContactsHtml(name, id, color) {
   return /*html*/ `
       <li class="oneContact" onclick="event.stopPropagation();">
-        <div onclick="toggleCheckbox(${id})" class="toggleCheckbox"></div>
+        <div onclick="toggleCheckbox(${id}, '${name}', '${color}')" class="toggleCheckbox"></div>
         <label class="nameOfContact">${name}</label>
         <input id="checkBoxUser${id}" type="checkbox"/>
       </li>
-    `;
+  `;
+}
+
+function renderTwoClickedContactsHtml(clickedContact) {
+  return /*html*/ `
+      <div id="clickedContact${clickedContact.id}" style="background-color: ${clickedContact.color}" class="initialsOfClickedContact circleContact">
+        ${clickedContact.initials}
+      </div>
+  `;
+}
+
+function renderRestAmountClickedContactsHtml(furtherAmountOfContacts) {
+  return /*html*/ `
+      <div style="background-color: blue" class="initialsOfClickedContact circleContact">
+        +${furtherAmountOfContacts}
+      </div>
+  `;
 }
 
 function renderSubtasksHtml(subtask, indexOfSubtask, status) {

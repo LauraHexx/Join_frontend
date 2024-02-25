@@ -110,7 +110,7 @@
       <div id="loggedUserContact">
         <li class="oneContact" onclick="event.stopPropagation();">
           <div
-            onclick="toggleCheckbox(0, LOGGED_USER.name)"
+            onclick="toggleCheckbox(0, LOGGED_USER.name, LOGGED_USER.color)"
             class="toggleCheckbox"></div>
           <label class="nameOfContact">You</label>
           <input id="checkBoxUser0" type="checkbox" />
@@ -119,10 +119,9 @@
       <div id="savedContacts"></div>
     </ul>
   </div>
-  <div id="clickedContacts">
-    <div style="background-color: blue" class="initialsOfClickedContact circle">
-      EM
-    </div>
+  <div class="clickedContacts-container">
+    <div id="clickedContacts"></div>
+    <div id="restAmountContacts"></div>
   </div>
 </section>
 <div class="partingLine"></div>
