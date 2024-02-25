@@ -74,7 +74,7 @@ const SAMPLE_DATA_TASKS = [
     description: "Implement a new feature in the software",
     category: "Developing",
     contacts: [1, 3, 4, 5],
-    dueDate: "2023-07-05",
+    dueDate: "2025-07-05",
     priority: "medium",
     subtasks: [
       {
@@ -93,7 +93,7 @@ const SAMPLE_DATA_TASKS = [
     description: "Schedule and conduct performance reviews for employees",
     category: "HR",
     contacts: [2, 4],
-    dueDate: "2023-07-07",
+    dueDate: "2024-01-07",
     priority: "urgent",
     subtasks: [
       {
@@ -112,7 +112,7 @@ const SAMPLE_DATA_TASKS = [
     description: "Plan and execute a new marketing campaign",
     category: "Marketing",
     contacts: [5],
-    dueDate: "2023-07-10",
+    dueDate: "2025-07-10",
     priority: "medium",
     subtasks: [
       {
@@ -131,7 +131,7 @@ const SAMPLE_DATA_TASKS = [
     description: "Contact potential leads and follow up on sales inquiries",
     category: "Sales",
     contacts: [6, 2, 3],
-    dueDate: "2023-07-12",
+    dueDate: "2024-07-12",
     priority: "low",
     subtasks: [
       {
@@ -150,7 +150,7 @@ const SAMPLE_DATA_TASKS = [
     description: "Coordinate and plan a training session for employees",
     category: "HR",
     contacts: [1, 3],
-    dueDate: "2023-07-15",
+    dueDate: "2024-07-15",
     priority: "medium",
     subtasks: [
       {
