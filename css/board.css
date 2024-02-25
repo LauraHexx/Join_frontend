@@ -303,7 +303,7 @@ section {
 
 .deleteBtn:hover {
   background-color: unset !important;
-  transition: 0.5s;
+  transition: 0.4s;
 }
 
 .deleteBtn img {
