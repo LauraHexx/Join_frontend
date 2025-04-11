@@ -1,36 +1,79 @@
-const STORAGE_TOKEN = "7UZ5X5I5WB9QXP3A4FQ3A68EKW7UFS8COHLKQ15J";
-const STORAGE_URL = "https://remote-storage.developerakademie.org/item";
+const URL_REGISTRATION = "http://127.0.0.1:8000/api/v1/auth/registration/";
+const URL_LOGIN = "http://127.0.0.1:8000/api/v1/auth/login/";
+const URL_GUEST_LOGIN = "http://127.0.0.1:8000/api/v1/auth/login/";
+const URL_LOGOUT = "http://127.0.0.1:8000/api/v1/auth/logout/";
+
+const URL_USERS = "http://127.0.0.1:8000/api/v1/users/";
+const URL_TASKS = "http://127.0.0.1:8000/api/v1/tasks/";
+const URL_SUBTASKS = "http://127.0.0.1:8000/api/v1/subtasks/";
+const URL_CATEGORIES = "http://127.0.0.1:8000/api/v1/categories/";
+const URL_CONTACTS = "http://127.0.0.1:8000/api/v1/contacts/";
 
 /**
- * Sets an item in the storage.
- * @param {string} key - The key for the item.
- * @param {any} value - The value to be stored.
- * @returns {Promise<object>} A Promise that resolves to the response JSON object.
+ * Sends a GET request to the specified URL with the given token.
+ * @param {string} url - The URL to send the GET request to.
+ * @param {string} token - The authentication token to authorize the request.
+ * @returns {Promise<any>} A Promise that resolves to the parsed JSON data.
+ * @throws {Error} Throws an error if the response is not OK.
  * @async
  */
-async function setItem(key, value) {
-  const payload = { key, value, token: STORAGE_TOKEN };
-  return fetch(STORAGE_URL, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  }).then((res) => res.json());
+async function getRequest(url, token) {
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+  });
+  return handleResponse(response);
 }
 
 /**
- * Retrieves the value of an item from the storage.
- * @param {string} key - The key of the item to retrieve.
- * @returns {Promise<any>} A Promise that resolves to the value of the item.
- * @throws {string} Throws an error if the item with the specified key is not found.
+ * Sends a POST request to the specified URL with the given payload and authentication token.
+ * @param {string} url - The URL to send the POST request to.
+ * @param {object} payload - The data to be sent in the body of the request.
+ * @param {string} token - The authentication token to authorize the request.
+ * @returns {Promise<Response>} A Promise that resolves to the response from the server.
  * @async
  */
-async function getItem(key) {
-  const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-  return fetch(url)
-    .then((res) => res.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data.value;
-      }
-      throw `Could not find data with key "${key}".`;
-    });
+async function sendRequestWithToken(url, payload, token) {
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`, // Adds the token in the header for authorization
+    },
+    body: JSON.stringify(payload),
+  });
+}
+
+/**
+ * Sends a POST request to the specified URL with the given payload without using a token.
+ * @param {string} url - The URL to send the POST request to.
+ * @param {object} payload - The data to be sent in the body of the request.
+ * @returns {Promise<Response>} A Promise that resolves to the response from the server.
+ * @async
+ */
+async function sendRequestWithoutToken(url, payload) {
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json", // Only the Content-Type header is set
+    },
+    body: JSON.stringify(payload),
+  });
+}
+
+/**
+ * Handles the server response by checking if it is OK and parsing the JSON data.
+ * @param {Response} response - The response object from the server.
+ * @returns {Promise<any>} A Promise that resolves to the parsed JSON data.
+ * @throws {Error} Throws an error if the response is not OK.
+ * @async
+ */
+async function handleResponse(response) {
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+  return response.json();
 }
