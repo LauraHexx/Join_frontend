@@ -8,6 +8,9 @@ const URL_TASKS = "http://127.0.0.1:8000/api/v1/tasks/";
 const URL_SUBTASKS = "http://127.0.0.1:8000/api/v1/subtasks/";
 const URL_CATEGORIES = "http://127.0.0.1:8000/api/v1/categories/";
 const URL_CONTACTS = "http://127.0.0.1:8000/api/v1/contacts/";
+const URL_SUMMARY = "http://127.0.0.1:8000/api/v1/summary/";
+
+let TOKEN;
 
 /**
  * Sends a GET request to the specified URL with the given token.
@@ -17,12 +20,13 @@ const URL_CONTACTS = "http://127.0.0.1:8000/api/v1/contacts/";
  * @throws {Error} Throws an error if the response is not OK.
  * @async
  */
-async function getRequest(url, token) {
+async function getRequest(url) {
+  console.log(TOKEN);
   const response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Token ${token}`,
+      Authorization: `Token ${TOKEN}`,
     },
   });
   return handleResponse(response);
@@ -36,12 +40,12 @@ async function getRequest(url, token) {
  * @returns {Promise<Response>} A Promise that resolves to the response from the server.
  * @async
  */
-async function sendRequestWithToken(url, payload, token) {
+async function sendRequestWithToken(url, payload) {
   return fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Token ${token}`, // Adds the token in the header for authorization
+      Authorization: `Token ${TOKEN}`, // Adds the token in the header for authorization
     },
     body: JSON.stringify(payload),
   });

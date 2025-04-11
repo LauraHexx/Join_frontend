@@ -272,20 +272,6 @@ function hideDisplay(id, animationClass, className) {
 /*USERS************************************************************************************/
 
 /**
- * Loads user data from storage asynchronously.
- * Parses the stored data and assigns it to the USERS variable.
- * @async
- */
-async function loadUserData() {
-  try {
-    USERS = JSON.parse(await getItem("users"));
-    console.log("USERS SERVER", USERS);
-  } catch (e) {
-    console.error("Loading error:", e);
-  }
-}
-
-/**
  * Retrieves the logged-in user's data.
  * Gets the logged user ID from local storage and retrieves the corresponding user data.
  * If no logged-in user is found, redirects to the index.html page.
@@ -299,6 +285,33 @@ async function getLoggedUser() {
     LOGGED_USER = getUserData(loggedUserId);
     console.log("LOGGED_USER:", LOGGED_USER);
   }
+}
+
+/**
+ * Checks if the user is logged in by verifying if a valid token exists in localStorage.
+ * If no token is found, it redirects the user to the login page.
+ * If the token exists, it sets the logged-in user information and stores the token.
+ */
+function checkIfUserIsLogged() {
+  const loggedUserToken = getItemFromLocalStorage("loggedUserToken");
+  if (!loggedUserToken) {
+    loadTemplate("../index.html");
+  } else {
+    LOGGED_USER = setLoggedUser(loggedUserToken);
+    TOKEN = getItemFromLocalStorage("loggedUserToken");
+  }
+}
+
+/**
+ * Sets the logged-in user's details (ID, name, email) from localStorage.
+ * @returns {Object} The logged-in user's details.
+ */
+function setLoggedUser() {
+  return {
+    id: getItemFromLocalStorage("loggedUserId"),
+    name: getItemFromLocalStorage("loggedUserName"),
+    email: getItemFromLocalStorage("loggedUserEmail"),
+  };
 }
 
 /**

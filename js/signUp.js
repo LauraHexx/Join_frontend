@@ -55,7 +55,6 @@ async function register() {
     if (response.ok) {
       setLocalStorage(responseData);
       loadTemplate("summary.html");
-      load;
     } else {
       handleRegistrationErrors(responseData);
     }
