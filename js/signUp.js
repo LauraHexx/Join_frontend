@@ -1,5 +1,3 @@
-let PAYLOAD;
-
 /**
  * Starts the sign-up process.
  */
@@ -13,7 +11,8 @@ function signUp() {
  * Hides all error messages.
  */
 function hideAllErrors() {
-  hideError("userIsAlreadyRegistered");
+  hideError("userNameIsAlreadyRegistered");
+  hideError("emailIsAlreadyRegistered");
   hideError("passwordsDoNotMatch");
 }
 
@@ -23,7 +22,7 @@ function hideAllErrors() {
  */
 function getSignUpData() {
   return {
-    username: signUpName.value.trim().replace(/\s+/g, ""),
+    username: signUpName.value.trim(),
     email: signUpEmail.value.trim(),
     password: signUpPassword.value.trim(),
     repeated_password: signUpPasswordConfirmation.value.trim(),
@@ -42,28 +41,6 @@ function checkIfPasswordsMatch() {
 }
 
 /**
- * Registers the user by sending the sign-up data to the server.
- * If successful, the user is redirected to the 'summary.html' page.
- * If there is an error, an appropriate error message is displayed.
- * @returns {Promise<void>}
- */
-async function register() {
-  try {
-    const response = await sendRequestWithoutToken(URL_REGISTRATION, PAYLOAD);
-    const responseData = await response.json();
-
-    if (response.ok) {
-      setLocalStorage(responseData);
-      loadTemplate("summary.html");
-    } else {
-      handleRegistrationErrors(responseData);
-    }
-  } catch (error) {
-    console.error("Registration error:", error);
-  }
-}
-
-/**
  * Stores the registration response data in local storage.
  * @param {Object} responseData - The data returned from the registration request.
  */
@@ -75,18 +52,32 @@ function setLocalStorage(responseData) {
 }
 
 /**
- * Handles errors that occur during registration.
- * @param {Object} responseData - The error response data.
+ * Handles registration errors by checking the error message and displaying the appropriate error message to the user.
+ * @param {Object} error - The error object containing the error message.
+ * @param {string} error.message - The error message received during registration.
  */
-function handleRegistrationErrors(responseData) {
-  console.log("Registration error response:", responseData);
-  switch (true) {
-    case responseData.hasOwnProperty("username"):
-      showError("userIsAlreadyRegistered");
-
-      break;
-    case responseData.hasOwnProperty("email"):
-      showError("emailIsAlreadyRegistered");
-      break;
+function handleRegistrationErrors(error) {
+  if (userNameAlreadyExists(error.message)) {
+    showError("userNameIsAlreadyRegistered");
+  } else if (emailAlreadyExists(error.message)) {
+    showError("emailIsAlreadyRegistered");
   }
+}
+
+/**
+ * Checks if the error message indicates that the username is already taken.
+ * @param {string} error - The error message to check.
+ * @returns {boolean} - Returns true if the error message indicates that the username already exists, otherwise false.
+ */
+function userNameAlreadyExists(error) {
+  return error.includes("A user with that username already exists");
+}
+
+/**
+ * Checks if the error message indicates that the email is already registered.
+ * @param {string} error - The error message to check.
+ * @returns {boolean} - Returns true if the error message indicates that the email is already registered, otherwise false.
+ */
+function emailAlreadyExists(error) {
+  return error.includes("EMAIL_ALREADY_REGISTERED");
 }

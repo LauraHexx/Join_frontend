@@ -6,12 +6,29 @@
  */
 async function getDataNewContact() {
   let newContact = {
+    id: getContactId(),
     color: getRandomColor(),
     name: addContactName.value,
+    initials: getInitials(addContactName.value),
     email: addContactEmail.value,
-    phone_number: addContactPhone.value,
+    phone: addContactPhone.value,
   };
   checkNewContactData(newContact);
+}
+
+/**
+ * Gets the next available contact ID by finding the highest ID among existing contacts
+ * and incrementing it by 1.
+ * @returns {number} The next available contact ID.
+ */
+function getContactId() {
+  let highestId = 0;
+  CONTACTS.forEach((contact) => {
+    if (contact.id > highestId) {
+      highestId = contact.id;
+    }
+  });
+  return highestId + 1;
 }
 
 /**
@@ -20,14 +37,11 @@ async function getDataNewContact() {
  * @param {Object} newContact - The new contact object to be checked and added.
  */
 function checkNewContactData(newContact) {
-  const foundExistingEmail = findExistingEmail(CONTACTS, addContactEmail.value);
-  const foundExistingName = findExistingUsername(
-    CONTACTS,
-    addContactName.value
+  const foundExistingEmail = findExistingEmail(
+    LOGGED_USER.contacts,
+    addContactEmail.value
   );
-  if (foundExistingName) {
-    showError("errorEnterANewName");
-  } else if (foundExistingEmail) {
+  if (foundExistingEmail) {
     showError("errorEnterANewEmail");
   } else {
     addNewContact(newContact);
@@ -42,9 +56,8 @@ function checkNewContactData(newContact) {
  */
 async function addNewContact(newContact) {
   closeAddContact();
-  CONTACTS.push(newContact);
-  PAYLOAD = newContact;
-  addContact();
+  LOGGED_USER.contacts.push(newContact);
+  await setItem("users", JSON.stringify(USERS));
   await loadDataAndRenderContacts();
   showAnimationNewContactSuccess();
 }

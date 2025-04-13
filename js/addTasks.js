@@ -8,6 +8,8 @@ let CLICKED_CONTACTS = [];
  * @async
  */
 async function initAddTask() {
+  console.log("initAddTask");
+  checkIfUserIsLogged();
   await setNavAndHeader("addTask");
   await loadDataAndRenderDropDown();
   setProcessStepForNewTask("todo");
@@ -20,11 +22,18 @@ async function initAddTask() {
  * @async
  */
 async function loadDataAndRenderDropDown() {
+  console.log("loadDataAndRenderDropDown");
   toggleClass("loadingContainer", "d-none");
-  await loadUserData();
-  await getLoggedUser();
+  await getDropDownData();
   await renderDropDownAddTaskDisplay();
   toggleClass("loadingContainer", "d-none");
+}
+
+async function getDropDownData() {
+  console.log("getDropDownData");
+  if (!CONTACTS) {
+    await getContacts();
+  }
 }
 
 /**
@@ -42,12 +51,11 @@ function setEventsAddTask() {
  * It´s responsible for setting up the initial state of the dropdown menus
  */
 function renderDropDownAddTaskDisplay() {
-  CONTACTS = LOGGED_USER.contacts;
-  CATEGORYS = LOGGED_USER.categorys;
-  if (CATEGORYS) {
-    sortArrayAlphabetically(CATEGORYS);
-    renderCategorys();
-  }
+  //CATEGORYS = LOGGED_USER.categorys;
+  //if (CATEGORYS) {
+  //  sortArrayAlphabetically(CATEGORYS);
+  //  renderCategorys();
+  //}
   if (CONTACTS) {
     sortArrayAlphabetically(CONTACTS);
     renderContacts();

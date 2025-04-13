@@ -1,83 +1,93 @@
-const URL_REGISTRATION = "http://127.0.0.1:8000/api/v1/auth/registration/";
-const URL_LOGIN = "http://127.0.0.1:8000/api/v1/auth/login/";
-const URL_GUEST_LOGIN = "http://127.0.0.1:8000/api/v1/auth/login/";
-const URL_LOGOUT = "http://127.0.0.1:8000/api/v1/auth/logout/";
+const BASE_URL = "http://127.0.0.1:8000/api/v1";
 
-const URL_USERS = "http://127.0.0.1:8000/api/v1/users/";
-const URL_TASKS = "http://127.0.0.1:8000/api/v1/tasks/";
-const URL_SUBTASKS = "http://127.0.0.1:8000/api/v1/subtasks/";
-const URL_CATEGORIES = "http://127.0.0.1:8000/api/v1/categories/";
-const URL_CONTACTS = "http://127.0.0.1:8000/api/v1/contacts/";
-const URL_SUMMARY = "http://127.0.0.1:8000/api/v1/summary/";
+const URL_REGISTRATION = `${BASE_URL}/auth/registration/`;
+const URL_LOGIN = `${BASE_URL}/auth/login/`;
+const URL_GUEST_LOGIN = `${BASE_URL}/auth/guest-login/`;
+const URL_LOGOUT = `${BASE_URL}/auth/logout/`;
+
+const URL_USERS = `${BASE_URL}/users/`;
+const URL_TASKS = `${BASE_URL}/tasks/`;
+const URL_SUBTASKS = `${BASE_URL}/subtasks/`;
+const URL_CATEGORIES = `${BASE_URL}/categories/`;
+const URL_CONTACTS = `${BASE_URL}/contacts/`;
+const URL_SUMMARY = `${BASE_URL}/summary/`;
 
 let TOKEN;
+let PAYLOAD;
 
 /**
- * Sends a GET request to the specified URL with the given token.
- * @param {string} url - The URL to send the GET request to.
- * @param {string} token - The authentication token to authorize the request.
- * @returns {Promise<any>} A Promise that resolves to the parsed JSON data.
- * @throws {Error} Throws an error if the response is not OK.
- * @async
+ * Sends an HTTP request with the specified method, URL, and optional payload,
+ * and handles the response centrally.
+ * @param {string} method - The HTTP method to be used (e.g., 'GET', 'POST', etc.).
+ * @param {string} url - The URL to which the request will be sent.
+ * @returns {Promise<void>} - Resolves when the request is successfully processed.
  */
-async function getRequest(url) {
-  console.log(TOKEN);
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Token ${TOKEN}`,
-    },
-  });
-  return handleResponse(response);
-}
+async function sendRequest(method, url) {
+  const options = {
+    method: method.toUpperCase(),
+    headers: getHeaders(),
+  };
 
-/**
- * Sends a POST request to the specified URL with the given payload and authentication token.
- * @param {string} url - The URL to send the POST request to.
- * @param {object} payload - The data to be sent in the body of the request.
- * @param {string} token - The authentication token to authorize the request.
- * @returns {Promise<Response>} A Promise that resolves to the response from the server.
- * @async
- */
-async function sendRequestWithToken(url, payload) {
-  return fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Token ${TOKEN}`, // Adds the token in the header for authorization
-    },
-    body: JSON.stringify(payload),
-  });
-}
-
-/**
- * Sends a POST request to the specified URL with the given payload without using a token.
- * @param {string} url - The URL to send the POST request to.
- * @param {object} payload - The data to be sent in the body of the request.
- * @returns {Promise<Response>} A Promise that resolves to the response from the server.
- * @async
- */
-async function sendRequestWithoutToken(url, payload) {
-  return fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json", // Only the Content-Type header is set
-    },
-    body: JSON.stringify(payload),
-  });
-}
-
-/**
- * Handles the server response by checking if it is OK and parsing the JSON data.
- * @param {Response} response - The response object from the server.
- * @returns {Promise<any>} A Promise that resolves to the parsed JSON data.
- * @throws {Error} Throws an error if the response is not OK.
- * @async
- */
-async function handleResponse(response) {
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
+  if (!isGetMethod(method)) {
+    options.body = addPayload();
   }
-  return response.json();
+
+  return await fetchAndHandleResponse(url, options);
+}
+
+/**
+ * Constructs the headers object for the HTTP request.
+ * Includes the 'Authorization' header if a TOKEN is available.
+ * @returns {Object} - The headers for the request, including 'Content-Type' and optional 'Authorization'.
+ */
+function getHeaders() {
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  if (TOKEN) {
+    headers.Authorization = `Token ${TOKEN}`;
+  }
+  return headers;
+}
+
+/**
+ * Checks if the provided method is a GET method without any payload.
+ * @param {string} method - The HTTP method to check.
+ * @returns {boolean} - Returns true if the method is 'GET' and no payload is provided.
+ */
+function isGetMethod(method) {
+  return method == "GET";
+}
+
+/**
+ * Converts the PAYLOAD object to a JSON string for use in request bodies.
+ * @returns {string} - A JSON string representation of the PAYLOAD.
+ */
+function addPayload() {
+  return JSON.stringify(PAYLOAD);
+}
+
+/**
+ * Funktion, um eine API-Anfrage zu senden und die Antwort zu verarbeiten.
+ * @param {string} url - Die URL der API.
+ * @param {Object} options - Die Optionen für die Anfrage (z.B. Methode, Header, etc.)
+ * @returns {Promise<Object|string>} - Gibt die Antwort als JSON oder Text zurück.
+ */
+async function fetchAndHandleResponse(url, options) {
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Fehler: ${errorText}`);
+    }
+
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      return await response.json();
+    }
+    return;
+  } catch (error) {
+    throw new Error("Fehler bei der Anfrage: " + error.message);
+  }
 }

@@ -1,4 +1,4 @@
-let SUMMARY_DATA = [];
+let SUMMARY = [];
 /**
  * Sets the navigation and header for the summary page, loads data, and renders the summary.
  * Displays a loading image during the loading process.
@@ -26,36 +26,20 @@ async function loadDataAndRenderSummary() {
 }
 
 /**
- * Fetches the summary data from the server and stores it in the `SUMMARY_DATA` variable.
- * Logs the data to the console and then renders the summary on the webpage.
- * Catches and logs any errors encountered during the fetch process.
- * @async
- */
-async function getSummary() {
-  try {
-    SUMMARY_DATA = await getRequest(URL_SUMMARY);
-    console.log(SUMMARY_DATA);
-    renderSummary();
-  } catch (error) {
-    console.error("Registration error:", error);
-  }
-}
-/**
  * Renders the data in the summary on the webpage.
  * @async
  */
 async function renderSummary() {
-  document.getElementById("tasksInBoard").innerHTML =
-    SUMMARY_DATA.tasks_in_board;
+  document.getElementById("tasksInBoard").innerHTML = SUMMARY.tasks_in_board;
   document.getElementById("tasksInProgress").innerHTML =
-    SUMMARY_DATA.tasks_in_progress;
+    SUMMARY.tasks_in_progress;
   document.getElementById("tasksAwaitingFeedback").innerHTML =
-    SUMMARY_DATA.tasks_awaiting_feedback;
-  document.getElementById("tasksUrgent").innerHTML = SUMMARY_DATA.tasks_urgent;
+    SUMMARY.tasks_awaiting_feedback;
+  document.getElementById("tasksUrgent").innerHTML = SUMMARY.tasks_urgent;
   document.getElementById("upcomingDeadline").innerHTML =
-    SUMMARY_DATA.upcoming_deadline;
-  document.getElementById("tasksToDo").innerHTML = SUMMARY_DATA.tasks_todo;
-  document.getElementById("tasksDone").innerHTML = SUMMARY_DATA.tasks_done;
+    SUMMARY.upcoming_deadline;
+  document.getElementById("tasksToDo").innerHTML = SUMMARY.tasks_todo;
+  document.getElementById("tasksDone").innerHTML = SUMMARY.tasks_done;
 }
 
 /*GREETING**********************************************************************************************************/

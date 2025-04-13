@@ -6,11 +6,10 @@ let SELECTED_CONTACT = "";
  * @async
  */
 async function initContacts() {
-  checkIfUserIsLogged();
   await setNavAndHeader("contacts");
   await loadDataAndRenderContacts();
   setEventsContacts();
-  renderDropDownAddTaskDisplay();
+  //renderDropDownAddTaskDisplay();
 }
 
 /**
@@ -20,9 +19,9 @@ async function initContacts() {
  */
 async function loadDataAndRenderContacts() {
   toggleClass("loadingContainer", "d-none");
-  await getContacts();
+  await loadUserData();
+  await getLoggedUser();
   renderContactList();
-  toggleClass("loadingContainer", "d-none");
 }
 
 /**
@@ -40,9 +39,12 @@ function setEventsContacts() {
  * Renders the contact list.
  */
 function renderContactList() {
-  sortArrayAlphabetically(CONTACTS);
-  renderFirstInitialsList();
-  renderContactsInInitialList();
+  CONTACTS = LOGGED_USER.contacts;
+  if (CONTACTS) {
+    sortArrayAlphabetically(CONTACTS);
+    renderFirstInitialsList();
+    renderContactsInInitialList();
+  }
 }
 
 /**
@@ -53,7 +55,7 @@ async function renderFirstInitialsList() {
   FIRST_INITIALS_NO_DUPLICAT = [];
   document.getElementById("contactList").innerHTML = "";
   CONTACTS.forEach((contact) => {
-    const firstInitial = contact.first_name.charAt(0);
+    const firstInitial = contact.initials.charAt(0);
     if (!FIRST_INITIALS_NO_DUPLICAT.includes(firstInitial)) {
       FIRST_INITIALS_NO_DUPLICAT.push(firstInitial);
       document.getElementById("contactList").innerHTML +=
@@ -66,13 +68,14 @@ async function renderFirstInitialsList() {
  * Renders the contacts in the initial list.
  */
 function renderContactsInInitialList() {
+  clearContacts();
   CONTACTS.forEach((contact) => {
-    contact.initials = getInitials(contact.first_name, contact.last_name);
-    const firstInitial = contact.first_name.charAt(0);
+    const firstInitial = contact.initials.charAt(0);
     const indexOfContact = CONTACTS.indexOf(contact);
     document.getElementById(`contactsLetter${firstInitial}`).innerHTML +=
       renderContactsInInitialListHtml(contact, indexOfContact);
   });
+  toggleClass("loadingContainer", "d-none");
 }
 
 /**
@@ -96,9 +99,7 @@ async function openContactDetails(indexOfContact) {
     styleContactDetailsMobile();
   }
   if (animationIsNotPlaying()) {
-    console.log(CONTACTS);
     SELECTED_CONTACT = CONTACTS[indexOfContact];
-
     playAnimationContactDetails();
     renderContactDetails();
   }

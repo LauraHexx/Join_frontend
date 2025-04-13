@@ -58,8 +58,7 @@ async function saveEdits() {
   hideDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
   changeData();
-  setPayload();
-  await changeContact(SELECTED_CONTACT.id, "PUT");
+  await setItem("users", JSON.stringify(USERS));
   await loadDataAndRenderContacts();
 }
 
@@ -69,17 +68,8 @@ async function saveEdits() {
 function changeData() {
   SELECTED_CONTACT.name = editContactName.value;
   SELECTED_CONTACT.email = editContactEmail.value;
-  SELECTED_CONTACT.phone_number = editContactPhone.value;
+  SELECTED_CONTACT.phone = editContactPhone.value;
   SELECTED_CONTACT.initials = getInitials(editContactName.value);
-}
-
-/**
- * Prepares the payload for an API request by copying the selected contact's data.
- * Removes the 'id' field from the payload to avoid sending it in the request body.
- */
-function setPayload() {
-  PAYLOAD = { ...SELECTED_CONTACT };
-  delete PAYLOAD.id;
 }
 
 /*DELETE CONTACT***********************************************************************************/
@@ -92,7 +82,8 @@ async function deleteContact() {
   toggleClass("body", "ovegetDataEditContactrflowHidden");
   closeDetailInfos();
   deleteContactFromContactList();
-  await changeContact(SELECTED_CONTACT.id, "DELETE");
+  deleteContactFromTasks();
+  await setItem("users", JSON.stringify(USERS));
   await loadDataAndRenderContacts();
   playAnimationContactDeletedSuccess();
 }
@@ -103,6 +94,20 @@ async function deleteContact() {
 function deleteContactFromContactList() {
   const indexSelectedContact = CONTACTS.indexOf(SELECTED_CONTACT);
   CONTACTS.splice(indexSelectedContact, 1);
+}
+
+/**
+ * Deletes the contact from every tasks.
+ */
+function deleteContactFromTasks() {
+  const idSelectedContact = SELECTED_CONTACT.id;
+  const tasksToEdit = LOGGED_USER.tasks;
+  tasksToEdit.forEach((task) => {
+    const indexContactToDelete = task.contacts.indexOf(idSelectedContact);
+    if (indexContactToDelete) {
+      task.contacts.splice(indexContactToDelete, 1);
+    }
+  });
 }
 
 /**

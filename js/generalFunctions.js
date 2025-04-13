@@ -196,6 +196,16 @@ function findExistingEmail(contacts, email) {
 }
 
 /**
+ * Finds an existing contact with the specified name.
+ * @param {Array} contacts - The contacts array to search in.
+ * @param {string} name - The name to search for.
+ * @returns {Object} The contact object if an existing name is found, otherwise null.
+ */
+function findExistingUsername(contacts, name) {
+  return contacts.find((contact) => contact.name === name);
+}
+
+/**
  * Hides an error element by adding the "d-none" class if it is not already hidden.
  * @param {string} id - The ID of the error element.
  */

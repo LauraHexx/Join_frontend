@@ -8,7 +8,7 @@ function renderFirstInitialsListHtml(firstInitial) {
   `;
 }
 
-function renderContactsInInitialListHtml(contact, indexOfContact) {
+function renderContactsInInitialListHtml(contact, indexOfContact, initials) {
   return /*html*/ `
      <div
         onclick="openContactDetails(${indexOfContact})"
@@ -59,7 +59,7 @@ function renderContactDetailsHtml() {
        </div>
        <div class="phone">
          <span class="bold">Phone</span>
-         <a href="tel:${SELECTED_CONTACT.phone}">${SELECTED_CONTACT.phone}</a>
+         <a href="tel:${SELECTED_CONTACT.phone_number}">${SELECTED_CONTACT.phone_number}</a>
        </div>
      </div>
     `;
@@ -112,7 +112,7 @@ function renderEditContactHtml() {
               <span id="errorEmailIsAlreadyTaken" class="error d-none">Email already belongs to a contact. Please update it.</span>
             </div>
               <input
-                value="${SELECTED_CONTACT.phone}"
+                value="${SELECTED_CONTACT.phone_number}"
                 id="editContactPhone"
                 class="input inputPhone"
                 type="number"
