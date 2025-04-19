@@ -99,3 +99,11 @@ async function getUsers() {
     console.error("error:", error);
   }
 }
+
+async function logoutBackend() {
+  try {
+    await sendRequest("POST", URL_LOGOUT, payload);
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
