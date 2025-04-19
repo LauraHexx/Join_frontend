@@ -22,7 +22,7 @@ function allowDrop(ev) {
  */
 async function moveTo(processStep, highlightArea) {
   TASKS[currentDraggedElement].processStep = processStep;
-  await setItem("users", JSON.stringify(USERS));
+  await changeTask(TASKS[currentDraggedElement].id, "PATCH", { process_step: processStep });
   unhighlightArea(highlightArea);
   renderTasks();
 }

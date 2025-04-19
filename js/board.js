@@ -9,6 +9,8 @@ async function initBoard() {
   checkIfUserIsLogged();
   await setNavAndHeader("board");
   await loadDataAndRenderTasks();
+  await getCategories()
+  await getContacts()
   setEventsBoard();
   renderDropDownAddTaskDisplay();
 }
@@ -55,6 +57,7 @@ function setEventsImageHoverAddTask(id) {
  * Renders the tasks on the board.
  */
 async function renderTasks() {
+  await getTasks()
   clearBoard();
   TASKS.forEach((task) => {
     setDataTaskCard(task);
@@ -222,7 +225,7 @@ function getPercentageProgress(amountSubtasks, amountFinishedSubtasks) {
  * @param {string} direction - The direction of the process step change ("back" or "forward").
  */
 function changeProcessStepOfTask(indexOfTask, direction) {
-  let currentProcessStep = TASKS[indexOfTask].processStep;
+  let currentProcessStep = TASKS[indexOfTask].process_step;
   if (direction == "back") {
     let newProcessStepIndex = changeProcessStepOfTaskBack(currentProcessStep);
     changeProcessStepInData(indexOfTask, newProcessStepIndex);
@@ -271,9 +274,10 @@ function changeProcessStepOfTaskForward(currentProcessStep) {
  * @param {number} newProcessStepIndex - The index of the new process step.
  */
 async function changeProcessStepInData(indexOfTask, newProcessStepIndex) {
-  TASKS[indexOfTask].processStep = PROCESS_STEPS[newProcessStepIndex];
-  await setItem("users", JSON.stringify(USERS));
-  initBoard();
+  console.log(TASKS[indexOfTask].id)
+  console.log(PROCESS_STEPS[newProcessStepIndex])
+  await changeTask(TASKS[indexOfTask].id, "PATCH", { process_step: PROCESS_STEPS[newProcessStepIndex] });
+  renderTasks()
 }
 
 /*DETAILS OF SINGLE TASK***********************************************************************************/

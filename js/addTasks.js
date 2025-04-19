@@ -155,6 +155,7 @@ function isNotUserContact(contact) {
  * @param {string} id - The ID of the checkbox to toggle.
  */
 function toggleCheckbox(id) {
+  console.log(id)
   const checkbox = document.getElementById(`checkBoxUser${id}`);
   checkbox.checked = !checkbox.checked;
   let selectedCheckboxes = getSelectedCheckboxes();
@@ -293,7 +294,7 @@ function createTask() {
     due_date: getDataFromInput("inputDueDate", "errorDueDate"),
     priority: getPriority(),
     subtasks: SUBTASKS,
-    processStep: CLICKED_PROCESS_STEP,
+    process_step: CLICKED_PROCESS_STEP,
   };
   checkAndPushTask(task);
 }
@@ -370,7 +371,8 @@ function getPriority() {
 async function checkAndPushTask(task) {
   if (requiredDataTaskComplete(task)) {
     await addTask(task)
-    loadTemplate("./board.html");
+    renderTasks()
+    closeAddTask()
   } 
 }
 

@@ -24,7 +24,7 @@ function changeStyleBtnsInEditTask() {
  */
 function setDataTaskToEditDisplay() {
   setTitleAndDescriptionToEditDisplay();
-  setCategoryToEditDisplay();
+  renderSelectedCategory(SELECTED_TASK.category.name, SELECTED_TASK.category.color);
   setContactsToEditDisplay();
   setDueDateToEditDisplay();
   setPrioBtnsToEditDisplay();
@@ -39,14 +39,6 @@ function setTitleAndDescriptionToEditDisplay() {
   document.getElementById("descriptionInput").value = SELECTED_TASK.description;
 }
 
-/**
- * Sets the category of the selected task to the edit display.
- */
-function setCategoryToEditDisplay() {
-  cosnole.log(SELECTED_TASK.category);
-  let selectedCategory = SELECTED_TASK.category;
-  renderSelectedCategory(selectedCategory.name, selectedCategory.color);
-}
 
 /**
  * Sets the contacts of the selected task to the edit display.
@@ -54,7 +46,7 @@ function setCategoryToEditDisplay() {
 function setContactsToEditDisplay() {
   let contacts = SELECTED_TASK.contacts;
   contacts.forEach((contact) => {
-    toggleCheckbox(contact);
+    toggleCheckbox(contact.id);
   });
 }
 
@@ -111,9 +103,9 @@ async function changeStatusSubtask(indexOfTask, indexOfSubtask) {
   );
   let status;
   if (checkbox.checked) {
-    status = "checked";
+    status = true;
   } else {
-    status = "unchecked";
+    status = false;
   }
   TASKS[indexOfTask].subtasks[indexOfSubtask].status = status;
   await setItem("users", JSON.stringify(USERS));
@@ -125,10 +117,10 @@ async function changeStatusSubtask(indexOfTask, indexOfSubtask) {
 async function deleteTask() {
   const indexOfTask = TASKS.indexOf(SELECTED_TASK);
   TASKS.splice(indexOfTask, 1);
-  await setItem("users", JSON.stringify(USERS));
+  await changeTask(SELECTED_TASK.id, "DELETE")
   hideDisplay("containerDetails", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
-  initBoard();
+  renderTasks()
 }
 
 /**
@@ -138,9 +130,9 @@ function editTask() {
   let task = {
     title: getDataFromInput("titleInput", "errorTitle"),
     description: getDataFromInput("descriptionInput", "errorDescription"),
-    category: getCategory(),
-    contacts: getSelectedCheckBoxes(),
-    dueDate: getDataFromInput("inputDueDate", "errorDueDate"),
+    category_id: getCategoryId(),
+    contact_ids: getSelectedCheckBoxes(),
+    due_date: getDataFromInput("inputDueDate", "errorDueDate"),
     priority: getPriority(),
     subtasks: SUBTASKS,
   };
@@ -161,7 +153,8 @@ async function checkAndOverwriteTask(task) {
     SELECTED_TASK.dueDate = task.dueDate;
     SELECTED_TASK.priority = task.priority;
     SELECTED_TASK.subtasks = task.subtasks;
-    await setItem("users", JSON.stringify(USERS));
-    loadTemplate("./board.html");
+    await changeTask(SELECTED_TASK.id, "PUT", task)
+    await loadDataAndRenderTasks()
+    closeAddTask()
   }
 }

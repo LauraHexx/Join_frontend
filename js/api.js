@@ -46,6 +46,7 @@ async function changeTask(id, methode, payload) {
   }
 }
 
+
 async function getCategories() {
   try {
     CATEGORYS = await sendRequest("GET", URL_CATEGORIES);
