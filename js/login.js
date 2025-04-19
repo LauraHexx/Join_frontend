@@ -24,7 +24,6 @@ function getLocalStorage() {
   loginPassword.value = getItemFromLocalStorage("password");
 }
 
-
 /**
  * Sends login data to the backend and handles the response.
  * If login is successful, stores user data and handles "remember me".
@@ -66,7 +65,6 @@ function checkIfRememberMeActiv() {
     setItemInLocalStorage("password", loginPassword.value);
   }
 }
-
 
 /**
  * Logs in as a guest user, stores session data and loads the summary page.

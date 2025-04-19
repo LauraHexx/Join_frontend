@@ -16,7 +16,6 @@ async function guestLogin(payload) {
   }
 }
 
-
 async function register(payload) {
   try {
     const newUser = await sendRequest("POST", URL_REGISTRATION, payload);

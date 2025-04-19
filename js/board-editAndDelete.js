@@ -84,32 +84,7 @@ function getColorOfPrio(priority) {
   }
 }
 
-/**
- * Sets the subtasks of the selected task to the edit display and initiates rendering.
- */
-function setSubtasksToEditDisplay() {
-  SUBTASKS = SELECTED_TASK.subtasks;
-  renderSubtasks();
-}
 
-/**
- * Changes the status of a subtask.
- * @param {number} indexOfTask - The index of the task.
- * @param {number} indexOfSubtask - The index of the subtask.
- */
-async function changeStatusSubtask(indexOfTask, indexOfSubtask) {
-  const checkbox = document.getElementById(
-    `task${indexOfTask}subtask${indexOfSubtask}`
-  );
-  let status;
-  if (checkbox.checked) {
-    status = true;
-  } else {
-    status = false;
-  }
-  TASKS[indexOfTask].subtasks[indexOfSubtask].status = status;
-  await setItem("users", JSON.stringify(USERS));
-}
 
 /**
  * Deletes the selected task and closes the opened display.
