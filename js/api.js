@@ -100,9 +100,9 @@ async function getUsers() {
   }
 }
 
-async function logoutBackend() {
+async function logOut() {
   try {
-    await sendRequest("POST", URL_LOGOUT, payload);
+    await sendRequest("POST", URL_LOGOUT);
   } catch (error) {
     console.error("error:", error);
   }

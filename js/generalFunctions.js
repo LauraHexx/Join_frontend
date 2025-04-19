@@ -159,10 +159,11 @@ function goBackToPreviousPage() {
 }
 
 /**
- * Logs out the user by removing the "loggedUserId" item from the local storage and loading the index.html template.
+ * Logs out user: calls backend, clears storage, redirects to login.
  */
-async function logOut() {
-  await logoutBackend()
+async function logUserOut() {
+  await logOut();
+  debugger
   removeItemFromLocalStorage("loggedUserId");
   removeItemFromLocalStorage("loggedUserEmail");
   removeItemFromLocalStorage("loggedUserName");
