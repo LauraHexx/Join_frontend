@@ -369,9 +369,7 @@ function getPriority() {
  */
 async function checkAndPushTask(task) {
   if (requiredDataTaskComplete(task)) {
-
     await addTask(task)
-
     loadTemplate("./board.html");
   } 
 }

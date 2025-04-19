@@ -9,6 +9,7 @@ async function initContacts() {
   checkIfUserIsLogged();
   await setNavAndHeader("contacts");
   await loadDataAndRenderContacts();
+  await getCategories();
   setEventsContacts();
   renderDropDownAddTaskDisplay();
 }

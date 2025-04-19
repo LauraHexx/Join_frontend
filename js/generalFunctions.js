@@ -313,7 +313,6 @@ function checkIfUserIsLogged() {
   }
 }
 
-
 /**
  * Sets the logged-in user's details (ID, name, email) from localStorage.
  * @returns {Object} The logged-in user's details.
