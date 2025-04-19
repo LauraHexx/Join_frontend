@@ -27,8 +27,10 @@ function checkNewContactData(newContact) {
   );
   if (foundExistingName) {
     showError("errorEnterANewName");
+    hideError("errorEnterANewEmail");
   } else if (foundExistingEmail) {
     showError("errorEnterANewEmail");
+    hideError("errorEnterANewName");
   } else {
     addNewContact(newContact);
   }
@@ -43,8 +45,9 @@ function checkNewContactData(newContact) {
 async function addNewContact(newContact) {
   closeAddContact();
   CONTACTS.push(newContact);
-  PAYLOAD = newContact;
-  addContact();
+  let payload = {};
+  payload = newContact;
+  await addContact(payload);
   await loadDataAndRenderContacts();
   showAnimationNewContactSuccess();
 }

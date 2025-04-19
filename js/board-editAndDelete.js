@@ -43,9 +43,9 @@ function setTitleAndDescriptionToEditDisplay() {
  * Sets the category of the selected task to the edit display.
  */
 function setCategoryToEditDisplay() {
+  cosnole.log(SELECTED_TASK.category);
   let selectedCategory = SELECTED_TASK.category;
-  let colorCategory = getColorCategory(selectedCategory);
-  renderSelectedCategory(selectedCategory, colorCategory);
+  renderSelectedCategory(selectedCategory.name, selectedCategory.color);
 }
 
 /**
@@ -62,7 +62,8 @@ function setContactsToEditDisplay() {
  * Sets the due date of the selected task to the edit display.
  */
 function setDueDateToEditDisplay() {
-  document.getElementById("inputDueDate").value = SELECTED_TASK.dueDate;
+  console.log(SELECTED_TASK);
+  document.getElementById("inputDueDate").value = SELECTED_TASK.due_date;
 }
 
 /**

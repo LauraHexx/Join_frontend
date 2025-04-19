@@ -89,7 +89,8 @@ function renderEditContactHtml() {
             alt="image of icon to close the adding" />
           <div id="editContactInitials" class="bigCircleEdit" style="background-color:${SELECTED_CONTACT.color}">${SELECTED_CONTACT.initials}</div>
           <form onsubmit="getDataEditContact(); return false" class="formEdit">
-              <input
+          <div class="inputContainer">  
+            <input
                 value="${SELECTED_CONTACT.name}"
                 id="editContactName"
                 class="input inputName"
@@ -98,7 +99,8 @@ function renderEditContactHtml() {
                 maxlength="25"
                 minlength="2"
                 required />
-              <span id="errorNoName" class="error d-none">Please enter a name</span>
+                <span id="errorNameIsAlreadyTaken" class="error d-none">Email already belongs to a contact. Please update it.</span>
+                </div>
             <div class="inputContainer">
               <input
                 value="${SELECTED_CONTACT.email}"
@@ -117,6 +119,8 @@ function renderEditContactHtml() {
                 class="input inputPhone"
                 type="number"
                 placeholder="Phone"
+                minlength="8"
+                minlength="15"
                 />
             <div class="editContactBtns">
             <input

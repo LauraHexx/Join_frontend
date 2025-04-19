@@ -1,34 +1,69 @@
-async function register() {
+async function register(payload) {
   try {
-    const newUser = await sendRequest("POST", URL_REGISTRATION);
-    setLocalStorage(newUser);
+    const newUser = await sendRequest("POST", URL_REGISTRATION, payload);
+    await setLocalStorage(newUser);
     loadTemplate("summary.html");
   } catch (error) {
     handleRegistrationErrors(error);
   }
 }
 
-/**
- * Fetches the summary data from the server and stores it in the `SUMMARY` variable.
- * Logs the data to the console and then renders the summary on the webpage.
- * Catches and logs any errors encountered during the fetch process.
- * @async
- */
 async function getSummary() {
   try {
     SUMMARY = await sendRequest("GET", URL_SUMMARY);
-    renderSummary();
   } catch (error) {
     console.error("error:", error);
   }
 }
 
-/**
- * Fetches the summary data from the server and stores it in the `SUMMARY_DATA` variable.
- * Logs the data to the console and then renders the summary on the webpage.
- * Catches and logs any errors encountered during the fetch process.
- * @async
- */
+async function getTasks() {
+  try {
+    TASKS = await sendRequest("GET", URL_TASKS);
+    console.log(TASKS);
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
+
+async function addTask(payload) {
+  try {
+    console.log("addTask")
+    TASKS = await sendRequest("POST", URL_TASKS, payload);
+    console.log(TASKS);
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
+
+
+async function changeTask(id, methode, payload) {
+  try {
+    const method = methode.toUpperCase();
+    const url = `${URL_TASKS}${id}/`;
+    await sendRequest(method, url, payload);
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
+
+async function getCategories() {
+  try {
+    CATEGORYS = await sendRequest("GET", URL_CATEGORIES);
+    console.log(CATEGORYS);
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
+
+async function addCategorie(payload) {
+  try {
+    CATEGORYS = await sendRequest("POST", URL_CATEGORIES, payload);
+    console.log(CATEGORYS);
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
+
 async function getContacts() {
   try {
     CONTACTS = await sendRequest("GET", URL_CONTACTS);
@@ -37,32 +72,28 @@ async function getContacts() {
   }
 }
 
-/**
- * Sends a POST request to create a new contact and updates the CONTACTS list with the response.
- * Logs any errors to the console if the request fails.
- * @returns {Promise<void>}
- */
-async function addContact() {
+async function addContact(payload) {
   try {
-    CONTACTS = await sendRequest("POST", URL_CONTACTS);
+    CONTACTS = await sendRequest("POST", URL_CONTACTS, payload);
   } catch (error) {
     console.error("error:", error);
   }
 }
 
-/**
- * Sends an HTTP request to update an existing contact using the specified method (e.g., 'PUT' or 'PATCH').
- * Constructs the URL using the contact's ID. Logs any errors to the console if the request fails.
- *
- * @param {number|string} id - The ID of the contact to be updated.
- * @param {string} methode - The HTTP method to use ('PUT' or 'PATCH').
- * @returns {Promise<void>}
- */
-async function changeContact(id, methode) {
+async function changeContact(id, methode, payload) {
   try {
     const method = methode.toUpperCase();
     const url = `${URL_CONTACTS}${id}/`;
-    await sendRequest(method, url);
+    await sendRequest(method, url, payload);
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
+
+async function getUsers() {
+  try {
+    USERS = await sendRequest("GET", URL_USERS);
+    console.log(USERS);
   } catch (error) {
     console.error("error:", error);
   }

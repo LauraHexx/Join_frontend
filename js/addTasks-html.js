@@ -2,7 +2,7 @@ function renderCategorysHtml(name, color) {
   return /*html*/ `
       <li onclick="renderSelectedCategory('${name}','${color}')" class="singleCategory">
         <span>${name}</span>
-        <div class="circle ${color}"></div>
+        <div class="circle" style="background-color: ${color}" ></div>
       </li>
     `;
 }
@@ -11,10 +11,21 @@ function renderSelectedCategoryHtml(name, color) {
   return /*html*/ `
     <li class="selectedCategory">
       <span id='selectedCategoryName'>${name}</span>
-      <div class="${color} circle colorOfCategory"></div>
+      <div class="circle colorOfCategory" style="background-color: ${color}"></div>
     </li>
   `;
 }
+
+function renderYouContactHtml(name, id, color) {
+  return /*html*/ `
+      <li class="oneContact" onclick="event.stopPropagation();">
+        <div onclick="toggleCheckbox(${id}, '${name}', '${color}')" class="toggleCheckbox"></div>
+        <label class="nameOfContact">You</label>
+        <input id="checkBoxUser${id}" type="checkbox"/>
+      </li>
+  `;
+}
+
 
 function renderContactsHtml(name, id, color) {
   return /*html*/ `
@@ -26,10 +37,10 @@ function renderContactsHtml(name, id, color) {
   `;
 }
 
-function renderTwoClickedContactsHtml(clickedContact) {
+function renderTwoClickedContactsHtml(clickedContact, initials) {
   return /*html*/ `
       <div id="clickedContact${clickedContact.id}" style="background-color: ${clickedContact.color}" class="initialsOfClickedContact circleContact">
-        ${clickedContact.initials}
+        ${initials}
       </div>
   `;
 }

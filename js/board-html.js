@@ -1,15 +1,18 @@
 function renderTasksHtml(
   indexOfTask,
   task,
-  colorCategory,
   amountSubtasks,
   amountFinishedSubtasks,
   classSubtasts
 ) {
   return /*html*/ `
-  <div draggable="true" ondragstart="startDragging(${indexOfTask})" id="task${indexOfTask}" class="singleCard" onclick="openTaskDetails(${indexOfTask},${colorCategory})">
+  <div draggable="true" ondragstart="startDragging(${indexOfTask})" id="task${indexOfTask}" class="singleCard" onclick="openTaskDetails(${indexOfTask}, '${
+    task.category.color
+  }')">
     <div class="headTaskCard">
-      <div class="category fontSize14px ${colorCategory}">${task.category}</div>
+    <div class="category fontSize14px" style="background-color: ${
+      task.category.color
+    };">${task.category.name}</div>
       <div onclick="event.stopPropagation()" class="containerArrows">
         <img onclick="changeProcessStepOfTask(${indexOfTask},'back')" class="prio" src="../assets/img/arrowUp.png" alt="icon change processStep back">
         <img onclick="changeProcessStepOfTask(${indexOfTask},'forward')" class="prio" src="../assets/img/arrowDown.png" alt="icon change processStep forward">
@@ -40,14 +43,14 @@ function renderTaskDetailsHtml(colorCategory, colorPrio) {
   return /*html*/ `
       <div onclick="event.stopPropagation()" class="displayEdit">
         <div class="headContainer">
-          <div class="category ${colorCategory}">${SELECTED_TASK.category}</div>
+          <div class="category" style="background-color: ${colorCategory}">${SELECTED_TASK.category.name}</div>
           <img onclick= "hideDisplay('containerDetails','animation-slideInRight', 'd-none'); toggleClass('body', 'overflowHidden')" src="../assets/img/boardCloseDisplay.svg" alt="icon to close display">
         </div>
         <span id="titleDisplay">${SELECTED_TASK.title}</span>
         <span id="descriptionDisplay">${SELECTED_TASK.description}</span>
         <section class="containerSectionBoard">
           <span class="bold">Due date:</span>
-          <span id="dueDate">${SELECTED_TASK.dueDate}</span>
+          <span id="dueDate">${SELECTED_TASK.due_date}</span>
         </section>
         <section class="containerSectionBoard">
           <span class="bold">Priority:</span>

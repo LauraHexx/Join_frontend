@@ -173,6 +173,7 @@ async function logOut() {
  */
 function getContactData(id) {
   const contact = CONTACTS.find((contact) => contact.id === id);
+  console.log("contact:", contact);
   return contact;
 }
 
@@ -286,7 +287,7 @@ function hideDisplay(id, animationClass, className) {
  * Gets the logged user ID from local storage and retrieves the corresponding user data.
  * If no logged-in user is found, redirects to the index.html page.
  * @async
- */
+ */ //ALT
 async function getLoggedUser() {
   const loggedUserId = getItemFromLocalStorage("loggedUserId");
   if (!loggedUserId) {
@@ -307,10 +308,11 @@ function checkIfUserIsLogged() {
   if (!loggedUserToken) {
     loadTemplate("../index.html");
   } else {
-    LOGGED_USER = setLoggedUser(loggedUserToken);
+    LOGGED_USER = setLoggedUser();
     TOKEN = getItemFromLocalStorage("loggedUserToken");
   }
 }
+
 
 /**
  * Sets the logged-in user's details (ID, name, email) from localStorage.

@@ -30,10 +30,8 @@ async function loadDataAndRenderDropDown() {
 }
 
 async function getDropDownData() {
-  console.log("getDropDownData");
-  if (!CONTACTS) {
-    await getContacts();
-  }
+  await getContacts();
+  await getCategories();
 }
 
 /**
@@ -51,11 +49,10 @@ function setEventsAddTask() {
  * It´s responsible for setting up the initial state of the dropdown menus
  */
 function renderDropDownAddTaskDisplay() {
-  //CATEGORYS = LOGGED_USER.categorys;
-  //if (CATEGORYS) {
-  //  sortArrayAlphabetically(CATEGORYS);
-  //  renderCategorys();
-  //}
+  if (CATEGORYS) {
+    sortArrayAlphabetically(CATEGORYS);
+    renderCategorys();
+  }
   if (CONTACTS) {
     sortArrayAlphabetically(CONTACTS);
     renderContacts();
@@ -91,8 +88,8 @@ function renderSelectedCategory(name, color) {
  * Renders all saved contacts.
  */
 function renderContacts() {
-  if (loggedUserIsGuest()) {
-    dontShowYouContact();
+  if (loggedUserIsNotGuest()) {
+    showYouContact();
   }
   renderSavedContacts();
 }
@@ -101,9 +98,22 @@ function renderContacts() {
  * Checks if the logged-in user is a guest.
  * @returns {boolean} True if the logged-in user is a guest, otherwise false.
  */
-function loggedUserIsGuest() {
-  return LOGGED_USER.name == "Guest";
+function loggedUserIsNotGuest() {
+  return !LOGGED_USER.name.includes("Guest");
 }
+
+function showYouContact() {
+  document.getElementById("savedContacts").innerHTML = "";
+  const loggedUser = CONTACTS.find((contact) => contact.email === LOGGED_USER.email);
+  const id = loggedUser.id 
+  const color = loggedUser.color 
+  document.getElementById("savedContacts").innerHTML += renderYouContactHtml(
+    LOGGED_USER.name,
+    id,
+    color
+  );
+}
+
 
 /**
  * Hides the logged-in user's contact by adding the 'd-none' class to it.
@@ -116,8 +126,8 @@ function dontShowYouContact() {
  * Renders all contacts of the user.
  */
 function renderSavedContacts() {
-  document.getElementById("savedContacts").innerHTML = "";
   CONTACTS.forEach((contact) => {
+    if (isNotUserContact(contact)) {
     const name = contact.name;
     const id = contact.id;
     const color = contact.color;
@@ -126,7 +136,18 @@ function renderSavedContacts() {
       id,
       color
     );
+  }
   });
+}
+
+/**
+ * Checks whether a given contact is not the currently logged-in user.
+ * @param {Object} contact - The contact object to check.
+ * @param {string} contact.email - The email of the contact.
+ * @returns {boolean} - Returns true if the contact is not the logged-in user, otherwise false.
+ */
+function isNotUserContact(contact) {
+  return contact.email !== LOGGED_USER.email
 }
 
 /**
@@ -165,16 +186,28 @@ function addOrRemoveContactToArray(checkbox, id) {
  * @param {number} amountSelectedContacts - The total number of clicked contacts.
  */
 function renderTwoClickedContacts(id, checkbox, amountSelectedContacts) {
-  document.getElementById("clickedContacts").innerHTML = "";
-  for (let i = 0; i < 2; i++) {
-    const id = CLICKED_CONTACTS[i];
-    if (id) {
-      const clickedContact = getContactData(id);
-      document.getElementById("clickedContacts").innerHTML +=
-        renderTwoClickedContactsHtml(clickedContact);
-    }
-  }
+  const container = document.getElementById("clickedContacts");
+  container.innerHTML = CLICKED_CONTACTS.slice(0, 2)
+    .map(getRenderedContactHtml)
+    .filter(Boolean)
+    .join("");
 }
+
+/**
+ * Generates the HTML for a clicked contact if valid.
+ * @param {string} contactId - The ID of the contact to render.
+ * @returns {string|null} The HTML string for the contact or null if the ID is invalid.
+ */
+function getRenderedContactHtml(contactId) {
+  if (!contactId) return null;
+  const contact = getContactData(contactId);
+  if (contact.email === LOGGED_USER.email) {
+    return renderTwoClickedContactsHtml(contact, "You");
+  }
+  const initials = getInitials(contact.name);
+  return renderTwoClickedContactsHtml(contact, initials);
+}
+
 
 /**
  * Renders the remaining amount of clicked contacts.
@@ -255,9 +288,9 @@ function createTask() {
   let task = {
     title: getDataFromInput("titleInput", "errorTitle"),
     description: getDataFromInput("descriptionInput", "errorDescription"),
-    category: getCategory(),
-    contacts: getSelectedCheckBoxes(),
-    dueDate: getDataFromInput("inputDueDate", "errorDueDate"),
+    category_id: getCategoryId(),
+    contact_ids: getSelectedCheckBoxes(),
+    due_date: getDataFromInput("inputDueDate", "errorDueDate"),
     priority: getPriority(),
     subtasks: SUBTASKS,
     processStep: CLICKED_PROCESS_STEP,
@@ -266,14 +299,17 @@ function createTask() {
 }
 
 /**
- * Retrieves the selected category name or diplays and error if no category selected.
- * @returns {string|undefined} - Returns the selected category name, or undefined if no category is selected.
+ * Retrieves the selected category ID based on the selected category name,
+ * or displays an error if no category is selected.
+ * @returns {number|undefined} - Returns the category ID or undefined if no category is selected or found.
  */
-function getCategory() {
-  const cateGoryName = document.getElementById("selectedCategoryName");
-  if (cateGoryName) {
+function getCategoryId() {
+  const categoryNameEl = document.getElementById("selectedCategoryName");
+  if (categoryNameEl) {
     hideError("errorNoCategorySelected");
-    return cateGoryName.innerHTML;
+    const categoryName = categoryNameEl.innerHTML;
+    const category = CATEGORYS.find(cat => cat.name === categoryName);
+    return category?.id;
   } else {
     showError("errorNoCategorySelected");
     return undefined;
@@ -333,12 +369,11 @@ function getPriority() {
  */
 async function checkAndPushTask(task) {
   if (requiredDataTaskComplete(task)) {
-    let indexUserToAddTask = USERS.indexOf(LOGGED_USER);
-    let userToAddTask = USERS[indexUserToAddTask];
-    userToAddTask.tasks.push(task);
-    await setItem("users", JSON.stringify(USERS));
+
+    await addTask(task)
+
     loadTemplate("./board.html");
-  }
+  } 
 }
 
 /**
@@ -350,8 +385,8 @@ function requiredDataTaskComplete(task) {
   return (
     task.title !== undefined &&
     task.description !== undefined &&
-    task.category !== undefined &&
-    task.dueDate !== undefined &&
+    task.category_id !== undefined &&
+    task.due_date !== undefined &&
     task.priority !== undefined
   );
 }

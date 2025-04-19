@@ -1,5 +1,7 @@
 /*EDIT CONTACT***********************************************************************************/
 
+let PAYLOAD = {};
+
 /**
  * Renders the edit contact display.
  */
@@ -15,6 +17,7 @@ function renderEditContact() {
  * @returns {object} The edited contact object with name, email, and phone properties.
  */
 function getDataEditContact() {
+  hideAllErrors();
   let editedContact = {
     name: editContactName.value,
     email: editContactEmail.value,
@@ -24,9 +27,18 @@ function getDataEditContact() {
 }
 
 /**
- * Checks if the email of a new contact is already existing in the filtered Contacts (without selected contact).
- * Displays an error message if the email is already taken, otherwise adds the new contact.
- * @param {object} editedContact - The edited contact object.
+ * Hides all error messages related to contact name and email validation.
+ */
+function hideAllErrors() {
+  hideError("errorNameIsAlreadyTaken");
+  hideError("errorEmailIsAlreadyTaken");
+}
+
+/**
+ * Validates the edited contact data by checking for duplicate name or email.
+ * If duplicates are found, shows corresponding error messages.
+ * Otherwise, proceeds to save the changes.
+ * @param {Object} editedContact - The contact data being edited (not directly used in this function).
  */
 function checkEditContactData(editedContact) {
   const filteredContacts = filterContacts();
@@ -34,7 +46,24 @@ function checkEditContactData(editedContact) {
     filteredContacts,
     editContactEmail.value
   );
-  if (foundExistingEmail) {
+  const foundExistingName = findExistingUsername(
+    filteredContacts,
+    editContactName.value
+  );
+
+  showErrorOrSaveEdits(foundExistingEmail, foundExistingName);
+}
+
+/**
+ * Displays appropriate error messages if name or email already exist.
+ * If no duplicates are found, saves the edited contact.
+ * @param {boolean} foundExistingEmail - Indicates whether the email already exists.
+ * @param {boolean} foundExistingName - Indicates whether the name already exists.
+ */
+function showErrorOrSaveEdits(foundExistingEmail, foundExistingName) {
+  if (foundExistingName) {
+    showError("errorNameIsAlreadyTaken");
+  } else if (foundExistingEmail) {
     showError("errorEmailIsAlreadyTaken");
   } else {
     saveEdits();
@@ -59,7 +88,7 @@ async function saveEdits() {
   toggleClass("body", "overflowHidden");
   changeData();
   setPayload();
-  await changeContact(SELECTED_CONTACT.id, "PUT");
+  await changeContact(SELECTED_CONTACT.id, "PUT", PAYLOAD);
   await loadDataAndRenderContacts();
 }
 

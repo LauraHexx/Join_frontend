@@ -8,7 +8,7 @@ function addSubtask() {
   if (subtask) {
     SUBTASKS.push({
       name: subtask,
-      status: "unchecked",
+      status: false,
     });
     document.getElementById("addTaskSubtasks").value = "";
     renderSubtasks();
@@ -39,9 +39,9 @@ function setStatusCheckbox(indexOfSubtask) {
   const checkbox = document.getElementById(`subtask${indexOfSubtask}`);
   let status;
   if (checkbox.checked) {
-    status = "checked";
+    status = true;
   } else {
-    status = "unchecked";
+    status = false;
   }
   SUBTASKS[indexOfSubtask].status = status;
 }

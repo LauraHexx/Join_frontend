@@ -6,6 +6,7 @@ let PROCESS_STEPS = ["todo", "inProgress", "awaitingFeedback", "done"];
  * @async
  */
 async function initBoard() {
+  checkIfUserIsLogged();
   await setNavAndHeader("board");
   await loadDataAndRenderTasks();
   setEventsBoard();
@@ -19,8 +20,7 @@ async function initBoard() {
  */
 async function loadDataAndRenderTasks() {
   toggleClass("loadingContainer", "d-none");
-  await loadUserData();
-  await getLoggedUser();
+  await getTasks();
   await renderTasks();
   toggleClass("loadingContainer", "d-none");
 }
@@ -56,7 +56,6 @@ function setEventsImageHoverAddTask(id) {
  */
 async function renderTasks() {
   clearBoard();
-  TASKS = LOGGED_USER.tasks;
   TASKS.forEach((task) => {
     setDataTaskCard(task);
   });
@@ -78,9 +77,7 @@ function clearBoard() {
  */
 function setDataTaskCard(task) {
   const indexOfTask = TASKS.indexOf(task);
-  const category = task.category;
-  const colorCategory = getColorCategory(category);
-  const processStep = task.processStep;
+  const processStep = task.process_step;
   const contactsIds = task.contacts;
   const amountSubtasks = task.subtasks.length;
   const classSubtasts = getStyleClassForSubtasks(amountSubtasks);
@@ -88,7 +85,6 @@ function setDataTaskCard(task) {
   document.getElementById(processStep).innerHTML += renderTasksHtml(
     indexOfTask,
     task,
-    colorCategory,
     amountSubtasks,
     amountFinishedSubtasks,
     classSubtasts
@@ -110,17 +106,6 @@ function getStyleClassForSubtasks(amountSubtasks) {
 }
 
 /**
- * Gets the color of a category by name.
- * @param {string} name - The name of the category.
- * @returns {string} The color of the category.
- */
-function getColorCategory(name) {
-  CATEGORYS = LOGGED_USER.categorys;
-  const searchedCategory = CATEGORYS.find((category) => category.name === name);
-  return searchedCategory.color;
-}
-
-/**
  * Counts the number of finished subtasks in a task.
  * @param {Object} task - The task object.
  * @returns {number} The number of finished subtasks.
@@ -130,7 +115,7 @@ function countAmountOfFinishedSubtasks(task) {
   let subtasks = task.subtasks;
   subtasks.forEach((subtasks) => {
     const status = subtasks.status;
-    if (status === "checked") {
+    if (status === true) {
       amountFinishedSubtasks++;
     }
   });
@@ -156,7 +141,6 @@ async function renderContactsInTaskCards(indexOfTask, contactsIds) {
  * @param {Array<number>} contactsIds - The IDs of the contacts.
  */
 function renderFirstTwoContacts(indexOfTask, contactsIds) {
-  CONTACTS = LOGGED_USER.contacts;
   const maxContacts = Math.min(2, contactsIds.length);
   for (let i = 0; i < maxContacts; i++) {
     if (assignedContactIsLoggedUser(contactsIds[i])) {
@@ -173,7 +157,7 @@ function renderFirstTwoContacts(indexOfTask, contactsIds) {
  * @returns {boolean} True if the contact is the logged-in user, false otherwise.
  */
 function assignedContactIsLoggedUser(contactId) {
-  return contactId === 0;
+  return contactId === LOGGED_USER.id;
 }
 
 /**
@@ -182,7 +166,7 @@ function assignedContactIsLoggedUser(contactId) {
  */
 function renderYouContact(indexOfTask) {
   const initials = "You";
-  const color = LOGGED_USER.color;
+  const color = "#0000FF";
   appendContactHtml(indexOfTask, initials, color);
 }
 
@@ -192,12 +176,9 @@ function renderYouContact(indexOfTask) {
  * @param {number} contactId - The id of the contact.
  */
 function renderInitialsContacts(indexOfTask, contactId) {
-  const contactData = getContactData(contactId);
-  if (contactData) {
-    const initials = contactData.initials;
-    const color = contactData.color;
-    appendContactHtml(indexOfTask, initials, color);
-  }
+  const initials = getInitials(contactId.name);
+  const color = contactId.color;
+  appendContactHtml(indexOfTask, initials, color);
 }
 
 /**
@@ -317,7 +298,7 @@ function openTaskDetails(indexOfTask) {
  * Renders the task details.
  */
 function renderTaskDetails() {
-  const colorCategory = getColorCategory(SELECTED_TASK.category);
+  const colorCategory = SELECTED_TASK.category.color;
   const colorPrio = getColorOfPrio(SELECTED_TASK.priority);
   document.getElementById("containerDetails").innerHTML = "";
   document.getElementById("containerDetails").innerHTML = renderTaskDetailsHtml(
@@ -333,12 +314,13 @@ function renderTaskDetails() {
  */
 function renderContactsInDetailCard() {
   document.getElementById("assignedContactsDetailCard").innerHTML = "";
-  const assignedContactIds = SELECTED_TASK.contacts;
-  assignedContactIds.forEach((contactId) => {
-    if (assignedContactIsLoggedUser(contactId)) {
+  const assignedContacts = SELECTED_TASK.contacts;
+  console.log(assignedContacts);
+  assignedContacts.forEach((contact) => {
+    if (assignedContactIsLoggedUser(contact)) {
       renderYouContactInDetailCard();
     } else {
-      renderSavedContactsInDetailCard(contactId);
+      renderSavedContactsInDetailCard(contact);
     }
   });
 }
@@ -349,24 +331,23 @@ function renderContactsInDetailCard() {
 function renderYouContactInDetailCard() {
   const name = "You";
   const initials = "You";
-  const color = LOGGED_USER.color;
+  const color = "blue";
   document.getElementById("assignedContactsDetailCard").innerHTML +=
     renderContactsInDetailCardHtml(name, initials, color);
 }
 
 /**
- * Renders the saved contacts in the detail card.
- * @param {string} contactId - The ID of the contact.
+ * Renders a saved contact inside the detail card by generating its HTML.
+ * @param {Object} contact - The contact object to render.
+ * @param {string} contact.name - The full name of the contact.
+ * @param {string} contact.color - The color assigned to the contact.
  */
-function renderSavedContactsInDetailCard(contactId) {
-  const contactData = getContactData(contactId);
-  if (contactData) {
-    const name = contactData.name;
-    const initials = contactData.initials;
-    const color = contactData.color;
-    document.getElementById("assignedContactsDetailCard").innerHTML +=
-      renderContactsInDetailCardHtml(name, initials, color);
-  }
+function renderSavedContactsInDetailCard(contact) {
+  const name = contact.name;
+  const initials = getInitials(name);
+  const color = contact.color;
+  document.getElementById("assignedContactsDetailCard").innerHTML +=
+    renderContactsInDetailCardHtml(name, initials, color);
 }
 
 /**

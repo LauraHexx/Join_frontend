@@ -1,3 +1,5 @@
+let PAYLOAD = {};
+
 /**
  * Starts the sign-up process.
  */
@@ -32,11 +34,11 @@ function getSignUpData() {
 /**
  * Checks if the entered passwords match and triggers registration.
  */
-function checkIfPasswordsMatch() {
+async function checkIfPasswordsMatch() {
   if (PAYLOAD.password !== PAYLOAD.repeated_password) {
     showError("passwordsDoNotMatch");
   } else {
-    register();
+    await register(PAYLOAD);
   }
 }
 
@@ -44,7 +46,7 @@ function checkIfPasswordsMatch() {
  * Stores the registration response data in local storage.
  * @param {Object} responseData - The data returned from the registration request.
  */
-function setLocalStorage(responseData) {
+async function setLocalStorage(responseData) {
   setItemInLocalStorage("loggedUserToken", responseData.token);
   setItemInLocalStorage("loggedUserId", responseData.id);
   setItemInLocalStorage("loggedUserName", responseData.username);

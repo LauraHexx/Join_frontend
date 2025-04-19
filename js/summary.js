@@ -1,4 +1,5 @@
 let SUMMARY = [];
+
 /**
  * Sets the navigation and header for the summary page, loads data, and renders the summary.
  * Displays a loading image during the loading process.
@@ -21,6 +22,7 @@ async function initSummary() {
 async function loadDataAndRenderSummary() {
   toggleClass("loadingContainer", "d-none");
   await getSummary();
+  renderSummary();
   greeting();
   toggleClass("loadingContainer", "d-none");
 }
