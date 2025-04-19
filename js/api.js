@@ -1,3 +1,22 @@
+async function login(payload) {
+  try {
+    const response = await sendRequest("POST", URL_LOGIN, payload);
+    return response
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
+
+async function guestLogin(payload) {
+  try {
+    const response = await sendRequest("POST", URL_GUEST_LOGIN);
+    return response
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
+
+
 async function register(payload) {
   try {
     const newUser = await sendRequest("POST", URL_REGISTRATION, payload);

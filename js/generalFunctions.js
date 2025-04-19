@@ -163,13 +163,24 @@ function goBackToPreviousPage() {
  */
 async function logUserOut() {
   await logOut();
-  debugger
   removeItemFromLocalStorage("loggedUserId");
   removeItemFromLocalStorage("loggedUserEmail");
   removeItemFromLocalStorage("loggedUserName");
   removeItemFromLocalStorage("loggedUserToken");
   loadTemplate("../index.html");
 }
+
+/**
+ * Stores the registration response data in local storage.
+ * @param {Object} responseData - The data returned from the registration request.
+ */
+async function setLocalStorage(responseData) {
+  setItemInLocalStorage("loggedUserToken", responseData.token);
+  setItemInLocalStorage("loggedUserId", responseData.id);
+  setItemInLocalStorage("loggedUserName", responseData.username);
+  setItemInLocalStorage("loggedUserEmail", responseData.email);
+}
+
 
 /**
  * Retrieves contact data by ID from the CONTACTS array.

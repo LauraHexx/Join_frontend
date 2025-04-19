@@ -42,16 +42,6 @@ async function checkIfPasswordsMatch() {
   }
 }
 
-/**
- * Stores the registration response data in local storage.
- * @param {Object} responseData - The data returned from the registration request.
- */
-async function setLocalStorage(responseData) {
-  setItemInLocalStorage("loggedUserToken", responseData.token);
-  setItemInLocalStorage("loggedUserId", responseData.id);
-  setItemInLocalStorage("loggedUserName", responseData.username);
-  setItemInLocalStorage("loggedUserEmail", responseData.email);
-}
 
 /**
  * Handles registration errors by checking the error message and displaying the appropriate error message to the user.

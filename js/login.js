@@ -1,7 +1,9 @@
+/**
+ * Initializes the login screen by adjusting UI and loading saved login data.
+ */
 async function initLogin() {
   changeZindexAnimation();
   getLocalStorage();
-  await loadUserData();
 }
 
 /**
@@ -22,30 +24,37 @@ function getLocalStorage() {
   loginPassword.value = getItemFromLocalStorage("password");
 }
 
+
 /**
- * Checks if the data provided by the user is correct.
- * If the login data is correct, it checks if "Remember Me" is activated and loads the summary template. Otherwise, it calls the `wrongData` function.
+ * Sends login data to the backend and handles the response.
+ * If login is successful, stores user data and handles "remember me".
+ * If login fails, displays an error message.
  */
-function checkIfDataCorrect() {
-  const correctUserData = lookForUserData();
-  if (correctUserData) {
-    checkIfRememberMeActiv();
-    setItemInLocalStorage("loggedUserId", correctUserData.id);
-    loadTemplate("templates/summary.html");
-  } else {
-    wrongData();
+async function checkIfDataCorrect() {
+  const loginData = getLoginData();
+  try {
+    const response = await login(loginData); 
+    if (response && response.token) {
+      checkIfRememberMeActiv();
+      setLocalStorage(response)
+      loadTemplate("templates/summary.html");
+    } else {
+      showError("dataIncorrect");
+    }
+  } catch (error) {
+    showError("dataIncorrect");
   }
 }
 
 /**
- * Checks if the user's email and password match any user in the `users` array.
- * @returns {Object|undefined} The user object if login data is correct, otherwise undefined.
+ * Reads email and password values from input fields.
+ * @returns {Object} loginData - Contains email and password
  */
-function lookForUserData() {
-  return USERS.find(
-    (user) =>
-      user.email === loginEmail.value && user.password === loginPassword.value
-  );
+function getLoginData() {
+  return {
+    email: loginEmail.value,
+    password: loginPassword.value
+  };
 }
 
 /**
@@ -58,39 +67,18 @@ function checkIfRememberMeActiv() {
   }
 }
 
-/**
- * Displays an error message indicating that the provided data is incorrect.
- */
-function wrongData() {
-  const dataIncorrect = document
-    .getElementById("dataIncorrect")
-    .classList.remove("d-none");
-}
 
 /**
- * Creates a guest user and adds the newly created guest user to the USERS array.
- * @async
+ * Logs in as a guest user, stores session data and loads the summary page.
  */
-async function createGuestUser() {
-  const newGuestUser = {
-    color: getRandomColor(),
-    id: getUserId(),
-    name: "Guest",
-    initials: "GU",
-    tasks: SAMPLE_DATA_TASKS,
-    contacts: SAMPLE_DATA_CONTACTS,
-    categorys: SAMPLE_DATA_CATEGORYS,
-  };
-  USERS.push(newGuestUser);
-  await setItem("users", JSON.stringify(USERS));
-  initializeUserGreeting(newGuestUser.id);
-}
-
-/**
- * Initializes the user greeting by setting data and loading the summary template.
- * @param {string} newGuestUserId - The ID of the newly created guest user.
- */
-function initializeUserGreeting(newGuestUserId) {
-  setDataForGreeting(newGuestUserId);
-  loadTemplate("templates/summary.html");
+async function setGuestLogin() {
+  try {
+    const response = await guestLogin(); 
+    if (response && response.token) {
+      setLocalStorage(response)
+      loadTemplate("templates/summary.html");
+    }
+  } catch (error) {
+    console.error("error:", error);
+  }
 }
