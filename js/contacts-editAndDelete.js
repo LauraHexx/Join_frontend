@@ -1,6 +1,7 @@
 /*EDIT CONTACT***********************************************************************************/
 
 let PAYLOAD = {};
+let SELECTED_CONTACT_EMAIL_BEFORE_CHANGE;
 
 /**
  * Renders the edit contact display.
@@ -8,6 +9,7 @@ let PAYLOAD = {};
 function renderEditContact() {
   showDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
+  SELECTED_CONTACT_EMAIL_BEFORE_CHANGE = SELECTED_CONTACT.email;
   document.getElementById("contentEditDisplay").innerHTML =
     renderEditContactHtml();
 }
@@ -87,6 +89,7 @@ async function saveEdits() {
   toggleClass("body", "overflowHidden");
   changeData();
   setPayload();
+  checkIfEditedContactIsUser();
   await changeContact(SELECTED_CONTACT.id, "PUT", PAYLOAD);
   await initContacts();
 }
@@ -108,6 +111,17 @@ function changeData() {
 function setPayload() {
   PAYLOAD = { ...SELECTED_CONTACT };
   delete PAYLOAD.id;
+}
+
+function checkIfEditedContactIsUser() {
+  if (SELECTED_CONTACT_EMAIL_BEFORE_CHANGE == LOGGED_USER.email) {
+    updateLocalStorage();
+  }
+}
+
+function updateLocalStorage() {
+  setItemInLocalStorage("loggedUserName", SELECTED_CONTACT.name);
+  setItemInLocalStorage("loggedUserEmail", SELECTED_CONTACT.email);
 }
 
 /*DELETE CONTACT***********************************************************************************/

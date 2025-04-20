@@ -145,7 +145,6 @@ async function renderContactsInTaskCards(indexOfTask, contacts) {
 function renderFirstTwoContacts(indexOfTask, contacts) {
   const maxContacts = Math.min(2, contacts.length);
   for (let i = 0; i < maxContacts; i++) {
-    console.log(contacts);
     if (assignedContactIsLoggedUser(contacts[i])) {
       renderYouContact(indexOfTask, contacts[i]);
     } else {
