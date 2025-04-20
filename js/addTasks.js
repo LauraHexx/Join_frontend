@@ -8,7 +8,6 @@ let CLICKED_CONTACTS = [];
  * @async
  */
 async function initAddTask() {
-  console.log("initAddTask");
   checkIfUserIsLogged();
   await setNavAndHeader("addTask");
   await loadDataAndRenderDropDown();
@@ -22,7 +21,6 @@ async function initAddTask() {
  * @async
  */
 async function loadDataAndRenderDropDown() {
-  console.log("loadDataAndRenderDropDown");
   toggleClass("loadingContainer", "d-none");
   await getDropDownData();
   await renderDropDownAddTaskDisplay();
@@ -104,16 +102,17 @@ function loggedUserIsNotGuest() {
 
 function showYouContact() {
   document.getElementById("savedContacts").innerHTML = "";
-  const loggedUser = CONTACTS.find((contact) => contact.email === LOGGED_USER.email);
-  const id = loggedUser.id 
-  const color = loggedUser.color 
+  const loggedUser = CONTACTS.find(
+    (contact) => contact.email === LOGGED_USER.email
+  );
+  const id = loggedUser.id;
+  const color = loggedUser.color;
   document.getElementById("savedContacts").innerHTML += renderYouContactHtml(
     LOGGED_USER.name,
     id,
     color
   );
 }
-
 
 /**
  * Hides the logged-in user's contact by adding the 'd-none' class to it.
@@ -128,15 +127,15 @@ function dontShowYouContact() {
 function renderSavedContacts() {
   CONTACTS.forEach((contact) => {
     if (isNotUserContact(contact)) {
-    const name = contact.name;
-    const id = contact.id;
-    const color = contact.color;
-    document.getElementById("savedContacts").innerHTML += renderContactsHtml(
-      name,
-      id,
-      color
-    );
-  }
+      const name = contact.name;
+      const id = contact.id;
+      const color = contact.color;
+      document.getElementById("savedContacts").innerHTML += renderContactsHtml(
+        name,
+        id,
+        color
+      );
+    }
   });
 }
 
@@ -147,7 +146,7 @@ function renderSavedContacts() {
  * @returns {boolean} - Returns true if the contact is not the logged-in user, otherwise false.
  */
 function isNotUserContact(contact) {
-  return contact.email !== LOGGED_USER.email
+  return contact.email !== LOGGED_USER.email;
 }
 
 /**
@@ -155,7 +154,6 @@ function isNotUserContact(contact) {
  * @param {string} id - The ID of the checkbox to toggle.
  */
 function toggleCheckbox(id) {
-  console.log(id)
   const checkbox = document.getElementById(`checkBoxUser${id}`);
   checkbox.checked = !checkbox.checked;
   let selectedCheckboxes = getSelectedCheckboxes();
@@ -208,7 +206,6 @@ function getRenderedContactHtml(contactId) {
   const initials = getInitials(contact.name);
   return renderTwoClickedContactsHtml(contact, initials);
 }
-
 
 /**
  * Renders the remaining amount of clicked contacts.
@@ -309,7 +306,7 @@ function getCategoryId() {
   if (categoryNameEl) {
     hideError("errorNoCategorySelected");
     const categoryName = categoryNameEl.innerHTML;
-    const category = CATEGORYS.find(cat => cat.name === categoryName);
+    const category = CATEGORYS.find((cat) => cat.name === categoryName);
     return category?.id;
   } else {
     showError("errorNoCategorySelected");
@@ -370,10 +367,9 @@ function getPriority() {
  */
 async function checkAndPushTask(task) {
   if (requiredDataTaskComplete(task)) {
-    await addTask(task)
-    renderTasks()
-    closeAddTask()
-  } 
+    await addTask(task);
+    loadTemplate("board.html");
+  }
 }
 
 /**

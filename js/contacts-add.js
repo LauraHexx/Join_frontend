@@ -48,7 +48,7 @@ async function addNewContact(newContact) {
   let payload = {};
   payload = newContact;
   await addContact(payload);
-  await loadDataAndRenderContacts();
+  await initContacts();
   showAnimationNewContactSuccess();
 }
 

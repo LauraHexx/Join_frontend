@@ -181,7 +181,6 @@ async function setLocalStorage(responseData) {
   setItemInLocalStorage("loggedUserEmail", responseData.email);
 }
 
-
 /**
  * Retrieves contact data by ID from the CONTACTS array.
  * @param {string} id - The ID of the contact.
@@ -189,7 +188,6 @@ async function setLocalStorage(responseData) {
  */
 function getContactData(id) {
   const contact = CONTACTS.find((contact) => contact.id === id);
-  console.log("contact:", contact);
   return contact;
 }
 
@@ -310,7 +308,6 @@ async function getLoggedUser() {
     loadTemplate("../index.html");
   } else {
     LOGGED_USER = getUserData(loggedUserId);
-    console.log("LOGGED_USER:", LOGGED_USER);
   }
 }
 

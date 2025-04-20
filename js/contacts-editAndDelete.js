@@ -50,7 +50,6 @@ function checkEditContactData(editedContact) {
     filteredContacts,
     editContactName.value
   );
-
   showErrorOrSaveEdits(foundExistingEmail, foundExistingName);
 }
 
@@ -89,7 +88,7 @@ async function saveEdits() {
   changeData();
   setPayload();
   await changeContact(SELECTED_CONTACT.id, "PUT", PAYLOAD);
-  await loadDataAndRenderContacts();
+  await initContacts();
 }
 
 /**
@@ -118,11 +117,11 @@ function setPayload() {
  */
 async function deleteContact() {
   hideDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
-  toggleClass("body", "ovegetDataEditContactrflowHidden");
+  toggleClass("body", "overflowHidden");
   closeDetailInfos();
   deleteContactFromContactList();
   await changeContact(SELECTED_CONTACT.id, "DELETE");
-  await loadDataAndRenderContacts();
+  await initContacts();
   playAnimationContactDeletedSuccess();
 }
 

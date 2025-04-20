@@ -9,8 +9,8 @@ async function initBoard() {
   checkIfUserIsLogged();
   await setNavAndHeader("board");
   await loadDataAndRenderTasks();
-  await getCategories()
-  await getContacts()
+  await getCategories();
+  await getContacts();
   setEventsBoard();
   renderDropDownAddTaskDisplay();
 }
@@ -57,7 +57,7 @@ function setEventsImageHoverAddTask(id) {
  * Renders the tasks on the board.
  */
 async function renderTasks() {
-  await getTasks()
+  await getTasks();
   clearBoard();
   TASKS.forEach((task) => {
     setDataTaskCard(task);
@@ -81,7 +81,7 @@ function clearBoard() {
 function setDataTaskCard(task) {
   const indexOfTask = TASKS.indexOf(task);
   const processStep = task.process_step;
-  const contactsIds = task.contacts;
+  const contacts = task.contacts;
   const amountSubtasks = task.subtasks.length;
   const classSubtasts = getStyleClassForSubtasks(amountSubtasks);
   const amountFinishedSubtasks = countAmountOfFinishedSubtasks(task);
@@ -92,7 +92,7 @@ function setDataTaskCard(task) {
     amountFinishedSubtasks,
     classSubtasts
   );
-  renderContactsInTaskCards(indexOfTask, contactsIds);
+  renderContactsInTaskCards(indexOfTask, contacts);
 }
 
 /**
@@ -126,61 +126,62 @@ function countAmountOfFinishedSubtasks(task) {
 }
 
 /**
- * Renders contacts initials in single task cards.
- * @param {number} indexOfTask - The index of the task.
- * @param {Array<number>} contactsIds - The IDs of the contacts.
- * @async
+ * Renders contacts in a task card, including initials or "You" if user is assigned.
+ * @param {number} indexOfTask - Index of the task in the task list.
+ * @param {Array<Object>} contacts - Array of contact objects assigned to the task.
  */
-async function renderContactsInTaskCards(indexOfTask, contactsIds) {
-  const amountContacts = contactsIds.length;
-  await renderFirstTwoContacts(indexOfTask, contactsIds);
+async function renderContactsInTaskCards(indexOfTask, contacts) {
+  const amountContacts = contacts.length;
+  await renderFirstTwoContacts(indexOfTask, contacts);
   await renderRemainingAmountOfContacts(indexOfTask, amountContacts);
   document.getElementById("loadingContainer").classList.add("d-none");
 }
 
 /**
- * Renders the first two contacts in a task card.
- * @param {number} indexOfTask - The index of the task.
- * @param {Array<number>} contactsIds - The IDs of the contacts.
+ * Renders the first two contacts of a task.
+ * @param {number} indexOfTask - Index of the task.
+ * @param {Array<Object>} contacts - Array of contact objects.
  */
-function renderFirstTwoContacts(indexOfTask, contactsIds) {
-  const maxContacts = Math.min(2, contactsIds.length);
+function renderFirstTwoContacts(indexOfTask, contacts) {
+  const maxContacts = Math.min(2, contacts.length);
   for (let i = 0; i < maxContacts; i++) {
-    if (assignedContactIsLoggedUser(contactsIds[i])) {
-      renderYouContact(indexOfTask);
+    console.log(contacts);
+    if (assignedContactIsLoggedUser(contacts[i])) {
+      renderYouContact(indexOfTask, contacts[i]);
     } else {
-      renderInitialsContacts(indexOfTask, contactsIds[i]);
+      renderInitialsContacts(indexOfTask, contacts[i]);
     }
   }
 }
 
 /**
- * Checks if the contact at the given id is the logged-in user.
- * @param {number} contactId - The id of the contact.
- * @returns {boolean} True if the contact is the logged-in user, false otherwise.
+ * Checks if a contact is the currently logged-in user.
+ * @param {Object} contact - Contact object.
+ * @returns {boolean} True if the contact is the logged-in user.
  */
-function assignedContactIsLoggedUser(contactId) {
-  return contactId === LOGGED_USER.id;
+function assignedContactIsLoggedUser(contact) {
+  return contact.email === LOGGED_USER.email;
 }
 
 /**
- * Renders the "You" contact in a task card if the logged user is not a guest.
- * @param {number} indexOfTask - The index of the task.
+ * Renders a contact labeled as "You".
+ * @param {number} indexOfTask - Index of the task.
+ * @param {Object} contactsId - Contact object with a color property.
  */
-function renderYouContact(indexOfTask) {
+function renderYouContact(indexOfTask, contactsId) {
   const initials = "You";
-  const color = "#0000FF";
+  const color = contactsId.color;
   appendContactHtml(indexOfTask, initials, color);
 }
 
 /**
- * Renders initials-based contacts in a task card.
- * @param {number} indexOfTask - The index of the task.
- * @param {number} contactId - The id of the contact.
+ * Renders a contact using their initials.
+ * @param {number} indexOfTask - Index of the task.
+ * @param {Object} contact - Contact object with name and color.
  */
-function renderInitialsContacts(indexOfTask, contactId) {
-  const initials = getInitials(contactId.name);
-  const color = contactId.color;
+function renderInitialsContacts(indexOfTask, contact) {
+  const initials = getInitials(contact.name);
+  const color = contact.color;
   appendContactHtml(indexOfTask, initials, color);
 }
 
@@ -274,10 +275,10 @@ function changeProcessStepOfTaskForward(currentProcessStep) {
  * @param {number} newProcessStepIndex - The index of the new process step.
  */
 async function changeProcessStepInData(indexOfTask, newProcessStepIndex) {
-  console.log(TASKS[indexOfTask].id)
-  console.log(PROCESS_STEPS[newProcessStepIndex])
-  await changeTask(TASKS[indexOfTask].id, "PATCH", { process_step: PROCESS_STEPS[newProcessStepIndex] });
-  renderTasks()
+  await changeTask(TASKS[indexOfTask].id, "PATCH", {
+    process_step: PROCESS_STEPS[newProcessStepIndex],
+  });
+  renderTasks();
 }
 
 /*DETAILS OF SINGLE TASK***********************************************************************************/
@@ -319,7 +320,6 @@ function renderTaskDetails() {
 function renderContactsInDetailCard() {
   document.getElementById("assignedContactsDetailCard").innerHTML = "";
   const assignedContacts = SELECTED_TASK.contacts;
-  console.log(assignedContacts);
   assignedContacts.forEach((contact) => {
     if (assignedContactIsLoggedUser(contact)) {
       renderYouContactInDetailCard();
@@ -361,11 +361,27 @@ function renderSubtasksInDetailCard() {
   document.getElementById("containerSubtasks").innerHTML = "";
   const indexOfTask = TASKS.indexOf(SELECTED_TASK);
   const subtasks = SELECTED_TASK.subtasks;
+
   subtasks.forEach((subtask) => {
     const name = subtask.name;
-    const status = subtask.status;
+    let status = subtask.status;
+    let statusHtml = setStatusSubtaskHtml(status);
     const indexOfSubtask = subtasks.indexOf(subtask);
     document.getElementById("containerSubtasks").innerHTML +=
-      renderSubtasksInDetailCardHtml(name, status, indexOfSubtask, indexOfTask);
+      renderSubtasksInDetailCardHtml(
+        name,
+        statusHtml,
+        indexOfSubtask,
+        indexOfTask
+      );
   });
+}
+
+function setStatusSubtaskHtml(status) {
+  if (status == true) {
+    status = "checked";
+  } else {
+    status = "unchecked";
+  }
+  return status;
 }

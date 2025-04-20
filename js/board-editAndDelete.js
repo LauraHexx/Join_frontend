@@ -24,7 +24,10 @@ function changeStyleBtnsInEditTask() {
  */
 function setDataTaskToEditDisplay() {
   setTitleAndDescriptionToEditDisplay();
-  renderSelectedCategory(SELECTED_TASK.category.name, SELECTED_TASK.category.color);
+  renderSelectedCategory(
+    SELECTED_TASK.category.name,
+    SELECTED_TASK.category.color
+  );
   setContactsToEditDisplay();
   setDueDateToEditDisplay();
   setPrioBtnsToEditDisplay();
@@ -38,7 +41,6 @@ function setTitleAndDescriptionToEditDisplay() {
   document.getElementById("titleInput").value = SELECTED_TASK.title;
   document.getElementById("descriptionInput").value = SELECTED_TASK.description;
 }
-
 
 /**
  * Sets the contacts of the selected task to the edit display.
@@ -54,7 +56,6 @@ function setContactsToEditDisplay() {
  * Sets the due date of the selected task to the edit display.
  */
 function setDueDateToEditDisplay() {
-  console.log(SELECTED_TASK);
   document.getElementById("inputDueDate").value = SELECTED_TASK.due_date;
 }
 
@@ -84,7 +85,31 @@ function getColorOfPrio(priority) {
   }
 }
 
+function setSubtasksToEditDisplay() {
+  SUBTASKS = SELECTED_TASK.subtasks;
+  renderSubtasks();
+}
 
+/**
+ * Changes the status of a subtask.
+ * @param {number} indexOfTask - The index of the task.
+ * @param {number} indexOfSubtask - The index of the subtask.
+ */
+async function changeStatusSubtask(indexOfTask, indexOfSubtask) {
+  const checkbox = document.getElementById(
+    `task${indexOfTask}subtask${indexOfSubtask}`
+  );
+  let status;
+  if (checkbox.checked) {
+    status = true;
+  } else {
+    status = false;
+  }
+  await changeTask(SELECTED_TASK.id, "PATCH", { status: status });
+  hideDisplay("containerDetails", "animation-slideInRight", "d-none");
+  toggleClass("body", "overflowHidden");
+  renderTasks();
+}
 
 /**
  * Deletes the selected task and closes the opened display.
@@ -92,10 +117,10 @@ function getColorOfPrio(priority) {
 async function deleteTask() {
   const indexOfTask = TASKS.indexOf(SELECTED_TASK);
   TASKS.splice(indexOfTask, 1);
-  await changeTask(SELECTED_TASK.id, "DELETE")
+  await changeTask(SELECTED_TASK.id, "DELETE");
   hideDisplay("containerDetails", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
-  renderTasks()
+  renderTasks();
 }
 
 /**
@@ -128,8 +153,8 @@ async function checkAndOverwriteTask(task) {
     SELECTED_TASK.dueDate = task.dueDate;
     SELECTED_TASK.priority = task.priority;
     SELECTED_TASK.subtasks = task.subtasks;
-    await changeTask(SELECTED_TASK.id, "PUT", task)
-    await loadDataAndRenderTasks()
-    closeAddTask()
+    await changeTask(SELECTED_TASK.id, "PUT", task);
+    await loadDataAndRenderTasks();
+    closeAddTask();
   }
 }

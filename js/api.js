@@ -1,7 +1,7 @@
 async function login(payload) {
   try {
     const response = await sendRequest("POST", URL_LOGIN, payload);
-    return response
+    return response;
   } catch (error) {
     console.error("error:", error);
   }
@@ -10,7 +10,7 @@ async function login(payload) {
 async function guestLogin(payload) {
   try {
     const response = await sendRequest("POST", URL_GUEST_LOGIN);
-    return response
+    return response;
   } catch (error) {
     console.error("error:", error);
   }
@@ -37,7 +37,6 @@ async function getSummary() {
 async function getTasks() {
   try {
     TASKS = await sendRequest("GET", URL_TASKS);
-    console.log(TASKS);
   } catch (error) {
     console.error("error:", error);
   }
@@ -45,14 +44,11 @@ async function getTasks() {
 
 async function addTask(payload) {
   try {
-    console.log("addTask")
     TASKS = await sendRequest("POST", URL_TASKS, payload);
-    console.log(TASKS);
   } catch (error) {
     console.error("error:", error);
   }
 }
-
 
 async function changeTask(id, methode, payload) {
   try {
@@ -64,11 +60,9 @@ async function changeTask(id, methode, payload) {
   }
 }
 
-
 async function getCategories() {
   try {
     CATEGORYS = await sendRequest("GET", URL_CATEGORIES);
-    console.log(CATEGORYS);
   } catch (error) {
     console.error("error:", error);
   }
@@ -77,7 +71,6 @@ async function getCategories() {
 async function addCategorie(payload) {
   try {
     CATEGORYS = await sendRequest("POST", URL_CATEGORIES, payload);
-    console.log(CATEGORYS);
   } catch (error) {
     console.error("error:", error);
   }
@@ -112,7 +105,6 @@ async function changeContact(id, methode, payload) {
 async function getUsers() {
   try {
     USERS = await sendRequest("GET", URL_USERS);
-    console.log(USERS);
   } catch (error) {
     console.error("error:", error);
   }

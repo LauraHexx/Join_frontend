@@ -97,8 +97,8 @@ async function openContactDetails(indexOfContact) {
     styleContactDetailsMobile();
   }
   if (animationIsNotPlaying()) {
-    console.log(CONTACTS);
     SELECTED_CONTACT = CONTACTS[indexOfContact];
+    console.log(SELECTED_CONTACT);
 
     playAnimationContactDetails();
     renderContactDetails();

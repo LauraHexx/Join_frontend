@@ -22,7 +22,12 @@ function renderSubtasks() {
   document.getElementById("subtasks").innerHTML = "";
   SUBTASKS.forEach((subtask) => {
     const indexOfSubtask = SUBTASKS.indexOf(subtask);
-    const status = subtask.status;
+    let status = subtask.status;
+    if (status == true) {
+      status = "checked";
+    } else {
+      status = "unchecked";
+    }
     document.getElementById("subtasks").innerHTML += renderSubtasksHtml(
       subtask,
       indexOfSubtask,
