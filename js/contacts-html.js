@@ -127,6 +127,7 @@ function renderEditContactHtml() {
             <input
                 onclick="deleteContact()"
                 class="closeEdit"
+                id="deleteBtn"
                 value="Delete" />
               <button class="saveBtn">Save</button>
             </div>

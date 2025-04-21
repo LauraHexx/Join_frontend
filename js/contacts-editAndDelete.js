@@ -12,6 +12,16 @@ function renderEditContact() {
   SELECTED_CONTACT_EMAIL_BEFORE_CHANGE = SELECTED_CONTACT.email;
   document.getElementById("contentEditDisplay").innerHTML =
     renderEditContactHtml();
+  removeDeleteBtnIfUser();
+}
+
+/**
+ * Hides the delete button if the selected contact is the logged-in user.
+ */
+function removeDeleteBtnIfUser() {
+  if (SELECTED_CONTACT.email == LOGGED_USER.email) {
+    toggleClass("deleteBtn", "d-none");
+  }
 }
 
 /**
