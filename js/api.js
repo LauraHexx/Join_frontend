@@ -79,6 +79,7 @@ async function addCategorie(payload) {
 async function getContacts() {
   try {
     CONTACTS = await sendRequest("GET", URL_CONTACTS);
+    checkIfGuest();
   } catch (error) {
     console.error("error:", error);
   }
@@ -113,6 +114,7 @@ async function getUsers() {
 async function logOut() {
   try {
     await sendRequest("POST", URL_LOGOUT);
+    console.log("log user per api aus");
   } catch (error) {
     console.error("error:", error);
   }

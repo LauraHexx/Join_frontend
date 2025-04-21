@@ -14,3 +14,11 @@ function closeMenu() {
   toggleClass("menuHeaderBg", "d-none");
   toggleClass("menuHeader", "d-none");
 }
+
+/**
+ * Logs out the user and clears local storage.
+ */
+async function logUserOut() {
+  await logOut();
+  removeUserFromLocalStorage();
+}

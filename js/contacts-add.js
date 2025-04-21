@@ -60,6 +60,12 @@ function closeAddContact() {
   cancelAddContact();
   hideDisplay("contentAddDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
+  hideAlleAddContactErrors();
+}
+
+function hideAlleAddContactErrors() {
+  hideError("errorEnterANewName");
+  hideError("errorEnterANewEmail");
 }
 
 /**

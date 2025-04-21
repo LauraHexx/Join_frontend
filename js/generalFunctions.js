@@ -159,10 +159,9 @@ function goBackToPreviousPage() {
 }
 
 /**
- * Logs out user: calls backend, clears storage, redirects to login.
+ * Removes user data from local storage and redirects to login page.
  */
-async function logUserOut() {
-  await logOut();
+async function removeUserFromLocalStorage() {
   removeItemFromLocalStorage("loggedUserId");
   removeItemFromLocalStorage("loggedUserEmail");
   removeItemFromLocalStorage("loggedUserName");
@@ -212,7 +211,7 @@ function findExistingUsernameInContacts(contacts, name) {
 }
 
 function findExistingUsernameInUsers(name) {
-  return USERS.find((user) => user.username === name);
+  return USERS.find((user) => user.namename === name);
 }
 
 /**
@@ -259,6 +258,17 @@ function getRandomColor() {
  */
 function sortArrayAlphabetically(array) {
   array.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * Removes the logged-in guest user from the contacts list if it's a guest account.
+ */
+function checkIfGuest() {
+  if (LOGGED_USER.email.includes("guest")) {
+    CONTACTS = CONTACTS.filter(
+      (contact) => contact.email !== LOGGED_USER.email
+    );
+  }
 }
 
 /*DISPLAYS************************************************************************************/

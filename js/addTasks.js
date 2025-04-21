@@ -97,7 +97,7 @@ function renderContacts() {
  * @returns {boolean} True if the logged-in user is a guest, otherwise false.
  */
 function loggedUserIsNotGuest() {
-  return !LOGGED_USER.name.includes("Guest");
+  return !LOGGED_USER.name.includes("guest");
 }
 
 function showYouContact() {
