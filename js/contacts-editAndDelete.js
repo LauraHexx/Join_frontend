@@ -98,15 +98,16 @@ function showErrorIfContactIsAlreadyExisting(
 async function checkEditContactDataUserContact(editedContact) {
   if (SELECTED_CONTACT_EMAIL_BEFORE_CHANGE == LOGGED_USER.email) {
     await getUsers();
-    const existingUsername = findExistingUsernameInUsers(SELECTED_CONTACT.name);
-    if (existingUsername) {
-      console.log("user gibt es bereits");
+    const existingUsername = findExistingUsernameInUsers(editedContact.name);
+    if (!existingUsername) {
+      checkUserEmail(editedContact);
+    } else if (existingUsername.username !== SELECTED_CONTACT.name) {
       showError("errorUserNameIsAlreadyTaken");
     } else {
-      checkUserEmail(editedContact);
+      saveEdits(editedContact);
     }
   } else {
-    await saveEdits();
+    await saveEdits(editedContact);
   }
 }
 
@@ -116,30 +117,41 @@ async function checkEditContactDataUserContact(editedContact) {
  * @param {Object} editedContact - The contact object being edited.
  */
 async function checkUserEmail(editedContact) {
+  console.log("checkUserEmail");
   if (SELECTED_CONTACT_EMAIL_BEFORE_CHANGE == LOGGED_USER.email) {
-    updateLocalStorage();
-    await saveEdits();
+    updateLocalStorage(editedContact);
+    await saveEdits(editedContact);
   }
 }
 
 /**
  * Updates the local storage with the name and email of the currently selected contact.
  */
-function updateLocalStorage() {
-  setItemInLocalStorage("loggedUserName", SELECTED_CONTACT.name);
-  setItemInLocalStorage("loggedUserEmail", SELECTED_CONTACT.email);
+function updateLocalStorage(editedContact) {
+  setItemInLocalStorage("loggedUserName", editedContact.name);
+  setItemInLocalStorage("loggedUserEmail", editedContact.email);
 }
 
 /**
  * Saves the edits made to the contact.
  * @async
  */
-async function saveEdits() {
+async function saveEdits(editedContact) {
   closeDetailInfos();
   hideDisplay("contentEditDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
   changeData();
   setPayload();
+  updateSelectedContact();
+}
+
+function setPayload() {
+  PAYLOAD = { ...SELECTED_CONTACT };
+  delete PAYLOAD.id;
+}
+
+async function updateSelectedContact() {
+  console.log("PAYLOAD", PAYLOAD);
   await changeContact(SELECTED_CONTACT.id, "PUT", PAYLOAD);
   await initContacts();
 }
@@ -152,15 +164,6 @@ function changeData() {
   SELECTED_CONTACT.email = editContactEmail.value;
   SELECTED_CONTACT.phone_number = editContactPhone.value;
   SELECTED_CONTACT.initials = getInitials(editContactName.value);
-}
-
-/**
- * Prepares the payload for an API request by copying the selected contact's data.
- * Removes the 'id' field from the payload to avoid sending it in the request body.
- */
-function setPayload() {
-  PAYLOAD = { ...SELECTED_CONTACT };
-  delete PAYLOAD.id;
 }
 
 /*DELETE CONTACT***********************************************************************************/

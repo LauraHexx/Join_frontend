@@ -121,7 +121,7 @@ function renderEditContactHtml() {
                 type="number"
                 placeholder="Phone"
                 minlength="8"
-                minlength="15"
+                maxlength="15"
                 />
             <div class="editContactBtns">
             <input
