@@ -63,6 +63,9 @@ function closeAddContact() {
   hideAlleAddContactErrors();
 }
 
+/**
+ * Hides all error messages related to adding a contact.
+ */
 function hideAlleAddContactErrors() {
   hideError("errorEnterANewName");
   hideError("errorEnterANewEmail");

@@ -376,6 +376,11 @@ function renderSubtasksInDetailCard() {
   });
 }
 
+/**
+ * Converts a boolean subtask status to a string representation.
+ * @param {boolean} status - The status of the subtask.
+ * @returns {string} "checked" if true, otherwise "unchecked".
+ */
 function setStatusSubtaskHtml(status) {
   if (status == true) {
     status = "checked";

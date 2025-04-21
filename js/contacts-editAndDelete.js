@@ -127,7 +127,6 @@ async function checkEditContactDataUserContact(editedContact) {
  * @param {Object} editedContact - The contact object being edited.
  */
 async function checkUserEmail(editedContact) {
-  console.log("checkUserEmail");
   if (SELECTED_CONTACT_EMAIL_BEFORE_CHANGE == LOGGED_USER.email) {
     updateLocalStorage(editedContact);
     await saveEdits(editedContact);
@@ -155,13 +154,18 @@ async function saveEdits(editedContact) {
   updateSelectedContact();
 }
 
+/**
+ * Prepares the payload by copying the selected contact and removing its ID.
+ */
 function setPayload() {
   PAYLOAD = { ...SELECTED_CONTACT };
   delete PAYLOAD.id;
 }
 
+/**
+ * Sends an update request for the selected contact and refreshes the contact list.
+ */
 async function updateSelectedContact() {
-  console.log("PAYLOAD", PAYLOAD);
   await changeContact(SELECTED_CONTACT.id, "PUT", PAYLOAD);
   await initContacts();
 }

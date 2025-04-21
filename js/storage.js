@@ -14,6 +14,14 @@ const URL_SUMMARY = `${BASE_URL}/summary/`;
 
 let TOKEN;
 
+/**
+ * Sends an HTTP request with the given method, URL, and optional payload.
+ * @param {string} method - HTTP method (e.g., "GET", "POST").
+ * @param {string} url - Endpoint URL.
+ * @param {Object} [payload=null] - Optional payload for non-GET requests.
+ * @returns {Promise<any>} Parsed JSON response or undefined.
+ * @throws {Error} If the request fails or returns a non-OK response.
+ */
 async function sendRequest(method, url, payload = null) {
   const options = {
     method: method.toUpperCase(),
@@ -27,6 +35,10 @@ async function sendRequest(method, url, payload = null) {
   return await fetchAndHandleResponse(url, options);
 }
 
+/**
+ * Returns the HTTP headers for requests, including auth token if available.
+ * @returns {Object} Headers object.
+ */
 function getHeaders() {
   const headers = {
     "Content-Type": "application/json",
@@ -37,14 +49,31 @@ function getHeaders() {
   return headers;
 }
 
+/**
+ * Checks if the given method is a GET request.
+ * @param {string} method - HTTP method.
+ * @returns {boolean} True if method is "GET", else false.
+ */
 function isGetMethod(method) {
   return method == "GET";
 }
 
+/**
+ * Converts a payload object to a JSON string.
+ * @param {Object} payload - Data to send.
+ * @returns {string} JSON stringified payload.
+ */
 function addPayload(payload) {
   return JSON.stringify(payload);
 }
 
+/**
+ * Performs fetch and handles response including error handling and JSON parsing.
+ * @param {string} url - The endpoint URL.
+ * @param {Object} options - Fetch options including method, headers, body.
+ * @returns {Promise<any>} Parsed JSON response or undefined.
+ * @throws {Error} If the response is not ok or fetch fails.
+ */
 async function fetchAndHandleResponse(url, options) {
   try {
     const response = await fetch(url, options);
@@ -60,6 +89,6 @@ async function fetchAndHandleResponse(url, options) {
     }
     return;
   } catch (error) {
-    throw new Error("Fehler bei der Anfrage: " + error.message);
+    throw new Error("Error: " + error.message);
   }
 }

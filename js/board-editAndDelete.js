@@ -85,6 +85,9 @@ function getColorOfPrio(priority) {
   }
 }
 
+/**
+ * Sets subtasks from selected task and renders them.
+ */
 function setSubtasksToEditDisplay() {
   SUBTASKS = SELECTED_TASK.subtasks;
   renderSubtasks();
