@@ -21,7 +21,7 @@ async function getDataNewContact() {
  */
 function checkNewContactData(newContact) {
   const foundExistingEmail = findExistingEmail(CONTACTS, addContactEmail.value);
-  const foundExistingName = findExistingUsername(
+  const foundExistingName = findExistingUsernameInContacts(
     CONTACTS,
     addContactName.value
   );

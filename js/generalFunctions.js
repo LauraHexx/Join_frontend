@@ -207,8 +207,12 @@ function findExistingEmail(contacts, email) {
  * @param {string} name - The name to search for.
  * @returns {Object} The contact object if an existing name is found, otherwise null.
  */
-function findExistingUsername(contacts, name) {
+function findExistingUsernameInContacts(contacts, name) {
   return contacts.find((contact) => contact.name === name);
+}
+
+function findExistingUsernameInUsers(name) {
+  return USERS.find((user) => user.username === name);
 }
 
 /**

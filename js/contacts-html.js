@@ -99,7 +99,8 @@ function renderEditContactHtml() {
                 maxlength="25"
                 minlength="2"
                 required />
-                <span id="errorNameIsAlreadyTaken" class="error d-none">Email already belongs to a contact. Please update it.</span>
+                <span id="errorNameIsAlreadyTaken" class="error d-none">Name already belongs to a contact. Please update it.</span>
+                <span id="errorUserNameIsAlreadyTaken" class="error d-none">Username is already taken. Please update it.</span>
                 </div>
             <div class="inputContainer">
               <input

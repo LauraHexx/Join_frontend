@@ -5,7 +5,7 @@ const URL_LOGIN = `${BASE_URL}/auth/login/`;
 const URL_GUEST_LOGIN = `${BASE_URL}/auth/guest-login/`;
 const URL_LOGOUT = `${BASE_URL}/auth/logout/`;
 
-const URL_USERS = `${BASE_URL}/users/`;
+const URL_USERS = `${BASE_URL}/auth/users/`;
 const URL_TASKS = `${BASE_URL}/tasks/`;
 const URL_SUBTASKS = `${BASE_URL}/subtasks/`;
 const URL_CATEGORIES = `${BASE_URL}/categories/`;

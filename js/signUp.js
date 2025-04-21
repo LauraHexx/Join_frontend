@@ -42,7 +42,6 @@ async function checkIfPasswordsMatch() {
   }
 }
 
-
 /**
  * Handles registration errors by checking the error message and displaying the appropriate error message to the user.
  * @param {Object} error - The error object containing the error message.
@@ -62,7 +61,7 @@ function handleRegistrationErrors(error) {
  * @returns {boolean} - Returns true if the error message indicates that the username already exists, otherwise false.
  */
 function userNameAlreadyExists(error) {
-  return error.includes("A user with that username already exists");
+  return error.includes("UNIQUE constraint failed: auth_user.username");
 }
 
 /**

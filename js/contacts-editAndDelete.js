@@ -25,15 +25,16 @@ function getDataEditContact() {
     email: editContactEmail.value,
     phone: editContactPhone.value,
   };
-  checkEditContactData(editedContact);
+  checkEditContactDataContact(editedContact);
 }
 
 /**
- * Hides all error messages related to contact name and email validation.
+ * Hides all error messages related to contact name, username and email validation.
  */
 function hideAllErrors() {
   hideError("errorNameIsAlreadyTaken");
   hideError("errorEmailIsAlreadyTaken");
+  hideError("errorUserNameIsAlreadyTaken");
 }
 
 /**
@@ -42,33 +43,21 @@ function hideAllErrors() {
  * Otherwise, proceeds to save the changes.
  * @param {Object} editedContact - The contact data being edited (not directly used in this function).
  */
-function checkEditContactData(editedContact) {
+function checkEditContactDataContact(editedContact) {
   const filteredContacts = filterContacts();
   const foundExistingEmail = findExistingEmail(
     filteredContacts,
     editContactEmail.value
   );
-  const foundExistingName = findExistingUsername(
+  const foundExistingName = findExistingUsernameInContacts(
     filteredContacts,
     editContactName.value
   );
-  showErrorOrSaveEdits(foundExistingEmail, foundExistingName);
-}
-
-/**
- * Displays appropriate error messages if name or email already exist.
- * If no duplicates are found, saves the edited contact.
- * @param {boolean} foundExistingEmail - Indicates whether the email already exists.
- * @param {boolean} foundExistingName - Indicates whether the name already exists.
- */
-function showErrorOrSaveEdits(foundExistingEmail, foundExistingName) {
-  if (foundExistingName) {
-    showError("errorNameIsAlreadyTaken");
-  } else if (foundExistingEmail) {
-    showError("errorEmailIsAlreadyTaken");
-  } else {
-    saveEdits();
-  }
+  showErrorIfContactIsAlreadyExisting(
+    foundExistingEmail,
+    foundExistingName,
+    editedContact
+  );
 }
 
 /**
@@ -77,6 +66,68 @@ function showErrorOrSaveEdits(foundExistingEmail, foundExistingName) {
  */
 function filterContacts() {
   return CONTACTS.filter((contact) => contact !== SELECTED_CONTACT);
+}
+
+/**
+ * Displays an error message if a contact with the same name or email already exists.
+ * If no duplicates are found, proceeds with further validation for the edited contact.
+ * @param {boolean} foundExistingEmail - Indicates if the email is already used by another contact.
+ * @param {boolean} foundExistingName - Indicates if the name is already used by another contact.
+ * @param {Object} editedContact - The contact object being edited.
+ */
+function showErrorIfContactIsAlreadyExisting(
+  foundExistingEmail,
+  foundExistingName,
+  editedContact
+) {
+  if (foundExistingName) {
+    showError("errorNameIsAlreadyTaken");
+  } else if (foundExistingEmail) {
+    showError("errorEmailIsAlreadyTaken");
+  } else {
+    checkEditContactDataUserContact(editedContact);
+  }
+}
+
+/**
+ * Validates the edited contact if it is the logged-in user's contact.
+ * Checks if the new username is already taken by another user.
+ * If not, continues with email validation or directly saves the changes.
+ * @param {Object} editedContact - The contact object being edited.
+ */
+async function checkEditContactDataUserContact(editedContact) {
+  if (SELECTED_CONTACT_EMAIL_BEFORE_CHANGE == LOGGED_USER.email) {
+    await getUsers();
+    const existingUsername = findExistingUsernameInUsers(SELECTED_CONTACT.name);
+    if (existingUsername) {
+      console.log("user gibt es bereits");
+      showError("errorUserNameIsAlreadyTaken");
+    } else {
+      checkUserEmail(editedContact);
+    }
+  } else {
+    await saveEdits();
+  }
+}
+
+/**
+ * Validates the email of the edited contact if it belongs to the logged-in user.
+ * Updates local storage with the new user data before saving.
+ * @param {Object} editedContact - The contact object being edited.
+ */
+async function checkUserEmail(editedContact) {
+  if (SELECTED_CONTACT_EMAIL_BEFORE_CHANGE == LOGGED_USER.email) {
+    updateLocalStorage();
+    await saveEdits();
+  }
+}
+
+/**
+ * Updates the local storage with the name and email of the currently selected contact.
+ */
+function updateLocalStorage() {
+  setItemInLocalStorage("loggedUserName", SELECTED_CONTACT.name);
+  setItemInLocalStorage("loggedUserEmail", SELECTED_CONTACT.email);
 }
 
 /**
@@ -89,7 +140,6 @@ async function saveEdits() {
   toggleClass("body", "overflowHidden");
   changeData();
   setPayload();
-  checkIfEditedContactIsUser();
   await changeContact(SELECTED_CONTACT.id, "PUT", PAYLOAD);
   await initContacts();
 }
@@ -111,17 +161,6 @@ function changeData() {
 function setPayload() {
   PAYLOAD = { ...SELECTED_CONTACT };
   delete PAYLOAD.id;
-}
-
-function checkIfEditedContactIsUser() {
-  if (SELECTED_CONTACT_EMAIL_BEFORE_CHANGE == LOGGED_USER.email) {
-    updateLocalStorage();
-  }
-}
-
-function updateLocalStorage() {
-  setItemInLocalStorage("loggedUserName", SELECTED_CONTACT.name);
-  setItemInLocalStorage("loggedUserEmail", SELECTED_CONTACT.email);
 }
 
 /*DELETE CONTACT***********************************************************************************/
