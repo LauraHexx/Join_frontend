@@ -8,7 +8,6 @@ async function addNewCategory() {
   let newCategory = getNewCategory();
   let colour = getSelectedColor();
   checkDataAndDisplayNewCategory(newCategory, colour);
-  renderDropDownAddTaskDisplay();
 }
 
 /**
@@ -72,11 +71,30 @@ function getSelectedColor() {
   const selectedColor = document.querySelector(".selectedColor");
   if (selectedColor) {
     hideError("errorNewCategoryNoColorSelected");
-    return selectedColor.id;
+    const bgColor = window.getComputedStyle(selectedColor).backgroundColor;
+    const bgColorHex = rgbToHex(bgColor);
+    return bgColorHex;
   } else {
     showError("errorNewCategoryNoColorSelected");
     return;
   }
+}
+
+/**
+ * Converts an RGB color string to a HEX color string.
+ * @param {string} rgb - The RGB string (e.g. "rgb(255, 0, 128)").
+ * @returns {string|null} - The HEX representation (e.g. "#ff0080") or null if input is invalid.
+ */
+function rgbToHex(rgb) {
+  const result = rgb.match(/\d+/g);
+  if (!result || result.length < 3) return null;
+
+  return (
+    "#" +
+    parseInt(result[0]).toString(16).padStart(2, "0") +
+    parseInt(result[1]).toString(16).padStart(2, "0") +
+    parseInt(result[2]).toString(16).padStart(2, "0")
+  );
 }
 
 /**
@@ -87,13 +105,15 @@ function getSelectedColor() {
  */
 async function checkDataAndDisplayNewCategory(newCategory, color) {
   if (requiredDataNewCategoryComplete(newCategory, color)) {
-    pushNewCategoryToUser(newCategory, color);
-    await setItem("users", JSON.stringify(USERS));
-    resetNewCategory();
+    const categoryRightFormat = getRightDataFormat(newCategory, color);
+    await addCategorie(categoryRightFormat);
+    resetNewCategory(newCategory);
     renderSelectedCategory(newCategory, color);
     changeStyleCategory();
     hideError("errorNewCategoryNoNameEntered");
     hideError("errorNewCategoryNameAlreadyExists");
+    await getCategories();
+    renderDropDownAddTaskDisplay();
   }
 }
 
@@ -105,15 +125,20 @@ function requiredDataNewCategoryComplete(newCategory, color) {
   return newCategory && color;
 }
 
+function getRightDataFormat(newCategory, color) {
+  return {
+    name: newCategory.trim(),
+    color: color,
+  };
+}
+
 /**
  * Adds a new category to the current user.
  * @param {string} newCategory - The name of the new category.
  * @param {string} color - The color of the new category.
  */
 function pushNewCategoryToUser(newCategory, color) {
-  let indexUserToAddCategory = USERS.indexOf(LOGGED_USER);
-  let userToAddCategory = USERS[indexUserToAddCategory];
-  userToAddCategory.categorys.push({
+  CATEGORYS.push({
     name: newCategory,
     color: color,
   });

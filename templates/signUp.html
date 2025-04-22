@@ -11,12 +11,12 @@
     <link rel="stylesheet" href="../css/signUp.css" />
     <link rel="stylesheet" href="../css/signUp-responsiv.css" />
     <script src="../js/storage.js"></script>
+    <script src="../js/api.js"></script>
     <script src="../js/globalVariables.js"></script>
     <script src="../js/generalFunctions.js"></script>
-    <script src="../js/sampleData.js"></script>
     <script src="../js/signUp.js"></script>
   </head>
-  <body onload="initSignUp()">
+  <body>
     <!--LOADING CONTAINER-->
     <div id="loadingContainer" class="d-none">
       <img src="../assets/img/spinner-loading.svg" alt="loading image" />
@@ -36,7 +36,7 @@
           <h1 class="title">Sign up</h1>
         </div>
         <div class="blueLine marginTop"></div>
-        <form class="form marginTop" onsubmit="checkSignUpData(); return false">
+        <form class="form marginTop" onsubmit="signUp(); return false">
           <div class="inputContainer">
             <input
               required
@@ -47,6 +47,9 @@
               maxlength="25"
               minlength="2"
               required />
+            <span class="d-none error" id="userNameIsAlreadyRegistered">
+              Please enter a new username. This name is already in use.
+            </span>
           </div>
           <div class="inputContainer">
             <input
@@ -58,7 +61,7 @@
               maxlength="25"
               minlength="2"
               required />
-            <span class="d-none error" id="userIsAlreadyRegistered"
+            <span class="d-none error" id="emailIsAlreadyRegistered"
               >Please enter a new email. User is already registred</span
             >
           </div>
@@ -69,7 +72,23 @@
               class="input inputPassword"
               type="password"
               placeholder="Password"
+              minlength="8"
+              maxlength="128"
               required />
+          </div>
+          <div class="inputContainer">
+            <input
+              required
+              id="signUpPasswordConfirmation"
+              class="input inputPassword"
+              type="password"
+              placeholder="Confirm Password"
+              minlength="8"
+              maxlength="128"
+              required />
+            <span class="d-none error" id="passwordsDoNotMatch"
+              >Please enter a new password. Passwords do not match</span
+            >
           </div>
           <button id="signUpButton">Sign up</button>
         </form>

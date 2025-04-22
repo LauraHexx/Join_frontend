@@ -6,8 +6,11 @@ let PROCESS_STEPS = ["todo", "inProgress", "awaitingFeedback", "done"];
  * @async
  */
 async function initBoard() {
+  checkIfUserIsLogged();
   await setNavAndHeader("board");
   await loadDataAndRenderTasks();
+  await getCategories();
+  await getContacts();
   setEventsBoard();
   renderDropDownAddTaskDisplay();
 }
@@ -19,8 +22,7 @@ async function initBoard() {
  */
 async function loadDataAndRenderTasks() {
   toggleClass("loadingContainer", "d-none");
-  await loadUserData();
-  await getLoggedUser();
+  await getTasks();
   await renderTasks();
   toggleClass("loadingContainer", "d-none");
 }
@@ -55,8 +57,8 @@ function setEventsImageHoverAddTask(id) {
  * Renders the tasks on the board.
  */
 async function renderTasks() {
+  await getTasks();
   clearBoard();
-  TASKS = LOGGED_USER.tasks;
   TASKS.forEach((task) => {
     setDataTaskCard(task);
   });
@@ -78,22 +80,19 @@ function clearBoard() {
  */
 function setDataTaskCard(task) {
   const indexOfTask = TASKS.indexOf(task);
-  const category = task.category;
-  const colorCategory = getColorCategory(category);
-  const processStep = task.processStep;
-  const contactsIds = task.contacts;
+  const processStep = task.process_step;
+  const contacts = task.contacts;
   const amountSubtasks = task.subtasks.length;
   const classSubtasts = getStyleClassForSubtasks(amountSubtasks);
   const amountFinishedSubtasks = countAmountOfFinishedSubtasks(task);
   document.getElementById(processStep).innerHTML += renderTasksHtml(
     indexOfTask,
     task,
-    colorCategory,
     amountSubtasks,
     amountFinishedSubtasks,
     classSubtasts
   );
-  renderContactsInTaskCards(indexOfTask, contactsIds);
+  renderContactsInTaskCards(indexOfTask, contacts);
 }
 
 /**
@@ -110,17 +109,6 @@ function getStyleClassForSubtasks(amountSubtasks) {
 }
 
 /**
- * Gets the color of a category by name.
- * @param {string} name - The name of the category.
- * @returns {string} The color of the category.
- */
-function getColorCategory(name) {
-  CATEGORYS = LOGGED_USER.categorys;
-  const searchedCategory = CATEGORYS.find((category) => category.name === name);
-  return searchedCategory.color;
-}
-
-/**
  * Counts the number of finished subtasks in a task.
  * @param {Object} task - The task object.
  * @returns {number} The number of finished subtasks.
@@ -130,7 +118,7 @@ function countAmountOfFinishedSubtasks(task) {
   let subtasks = task.subtasks;
   subtasks.forEach((subtasks) => {
     const status = subtasks.status;
-    if (status === "checked") {
+    if (status === true) {
       amountFinishedSubtasks++;
     }
   });
@@ -138,66 +126,62 @@ function countAmountOfFinishedSubtasks(task) {
 }
 
 /**
- * Renders contacts initials in single task cards.
- * @param {number} indexOfTask - The index of the task.
- * @param {Array<number>} contactsIds - The IDs of the contacts.
- * @async
+ * Renders contacts in a task card, including initials or "You" if user is assigned.
+ * @param {number} indexOfTask - Index of the task in the task list.
+ * @param {Array<Object>} contacts - Array of contact objects assigned to the task.
  */
-async function renderContactsInTaskCards(indexOfTask, contactsIds) {
-  const amountContacts = contactsIds.length;
-  await renderFirstTwoContacts(indexOfTask, contactsIds);
+async function renderContactsInTaskCards(indexOfTask, contacts) {
+  const amountContacts = contacts.length;
+  await renderFirstTwoContacts(indexOfTask, contacts);
   await renderRemainingAmountOfContacts(indexOfTask, amountContacts);
   document.getElementById("loadingContainer").classList.add("d-none");
 }
 
 /**
- * Renders the first two contacts in a task card.
- * @param {number} indexOfTask - The index of the task.
- * @param {Array<number>} contactsIds - The IDs of the contacts.
+ * Renders the first two contacts of a task.
+ * @param {number} indexOfTask - Index of the task.
+ * @param {Array<Object>} contacts - Array of contact objects.
  */
-function renderFirstTwoContacts(indexOfTask, contactsIds) {
-  CONTACTS = LOGGED_USER.contacts;
-  const maxContacts = Math.min(2, contactsIds.length);
+function renderFirstTwoContacts(indexOfTask, contacts) {
+  const maxContacts = Math.min(2, contacts.length);
   for (let i = 0; i < maxContacts; i++) {
-    if (assignedContactIsLoggedUser(contactsIds[i])) {
-      renderYouContact(indexOfTask);
+    if (assignedContactIsLoggedUser(contacts[i])) {
+      renderYouContact(indexOfTask, contacts[i]);
     } else {
-      renderInitialsContacts(indexOfTask, contactsIds[i]);
+      renderInitialsContacts(indexOfTask, contacts[i]);
     }
   }
 }
 
 /**
- * Checks if the contact at the given id is the logged-in user.
- * @param {number} contactId - The id of the contact.
- * @returns {boolean} True if the contact is the logged-in user, false otherwise.
+ * Checks if a contact is the currently logged-in user.
+ * @param {Object} contact - Contact object.
+ * @returns {boolean} True if the contact is the logged-in user.
  */
-function assignedContactIsLoggedUser(contactId) {
-  return contactId === 0;
+function assignedContactIsLoggedUser(contact) {
+  return contact.email === LOGGED_USER.email;
 }
 
 /**
- * Renders the "You" contact in a task card if the logged user is not a guest.
- * @param {number} indexOfTask - The index of the task.
+ * Renders a contact labeled as "You".
+ * @param {number} indexOfTask - Index of the task.
+ * @param {Object} contactsId - Contact object with a color property.
  */
-function renderYouContact(indexOfTask) {
+function renderYouContact(indexOfTask, contactsId) {
   const initials = "You";
-  const color = LOGGED_USER.color;
+  const color = contactsId.color;
   appendContactHtml(indexOfTask, initials, color);
 }
 
 /**
- * Renders initials-based contacts in a task card.
- * @param {number} indexOfTask - The index of the task.
- * @param {number} contactId - The id of the contact.
+ * Renders a contact using their initials.
+ * @param {number} indexOfTask - Index of the task.
+ * @param {Object} contact - Contact object with name and color.
  */
-function renderInitialsContacts(indexOfTask, contactId) {
-  const contactData = getContactData(contactId);
-  if (contactData) {
-    const initials = contactData.initials;
-    const color = contactData.color;
-    appendContactHtml(indexOfTask, initials, color);
-  }
+function renderInitialsContacts(indexOfTask, contact) {
+  const initials = getInitials(contact.name);
+  const color = contact.color;
+  appendContactHtml(indexOfTask, initials, color);
 }
 
 /**
@@ -241,7 +225,7 @@ function getPercentageProgress(amountSubtasks, amountFinishedSubtasks) {
  * @param {string} direction - The direction of the process step change ("back" or "forward").
  */
 function changeProcessStepOfTask(indexOfTask, direction) {
-  let currentProcessStep = TASKS[indexOfTask].processStep;
+  let currentProcessStep = TASKS[indexOfTask].process_step;
   if (direction == "back") {
     let newProcessStepIndex = changeProcessStepOfTaskBack(currentProcessStep);
     changeProcessStepInData(indexOfTask, newProcessStepIndex);
@@ -290,9 +274,10 @@ function changeProcessStepOfTaskForward(currentProcessStep) {
  * @param {number} newProcessStepIndex - The index of the new process step.
  */
 async function changeProcessStepInData(indexOfTask, newProcessStepIndex) {
-  TASKS[indexOfTask].processStep = PROCESS_STEPS[newProcessStepIndex];
-  await setItem("users", JSON.stringify(USERS));
-  initBoard();
+  await changeTask(TASKS[indexOfTask].id, "PATCH", {
+    process_step: PROCESS_STEPS[newProcessStepIndex],
+  });
+  renderTasks();
 }
 
 /*DETAILS OF SINGLE TASK***********************************************************************************/
@@ -317,7 +302,7 @@ function openTaskDetails(indexOfTask) {
  * Renders the task details.
  */
 function renderTaskDetails() {
-  const colorCategory = getColorCategory(SELECTED_TASK.category);
+  const colorCategory = SELECTED_TASK.category.color;
   const colorPrio = getColorOfPrio(SELECTED_TASK.priority);
   document.getElementById("containerDetails").innerHTML = "";
   document.getElementById("containerDetails").innerHTML = renderTaskDetailsHtml(
@@ -333,12 +318,12 @@ function renderTaskDetails() {
  */
 function renderContactsInDetailCard() {
   document.getElementById("assignedContactsDetailCard").innerHTML = "";
-  const assignedContactIds = SELECTED_TASK.contacts;
-  assignedContactIds.forEach((contactId) => {
-    if (assignedContactIsLoggedUser(contactId)) {
+  const assignedContacts = SELECTED_TASK.contacts;
+  assignedContacts.forEach((contact) => {
+    if (assignedContactIsLoggedUser(contact)) {
       renderYouContactInDetailCard();
     } else {
-      renderSavedContactsInDetailCard(contactId);
+      renderSavedContactsInDetailCard(contact);
     }
   });
 }
@@ -349,24 +334,23 @@ function renderContactsInDetailCard() {
 function renderYouContactInDetailCard() {
   const name = "You";
   const initials = "You";
-  const color = LOGGED_USER.color;
+  const color = "blue";
   document.getElementById("assignedContactsDetailCard").innerHTML +=
     renderContactsInDetailCardHtml(name, initials, color);
 }
 
 /**
- * Renders the saved contacts in the detail card.
- * @param {string} contactId - The ID of the contact.
+ * Renders a saved contact inside the detail card by generating its HTML.
+ * @param {Object} contact - The contact object to render.
+ * @param {string} contact.name - The full name of the contact.
+ * @param {string} contact.color - The color assigned to the contact.
  */
-function renderSavedContactsInDetailCard(contactId) {
-  const contactData = getContactData(contactId);
-  if (contactData) {
-    const name = contactData.name;
-    const initials = contactData.initials;
-    const color = contactData.color;
-    document.getElementById("assignedContactsDetailCard").innerHTML +=
-      renderContactsInDetailCardHtml(name, initials, color);
-  }
+function renderSavedContactsInDetailCard(contact) {
+  const name = contact.name;
+  const initials = getInitials(name);
+  const color = contact.color;
+  document.getElementById("assignedContactsDetailCard").innerHTML +=
+    renderContactsInDetailCardHtml(name, initials, color);
 }
 
 /**
@@ -376,11 +360,32 @@ function renderSubtasksInDetailCard() {
   document.getElementById("containerSubtasks").innerHTML = "";
   const indexOfTask = TASKS.indexOf(SELECTED_TASK);
   const subtasks = SELECTED_TASK.subtasks;
+
   subtasks.forEach((subtask) => {
     const name = subtask.name;
-    const status = subtask.status;
+    let status = subtask.status;
+    let statusHtml = setStatusSubtaskHtml(status);
     const indexOfSubtask = subtasks.indexOf(subtask);
     document.getElementById("containerSubtasks").innerHTML +=
-      renderSubtasksInDetailCardHtml(name, status, indexOfSubtask, indexOfTask);
+      renderSubtasksInDetailCardHtml(
+        name,
+        statusHtml,
+        indexOfSubtask,
+        indexOfTask
+      );
   });
+}
+
+/**
+ * Converts a boolean subtask status to a string representation.
+ * @param {boolean} status - The status of the subtask.
+ * @returns {string} "checked" if true, otherwise "unchecked".
+ */
+function setStatusSubtaskHtml(status) {
+  if (status == true) {
+    status = "checked";
+  } else {
+    status = "unchecked";
+  }
+  return status;
 }

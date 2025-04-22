@@ -8,7 +8,7 @@ function addSubtask() {
   if (subtask) {
     SUBTASKS.push({
       name: subtask,
-      status: "unchecked",
+      status: false,
     });
     document.getElementById("addTaskSubtasks").value = "";
     renderSubtasks();
@@ -22,7 +22,12 @@ function renderSubtasks() {
   document.getElementById("subtasks").innerHTML = "";
   SUBTASKS.forEach((subtask) => {
     const indexOfSubtask = SUBTASKS.indexOf(subtask);
-    const status = subtask.status;
+    let status = subtask.status;
+    if (status == true) {
+      status = "checked";
+    } else {
+      status = "unchecked";
+    }
     document.getElementById("subtasks").innerHTML += renderSubtasksHtml(
       subtask,
       indexOfSubtask,
@@ -39,9 +44,9 @@ function setStatusCheckbox(indexOfSubtask) {
   const checkbox = document.getElementById(`subtask${indexOfSubtask}`);
   let status;
   if (checkbox.checked) {
-    status = "checked";
+    status = true;
   } else {
-    status = "unchecked";
+    status = false;
   }
   SUBTASKS[indexOfSubtask].status = status;
 }

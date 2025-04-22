@@ -159,11 +159,25 @@ function goBackToPreviousPage() {
 }
 
 /**
- * Logs out the user by removing the "loggedUserId" item from the local storage and loading the index.html template.
+ * Removes user data from local storage and redirects to login page.
  */
-async function logOut() {
+async function removeUserFromLocalStorage() {
   removeItemFromLocalStorage("loggedUserId");
+  removeItemFromLocalStorage("loggedUserEmail");
+  removeItemFromLocalStorage("loggedUserName");
+  removeItemFromLocalStorage("loggedUserToken");
   loadTemplate("../index.html");
+}
+
+/**
+ * Stores the registration response data in local storage.
+ * @param {Object} responseData - The data returned from the registration request.
+ */
+async function setLocalStorage(responseData) {
+  setItemInLocalStorage("loggedUserToken", responseData.token);
+  setItemInLocalStorage("loggedUserId", responseData.id);
+  setItemInLocalStorage("loggedUserName", responseData.username);
+  setItemInLocalStorage("loggedUserEmail", responseData.email);
 }
 
 /**
@@ -177,15 +191,6 @@ function getContactData(id) {
 }
 
 /**
- * Checks if an existing user with the given email address exists.
- * @param {string} id - The email ID to search for in the USERS array.
- * @returns {User|undefined} The existing user if found, or undefined if not.
- */
-function checkForExistingUser(id) {
-  return USERS.find((user) => user.email === document.getElementById(id).value);
-}
-
-/**
  * Finds an existing contact with the specified email.
  * @param {Array} contacts - The contacts array to search in.
  * @param {string} email - The email to search for.
@@ -193,6 +198,20 @@ function checkForExistingUser(id) {
  */
 function findExistingEmail(contacts, email) {
   return contacts.find((contact) => contact.email === email);
+}
+
+/**
+ * Finds an existing contact with the specified name.
+ * @param {Array} contacts - The contacts array to search in.
+ * @param {string} name - The name to search for.
+ * @returns {Object} The contact object if an existing name is found, otherwise null.
+ */
+function findExistingUsernameInContacts(contacts, name) {
+  return contacts.find((contact) => contact.name === name);
+}
+
+function findExistingUsernameInUsers(name) {
+  return USERS.find((user) => user.namename === name);
 }
 
 /**
@@ -241,6 +260,17 @@ function sortArrayAlphabetically(array) {
   array.sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/**
+ * Removes the logged-in guest user from the contacts list if it's a guest account.
+ */
+function checkIfGuest() {
+  if (LOGGED_USER.email.includes("guest")) {
+    CONTACTS = CONTACTS.filter(
+      (contact) => contact.email !== LOGGED_USER.email
+    );
+  }
+}
+
 /*DISPLAYS************************************************************************************/
 
 /**
@@ -272,52 +302,30 @@ function hideDisplay(id, animationClass, className) {
 /*USERS************************************************************************************/
 
 /**
- * Loads user data from storage asynchronously.
- * Parses the stored data and assigns it to the USERS variable.
- * @async
+ * Checks if the user is logged in by verifying if a valid token exists in localStorage.
+ * If no token is found, it redirects the user to the login page.
+ * If the token exists, it sets the logged-in user information and stores the token.
  */
-async function loadUserData() {
-  try {
-    USERS = JSON.parse(await getItem("users"));
-    console.log("USERS SERVER", USERS);
-  } catch (e) {
-    console.error("Loading error:", e);
-  }
-}
-
-/**
- * Retrieves the logged-in user's data.
- * Gets the logged user ID from local storage and retrieves the corresponding user data.
- * If no logged-in user is found, redirects to the index.html page.
- * @async
- */
-async function getLoggedUser() {
-  const loggedUserId = getItemFromLocalStorage("loggedUserId");
-  if (!loggedUserId) {
+function checkIfUserIsLogged() {
+  const loggedUserToken = getItemFromLocalStorage("loggedUserToken");
+  if (!loggedUserToken) {
     loadTemplate("../index.html");
   } else {
-    LOGGED_USER = getUserData(loggedUserId);
-    console.log("LOGGED_USER:", LOGGED_USER);
+    LOGGED_USER = setLoggedUser();
+    TOKEN = getItemFromLocalStorage("loggedUserToken");
   }
 }
 
 /**
- * Generates and returns a new user ID based on the number of existing users.
- * @returns {number} The generated user ID.
+ * Sets the logged-in user's details (ID, name, email) from localStorage.
+ * @returns {Object} The logged-in user's details.
  */
-function getUserId() {
-  const id = USERS.length + 1;
-  return id;
-}
-
-/**
- * Retrieves the user data for a given user ID.
- * @param {number} id - The ID of the user.
- * @returns {object} The user object corresponding to the provided ID.
- */
-function getUserData(id) {
-  const user = USERS.find((user) => user.id === id);
-  return user;
+function setLoggedUser() {
+  return {
+    id: getItemFromLocalStorage("loggedUserId"),
+    name: getItemFromLocalStorage("loggedUserName"),
+    email: getItemFromLocalStorage("loggedUserEmail"),
+  };
 }
 
 /**
@@ -371,14 +379,6 @@ function getFirstAndLastInitial(partsOfName) {
   const lastNameInitial = partsOfName[partsOfName.length - 1][0].toUpperCase();
   const initials = firstNameInitial + lastNameInitial;
   return initials;
-}
-
-/**
- * Sets the data for greeting by storing the logged user ID in local storage.
- * @param {number} userId - The ID of the logged user.
- */
-function setDataForGreeting(userId) {
-  setItemInLocalStorage("loggedUserId", userId);
 }
 
 /*LOCAL STORAGE************************************************************************************/

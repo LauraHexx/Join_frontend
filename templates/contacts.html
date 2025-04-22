@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="../css/addTask.css" />
     <link rel="stylesheet" href="../css/addTask-responsiv.css" />
     <script src="../js/storage.js"></script>
+    <script src="../js/api.js"></script>
     <script src="../js/globalVariables.js"></script>
-    <script src="../js/sampleData.js"></script>
     <script src="../js/includeHtml.js"></script>
     <script src="../js/generalFunctions.js"></script>
     <script src="../js/header.js"></script>
@@ -141,14 +141,19 @@
           <form
             onsubmit="getDataNewContact(); return false"
             class="containerAddNewContact">
-            <input
-              id="addContactName"
-              class="input inputName"
-              type="name"
-              placeholder="Name"
-              required
-              maxlength="25"
-              minlength="2" />
+            <div class="inputContainer">
+              <input
+                id="addContactName"
+                class="input inputName"
+                type="name"
+                placeholder="Name"
+                required
+                maxlength="25"
+                minlength="2" />
+              <span id="errorEnterANewName" class="error d-none"
+                >Name already belongs to a contact. Please update it</span
+              >
+            </div>
             <div class="inputContainer">
               <input
                 id="addContactEmail"
@@ -167,6 +172,8 @@
               class="input inputPassword"
               type="number"
               placeholder="Phone"
+              minlength="8"
+              maxlength="15"
               required />
             <div class="addDisplayBtns">
               <input

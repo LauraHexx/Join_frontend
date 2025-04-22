@@ -6,29 +6,12 @@
  */
 async function getDataNewContact() {
   let newContact = {
-    id: getContactId(),
     color: getRandomColor(),
     name: addContactName.value,
-    initials: getInitials(addContactName.value),
     email: addContactEmail.value,
-    phone: addContactPhone.value,
+    phone_number: addContactPhone.value,
   };
   checkNewContactData(newContact);
-}
-
-/**
- * Gets the next available contact ID by finding the highest ID among existing contacts
- * and incrementing it by 1.
- * @returns {number} The next available contact ID.
- */
-function getContactId() {
-  let highestId = 0;
-  CONTACTS.forEach((contact) => {
-    if (contact.id > highestId) {
-      highestId = contact.id;
-    }
-  });
-  return highestId + 1;
 }
 
 /**
@@ -37,12 +20,17 @@ function getContactId() {
  * @param {Object} newContact - The new contact object to be checked and added.
  */
 function checkNewContactData(newContact) {
-  const foundExistingEmail = findExistingEmail(
-    LOGGED_USER.contacts,
-    addContactEmail.value
+  const foundExistingEmail = findExistingEmail(CONTACTS, addContactEmail.value);
+  const foundExistingName = findExistingUsernameInContacts(
+    CONTACTS,
+    addContactName.value
   );
-  if (foundExistingEmail) {
+  if (foundExistingName) {
+    showError("errorEnterANewName");
+    hideError("errorEnterANewEmail");
+  } else if (foundExistingEmail) {
     showError("errorEnterANewEmail");
+    hideError("errorEnterANewName");
   } else {
     addNewContact(newContact);
   }
@@ -56,9 +44,11 @@ function checkNewContactData(newContact) {
  */
 async function addNewContact(newContact) {
   closeAddContact();
-  LOGGED_USER.contacts.push(newContact);
-  await setItem("users", JSON.stringify(USERS));
-  await loadDataAndRenderContacts();
+  CONTACTS.push(newContact);
+  let payload = {};
+  payload = newContact;
+  await addContact(payload);
+  await initContacts();
   showAnimationNewContactSuccess();
 }
 
@@ -70,6 +60,15 @@ function closeAddContact() {
   cancelAddContact();
   hideDisplay("contentAddDisplay", "animation-slideInRight", "d-none");
   toggleClass("body", "overflowHidden");
+  hideAlleAddContactErrors();
+}
+
+/**
+ * Hides all error messages related to adding a contact.
+ */
+function hideAlleAddContactErrors() {
+  hideError("errorEnterANewName");
+  hideError("errorEnterANewEmail");
 }
 
 /**

@@ -190,14 +190,6 @@ a {
   width: 100% !important;
 }
 
-.error {
-  position: absolute;
-  top: 43px;
-  left: 0;
-  color: #f24822;
-  font-size: 12px !important;
-}
-
 .emailAndPhone {
   display: flex;
   flex-direction: column;

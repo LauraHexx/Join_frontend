@@ -1,54 +1,74 @@
+let PAYLOAD = {};
+
 /**
- * Initializes the sign-up process by loading the user Data.
- * Displays a loading image during the loading time.
- * @async
+ * Starts the sign-up process.
  */
-async function initSignUp() {
-  toggleClass("loadingContainer", "d-none");
-  await loadUserData();
-  toggleClass("loadingContainer", "d-none");
+function signUp() {
+  hideAllErrors();
+  PAYLOAD = getSignUpData();
+  checkIfPasswordsMatch();
 }
 
 /**
- * Checks the sign-up data.
- * If an existing user with the same email address is found, an error message is displayed.
- * Otherwise, a new user is registered.
+ * Hides all error messages.
  */
-function checkSignUpData() {
-  const existingUser = checkForExistingUser("signUpEmail");
-  if (existingUser) {
-    showError("userIsAlreadyRegistered");
+function hideAllErrors() {
+  hideError("userNameIsAlreadyRegistered");
+  hideError("emailIsAlreadyRegistered");
+  hideError("passwordsDoNotMatch");
+}
+
+/**
+ * Retrieves and returns the sign-up data from the form.
+ * @returns {Object} The sign-up data object.
+ */
+function getSignUpData() {
+  return {
+    username: signUpName.value.trim(),
+    email: signUpEmail.value.trim(),
+    password: signUpPassword.value.trim(),
+    repeated_password: signUpPasswordConfirmation.value.trim(),
+  };
+}
+
+/**
+ * Checks if the entered passwords match and triggers registration.
+ */
+async function checkIfPasswordsMatch() {
+  if (PAYLOAD.password !== PAYLOAD.repeated_password) {
+    showError("passwordsDoNotMatch");
   } else {
-    registerNewUser();
+    await register(PAYLOAD);
   }
 }
 
 /**
- * Registers a new user and loads summary template.
- * @async
+ * Handles registration errors by checking the error message and displaying the appropriate error message to the user.
+ * @param {Object} error - The error object containing the error message.
+ * @param {string} error.message - The error message received during registration.
  */
-async function registerNewUser() {
-  pushNewUserToArray();
-  await setItem("users", JSON.stringify(USERS));
-  loadTemplate("summary.html");
+function handleRegistrationErrors(error) {
+  if (userNameAlreadyExists(error.message)) {
+    showError("userNameIsAlreadyRegistered");
+  } else if (emailAlreadyExists(error.message)) {
+    showError("emailIsAlreadyRegistered");
+  }
 }
 
 /**
- * It creates a new user object with the provided sign-up details and pushes it into the USERS array
- * Sets the user id for the greeting in the summary template.
+ * Checks if the error message indicates that the username is already taken.
+ * @param {string} error - The error message to check.
+ * @returns {boolean} - Returns true if the error message indicates that the username already exists, otherwise false.
  */
-function pushNewUserToArray() {
-  const newUser = {
-    color: getRandomColor(),
-    id: getUserId(),
-    name: signUpName.value,
-    initials: getInitials(signUpName.value),
-    email: signUpEmail.value,
-    password: signUpPassword.value,
-    tasks: SAMPLE_DATA_TASKS,
-    contacts: SAMPLE_DATA_CONTACTS,
-    categorys: SAMPLE_DATA_CATEGORYS,
-  };
-  USERS.push(newUser);
-  setDataForGreeting(newUser.id);
+function userNameAlreadyExists(error) {
+  return error.includes("UNIQUE constraint failed: auth_user.username");
+}
+
+/**
+ * Checks if the error message indicates that the email is already registered.
+ * @param {string} error - The error message to check.
+ * @returns {boolean} - Returns true if the error message indicates that the email is already registered, otherwise false.
+ */
+function emailAlreadyExists(error) {
+  return error.includes("EMAIL_ALREADY_REGISTERED");
 }
