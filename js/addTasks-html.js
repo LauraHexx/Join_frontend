@@ -26,7 +26,6 @@ function renderYouContactHtml(name, id, color) {
   `;
 }
 
-
 function renderContactsHtml(name, id, color) {
   return /*html*/ `
       <li class="oneContact" onclick="event.stopPropagation();">
@@ -54,10 +53,16 @@ function renderRestAmountClickedContactsHtml(furtherAmountOfContacts) {
 }
 
 function renderSubtasksHtml(subtask, indexOfSubtask, status) {
-  return /*html*/ `
+  return /*html*/ `      
       <div class="singleSubtask">
-        <input onclick="setStatusCheckbox(${indexOfSubtask})" ${status} type="checkbox" id="subtask${indexOfSubtask}" class="checkbox">
-        <span class="subtask">${subtask.name}</span>
+          <div id="subtaskContent">
+              <input onclick="setStatusCheckbox(${indexOfSubtask})" ${status} type="checkbox" id="subtask${indexOfSubtask}" class="checkbox">
+              <span id="subtask-name-id${indexOfSubtask}" class="subtask subtaskName">${subtask.name}</span>
+          </div>
+          <div id="subtaskImgs">
+              <img onclick="editCurrentSubtask(${indexOfSubtask})" id="editImgSubtask"  src="../assets/img/pencilBlue.svg" alt="icon to edit task">
+              <img onclick="deleteCurrentSubtask(${indexOfSubtask})" id="deleteImgSubtask" src="../assets/img/boardDeleteTaskDarkBlue.svg" alt="icon to delete task">
+          </div>
       </div>
     `;
 }
