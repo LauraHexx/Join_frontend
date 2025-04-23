@@ -14,6 +14,7 @@
 }
 
 input {
+  font-family: "Segoe UI", sans-serif !important;
   box-sizing: border-box;
   background: var(--bright-white);
   border: 1px solid var(--grey);
@@ -314,9 +315,17 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .singleSubtask {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: space-between;
+}
+
+#subtaskContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .singleSubtask input {
@@ -328,6 +337,30 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .singleSubtask span {
   font-weight: unset;
   font-size: 12px;
+}
+
+#subtaskImgs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-right: 3px;
+}
+
+#editImgSubtask {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+}
+
+#deleteImgSubtask {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.editable-subtask-input {
+  padding: 8px;
 }
 
 .clearAndCreateBtns {
