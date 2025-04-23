@@ -139,7 +139,7 @@ function stopBlinkingAndSave(inputField, subtaskToEdit, indexOfSubtask) {
 }
 
 /**
- * Deletes subtask from list and re-renders UI.
+ * Deletes subtask from list and renders tasks when in board
  * @param {number} indexOfSubtask
  */
 function deleteCurrentSubtask(indexOfSubtask) {
