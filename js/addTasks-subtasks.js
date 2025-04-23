@@ -145,5 +145,7 @@ function stopBlinkingAndSave(inputField, subtaskToEdit, indexOfSubtask) {
 function deleteCurrentSubtask(indexOfSubtask) {
   SUBTASKS.splice(indexOfSubtask, 1);
   renderSubtasks();
-  renderTasks();
+  if (window.location.href.includes("board")) {
+    renderTasks();
+  }
 }
